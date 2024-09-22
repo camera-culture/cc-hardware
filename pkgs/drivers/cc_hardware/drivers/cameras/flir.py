@@ -7,10 +7,10 @@ import PySpin
 from cc_hardware.drivers.camera import Camera
 from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.singleton import SingletonMeta
+from cc_hardware.utils.singleton import SingletonABCMeta
 
 
-class FlirCamera(Camera, metaclass=SingletonMeta):
+class FlirCamera(Camera, metaclass=SingletonABCMeta):
     def __init__(self, camera_index: int = 0):
         self.camera_index = camera_index
         self.queue = BlockingDeque(maxlen=10)
