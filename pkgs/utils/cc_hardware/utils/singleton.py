@@ -1,7 +1,22 @@
+from abc import ABCMeta
+from typing import Self
+
+
 class SingletonMeta(type):
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
         return cls._instances[cls]
+
+    @classmethod
+    def instance(cls) -> Self:
+        if cls not in cls._instances:
+            cls._instances[cls] = cls()
+        return cls._instances[cls]
+
+
+class SingletonABCMeta(ABCMeta, SingletonMeta):
+    pass

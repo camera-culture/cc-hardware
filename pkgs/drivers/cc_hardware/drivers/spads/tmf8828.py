@@ -3,7 +3,8 @@ import threading
 import numpy as np
 
 from cc_hardware.drivers.arduino import Arduino
-from cc_hardware.drivers.sensor import Sensor, SensorDataThreaded
+from cc_hardware.drivers.sensor import SensorDataThreaded
+from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 
@@ -84,7 +85,7 @@ class TMF8828Object(SensorDataThreaded):
 # ================
 
 
-class TMF8828Sensor(Sensor):
+class TMF8828Sensor(SPADSensor):
     PORT: str = "/usr/local/dev/arduino-tmf8828"
     BAUDRATE: int = 2_000_000
     TIMEOUT: float = 0.1
@@ -179,9 +180,6 @@ class TMF8828Sensor(Sensor):
         except Exception as e:
             get_logger().error(f"Error closing Arduino: {e}")
 
-    def __del__(self):
-        self.close()
-
     def _background_read(self):
         while self.okay:
             try:
@@ -206,7 +204,6 @@ class TMF8828Sensor(Sensor):
         average: bool = True,
         return_histograms: bool = True,
         return_objects: bool = False,
-        verbose: bool = True,
     ) -> np.ndarray | list[np.ndarray]:
         assert return_histograms or return_objects
 
@@ -218,10 +215,7 @@ class TMF8828Sensor(Sensor):
 
         histograms, objects = [], []
         for _ in range(num_samples):
-            if verbose:
-                get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
-            else:
-                get_logger().debug(f"Sample {len(histograms) + 1}/{num_samples}")
+            get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
 
             if return_histograms:
                 histograms.append(self._histogram.get_data())
@@ -250,7 +244,7 @@ class TMF8828Sensor(Sensor):
             return objects
 
     @property
-    def okay(self) -> bool:
+    def is_okay(self) -> bool:
         return not self._stop_event.is_set()
 
     @property
@@ -259,9 +253,8 @@ class TMF8828Sensor(Sensor):
         return 10 / TMF882X_BINS / C
 
     @property
-    def fov(self) -> float:
-        return 50
-
-    @property
     def resolution(self) -> tuple[int, int]:
         return 3, 3
+
+
+# ================
