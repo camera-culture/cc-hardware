@@ -34,6 +34,7 @@ class SensorData(ABC):
 
     def __init__(self):
         self._data: np.ndarray = None
+        self._has_data = False
 
     @abstractmethod
     def reset(self) -> None:

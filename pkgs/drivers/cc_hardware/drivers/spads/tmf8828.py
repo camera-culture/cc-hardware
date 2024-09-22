@@ -1,6 +1,8 @@
 import re
+from pathlib import Path
 
 import numpy as np
+import pkg_resources
 
 from cc_hardware.drivers.arduino import Arduino
 from cc_hardware.drivers.sensor import SensorData
@@ -31,6 +33,7 @@ class TMF8828Histogram(SensorData):
     def reset(self) -> None:
         self._temp_data.fill(0)
         self._data.fill(0)
+        self._has_data = False
 
     def process(self, row: list[str]) -> None:
         idx = int(row[TMF882X_IDX_FIELD])
@@ -57,9 +60,16 @@ class TMF8828Histogram(SensorData):
             if idx == 9:
                 self._data = np.copy(self._temp_data)
                 self._temp_data.fill(0)
+                self._has_data = True
 
     def get_data(self) -> np.ndarray:
-        return self._data[TMF882X_CHANNEL_MASK]
+        data = np.copy(self._data[TMF882X_CHANNEL_MASK])
+        self.reset()
+        return data
+
+    @property
+    def has_data(self) -> bool:
+        return self._has_data
 
 
 class TMF8828Object(SensorData):
@@ -86,6 +96,11 @@ class TMF8828Object(SensorData):
 
 class TMF8828Sensor(SPADSensor):
     PORT: str = "/usr/local/dev/arduino-tmf8828"
+    SCRIPT: Path = Path(
+        pkg_resources.resource_filename(
+            "cc_hardware.drivers", str(Path("data") / "tmf8828" / "tmf8828.ino")
+        )
+    )
     BAUDRATE: int = 2_000_000
     TIMEOUT: float = 0.1
 
@@ -179,63 +194,51 @@ class TMF8828Sensor(SPADSensor):
         num_samples: int,
         *,
         average: bool = True,
-        return_histograms: bool = True,
-        return_objects: bool = False,
     ) -> np.ndarray | list[np.ndarray]:
-        assert return_histograms or return_objects
-
         # Reset the serial buffer
         self.write("s")
         self.wait_for_stop_talk()
         self.write("m")
         self.wait_for_start_talk()
 
-        histograms, objects = [], []
+        histograms = []
         for _ in range(num_samples):
             get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
 
-            data = self.read()
-            try:
-                data = data.decode("utf-8").replace("\r", "").replace("\n", "")
-            except UnicodeDecodeError:
-                continue
-            row = data.split(",")
+            while not self._histogram.has_data:
+                data = self.read()
+                try:
+                    data = data.decode("utf-8").replace("\r", "").replace("\n", "")
+                except UnicodeDecodeError:
+                    get_logger().error("Error decoding data")
+                    continue
+                row = data.split(",")
 
-            if len(row) > 0 and row[0] != "":
-                if row[0] == "#Obj":
-                    self._object.process(row)
-                elif row[0] == "#Raw":
-                    self._histogram.process(row)
+                if len(row) > 0 and row[0] != "":
+                    if row[0] == "#Obj":
+                        self._object.process(row)
+                    elif row[0] == "#Raw":
+                        self._histogram.process(row)
 
-            if return_histograms:
-                histograms.append(self._histogram.get_data())
-            if return_objects:
-                objects.append(self._object.get_data())
+            histograms.append(self._histogram.get_data())
 
         self.write("s")
         self.wait_for_stop_talk()
 
         if num_samples == 1:
-            if return_histograms:
-                histograms = histograms[0] if histograms else None
-            if return_objects:
-                objects = objects[0] if objects else None
+            histograms = histograms[0] if histograms else None
         elif average:
-            if return_histograms:
-                histograms = np.mean(histograms, axis=0)
-            if return_objects:
-                objects = np.mean(objects, axis=0)
+            histograms = np.mean(histograms, axis=0)
 
-        if return_histograms and return_objects:
-            return histograms, objects
-        elif return_histograms:
-            return histograms
-        elif return_objects:
-            return objects
+        return histograms
 
     @property
     def is_okay(self) -> bool:
         return True
+
+    @property
+    def num_bins(self) -> int:
+        return TMF882X_BINS
 
     @property
     def bin_width(self) -> float:

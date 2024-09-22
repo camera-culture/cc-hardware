@@ -8,11 +8,10 @@ version = "0.0"
 authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CC Hardware Drivers"
 readme = "README.md"
-packages = [
-  { include = "cc_hardware" }
-]
+packages = [{ include = "cc_hardware" }]
+include = [{ path = "./cc_hardware/drivers/data" }]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
 numpy = ">=1.26.4, <2.0.0"
-utils = {path = "../utils", develop = true}
+utils = { path = "../utils", develop = true }

@@ -60,7 +60,7 @@ class Manager:
                 None.
         """
         setup = setup or (lambda **_: None)
-        loop = loop or (lambda **_: None)
+        loop = loop or (lambda *_, **__: None)
         cleanup = cleanup or (lambda **_: None)
 
         try:
