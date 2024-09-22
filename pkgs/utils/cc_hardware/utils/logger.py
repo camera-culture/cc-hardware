@@ -1,4 +1,5 @@
 import logging
+import logging.config
 
 
 class FileHandler(logging.FileHandler):

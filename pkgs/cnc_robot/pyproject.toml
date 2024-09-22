@@ -15,7 +15,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12"
 telemetrix = "1.40"
-numpy = "^2.1.1"
+numpy = ">=1.26.4"
 tools = {path = "../tools", develop = true}
 
 [tool.poetry.scripts]
