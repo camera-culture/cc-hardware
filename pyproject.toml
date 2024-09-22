@@ -9,15 +9,18 @@ authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CC Hardware"
 readme = "README.md"
 packages = [
-  { include = "cc_hardware" }
+  { include = "cc_hardware", from = "pkgs/cnc_robot" },
+  { include = "cc_hardware", from = "pkgs/drivers" },
+  { include = "cc_hardware", from = "pkgs/tools" },
+  { include = "cc_hardware", from = "pkgs/utils" },
 ]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
-cnc_robot = {path = "pkgs/cnc_robot", develop = true}
-drivers = {path = "pkgs/drivers", develop = true}
-tools = {path = "pkgs/tools", develop = true}
-utils = {path = "pkgs/utils", develop = true}
+cnc_robot = { path = "pkgs/cnc_robot", develop = true }
+drivers = { path = "pkgs/drivers", develop = true }
+tools = { path = "pkgs/tools", develop = true }
+utils = { path = "pkgs/utils", develop = true }
 
 [tool.poetry.dev-dependencies]
 pip = "^24.2"
@@ -40,21 +43,22 @@ enable = [
   "empty-docstring",
   "missing-class-docstring",
   "missing-function-docstring",
-  "missing-module-docstring"
+  "missing-module-docstring",
 ]
 
 [tool.isort]
 profile = "black"
-known_first_party = ["cc_hardware"]  # see package configuration below
+known_first_party = ["cc_hardware"] # see package configuration below
 
 [tool.flake8]
 ignore = ['E203']
-per-file-ignores = [
-    '__init__.py:F401',
-]
+per-file-ignores = ['__init__.py:F401']
 max-line-length = 88
 count = true
 
 [tools.pyright]
-reportMissingTypeArgument = true  # Report generic classes used without type arguments
-strictListInference = true  # Use union types when inferring types of lists elements, instead of Any
+reportMissingTypeArgument = true # Report generic classes used without type arguments
+strictListInference = true       # Use union types when inferring types of lists elements, instead of Any
+
+[tool.poetry-monorepo-dependency-plugin]
+enable = true
