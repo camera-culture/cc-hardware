@@ -7,6 +7,8 @@ import serial
 from serial.serialutil import SerialException
 from serial.tools import list_ports
 
+from cc_hardware.utils.logger import get_logger
+
 
 class Arduino(serial.Serial):
     _lock = threading.Lock()
@@ -19,7 +21,7 @@ class Arduino(serial.Serial):
         (if port is None) and wait for the Arduino to reset before connecting."""
         serial_ports = []
         if port is None:
-            print("Opening all potential serial ports...")
+            get_logger().info("Opening all potential serial ports...")
             the_ports_list = list_ports.comports()
             for port in the_ports_list:
                 if port.pid is None:
@@ -29,20 +31,22 @@ class Arduino(serial.Serial):
                 except SerialException:
                     continue
                 serial_ports.append(serial_port)
-                print(f"\t{port.device}")
+                get_logger().info(f"\t{port.device}")
         else:
             serial_ports = [cls(port, **kwargs)]
 
-        assert len(serial_ports) > 0, "No Arduino devices found"
+        assert len(serial_ports) > 0, f"No {cls.__name__} devices found"
 
-        print(f"\nWaiting {wait} seconds for Arduino devices to reset...")
+        get_logger().info(
+            f"Waiting {wait} seconds for {cls.__name__} devices to reset..."
+        )
         time.sleep(wait)
 
         return serial_ports if len(serial_ports) > 1 else serial_ports[0]
 
     @singledispatchmethod
     def write(self, data: Any):
-        print(f"Invalid data type: {type(data)}")
+        get_logger().warning(f"Invalid data type: {type(data)}")
         with self._lock:  # Ensure that only one thread can write at a time
             super().write(data)
 

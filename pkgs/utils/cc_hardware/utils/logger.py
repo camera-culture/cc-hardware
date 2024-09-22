@@ -39,8 +39,10 @@ class TqdmStreamHandler(logging.StreamHandler):
 class LoggerMaxLevelFilter(logging.Filter):
     """This filter sets a maximum level."""
 
-    def __init__(self, max_level: str):
-        self._max_level = logging.getLevelName(max_level)
+    def __init__(self, max_level: int | str):
+        if isinstance(max_level, str):
+            max_level = getattr(logging, max_level.upper())
+        self._max_level = max_level
 
     def filter(self, record: logging.LogRecord) -> bool | logging.LogRecord:
         return record.levelno <= self._max_level
@@ -55,33 +57,30 @@ LOGGING_CONFIG = {
         }
     },
     "handlers": {
-        "stdout_debug": {
+        "stdout": {
             "class": TqdmStreamHandler,
             "formatter": "simple",
             "stream": "ext://sys.stdout",
             "level": logging.DEBUG,
-            "filters": ["max_level"],
-        },
-        "stdout_info": {
-            "class": TqdmStreamHandler,
-            "formatter": "simple",
-            "stream": "ext://sys.stdout",
-            "level": logging.INFO,
-            "filters": ["max_level"],
         },
     },
     "loggers": {
-        "cambrian": {
-            "level": logging.DEBUG,
-            "handlers": ["stdout_debug"],
+        "cc_hardware": {
+            "level": logging.INFO,
+            "handlers": ["stdout"],
+            # Set propagate to false to avoid double logging
+            # If it were true, all logs applied to the logger would continue down to
+            # the root.
+            "propagate": False,
         },
     },
     "formatters": {
-        "simple": {"format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"}
+        "simple": {"format": "%(levelname)-8s | %(module)s.%(funcName)s :: %(message)s"}
     },
 }
 
 
-def get_logger(name: str = "cc_hardware") -> logging.Logger:
+def get_logger(name: str = "cc_hardware", *, overrides: dict = {}) -> logging.Logger:
+    LOGGING_CONFIG.update(overrides)
     logging.config.dictConfig(LOGGING_CONFIG)
     return logging.getLogger(name)

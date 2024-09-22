@@ -9,6 +9,7 @@ packages = [
   { include = "cc_hardware", from = "pkgs/drivers" },
   { include = "cc_hardware", from = "pkgs/tools" },
   { include = "cc_hardware", from = "pkgs/utils" },
+  { include = "cc_hardware", from = "pkgs/algos" },
 ]
 
 [tool.poetry.dependencies]
@@ -17,6 +18,7 @@ cnc_robot = { path = "pkgs/cnc_robot", develop = true }
 drivers = { path = "pkgs/drivers", develop = true }
 tools = { path = "pkgs/tools", develop = true }
 utils = { path = "pkgs/utils", develop = true }
+algos = { path = "pkgs/algos", develop = true }
 
 [tool.poetry.dev-dependencies]
 pip = "^24.2"

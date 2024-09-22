@@ -1,6 +1,6 @@
 from enum import Enum
 from functools import partial
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type, overload
+from typing import Any, Callable, Dict, List, Tuple, Type, overload
 
 import numpy as np
 from telemetrix import telemetrix
@@ -28,7 +28,7 @@ class Gantry:
     as a whole (i.e. a gantry).
 
     Args:
-        port (Optional[str]): The port the arduino is on. If None, auto port detection
+        port (str | None): The port the arduino is on. If None, auto port detection
             is used.
 
     Keyword Args:
@@ -38,10 +38,10 @@ class Gantry:
 
     def __init__(
         self,
-        port: Optional[str] = None,
+        port: str | None = None,
         *,
         axes: Dict[Axis, List[StepperMotorPartial]],
-        home: Optional[Tuple[float]] = None,
+        home: Tuple[float] | None = None,
     ):
         # This is the arduino object. Initialize it once. If port is None, the library
         # will attempt to auto-detect the port.

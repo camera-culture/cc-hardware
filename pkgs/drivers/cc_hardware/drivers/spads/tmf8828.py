@@ -1,3 +1,4 @@
+import re
 import threading
 
 import numpy as np
@@ -37,7 +38,7 @@ class TMF8828Histogram(SensorDataThreaded):
         idx = int(row[TMF882X_IDX_FIELD])
         try:
             data = np.array(row[TMF882X_SKIP_FIELDS:], dtype=np.int32)
-        except RuntimeError:
+        except ValueError:
             get_logger().error("Invalid data received.")
             return
 
@@ -96,6 +97,9 @@ class TMF8828Sensor(SPADSensor):
         port: str | None = None,
         setup: bool = True,
     ):
+        self._initialized = False
+
+        port = port or self.PORT
         self._arduino = Arduino.create(
             port=port, baudrate=self.BAUDRATE, timeout=self.TIMEOUT
         )
@@ -110,6 +114,8 @@ class TMF8828Sensor(SPADSensor):
         self._stop_event = threading.Event()
         self._thread = threading.Thread(target=self._background_read)
         self._thread.start()
+
+        self._initialized = True
 
     def initialize(self):
         get_logger().debug("Initializing sensor...")
@@ -160,11 +166,15 @@ class TMF8828Sensor(SPADSensor):
         while len(data) > 0:
             data = self.read()
             try:
-                get_logger().debug(data.decode("utf-8"), end="")
+                data_str = re.sub(r"[\r\n]", "", data.decode("utf-8").strip())
+                get_logger().debug(data_str)
             except UnicodeDecodeError:
                 get_logger().debug(data)
 
     def close(self) -> None:
+        if not self._initialized:
+            return
+
         try:
             self._stop_event.set()
         except Exception as e:
@@ -181,7 +191,7 @@ class TMF8828Sensor(SPADSensor):
             get_logger().error(f"Error closing Arduino: {e}")
 
     def _background_read(self):
-        while self.okay:
+        while self.is_okay:
             try:
                 data = self.read().decode("utf-8").replace("\r", "").replace("\n", "")
             except UnicodeDecodeError:
