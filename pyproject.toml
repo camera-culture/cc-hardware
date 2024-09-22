@@ -1,0 +1,58 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "cc_hardware"
+version = "0.0"
+authors = ["Camera Culture <a2cc@media.mit.edu>"]
+description = "CC Hardware"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+cnc_robot = {path = "pkgs/cnc_robot", develop = true}
+drivers = {path = "pkgs/drivers", develop = true}
+tools = {path = "pkgs/tools", develop = true}
+utils = {path = "pkgs/utils", develop = true}
+
+[tool.poetry.dev-dependencies]
+pip = "^24.2"
+black = "^24.8.0"
+flake8 = "^7.1.1"
+Flake8-pyproject = "^1.2.3"
+isort = "^5.13.2"
+pyright = "^1.1.381"
+pytest = "^8.3.3"
+pre-commit = "^3.8.0"
+
+[tool.black]
+line-length = 88
+target-version = ['py312']
+
+[tool.pylint."messages control"]
+ignore = ["setup.py", "__init__.py"]
+disable = "all"
+enable = [
+  "empty-docstring",
+  "missing-class-docstring",
+  "missing-function-docstring",
+  "missing-module-docstring"
+]
+
+[tool.isort]
+profile = "black"
+known_first_party = ["cc_hardware"]  # see package configuration below
+
+[tool.flake8]
+ignore = ['E203']
+per-file-ignores = [
+    '__init__.py:F401',
+]
+max-line-length = 88
+count = true
+
+[tools.pyright]
+reportMissingTypeArgument = true  # Report generic classes used without type arguments
+strictListInference = true  # Use union types when inferring types of lists elements, instead of Any

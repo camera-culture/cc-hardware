@@ -1,0 +1,19 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "tools"
+version = "0.0"
+authors = ["Camera Culture <a2cc@media.mit.edu>"]
+description = "CC Hardware Tools"
+readme = "README.md"
+packages = [
+  { include = "cc_hardware" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+
+[tool.poetry.scripts]
+cc = "cc_hardware.tools.cli:main"
