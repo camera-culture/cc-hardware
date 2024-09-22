@@ -34,11 +34,20 @@ class ArucoLocalizationAlgorithm(Algorithm):
 
         self._is_okay = True
 
-    def run(self, *, visualize: bool = False, save: bool = False):
+    def run(
+        self,
+        *,
+        visualize: bool = False,
+        save: bool = False,
+        return_images: bool = False,
+    ):
         """Processes a single image and returns the localization result."""
         results = []
         for _ in range(self._num_samples):
             results.append(self._process_image(visualize=visualize, save=save))
+
+        # Get the images
+        images = [r.pop("image") for r in results if "image" in r]
 
         # Average the results
         result = {}
@@ -47,7 +56,10 @@ class ArucoLocalizationAlgorithm(Algorithm):
             if all(key in r for r in results):
                 result[key] = np.median([r[key] for r in results], axis=0)
 
-        return {key: result.get(key) for key in self._marker_ids}
+        results = {key: result.get(key) for key in self._marker_ids}
+        if return_images:
+            return results, images
+        return results
 
     def _process_image(self, *, visualize: bool = False, save: bool = False) -> dict:
         """Process a single image to compute poses."""
@@ -60,12 +72,13 @@ class ArucoLocalizationAlgorithm(Algorithm):
 
         # Visualize the results
         if visualize or save:
+            vis_image = image.copy()
             if len(image.shape) == 2:
-                image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
-            cv2.aruco.drawDetectedMarkers(image, corners, ids)
+                vis_image = cv2.cvtColor(vis_image, cv2.COLOR_GRAY2BGR)
+            cv2.aruco.drawDetectedMarkers(vis_image, corners, ids)
             if visualize:
                 get_logger().debug("Displaying image...")
-                cv2.imshow("Aruco Localization", image)
+                cv2.imshow("Aruco Localization", vis_image)
                 waitKey = cv2.waitKey(1)
                 if waitKey & 0xFF == ord("q"):
                     get_logger().info("Quitting...")
@@ -73,9 +86,9 @@ class ArucoLocalizationAlgorithm(Algorithm):
                     cv2.destroyAllWindows()
                 elif waitKey & 0xFF == ord("s"):
                     get_logger().info("Saving image...")
-                    cv2.imwrite("aruco_localization.png", image)
+                    cv2.imwrite("aruco_localization.png", vis_image)
             elif save:
-                cv2.imwrite("aruco_localization.png", image)
+                cv2.imwrite("aruco_localization.png", vis_image)
 
         # Estimate the pose of the markers
         rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
@@ -95,15 +108,16 @@ class ArucoLocalizationAlgorithm(Algorithm):
         origin_pose = self._get_pose(self._origin_id, ids_list, tvecs, rvecs)
 
         # Compute global poses for all specified markers
-        poses = {}
+        results = {}
         for key, id in self._marker_ids.items():
             if id in ids_list:
                 global_pose = self._get_global_pose(
                     origin_pose, id, ids_list, tvecs, rvecs
                 )
-                poses[key] = global_pose
+                results[key] = global_pose
 
-        return poses
+        results["image"] = image
+        return results
 
     def _get_pose(self, id: int, ids: list, tvecs: np.ndarray, rvecs: np.ndarray):
         idx = ids.index(id)

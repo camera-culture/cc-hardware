@@ -11,7 +11,9 @@ from cc_hardware.utils.logger import get_logger
 
 
 class Arduino(serial.Serial):
-    _lock = threading.Lock()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._lock = threading.Lock()
 
     @classmethod
     def create(
@@ -58,3 +60,28 @@ class Arduino(serial.Serial):
     def read(self, size: int = 1) -> bytes:
         with self._lock:  # Ensure that only one thread can read at a time
             return super().read(size)
+
+    def readline(self):
+        t0 = time.time()
+
+        buf = bytearray()
+        i = buf.find(b"\n")
+        if i >= 0:
+            r = buf[: i + 1]
+            buf = buf[i + 1 :]
+            return r
+        while True:
+            if self.timeout is not None and time.time() - t0 >= self.timeout:
+                if buf:
+                    return buf
+                return b""
+
+            i = max(1, min(1024, self.in_waiting))
+            data = super().read(i)
+            i = data.find(b"\n")
+            if i >= 0:
+                r = buf + data[: i + 1]
+                buf[0:] = data[i + 1 :]
+                return r
+            else:
+                buf.extend(data)

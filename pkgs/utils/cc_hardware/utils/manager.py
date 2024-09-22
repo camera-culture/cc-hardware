@@ -23,6 +23,12 @@ class Manager:
     """
 
     def __init__(self, **components: Type[Component] | Component):
+        self._components = components
+
+        self._closed = False
+
+    def add(self, **components: Component):
+        """Adds additional components to the manager."""
         # Check each component has a close method
         for name, component in components.items():
             if not hasattr(component, "close"):
@@ -32,33 +38,58 @@ class Manager:
                 get_logger().warning(f"Component {name} does not have an is_okay prop.")
                 component.is_okay = True
 
-        self._components = components
-
-    def add(self, **components: Component):
-        """Adds additional components to the manager."""
         self._components.update(components)
 
     def run(
         self,
         *,
         setup: Callable[..., None] | None = None,
-        loop: Callable[..., None] | None = None,
+        loop: Callable[..., bool] | None = None,
+        cleanup: Callable[..., None] | None = None,
     ) -> None:
         """Runs a setup and loop function until all components are okay.
 
         Args:
             setup (Callable[..., None] | None, optional): Setup function to run before
                 the loop. Accepts keyword arguments, returns None. Defaults to None.
-            loop (Callable[..., None] | None, optional): Loop function to run until all
-                components are okay. Accepts keyword arguments, returns None.
-                Defaults to None.
+            loop (Callable[..., bool] | None, optional): Loop function to run until all
+                components are okay. Accepts keyword arguments, returns bool. When
+                False, the loop will stop and cleanup will begin. Defaults to None.
+            cleanup (Callable[..., None] | None, optional): Cleanup function to run
+                after the loop. Accepts keyword arguments, returns None. Defaults to
+                None.
         """
         setup = setup or (lambda **_: None)
         loop = loop or (lambda **_: None)
+        cleanup = cleanup or (lambda **_: None)
 
-        setup(manager=self, **self._components)
+        try:
+            setup(manager=self, **self._components)
+        except Exception:
+            get_logger().exception("Failed to setup components.")
+            self.close()
+            return
+
+        i = 0
         while self.is_okay:
-            loop(manager=self, **self._components)
+            try:
+                if not loop(i, manager=self, **self._components):
+                    break
+            except Exception:
+                get_logger().exception(f"Failed to run loop {i}.")
+                self.close()
+                break
+
+            i += 1
+
+        try:
+            cleanup(manager=self, **self._components)
+        except Exception:
+            get_logger().exception("Failed to cleanup components.")
+            self.close()
+            return
+
+        self.close()
 
     def __enter__(self):
         """Allows this class to be used as a context manager."""
@@ -71,17 +102,26 @@ class Manager:
                 get_logger().exception(f"Failed to create component {name}.")
                 self.close()
                 raise
+
+        # Check each component has a close method
+        for name, component in self._components.items():
+            if not hasattr(component, "close"):
+                get_logger().warning(f"Component {name} does not have a close method.")
+                component.close = lambda: None
+            if not hasattr(component, "is_okay"):
+                get_logger().warning(f"Component {name} does not have an is_okay prop.")
+                component.is_okay = True
+
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Ensures each component is properly closed when used as a context manager."""
         self.close()
 
-    def __getattr__(self, name):
-        """Allows components to be accessed as attributes."""
-        if name in self._components:
-            return self._components[name]
-        return super().__getattr__(name)
+    @property
+    def components(self) -> dict[str, Component]:
+        """Returns a dictionary of components."""
+        return self._components
 
     @property
     def is_okay(self) -> bool:
@@ -90,6 +130,9 @@ class Manager:
 
     def close(self):
         """Closes all components."""
+        if self._closed:
+            return
+
         for name, component in self._components.items():
             if isinstance(component, type):
                 continue
@@ -101,3 +144,5 @@ class Manager:
                 get_logger().exception(
                     f"Failed to close {name} ({component.__class__.__name__})."
                 )
+
+        self._closed = True

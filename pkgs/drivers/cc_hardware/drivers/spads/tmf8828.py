@@ -1,10 +1,9 @@
 import re
-import threading
 
 import numpy as np
 
 from cc_hardware.drivers.arduino import Arduino
-from cc_hardware.drivers.sensor import SensorDataThreaded
+from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
@@ -21,7 +20,7 @@ TMF882X_CHANNEL_MASK = np.array([0] + [1] * 9, dtype=bool)  # Use channels 1 thr
 # ================
 
 
-class TMF8828Histogram(SensorDataThreaded):
+class TMF8828Histogram(SensorData):
     def __init__(self):
         super().__init__()
         self._temp_data = np.zeros(
@@ -32,7 +31,6 @@ class TMF8828Histogram(SensorDataThreaded):
     def reset(self) -> None:
         self._temp_data.fill(0)
         self._data.fill(0)
-        super().reset()
 
     def process(self, row: list[str]) -> None:
         idx = int(row[TMF882X_IDX_FIELD])
@@ -59,19 +57,17 @@ class TMF8828Histogram(SensorDataThreaded):
             if idx == 9:
                 self._data = np.copy(self._temp_data)
                 self._temp_data.fill(0)
-                self._ready_event.set()
 
     def get_data(self) -> np.ndarray:
-        return super().get_data()[TMF882X_CHANNEL_MASK]
+        return self._data[TMF882X_CHANNEL_MASK]
 
 
-class TMF8828Object(SensorDataThreaded):
+class TMF8828Object(SensorData):
     def __init__(self):
         super().__init__()
         self._data = np.zeros(TMF882X_OBJ_BINS, dtype=np.int32)
 
     def reset(self) -> None:
-        super().reset()
         self._data.fill(0)
 
     def process(self, row: list[str]) -> None:
@@ -80,7 +76,9 @@ class TMF8828Object(SensorDataThreaded):
         except ValueError:
             get_logger().error("Invalid data received.")
             return
-        self._ready_event.set()
+
+    def get_data(self) -> np.ndarray:
+        return self._data
 
 
 # ================
@@ -111,14 +109,10 @@ class TMF8828Sensor(SPADSensor):
         self._histogram = TMF8828Histogram()
         self._object = TMF8828Object()
 
-        self._stop_event = threading.Event()
-        self._thread = threading.Thread(target=self._background_read)
-        self._thread.start()
-
         self._initialized = True
 
     def initialize(self):
-        get_logger().debug("Initializing sensor...")
+        get_logger().info("Initializing sensor...")
 
         self.write("h")
         self.wait_for_start_talk()
@@ -127,7 +121,7 @@ class TMF8828Sensor(SPADSensor):
         get_logger().info("Sensor initialized")
 
     def setup_sensor(self) -> None:
-        get_logger().debug("Setting up sensor...")
+        get_logger().info("Setting up sensor...")
 
         self.write("d")
         self.wait_for_stop_talk()
@@ -176,36 +170,9 @@ class TMF8828Sensor(SPADSensor):
             return
 
         try:
-            self._stop_event.set()
-        except Exception as e:
-            get_logger().error(f"Error closing sensor: {e}")
-
-        try:
-            self._thread.join()
-        except Exception as e:
-            get_logger().error(f"Error joining thread: {e}")
-
-        try:
             self._arduino.close()
         except Exception as e:
             get_logger().error(f"Error closing Arduino: {e}")
-
-    def _background_read(self):
-        while self.is_okay:
-            try:
-                data = self.read().decode("utf-8").replace("\r", "").replace("\n", "")
-            except UnicodeDecodeError:
-                get_logger().error("Error decoding data.")
-                continue
-            row = data.split(",")
-
-            if len(row) > 0 and row[0] != "":
-                if row[0] == "#Obj":
-                    self._object.process(row)
-                elif row[0] == "#Raw":
-                    self._histogram.process(row)
-                else:
-                    get_logger().info(data)
 
     def accumulate(
         self,
@@ -226,6 +193,19 @@ class TMF8828Sensor(SPADSensor):
         histograms, objects = [], []
         for _ in range(num_samples):
             get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
+
+            data = self.read()
+            try:
+                data = data.decode("utf-8").replace("\r", "").replace("\n", "")
+            except UnicodeDecodeError:
+                continue
+            row = data.split(",")
+
+            if len(row) > 0 and row[0] != "":
+                if row[0] == "#Obj":
+                    self._object.process(row)
+                elif row[0] == "#Raw":
+                    self._histogram.process(row)
 
             if return_histograms:
                 histograms.append(self._histogram.get_data())
@@ -255,7 +235,7 @@ class TMF8828Sensor(SPADSensor):
 
     @property
     def is_okay(self) -> bool:
-        return not self._stop_event.is_set()
+        return True
 
     @property
     def bin_width(self) -> float:
@@ -265,6 +245,3 @@ class TMF8828Sensor(SPADSensor):
     @property
     def resolution(self) -> tuple[int, int]:
         return 3, 3
-
-
-# ================

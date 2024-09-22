@@ -284,16 +284,20 @@ plugged into 'Y'."""
 
 
 class GantryFactory:
+    GANTRY_MAP: Dict[str, Type[Gantry]] = {
+        "DualDrive2AxisGantry": DualDrive2AxisGantry,
+        "SingleDrive1AxisGantry": SingleDrive1AxisGantry,
+        "DummyGantry": DummyGantry,
+    }
+
     @staticmethod
     def create(name: str, *args, **kwargs) -> Gantry:
-        if name == "DualDrive2AxisGantry":
-            return DualDrive2AxisGantry(*args, **kwargs)
-        elif name == "SingleDrive1AxisGantry":
-            return SingleDrive1AxisGantry(*args, **kwargs)
-        elif name == "DummyGantry":
-            return DummyGantry(*args, **kwargs)
-        else:
-            raise ValueError(f"Invalid gantry name: {name}")
+        if name not in GantryFactory.GANTRY_MAP:
+            raise ValueError(
+                f"Invalid gantry name: {name}. "
+                f"Must be one of {list(GantryFactory.GANTRY_MAP.keys())}."
+            )
+        return GantryFactory.GANTRY_MAP[name](*args, **kwargs)
 
 
 __all__ = [

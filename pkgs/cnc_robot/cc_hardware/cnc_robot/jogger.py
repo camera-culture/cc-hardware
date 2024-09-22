@@ -63,7 +63,7 @@ class Jogger:
         return True
 
     def home(self):
-        self._gantry.set_current_position(0, 0)
+        self._gantry.set_current_position(0, 0, 0, 0, 0, 0)
         self._target_x = 0
         self._target_y = 0
         self.set_position(0, 0)

@@ -15,3 +15,5 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12"
 tqdm = "^4.66.5"
+scipy = "^1.14.1"
+imageio = "^2.35.1"
