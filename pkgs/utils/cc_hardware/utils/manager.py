@@ -126,7 +126,11 @@ class Manager:
     @property
     def is_okay(self) -> bool:
         """Checks if all components are okay."""
-        return all(component.is_okay for component in self._components.values())
+        for name, component in self._components.items():
+            if not component.is_okay:
+                get_logger().error(f"Component {name} is not okay.")
+                return False
+        return True
 
     def close(self):
         """Closes all components."""

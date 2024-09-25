@@ -15,6 +15,7 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12"
 typer = "^0.12.5"
+torch = "^2.4.1"
 utils = {path = "../utils", develop = true}
 drivers = {path = "../drivers", develop = true}
 

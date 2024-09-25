@@ -8,15 +8,13 @@ version = "0.0"
 authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CNC Robot"
 readme = "README.md"
-packages = [
-  { include = "cc_hardware" }
-]
+packages = [{ include = "cc_hardware" }]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
-telemetrix = "1.40"
+telemetrix = { git = "https://github.com/AaronYoung5/telemetrix.git" }
 numpy = ">=1.26.4"
-tools = {path = "../tools", develop = true}
+tools = { path = "../tools", develop = true }
 
 [tool.poetry.scripts]
 jogger = "cc_hardware.cnc_robot.jogger:main"

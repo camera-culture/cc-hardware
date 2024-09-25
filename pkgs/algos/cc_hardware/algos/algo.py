@@ -15,3 +15,6 @@ class Algorithm(ABC):
     @abstractmethod
     def is_okay(self) -> bool:
         pass
+
+    def close(self):
+        pass

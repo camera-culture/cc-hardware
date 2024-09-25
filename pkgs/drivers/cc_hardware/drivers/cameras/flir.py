@@ -23,6 +23,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         self.cam = self.cam_list[self.camera_index]
 
         self._start_background_capture()
+        self.has_started.wait()
         self._initialized = True
 
     def _start_background_capture(self):
@@ -101,6 +102,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         is_initialized = self.cam.IsInitialized()
         is_streaming = self.cam.IsStreaming()
         has_started = self.has_started.is_set()
+
         return is_initialized and (not has_started or is_streaming)
 
     @override

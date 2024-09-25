@@ -20,9 +20,22 @@ class PklWriter:
         with open(self._path, "ab") as file:
             pickle.dump(data, file)
 
-    def load(self) -> dict:
-        with open(self._path, "rb") as file:
+    @staticmethod
+    def load(path: Path | str) -> dict:
+        with open(path, "rb") as file:
             return pickle.load(file)
+
+    @staticmethod
+    def load_all(path: Path | str, *, key: str | None = None) -> list[dict]:
+        data = []
+        with open(path, "rb") as file:
+            try:
+                while True:
+                    entry = pickle.load(file)
+                    data.append(entry if key is None else entry[key])
+            except EOFError:
+                pass
+        return data
 
 
 class VideoWriter:
@@ -30,18 +43,14 @@ class VideoWriter:
         self,
         path: Path | str,
         fps: float,
-        frame_size: tuple[int, int],
         flush_interval: int = 10,
     ):
         self._path = Path(path)
         self._fps = fps
-        self._frame_size = frame_size
         self._frames = []
         self._flush_interval = flush_interval
         self._frame_count = 0
-
-        if self._path.exists():
-            self._path.unlink()
+        self._writer = imageio.get_writer(self._path, fps=self._fps)
 
     def append(self, frame: np.ndarray):
         self._frames.append(frame)
@@ -50,15 +59,14 @@ class VideoWriter:
             self._flush()
 
     def _flush(self):
-        frames = self._frames
-        if self._path.exists():
-            frames = self._frames + list(imageio.get_reader(self._path))
-        imageio.mimwrite(self._path, frames, fps=self._fps)
+        for frame in self._frames:
+            self._writer.append_data(frame)
         self._frames = []
 
     def close(self):
         if self._frames:
             self._flush()
+        self._writer.close()
 
     def __del__(self):
         self.close()

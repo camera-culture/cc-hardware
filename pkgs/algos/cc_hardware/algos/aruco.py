@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import cv2
 import numpy as np
 
@@ -5,6 +7,7 @@ from cc_hardware.algos.algo import Algorithm
 from cc_hardware.drivers.camera import Camera
 from cc_hardware.drivers.sensor import Sensor
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.writers import VideoWriter
 
 
 class ArucoLocalizationAlgorithm(Algorithm):
@@ -14,7 +17,7 @@ class ArucoLocalizationAlgorithm(Algorithm):
         *,
         aruco_dict: int,
         marker_size: float,
-        origin_id: int,
+        origin_id: int = -1,
         num_samples: int = 1,
         **marker_ids,
     ):
@@ -37,14 +40,15 @@ class ArucoLocalizationAlgorithm(Algorithm):
     def run(
         self,
         *,
-        visualize: bool = False,
+        show: bool = False,
         save: bool = False,
+        filename: Path | str | None = None,
         return_images: bool = False,
     ):
         """Processes a single image and returns the localization result."""
         results = []
         for _ in range(self._num_samples):
-            results.append(self._process_image(visualize=visualize, save=save))
+            results.append(self._process_image(show=show, save=save, filename=filename))
 
         # Get the images
         images = [r.pop("image") for r in results if "image" in r]
@@ -61,22 +65,33 @@ class ArucoLocalizationAlgorithm(Algorithm):
             return results, images
         return results
 
-    def _process_image(self, *, visualize: bool = False, save: bool = False) -> dict:
+    def _process_image(
+        self,
+        *,
+        show: bool = False,
+        save: bool = False,
+        filename: Path | str | None = None,
+    ) -> dict:
         """Process a single image to compute poses."""
-        image = np.squeeze(self._sensor.accumulate(1))
+        image = self._sensor.accumulate(1)
+        if image is None:
+            get_logger().error("No image available.")
+            return {}
+        image = np.squeeze(image)
 
         # Detect markers
         corners, ids, _ = self._detector.detectMarkers(image)
         if ids is None:
-            raise RuntimeError("No markers detected.")
+            get_logger().warning("No markers detected.")
+            return {}
 
-        # Visualize the results
-        if visualize or save:
+        # Show/save the results
+        if show or save:
             vis_image = image.copy()
             if len(image.shape) == 2:
                 vis_image = cv2.cvtColor(vis_image, cv2.COLOR_GRAY2BGR)
             cv2.aruco.drawDetectedMarkers(vis_image, corners, ids)
-            if visualize:
+            if show:
                 get_logger().debug("Displaying image...")
                 cv2.imshow("Aruco Localization", vis_image)
                 waitKey = cv2.waitKey(1)
@@ -86,9 +101,18 @@ class ArucoLocalizationAlgorithm(Algorithm):
                     cv2.destroyAllWindows()
                 elif waitKey & 0xFF == ord("s"):
                     get_logger().info("Saving image...")
-                    cv2.imwrite("aruco_localization.png", vis_image)
-            elif save:
-                cv2.imwrite("aruco_localization.png", vis_image)
+                    filename = filename or "aruco_localization.png"
+                    cv2.imwrite(filename, vis_image)
+                if waitKey & 0xFF == ord(" "):
+                    cv2.waitKey(0)
+            if save:
+                filename = filename or "aruco_localization.png"
+                if Path(filename).suffix in [".png", ".jpg"]:
+                    cv2.imwrite(filename, vis_image)
+                else:
+                    if not hasattr(self, "_writer"):
+                        self._writer = VideoWriter(filename, 10, flush_interval=1)
+                    self._writer.append(vis_image)
 
         # Estimate the pose of the markers
         rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(
@@ -141,3 +165,7 @@ class ArucoLocalizationAlgorithm(Algorithm):
     @property
     def is_okay(self) -> bool:
         return self._is_okay and self._sensor.is_okay
+
+    def close(self):
+        if hasattr(self, "_writer"):
+            self._writer.close()

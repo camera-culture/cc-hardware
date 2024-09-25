@@ -69,7 +69,7 @@ const uint8_t logLevels[NR_LOG_LEVELS] = {
 
 // for each configuration specifiy a period in milli-seconds
 const uint16_t configPeriod[2][3] = {
-    {100, 500, 100}, // TMF882X config
+    {10, 500, 100}, // TMF882X config
     {132, 264, 528}  // TMF8828 config
 };
 
