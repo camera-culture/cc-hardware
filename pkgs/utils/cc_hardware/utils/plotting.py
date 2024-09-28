@@ -17,10 +17,15 @@ def set_matplotlib_style(*, use_scienceplots: bool = True):
     sns.set_style("ticks")
 
     if use_scienceplots:
+        from matplotlib import rcParams
+
+        styles = ["science", "nature"]
+        if not rcParams.get('tex.usetex', False):
+            styles += ["no-latex"]
+
         try:
             import scienceplots  # noqa
-
-            plt.style.use(["science", "nature"])
+            plt.style.use(styles)
         except ImportError:
             get_logger().warning(
                 "SciencePlots not found. Using default matplotlib style."

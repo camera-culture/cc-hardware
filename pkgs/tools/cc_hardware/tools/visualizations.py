@@ -28,6 +28,7 @@ def dashboard(spad: type[SPADSensor] | SPADSensor, **kwargs):
 
 @APP.command()
 def tmf8828_dashboard(
+    port: str | None = None,
     num_frames: int = 100,
     show: bool = True,
     save: bool = False,
@@ -39,6 +40,8 @@ def tmf8828_dashboard(
     channel_mask: list[int] | None = None,
 ):
     from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
+
+    TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
 
     dashboard(
         TMF8828Sensor,
