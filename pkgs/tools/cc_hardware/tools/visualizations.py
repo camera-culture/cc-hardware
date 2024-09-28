@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 import imageio
 import numpy as np
-import torch
+# import torch
 
 from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 from cc_hardware.drivers.camera import Camera
@@ -180,7 +180,7 @@ def pkl_aruco_localization(
 def estimated_position(
     sensor: type[SPADSensor] | SPADSensor,
     camera: type[Camera] | Camera,
-    model: torch.nn.Module,
+    model: "torch.nn.Module",
     aruco_dict: str,
     marker_size: float = 8.25,
     num_samples: int = 1,
@@ -296,7 +296,7 @@ def pkl_estimated_position(
     assert hasattr(cv2.aruco, aruco_dict), f"Invalid aruco_dict: {aruco_dict}"
     aruco_dict = getattr(cv2.aruco, aruco_dict)
 
-    class PklModel(torch.nn.Module):
+    class PklModel("torch.nn.Module"):
         def __init__(self, pkl_path: Path):
             super().__init__()
             self._data = PklWriter.load_all(pkl_path)

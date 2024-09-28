@@ -31,6 +31,9 @@ class Manager:
         """Adds additional components to the manager."""
         # Check each component has a close method
         for name, component in components.items():
+            if component is None:
+                continue 
+
             if not hasattr(component, "close"):
                 get_logger().warning(f"Component {name} does not have a close method.")
                 component.close = lambda: None
@@ -95,6 +98,9 @@ class Manager:
         """Allows this class to be used as a context manager."""
         # Create each component if it is a type
         for name, component in self._components.items():
+            if component is None:
+                continue
+
             try:
                 if isinstance(component, type):
                     self._components[name] = component()
@@ -105,6 +111,9 @@ class Manager:
 
         # Check each component has a close method
         for name, component in self._components.items():
+            if component is None:
+                continue
+
             if not hasattr(component, "close"):
                 get_logger().warning(f"Component {name} does not have a close method.")
                 component.close = lambda: None
@@ -127,6 +136,9 @@ class Manager:
     def is_okay(self) -> bool:
         """Checks if all components are okay."""
         for name, component in self._components.items():
+            if component is None:
+                continue
+
             if not component.is_okay:
                 get_logger().error(f"Component {name} is not okay.")
                 return False
@@ -139,6 +151,8 @@ class Manager:
 
         for name, component in self._components.items():
             if isinstance(component, type):
+                continue
+            elif component is None:
                 continue
 
             get_logger().info(f"Closing {name}...")

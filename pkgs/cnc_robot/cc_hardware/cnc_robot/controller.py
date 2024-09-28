@@ -4,6 +4,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, Tuple
 
+import numpy as np
+
 from cc_hardware.cnc_robot.gantry import Gantry
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.transformations import Action, GlobalFrame, LocalFrame
@@ -29,7 +31,8 @@ class MotionController(ABC):
         logfile: Path | None,
         num_steps: int,
         global_frame: GlobalFrame = GlobalFrame.create(),
-        init_action: LocalFrame = LocalFrame.create(),
+        init_action: Action = Action.create(),
+        flip: bool = False,
     ):
         self._gantry = gantry
         self._num_axes = self._gantry.num_axes
@@ -39,6 +42,8 @@ class MotionController(ABC):
         self._global_frame = global_frame
         self._init_action = init_action
         self._current_frame: GlobalFrame = global_frame.copy()
+
+        self._flip_action = flip
 
         # We want to start with a fresh csv, so remove the logfile if it exists.
         if self._logfile is not None:
@@ -104,10 +109,16 @@ class MotionController(ABC):
         pass
 
     def move(self, action: Action):
+        # Flip the action if we're moving in the opposite direction
+        action = action if not self._flip_action else -action
+
+        new_local_frame = self._current_frame @ action
+        get_logger().info(f"Moving to {new_local_frame}...")
         self._gantry.set_position(*action.get())
+        get_logger().debug(f"Moved to {new_local_frame}.")
 
         # Update the current frame
-        self._current_frame = self._current_frame.apply(action, T=self._global_frame)
+        self._current_frame @= action
 
     def save(self, frame: GlobalFrame):
         if self._logfile is None:
@@ -121,12 +132,24 @@ class MotionController(ABC):
             formatted_data = [f"{x:.6f}" for x in [t, *frame.mat.flatten()]]
             writer.writerow(formatted_data)
 
+    @property
+    def current_frame(self) -> LocalFrame:
+        return self._current_frame
+
+    @property
+    def pos(self) -> np.ndarray:
+        return self.current_frame.pos
+
     def shutdown(self):
         """Turns off the controller. Basically just tears down the gantry."""
+        self._flip_action = False  # Reset the flip action during homing
+
         # Home the gantry
         home_pos = (self._current_frame @ self._global_frame.inverse()).inverse()
         get_logger().info(f"Homing gantry to {home_pos}...")
         self.move(Action.from_frame(home_pos))
+
+        # self._gantry.close()
 
     def close(self):
         """Closes the controller. This is called after the capture loop has finished."""
@@ -282,14 +305,17 @@ class SnakeController(MotionController):
         gantry,
         logfile: Path | None = None,
         global_frame: GlobalFrame = GlobalFrame.create(),
-        init_action: LocalFrame = LocalFrame.create(),
+        init_action: Action = Action.create(),
         x_range: Tuple[float, float],
         y_range: Tuple[float, float],
         x_steps_per_direction: int,
         y_steps_per_direction: int,
+        flip: bool = False,
     ):
         num_steps = x_steps_per_direction * y_steps_per_direction
-        super().__init__(gantry, logfile, num_steps, global_frame, init_action)
+        super().__init__(
+            gantry, logfile, num_steps, global_frame, init_action, flip=flip
+        )
 
         assert (
             x_steps_per_direction * y_steps_per_direction == num_steps

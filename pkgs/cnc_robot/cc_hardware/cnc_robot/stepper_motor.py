@@ -5,6 +5,7 @@ from typing import Any, Callable, List, TypeAlias
 from telemetrix import telemetrix
 
 from cc_hardware.cnc_robot.utils import call_async
+from cc_hardware.utils.logger import get_logger
 
 
 class StepperMotor:

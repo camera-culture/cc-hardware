@@ -20,8 +20,11 @@ class Jogger:
         curses.curs_set(0)  # disable blinking cursor
         stdscr.nodelay(True)  # make getch non-blocking
 
-        while self._step(stdscr):
-            pass
+        try:
+            while self._step(stdscr):
+                pass
+        finally:
+            self._gantry.close()
 
     def _step(self, stdscr: curses.window) -> bool:
         key = stdscr.getch()

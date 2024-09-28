@@ -12,6 +12,7 @@ from cc_hardware.cnc_robot.stepper_motor import (
     StepperMotorPartial,
 )
 from cc_hardware.cnc_robot.utils import call_async_gather
+from cc_hardware.utils.logger import get_logger
 
 
 class Axis(Enum):
@@ -191,6 +192,7 @@ class Gantry:
         return list([axis.name for axis in self._axes])
 
     def close(self):
+        get_logger().info("Closing gantry...")
         if "_axes" in self.__dict__:
             # Must come before board shutdown
             del self._axes
@@ -211,6 +213,7 @@ class DummyGantry:
         init_pos: List[float] = (0, 0, 0, 0, 0, 0),
         *,
         override_getattr: bool = True,
+        **kwargs,
     ):
         self.set_current_position(*init_pos)
         self.override_getattr = override_getattr

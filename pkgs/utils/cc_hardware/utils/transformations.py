@@ -121,6 +121,10 @@ class Frame:
     def pos(self) -> Position:
         return self._mat[:3, 3]
 
+    @pos.setter
+    def pos(self, new_pos: Position):
+        self._mat[:3, 3] = new_pos
+
     @property
     def quat(self) -> Quaternion:
         return R.from_matrix(self._mat[:3, :3]).as_quat()
@@ -148,6 +152,24 @@ class Frame:
 
     def __matmul__(self, action: "Action") -> Self:
         return self.copy(mat=self._mat @ action.mat)
+
+    def __mul__(self, scalar: float | int) -> Self:
+        assert isinstance(scalar, (float, int)), "Can only multiply by a scalar."
+        mat = self._mat.copy()
+        mat[:3, 3] *= scalar  # Scale the position
+        return self.copy(mat=mat)
+
+    def __rmul__(self, scalar: float | int) -> Self:
+        return self * scalar
+
+    def __truediv__(self, scalar: float | int) -> Self:
+        return self * (1 / scalar)
+
+    def __rtruediv__(self, scalar: float | int) -> Self:
+        return self / scalar
+
+    def __neg__(self) -> Self:
+        return self * -1
 
 
 class Action(Frame):
