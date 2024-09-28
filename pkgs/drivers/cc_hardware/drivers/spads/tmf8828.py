@@ -17,23 +17,29 @@ TMF882X_BINS = 128
 TMF882X_OBJ_BINS = 75
 TMF882X_SKIP_FIELDS = 3  # Skip the first 3 fields
 TMF882X_IDX_FIELD = TMF882X_SKIP_FIELDS - 1
-TMF882X_CHANNEL_MASK = np.array([0] + [1] * 9, dtype=bool)  # Use channels 1 through 10
 
 # ================
 
 
 class TMF8828Histogram(SensorData):
-    def __init__(self):
+    def __init__(self, num_channels: int, num_subcaptures: int, active_channels: int):
         super().__init__()
+        self.num_channels = num_channels
+        self.num_subcaptures = num_subcaptures
+        self.active_channels = active_channels
         self._temp_data = np.zeros(
-            (len(TMF882X_CHANNEL_MASK), TMF882X_BINS), dtype=np.int32
+            (num_subcaptures, num_channels, TMF882X_BINS), dtype=np.int32
         )
-        self._data = np.zeros((len(TMF882X_CHANNEL_MASK), TMF882X_BINS), dtype=np.int32)
+        self._data = np.zeros(
+            (self.active_channels * num_subcaptures, TMF882X_BINS), dtype=np.int32
+        )
+        self.current_subcapture = 0
 
     def reset(self) -> None:
         self._temp_data.fill(0)
         self._data.fill(0)
         self._has_data = False
+        self.current_subcapture = 0
 
     def process(self, row: list[str]) -> None:
         idx = int(row[TMF882X_IDX_FIELD])
@@ -48,22 +54,35 @@ class TMF8828Histogram(SensorData):
             return
 
         if 0 <= idx <= 9:
-            self._temp_data[idx] += data
+            channel = idx
+            self._temp_data[self.current_subcapture, channel] += data
         elif 10 <= idx <= 19:
-            idx -= 10
-            self._temp_data[idx] += data * 256
+            channel = idx - 10
+            self._temp_data[self.current_subcapture, channel] += data * 256
         elif 20 <= idx <= 29:
-            idx -= 20
-            self._temp_data[idx] += data * 256 * 256
+            channel = idx - 20
+            self._temp_data[self.current_subcapture, channel] += data * 256 * 256
 
-            # If this is the last channel, copy the data
-            if idx == 9:
-                self._data = np.copy(self._temp_data)
-                self._temp_data.fill(0)
-                self._has_data = True
+            # If this is the last index, check if we need more subcaptures
+            if channel == 9:
+                self.current_subcapture += 1
+                if self.current_subcapture == self.num_subcaptures:
+                    # All subcaptures received, combine data
+                    self._data = self._assemble_data()
+                    self._temp_data.fill(0)
+                    self._has_data = True
+
+    def _assemble_data(self) -> np.ndarray:
+        # Exclude calibration channel (channel 0) and limit to active channels
+        data_without_calibration = self._temp_data[
+            :, 1 : self.active_channels + 1, :
+        ]  # Exclude channel 0
+        # Flatten the subcaptures into one array
+        combined_data = data_without_calibration.reshape(-1, TMF882X_BINS)
+        return np.copy(combined_data)
 
     def get_data(self) -> np.ndarray:
-        data = np.copy(self._data[TMF882X_CHANNEL_MASK])
+        data = np.copy(self._data)
         self.reset()
         return data
 
@@ -109,8 +128,16 @@ class TMF8828Sensor(SPADSensor):
         *,
         port: str | None = None,
         setup: bool = True,
+        mode: str = "3x3",
     ):
         self._initialized = False
+        self.mode = mode
+        self._num_subcaptures = self._get_num_subcaptures()
+        self._num_pixels = self._get_num_pixels()
+        self.num_channels = self._get_num_channels()  # Including calibration channel
+        self.active_channels = (
+            self._get_active_channels_per_subcapture()
+        )  # Excluding calibration channel
 
         port = port or self.PORT
         self._arduino = Arduino.create(
@@ -121,10 +148,46 @@ class TMF8828Sensor(SPADSensor):
         if setup:
             self.setup_sensor()
 
-        self._histogram = TMF8828Histogram()
+        self._histogram = TMF8828Histogram(
+            self.num_channels, self._num_subcaptures, self.active_channels
+        )
         self._object = TMF8828Object()
 
         self._initialized = True
+
+    def _get_num_subcaptures(self) -> int:
+        if self.mode == "3x3":
+            return 1
+        elif self.mode == "4x4":
+            return 2
+        elif self.mode == "8x8":
+            return 8
+        else:
+            raise ValueError(f"Unsupported mode: {self.mode}")
+
+    def _get_num_pixels(self) -> int:
+        if self.mode == "3x3":
+            return 9
+        elif self.mode == "4x4":
+            return 16
+        elif self.mode == "8x8":
+            return 64
+        else:
+            raise ValueError(f"Unsupported mode: {self.mode}")
+
+    def _get_num_channels(self) -> int:
+        # Channels 0-9, including calibration channel
+        return 10
+
+    def _get_active_channels_per_subcapture(self) -> int:
+        if self.mode == "3x3":
+            return 9  # Channels 1-9
+        elif self.mode == "4x4":
+            return 8  # Channels 1-8
+        elif self.mode == "8x8":
+            return 8  # Channels 1-8
+        else:
+            raise ValueError(f"Unsupported mode: {self.mode}")
 
     def initialize(self):
         get_logger().info("Initializing sensor...")
@@ -141,13 +204,23 @@ class TMF8828Sensor(SPADSensor):
         self.write("d")
         self.wait_for_stop_talk()
 
-        self.write("e")
-        self.wait_for_start_talk()
-        self.wait_for_stop_talk()
-
-        self.write("o")
-        self.wait_for_start_talk()
-        self.wait_for_stop_talk()
+        if self.mode == "3x3" or self.mode == "4x4":
+            if self.mode == "4x4":
+                self.write("c")
+                self.wait_for_start_talk()
+                self.wait_for_stop_talk()
+            self.write("o")
+            self.wait_for_start_talk()
+            self.wait_for_stop_talk()
+            self.write("E")
+            self.wait_for_start_talk()
+            self.wait_for_stop_talk()
+        elif self.mode == "8x8":
+            self.write("e")
+            self.wait_for_start_talk()
+            self.wait_for_stop_talk()
+        else:
+            raise ValueError(f"Unsupported mode: {self.mode}")
 
         self.write("z")
         self.wait_for_stop_talk()
@@ -247,4 +320,48 @@ class TMF8828Sensor(SPADSensor):
 
     @property
     def resolution(self) -> tuple[int, int]:
-        return 3, 3
+        if self.mode == "3x3":
+            return 3, 3
+        elif self.mode == "4x4":
+            return 4, 4
+        elif self.mode == "8x8":
+            return 8, 8
+        else:
+            raise ValueError(f"Unsupported mode: {self.mode}")
+
+    @property
+    def num_pixels(self) -> int:
+        return self._num_pixels
+
+
+# Subclasses for specific modes
+class TMF8828_3x3(TMF8828Sensor):
+    def __init__(self, *, port: str | None = None, setup: bool = True):
+        super().__init__(port=port, setup=setup, mode="3x3")
+
+
+class TMF8828_4x4(TMF8828Sensor):
+    def __init__(self, *, port: str | None = None, setup: bool = True):
+        super().__init__(port=port, setup=setup, mode="4x4")
+
+
+class TMF8828_8x8(TMF8828Sensor):
+    def __init__(self, *, port: str | None = None, setup: bool = True):
+        super().__init__(port=port, setup=setup, mode="8x8")
+
+
+# Factory class
+class TMF8828Factory:
+    @staticmethod
+    def create(
+        resolution: tuple[int, int],
+        **kwargs,
+    ) -> TMF8828Sensor:
+        if resolution == (3, 3):
+            return TMF8828_3x3(**kwargs)
+        elif resolution == (4, 4):
+            return TMF8828_4x4(**kwargs)
+        elif resolution == (8, 8):
+            return TMF8828_8x8(**kwargs)
+        else:
+            raise ValueError(f"Unsupported resolution: {resolution}")

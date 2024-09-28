@@ -20,11 +20,12 @@ def set_matplotlib_style(*, use_scienceplots: bool = True):
         from matplotlib import rcParams
 
         styles = ["science", "nature"]
-        if not rcParams.get('tex.usetex', False):
+        if not rcParams.get("tex.usetex", False):
             styles += ["no-latex"]
 
         try:
             import scienceplots  # noqa
+
             plt.style.use(styles)
         except ImportError:
             get_logger().warning(
@@ -63,7 +64,7 @@ def histogram_gui(
     rows = int(np.ceil(np.sqrt(num_channels)))
     cols = int(np.ceil(num_channels / rows))
 
-    fig = plt.figure(figsize=(3 * cols, 3 * rows))
+    fig = plt.figure(figsize=(10, 10 * rows / cols))
     gs = plt.GridSpec(rows, cols, figure=fig)
 
     # Setup

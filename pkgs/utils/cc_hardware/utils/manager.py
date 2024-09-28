@@ -1,3 +1,4 @@
+from functools import partial
 from typing import Callable, Protocol, Type
 
 from cc_hardware.utils.logger import get_logger
@@ -32,7 +33,7 @@ class Manager:
         # Check each component has a close method
         for name, component in components.items():
             if component is None:
-                continue 
+                continue
 
             if not hasattr(component, "close"):
                 get_logger().warning(f"Component {name} does not have a close method.")
@@ -102,7 +103,7 @@ class Manager:
                 continue
 
             try:
-                if isinstance(component, type):
+                if isinstance(component, (type, partial)):
                     self._components[name] = component()
             except Exception:
                 get_logger().exception(f"Failed to create component {name}.")
@@ -150,7 +151,7 @@ class Manager:
             return
 
         for name, component in self._components.items():
-            if isinstance(component, type):
+            if isinstance(component, (type, partial)):
                 continue
             elif component is None:
                 continue

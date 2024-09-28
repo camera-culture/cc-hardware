@@ -1,9 +1,15 @@
+from functools import partial
 from pathlib import Path
 
 import cv2
 import imageio
 import numpy as np
-# import torch
+
+try:
+    import torch
+except ImportError:
+    torch = None
+    pass
 
 from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 from cc_hardware.drivers.camera import Camera
@@ -38,13 +44,15 @@ def tmf8828_dashboard(
     min_bin: int = 0,
     max_bin: int = 128,
     channel_mask: list[int] | None = None,
+    resolution: tuple[int, int] = (3, 3),
 ):
-    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
+    from cc_hardware.drivers.spads.tmf8828 import TMF8828Factory, TMF8828Sensor
 
     TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
+    sensor = partial(TMF8828Factory.create, resolution=resolution)
 
     dashboard(
-        TMF8828Sensor,
+        sensor,
         num_frames=num_frames,
         show=show,
         save=save,
@@ -69,12 +77,12 @@ def pkl_dashboard(
     min_bin: int = 0,
     max_bin: int = 128,
     channel_mask: list[int] | None = None,
+    resolution: tuple[int, int] = (3, 3),
 ):
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
 
     # TODO: Load directly from the pkl
     bin_width = 10 / 128 / C
-    resolution = (3, 3)
 
     dashboard(
         PklSPADSensor(pkl_path, bin_width=bin_width, resolution=resolution),
@@ -296,7 +304,9 @@ def pkl_estimated_position(
     assert hasattr(cv2.aruco, aruco_dict), f"Invalid aruco_dict: {aruco_dict}"
     aruco_dict = getattr(cv2.aruco, aruco_dict)
 
-    class PklModel("torch.nn.Module"):
+    assert torch is not None, "PyTorch is required for this command."
+
+    class PklModel(torch.nn.Module):
         def __init__(self, pkl_path: Path):
             super().__init__()
             self._data = PklWriter.load_all(pkl_path)
