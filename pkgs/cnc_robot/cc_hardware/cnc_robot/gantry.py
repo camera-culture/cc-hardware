@@ -219,7 +219,8 @@ class DummyGantry:
         self.pos = np.array(pos, dtype=float)
 
     def set_position(self, *step: float):
-        self.pos += np.array(step)
+        step = np.array(list(step) + [0] * (6 - len(step)))
+        self.pos += step
 
     def get_position(self) -> np.ndarray:
         return self.pos
@@ -301,8 +302,5 @@ class GantryFactory:
 
 
 __all__ = [
-    "DualDrive2AxisGantry",
-    "SingleDrive1AxisGantry",
-    "DummyGantry",
     "GantryFactory",
 ]

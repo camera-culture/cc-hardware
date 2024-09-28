@@ -28,8 +28,8 @@ class MotionController(ABC):
         gantry: Gantry,
         logfile: Path | None,
         num_steps: int,
-        global_frame: GlobalFrame,
-        init_action: LocalFrame,
+        global_frame: GlobalFrame = GlobalFrame.create(),
+        init_action: LocalFrame = LocalFrame.create(),
     ):
         self._gantry = gantry
         self._num_axes = self._gantry.num_axes
