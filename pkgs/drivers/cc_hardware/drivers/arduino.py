@@ -15,6 +15,8 @@ class Arduino(serial.Serial):
         super().__init__(*args, **kwargs)
         self._lock = threading.Lock()
 
+        self.flush()
+
     @classmethod
     def create(
         cls, port: str | None = None, *, wait: int = 2, **kwargs
@@ -61,7 +63,7 @@ class Arduino(serial.Serial):
         with self._lock:  # Ensure that only one thread can read at a time
             return super().read(size)
 
-    def readline(self):
+    def readline_old(self):
         t0 = time.time()
 
         buf = bytearray()
@@ -72,6 +74,7 @@ class Arduino(serial.Serial):
             return r
         while True:
             if self.timeout is not None and time.time() - t0 >= self.timeout:
+                get_logger().error("Timed out while reading line!")
                 if buf:
                     return buf
                 return b""

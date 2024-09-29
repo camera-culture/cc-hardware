@@ -1,6 +1,7 @@
 import re
 from enum import Enum
 from pathlib import Path
+import time
 
 import numpy as np
 import pkg_resources
@@ -180,14 +181,14 @@ class TMF8828Sensor(SPADSensor):
         )
     )
     BAUDRATE: int = 2_000_000
-    TIMEOUT: float = 0.1
+    TIMEOUT: float = 1.0
 
     def __init__(
         self,
         *,
+        spad_id: SPADID | int,
         port: str | None = None,
         setup: bool = True,
-        spad_id: SPADID = SPADID.ID6,
     ):
         self._initialized = False
         self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
@@ -273,15 +274,20 @@ class TMF8828Sensor(SPADSensor):
         self.write("z")
         self.wait_for_stop_talk()
 
-        self.write("m")
-
         get_logger().info("Sensor setup complete")
 
     def read(self) -> bytes:
-        return self._arduino.readline()
+        read_line = self._arduino.readline()
+        if len(read_line) > 0:
+            if read_line[0] != b'#'[0]:
+                get_logger().info(read_line)
+
+        return read_line
 
     def write(self, data: str) -> None:
+        get_logger().debug(f"Writing {data}...")
         self._arduino.write(data)
+        time.sleep(0.05)
 
     def wait_for_start_talk(self) -> bytes:
         """Wait until Arduino starts talking."""
@@ -328,6 +334,7 @@ class TMF8828Sensor(SPADSensor):
 
             while not self._histogram.has_data:
                 data = self.read()
+                get_logger().debug(data)
                 try:
                     data = data.decode("utf-8").replace("\r", "").replace("\n", "")
                 except UnicodeDecodeError:

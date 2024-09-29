@@ -1,6 +1,6 @@
+from typing import Any
 import threading
 from collections import deque
-from typing import Any
 
 
 class BlockingDeque:
@@ -12,6 +12,10 @@ class BlockingDeque:
         with self._condition:
             self._deque.append(item)
             self._condition.notify()
+
+    def __getattr__(self, name: str) -> Any:
+        with self._condition:
+            return getattr(self._deque, name)
 
     def __getitem__(self, index: int) -> Any:
         with self._condition:
