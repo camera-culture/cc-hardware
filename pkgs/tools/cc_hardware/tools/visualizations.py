@@ -44,12 +44,18 @@ def tmf8828_dashboard(
     min_bin: int = 0,
     max_bin: int = 128,
     channel_mask: list[int] | None = None,
-    resolution: tuple[int, int] = (3, 3),
+    spad_id: int = 6,  # 3x3
 ):
-    from cc_hardware.drivers.spads.tmf8828 import TMF8828Factory, TMF8828Sensor
+    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
 
     TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
-    sensor = partial(TMF8828Factory.create, resolution=resolution)
+
+    assert spad_id in (
+        6,
+        7,
+        15,
+    ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
+    sensor = partial(TMF8828Sensor, spad_id=spad_id)
 
     dashboard(
         sensor,

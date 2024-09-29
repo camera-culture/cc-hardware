@@ -1,9 +1,11 @@
 import re
+from enum import Enum
 from pathlib import Path
 
 import numpy as np
 import pkg_resources
 
+# Assume these modules are available in your project
 from cc_hardware.drivers.arduino import Arduino
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spad import SPADSensor
@@ -21,19 +23,35 @@ TMF882X_IDX_FIELD = TMF882X_SKIP_FIELDS - 1
 # ================
 
 
+# Enum for SPAD IDs
+class SPADID(Enum):
+    ID6 = 6
+    ID7 = 7
+    ID15 = 15
+
+
+# ================
+
+
 class TMF8828Histogram(SensorData):
-    def __init__(self, num_channels: int, num_subcaptures: int, active_channels: int):
+    def __init__(
+        self,
+        num_channels: int,
+        active_channels_per_subcapture: list[int],
+        spad_id: SPADID,
+    ):
         super().__init__()
-        self.num_channels = num_channels
-        self.num_subcaptures = num_subcaptures
-        self.active_channels = active_channels
+        self.num_channels = num_channels  # Including calibration channel
+        self.active_channels_per_subcapture = active_channels_per_subcapture
+        self.num_subcaptures = len(active_channels_per_subcapture)
+        self.spad_id = spad_id
         self._temp_data = np.zeros(
-            (num_subcaptures, num_channels, TMF882X_BINS), dtype=np.int32
+            (self.num_subcaptures, self.num_channels, TMF882X_BINS), dtype=np.int32
         )
-        self._data = np.zeros(
-            (self.active_channels * num_subcaptures, TMF882X_BINS), dtype=np.int32
-        )
+        total_active_channels = sum(active_channels_per_subcapture)
+        self._data = np.zeros((total_active_channels, TMF882X_BINS), dtype=np.int32)
         self.current_subcapture = 0
+        self._has_data = False
 
     def reset(self) -> None:
         self._temp_data.fill(0)
@@ -42,7 +60,11 @@ class TMF8828Histogram(SensorData):
         self.current_subcapture = 0
 
     def process(self, row: list[str]) -> None:
-        idx = int(row[TMF882X_IDX_FIELD])
+        try:
+            idx = int(row[TMF882X_IDX_FIELD])
+        except (IndexError, ValueError):
+            get_logger().error("Invalid index received.")
+            return
         try:
             data = np.array(row[TMF882X_SKIP_FIELDS:], dtype=np.int32)
         except ValueError:
@@ -53,32 +75,69 @@ class TMF8828Histogram(SensorData):
             get_logger().error(f"Invalid data length: {len(data)}")
             return
 
-        if 0 <= idx <= 9:
-            channel = idx
-            self._temp_data[self.current_subcapture, channel] += data
-        elif 10 <= idx <= 19:
-            channel = idx - 10
-            self._temp_data[self.current_subcapture, channel] += data * 256
-        elif 20 <= idx <= 29:
-            channel = idx - 20
-            self._temp_data[self.current_subcapture, channel] += data * 256 * 256
+        base_idx = idx // 10
+        channel = idx % 10  # idx ranges from 0 to 29, channels 0-9
 
-            # If this is the last index, check if we need more subcaptures
-            if channel == 9:
-                self.current_subcapture += 1
-                if self.current_subcapture == self.num_subcaptures:
-                    # All subcaptures received, combine data
-                    self._data = self._assemble_data()
-                    self._temp_data.fill(0)
-                    self._has_data = True
+        if self.current_subcapture >= self.num_subcaptures:
+            # Already received all subcaptures
+            return
+
+        active_channels = self.active_channels_per_subcapture[self.current_subcapture]
+
+        # Only process valid channels
+        if 0 <= channel <= active_channels:
+            if base_idx == 0:
+                self._temp_data[self.current_subcapture, channel] += data
+            elif base_idx == 1:
+                self._temp_data[self.current_subcapture, channel] += data * 256
+            elif base_idx == 2:
+                self._temp_data[self.current_subcapture, channel] += data * 256 * 256
+
+                # If this is the last channel and MSB, check for more subcaptures
+                if channel == active_channels:
+                    self.current_subcapture += 1
+                    if self.current_subcapture == self.num_subcaptures:
+                        # All subcaptures received, combine data
+                        self._data = self._assemble_data()
+                        self._temp_data.fill(0)
+                        self._has_data = True
+        else:
+            # Ignore idx values for channels that don't have measurements
+            pass
 
     def _assemble_data(self) -> np.ndarray:
-        # Exclude calibration channel (channel 0) and limit to active channels
-        data_without_calibration = self._temp_data[
-            :, 1 : self.active_channels + 1, :
-        ]  # Exclude channel 0
-        # Flatten the subcaptures into one array
-        combined_data = data_without_calibration.reshape(-1, TMF882X_BINS)
+        combined_data = []
+        for subcapture_index in range(self.num_subcaptures):
+            active_channels = self.active_channels_per_subcapture[subcapture_index]
+            # Exclude calibration channel (channel 0) and limit to active channels
+            data = self._temp_data[subcapture_index, 1 : active_channels + 1, :]
+            combined_data.append(data)
+        combined_data = np.vstack(combined_data)
+
+        # TODO
+        # if self.spad_id == SPADID.ID15:
+        #     # Rearrange the data according to the pixel mapping
+        #     pixel_mapping = [
+        #         (4, 7), (5, 8), (6, 7), (7, 8), (4, 8), (5, 9), (6, 8), (7, 9),
+        #         (0, 7), (1, 8), (2, 7), (3, 8), (0, 8), (1, 9), (2, 8), (3, 9),
+        #         (4, 5), (5, 6), (6, 5), (7, 6), (4, 6), (5, 7), (6, 6), (7, 7),
+        #         (0, 5), (1, 6), (2, 5), (3, 6), (0, 6), (1, 7), (2, 6), (3, 7),
+        #         (4, 3), (5, 4), (6, 3), (7, 4), (4, 4), (5, 5), (6, 4), (7, 5),
+        #         (0, 3), (1, 4), (2, 3), (3, 4), (0, 4), (1, 5), (2, 4), (3, 5),
+        #         (4, 1), (5, 2), (6, 1), (7, 2), (4, 2), (5, 3), (6, 2), (7, 3),
+        #         (0, 1), (1, 2), (2, 1), (3, 2), (0, 2), (1, 3), (2, 2), (3, 3),
+        #     ]
+        #     # Create a 3D array to hold the spatial data
+        #     spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
+        #     for idx in range(combined_data.shape[0]):
+        #         row, col = pixel_mapping[idx]
+        #         spatial_data[row, col - 2, :] = combined_data[idx, :]
+        #     # Flatten the spatial data back to (64, TMF882X_BINS) if needed
+        #     rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
+        #     return np.copy(rearranged_data)
+        # else:
+        #     return np.copy(combined_data)
+
         return np.copy(combined_data)
 
     def get_data(self) -> np.ndarray:
@@ -128,16 +187,13 @@ class TMF8828Sensor(SPADSensor):
         *,
         port: str | None = None,
         setup: bool = True,
-        mode: str = "3x3",
+        spad_id: SPADID = SPADID.ID6,
     ):
         self._initialized = False
-        self.mode = mode
-        self._num_subcaptures = self._get_num_subcaptures()
+        self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
         self._num_pixels = self._get_num_pixels()
         self.num_channels = self._get_num_channels()  # Including calibration channel
-        self.active_channels = (
-            self._get_active_channels_per_subcapture()
-        )  # Excluding calibration channel
+        self.active_channels_per_subcapture = self._get_active_channels_per_subcapture()
 
         port = port or self.PORT
         self._arduino = Arduino.create(
@@ -149,45 +205,35 @@ class TMF8828Sensor(SPADSensor):
             self.setup_sensor()
 
         self._histogram = TMF8828Histogram(
-            self.num_channels, self._num_subcaptures, self.active_channels
+            self.num_channels, self.active_channels_per_subcapture, self.spad_id
         )
         self._object = TMF8828Object()
 
         self._initialized = True
 
-    def _get_num_subcaptures(self) -> int:
-        if self.mode == "3x3":
-            return 1
-        elif self.mode == "4x4":
-            return 2
-        elif self.mode == "8x8":
-            return 8
-        else:
-            raise ValueError(f"Unsupported mode: {self.mode}")
-
     def _get_num_pixels(self) -> int:
-        if self.mode == "3x3":
+        if self.spad_id == SPADID.ID6:
             return 9
-        elif self.mode == "4x4":
+        elif self.spad_id == SPADID.ID7:
             return 16
-        elif self.mode == "8x8":
+        elif self.spad_id == SPADID.ID15:
             return 64
         else:
-            raise ValueError(f"Unsupported mode: {self.mode}")
+            raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     def _get_num_channels(self) -> int:
         # Channels 0-9, including calibration channel
         return 10
 
-    def _get_active_channels_per_subcapture(self) -> int:
-        if self.mode == "3x3":
-            return 9  # Channels 1-9
-        elif self.mode == "4x4":
-            return 8  # Channels 1-8
-        elif self.mode == "8x8":
-            return 8  # Channels 1-8
+    def _get_active_channels_per_subcapture(self) -> list[int]:
+        if self.spad_id == SPADID.ID6:
+            return [9]
+        elif self.spad_id == SPADID.ID7:
+            return [8, 8]
+        elif self.spad_id == SPADID.ID15:
+            return [8, 8, 8, 8, 8, 8, 8, 8]
         else:
-            raise ValueError(f"Unsupported mode: {self.mode}")
+            raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     def initialize(self):
         get_logger().info("Initializing sensor...")
@@ -201,26 +247,28 @@ class TMF8828Sensor(SPADSensor):
     def setup_sensor(self) -> None:
         get_logger().info("Setting up sensor...")
 
+        # Reset the sensor
         self.write("d")
+        self.wait_for_start_talk()
         self.wait_for_stop_talk()
 
-        if self.mode == "3x3" or self.mode == "4x4":
-            if self.mode == "4x4":
-                self.write("c")
-                self.wait_for_start_talk()
-                self.wait_for_stop_talk()
-            self.write("o")
+        if self.spad_id in [SPADID.ID6, SPADID.ID7]:  # 3x3, 4x4
+            self.write("o")  # Switch to TMF882x mode
             self.wait_for_start_talk()
             self.wait_for_stop_talk()
             self.write("E")
             self.wait_for_start_talk()
             self.wait_for_stop_talk()
-        elif self.mode == "8x8":
+            if self.spad_id == SPADID.ID7:  # 4x4
+                self.write("c")  # Move to the next configuration
+                self.wait_for_start_talk()
+                self.wait_for_stop_talk()
+        elif self.spad_id == SPADID.ID15:  # 8x8
             self.write("e")
             self.wait_for_start_talk()
             self.wait_for_stop_talk()
         else:
-            raise ValueError(f"Unsupported mode: {self.mode}")
+            raise ValueError(f"Unsupported mode: {self.spad_id}")
 
         self.write("z")
         self.wait_for_stop_talk()
@@ -320,48 +368,15 @@ class TMF8828Sensor(SPADSensor):
 
     @property
     def resolution(self) -> tuple[int, int]:
-        if self.mode == "3x3":
+        if self.spad_id == SPADID.ID6:
             return 3, 3
-        elif self.mode == "4x4":
+        elif self.spad_id == SPADID.ID7:
             return 4, 4
-        elif self.mode == "8x8":
+        elif self.spad_id == SPADID.ID15:
             return 8, 8
         else:
-            raise ValueError(f"Unsupported mode: {self.mode}")
+            raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     @property
     def num_pixels(self) -> int:
         return self._num_pixels
-
-
-# Subclasses for specific modes
-class TMF8828_3x3(TMF8828Sensor):
-    def __init__(self, *, port: str | None = None, setup: bool = True):
-        super().__init__(port=port, setup=setup, mode="3x3")
-
-
-class TMF8828_4x4(TMF8828Sensor):
-    def __init__(self, *, port: str | None = None, setup: bool = True):
-        super().__init__(port=port, setup=setup, mode="4x4")
-
-
-class TMF8828_8x8(TMF8828Sensor):
-    def __init__(self, *, port: str | None = None, setup: bool = True):
-        super().__init__(port=port, setup=setup, mode="8x8")
-
-
-# Factory class
-class TMF8828Factory:
-    @staticmethod
-    def create(
-        resolution: tuple[int, int],
-        **kwargs,
-    ) -> TMF8828Sensor:
-        if resolution == (3, 3):
-            return TMF8828_3x3(**kwargs)
-        elif resolution == (4, 4):
-            return TMF8828_4x4(**kwargs)
-        elif resolution == (8, 8):
-            return TMF8828_8x8(**kwargs)
-        else:
-            raise ValueError(f"Unsupported resolution: {resolution}")

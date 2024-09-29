@@ -68,21 +68,19 @@ const uint8_t logLevels[NR_LOG_LEVELS] = {
 #define TMF8828_CONFIG_IDX 1
 
 // for each configuration specifiy a period in milli-seconds
-const uint16_t configPeriod[2][3] = {
-    {10, 10, 100}, // TMF882X config
-    {132, 264, 528}  // TMF8828 config
+const uint16_t configPeriod[2][2] = {
+    {16, 8}, // TMF882X config
+    {132, 264}  // TMF8828 config
 };
 
 // for each configuration specify the number of Kilo Iterations (Kilo = 1024)
-const uint16_t configKiloIter[2][3] = {{10000, 5000, 900}, {250, 500, 1000}};
+const uint16_t configKiloIter[2][2] = {{5000, 2500}, {250, 500}};
 
 // for each configuration select a SPAD map through the id
-const uint8_t configSpadId[2][3] = {
-    {TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_6,
-     TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_7,
-     TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_7},
+const uint8_t configSpadId[2][2] = {
+    {TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_6, // wide 3x3
+     TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_7}, // wide 4x4
     {TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_15,
-     TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_15,
      TMF8828_COM_SPAD_MAP_ID__spad_map_id__map_no_15} // TMF8828 can only have 1
                                                       // mask
 };
