@@ -1,0 +1,68 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: check-ast # check that python can parse files
+      - id: check-case-conflict # check for files with names that would conflict on a case-insensitive filesystem
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-symlinks
+      - id: check-added-large-files
+        args: [--maxkb=10240] # 10 MB
+      - id: detect-private-key
+      - id: check-yaml
+      - id: check-xml
+
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.11.2
+    hooks:
+      - id: markdown-link-check
+        args: [-q, -a, "200,202"]
+        files: \.md$
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        files: ^configs/.*\.yaml$
+        # args: ['-c', 'configs/.yamllint.yaml']
+        args:
+          - '-d'
+          - |
+            {
+              extends: default,
+              rules: {
+                line-length: {max: 120},
+                document-start: {present: false},
+                comments: {min-spaces-from-content: 1},
+                truthy: {allowed-values: ["true", "True", "false", "False"], check-keys: false}
+              }
+            }
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.1
+    hooks:
+      - id: flake8
+        additional_dependencies: [Flake8-pyproject]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
