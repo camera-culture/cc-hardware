@@ -1,4 +1,4 @@
-from functools import partial
+from functools import partial, partialmethod
 from pathlib import Path
 
 import cv2
@@ -102,6 +102,85 @@ def pkl_dashboard(
         max_bin=max_bin,
         channel_mask=channel_mask,
     )
+
+
+# ========================
+
+
+def camera_viewer(
+    camera: type[Camera] | Camera,
+    num_frames: int,
+    resolution: tuple[int, int] | None = None,
+    **kwargs,
+):
+    from cc_hardware.utils.manager import Manager
+
+    def setup(manager: Manager, camera: Camera):
+        pass
+
+    def loop(iter: int, manager: Manager, camera: Camera) -> bool:
+        if num_frames != -1 and iter >= num_frames:
+            get_logger().info(f"Finished capturing {num_frames} frames.")
+            return False
+
+        frame = camera.accumulate(num_samples=1)
+        if frame is None:
+            return False
+
+        # Resize the frame
+        if resolution is not None:
+            frame = cv2.resize(frame, resolution)
+
+        cv2.imshow("Camera Viewer", frame)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            return False
+
+        return True
+
+    with Manager(camera=camera) as manager:
+        manager.run(setup=setup, loop=loop)
+
+
+@APP.command()
+def flir_camera_viewer(num_frames: int = -1, resolution: tuple[int, int] | None = None):
+    from cc_hardware.drivers.cameras.flir import GrasshopperFlirCamera
+
+    camera_viewer(GrasshopperFlirCamera, num_frames, resolution)
+
+
+@APP.command()
+def pkl_camera_viewer(
+    pkl_path: Path, num_frames: int = -1, resolution: tuple[int, int] | None = None
+):
+    from cc_hardware.drivers.cameras.pkl import PklCamera
+
+    camera_viewer(PklCamera(pkl_path), num_frames, resolution)
+
+
+@APP.command()
+def realsense_camera_viewer(
+    num_frames: int = -1,
+    resolution: tuple[int, int] | None = None,
+    rgb: bool | None = None,
+    depth: bool | None = None,
+):
+    from cc_hardware.drivers.cameras.realsense import RealsenseCamera
+
+    assert not (rgb and depth), "Cannot show both RGB and depth images."
+    if depth:
+        # Apply a colormap for visualization purposes
+        class DepthRealsenseCamera(RealsenseCamera):
+            def accumulate(self, num_samples: int):
+                frame = super().accumulate(
+                    num_samples=num_samples, return_rgb=False, return_depth=True
+                )
+                return cv2.applyColorMap(
+                    cv2.convertScaleAbs(frame, alpha=0.03), cv2.COLORMAP_JET
+                )
+
+        RealsenseCamera = DepthRealsenseCamera
+
+    camera_viewer(RealsenseCamera, num_frames, resolution)
 
 
 # ========================

@@ -979,9 +979,10 @@ static int8_t tmf8828ConfigInternal(tmf8828Driver *driver, uint16_t periodInMs,
     dataBuffer[0] = TMF8828_ENABLE_LOGARITHMIC_CONFIDENCE;
     i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ALG_SETTING_0, 1,
              dataBuffer);
-    dataBuffer[0] = activeRange;
-    i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
-             dataBuffer);
+    // dataBuffer[0] = activeRange;
+    // i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
+    //          dataBuffer);
+
     stat = tmf8828WriteConfigPage(
         driver); // as a last step write the config page back
   }
@@ -1125,6 +1126,13 @@ int8_t tmf8828SwitchToLegacyMode(tmf8828Driver *driver) {
   return tmf8828SwitchToMode(
       driver, TMF8828_COM_CMD_STAT__cmd_stat__CMD_SWITCH_TMF8821_MODE,
       TMF8828_COM_TMF8828_MODE__mode__TMF8821);
+}
+
+uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange) {
+  dataBuffer[0] = activeRange;
+  i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
+           dataBuffer);
+  return APP_SUCCESS_OK;
 }
 
 // function reads and clears the specified interrupts

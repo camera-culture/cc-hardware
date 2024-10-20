@@ -384,6 +384,13 @@ int8_t tmf8828SwitchTo8x8Mode(tmf8828Driver *driver);
 // driver ... pointer to an instance of the tmf8828 driver data structure
 int8_t tmf8828SwitchToLegacyMode(tmf8828Driver *driver);
 
+// Function to switch the active range
+// driver ... pointer to an instance of the tmf8828 driver data structure
+// activeRange ... the active range mode (short range, high accuracy or long
+// range, low accuracy) Function returns APP_SUCCESS_OK if successfully switched
+// the active range, else it returns an error APP_ERROR_*
+uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange);
+
 // Function reads the interrupts that are set and clears those.
 // driver ... pointer to an instance of the tmf8828 driver data structure
 // Function returns the bit-mask of the interrupts that were set.

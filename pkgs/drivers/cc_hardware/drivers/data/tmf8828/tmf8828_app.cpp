@@ -98,8 +98,8 @@ const uint8_t configPersistance[3] = {0, 1, 3};
 const uint32_t configInterruptMask = 0x3FFFF;
 // set the active range to be short range, high accuracy
 const uint8_t activeRange = \
-  // TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY; 
-  TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY;
+  TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY; 
+  // TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY;
 
 // ---------------------------------------------- variables
 // -----------------------------------------
@@ -302,6 +302,7 @@ static const uint8_t *getPrecollectedFactoryCalibration(uint8_t id) {
 // load factory calibration page to I2C registers 0x20...
 void loadFactoryCalibration() {
   if (stateTmf8828 == TMF8828_STATE_STOPPED) {
+    tmf8828SetActiveRange(&(tmf8828[0]), activeRange);
     if (modeIsTmf8828) // tmf8828 has 4 calibration pages
     {
       tmf8828ResetFactoryCalibration(&(tmf8828[0]));
