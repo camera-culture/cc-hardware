@@ -96,10 +96,6 @@ const uint8_t configPersistance[3] = {0, 1, 3};
 // interrupt selection mask is 18-bits, if bit is set, zone can report an
 // interrupt
 const uint32_t configInterruptMask = 0x3FFFF;
-// set the active range to be short range, high accuracy
-const uint8_t activeRange = \
-  TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY; 
-  // TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY;
 
 // ---------------------------------------------- variables
 // -----------------------------------------
@@ -109,6 +105,8 @@ uint8_t logLevel;                     // how chatty the program is
 int8_t stateTmf8828;                  // current state of the device
 int8_t
     modeIsTmf8828; // if set to 1 this is the tmf8828 else this is the tmf882x
+int8_t isLongRangeMode; // if set to 1 this is the long range mode, else this is
+                        // the short range mode
 int8_t configNr;   // this sample application has only a few configurations it
                    // will loop through, the variable keeps track of that
 int8_t persistenceNr;   // this is to keep track of the selected persistence
@@ -123,10 +121,10 @@ volatile uint8_t irqTriggered; // interrupt is triggered or not
 
 void printDeviceInfo();
 void printHelp();
-void printRegisters(uint8_t regAddr, uint16_t len, char seperator,
-                    uint8_t calibId);
+void printRegisters(uint8_t regAddr, uint16_t len, char seperator, uint8_t calibId);
 void resetAppState();
 void setMode();
+void setAccuracyMode();
 
 // ---------------------------------------------- functions
 // -----------------------------------------
@@ -167,7 +165,7 @@ void configure() {
                        configSpadId[modeIsTmf8828][configNr],
                        configLowThreshold, configHighThreshold,
                        configPersistance[persistenceNr], configInterruptMask,
-                       dumpHistogramOn, activeRange) == APP_SUCCESS_OK) {
+                       dumpHistogramOn) == APP_SUCCESS_OK) {
     PRINT_CONST_STR(F("#Conf"));
     PRINT_CHAR(SEPARATOR);
     PRINT_CONST_STR(F("Period="));
@@ -230,15 +228,18 @@ void factoryCalibration() {
     tmf8828Configure(&(tmf8828[0]), 1, 4000,
                      configSpadId[modeIsTmf8828][configNr], 0, 0xffff, 0,
                      0x3ffff,
-                     0, activeRange); // no histogram dumping in factory calibration allowed,
+                     0); // no histogram dumping in factory calibration allowed,
                          // 4M iterations for factory calibration recommended
     if (modeIsTmf8828) {
       tmf8828ResetFactoryCalibration(&(tmf8828[0]));
-      if (APP_SUCCESS_OK == tmf8828FactoryCalibration(
-                                &(tmf8828[0])) // walk through all 4 calibration
-          && APP_SUCCESS_OK == tmf8828FactoryCalibration(&(tmf8828[0])) &&
-          APP_SUCCESS_OK == tmf8828FactoryCalibration(&(tmf8828[0])) &&
-          APP_SUCCESS_OK == tmf8828FactoryCalibration(&(tmf8828[0]))) {
+      // there will be 4 factory calibration sets for tmf8828
+      int8_t status;
+      for (int8_t i = 0; i < 4; i++) {
+        status = tmf8828FactoryCalibration(&(tmf8828[0]));
+        if (APP_SUCCESS_OK != status)
+          break;
+      }
+      if (APP_SUCCESS_OK == status) {
         configure();
         return;
       }
@@ -278,22 +279,38 @@ static const uint8_t *getPrecollectedFactoryCalibration(uint8_t id) {
   if (modeIsTmf8828) // tmf8828 has only 1 SPAD map, but needs 4 sets of
                      // calibraitond data for this 1 spad map
   {
-    factory_calib = tmf8828_calib_0;
-    if (id == 1) {
-      factory_calib = tmf8828_calib_1;
-    } else if (id == 2) {
-      factory_calib = tmf8828_calib_2;
-    } else if (id == 3) {
-      factory_calib = tmf8828_calib_3;
+    if (isLongRangeMode) {
+      factory_calib = tmf8828_calib_long_0;
+      if (id == 1) {
+        factory_calib = tmf8828_calib_long_1;
+      } else if (id == 2) {
+        factory_calib = tmf8828_calib_long_2;
+      } else if (id == 3) {
+        factory_calib = tmf8828_calib_long_3;
+      }
+    }
+    else {
+      factory_calib = tmf8828_calib_short_0;
+      if (id == 1) {
+        factory_calib = tmf8828_calib_short_1;
+      } else if (id == 2) {
+        factory_calib = tmf8828_calib_short_2;
+      } else if (id == 3) {
+        factory_calib = tmf8828_calib_short_3;
+      }
     }
   } else // tmf882x can have different SPAD maps, so need different calibration
          // sets
   {
-    factory_calib = tmf882x_calib_0;
-    if (configNr == 1) {
-      factory_calib = tmf882x_calib_1;
-    } else if (configNr == 2) {
-      factory_calib = tmf882x_calib_2;
+    if (isLongRangeMode) {
+      factory_calib = tmf882x_calib_long_0;
+      if (configNr == 1) 
+        factory_calib = tmf882x_calib_long_1;
+    }
+    else {
+      factory_calib = tmf882x_calib_short_0;
+      if (configNr == 1)
+        factory_calib = tmf882x_calib_short_1;
     }
   }
   return factory_calib;
@@ -302,7 +319,6 @@ static const uint8_t *getPrecollectedFactoryCalibration(uint8_t id) {
 // load factory calibration page to I2C registers 0x20...
 void loadFactoryCalibration() {
   if (stateTmf8828 == TMF8828_STATE_STOPPED) {
-    tmf8828SetActiveRange(&(tmf8828[0]), activeRange);
     if (modeIsTmf8828) // tmf8828 has 4 calibration pages
     {
       tmf8828ResetFactoryCalibration(&(tmf8828[0]));
@@ -451,6 +467,17 @@ void setMode() {
   }
 }
 
+// set the active ranging mode
+void setAccuracyMode() {
+  if (stateTmf8828 == TMF8828_STATE_STOPPED) {
+    if (isLongRangeMode)
+      tmf8828SetLongRangeAccuracy(&(tmf8828[0]));
+    else
+      tmf8828SetShortRangeAccuracy(&(tmf8828[0]));
+    configure();
+  }
+}
+
 // execute a stop
 void stop() {
   if (stateTmf8828 == TMF8828_STATE_MEASURE ||
@@ -531,6 +558,11 @@ void printRegisters(uint8_t regAddr, uint16_t len, char seperator,
         PRINT_CONST_STR(
             F("const PROGMEM uint8_t tmf882x_calib_")); // different name for
                                                         // tmf882x
+      }
+      if (isLongRangeMode) {
+        PRINT_CONST_STR(F("long_"));
+      } else {
+        PRINT_CONST_STR(F("short_"));
       }
       PRINT_INT(calibId);
       PRINT_CONST_STR(F("[] = {"));
@@ -616,6 +648,8 @@ void printHelp() {
   PRINT_LN();
   PRINT_CONST_STR(F("o ... toggle between TMF8828 and TMF882X"));
   PRINT_LN();
+  PRINT_CONST_STR(F("O ... toggle between short range and long range accuracy modes"));
+  PRINT_LN();
   PRINT_CONST_STR(F("p ... power down"));
   PRINT_LN();
   PRINT_CONST_STR(F("r ... restore fact calib from file"));
@@ -672,6 +706,9 @@ int8_t serialInput() {
       } else if (rx == 'o') {
         modeIsTmf8828 = !modeIsTmf8828;
         setMode();
+      } else if (rx == 'O') {
+        isLongRangeMode = !isLongRangeMode;
+        setAccuracyMode();
       } else if (rx == 'm') {
         measure();
       } else if (rx == 's') {
@@ -729,6 +766,7 @@ void resetAppState() {
   dumpHistogramOn = 0; // default is off
   irqTriggered = 0;
   modeIsTmf8828 = 1; // default is tmf8828
+  isLongRangeMode = 1; // default is long range mode
 }
 
 // interrupt handler is called when INT pin goes low

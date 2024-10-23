@@ -25,8 +25,10 @@
 
 #include "tmf8828_shim.h"
 
-extern const PROGMEM uint8_t tmf882x_calib_0[];
-extern const PROGMEM uint8_t tmf882x_calib_1[];
-extern const PROGMEM uint8_t tmf882x_calib_2[];
+extern const PROGMEM uint8_t tmf882x_calib_long_0[];
+extern const PROGMEM uint8_t tmf882x_calib_long_1[];
+
+extern const PROGMEM uint8_t tmf882x_calib_short_0[];
+extern const PROGMEM uint8_t tmf882x_calib_short_1[];
 
 #endif /* TMF882X_CALIB_H */

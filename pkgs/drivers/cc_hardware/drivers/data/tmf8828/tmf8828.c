@@ -334,7 +334,7 @@
   0x35 // register that holds the algorithm settings
 
 // Active range configuration
-#define TMF8X2X_COM_ACTIVE_RANGE 0x19
+#define TMF8X2X_COM_ACTIVE_RANGE 0x08
 
 /* show distance results with extended confidence range
    report distances -> 0x04
@@ -946,7 +946,7 @@ static int8_t tmf8828ConfigInternal(tmf8828Driver *driver, uint16_t periodInMs,
                                     uint16_t kiloIterations, uint8_t spadMapId,
                                     uint16_t lowThreshold,
                                     uint16_t highThreshold, uint8_t persistence,
-                                    uint32_t intMask, uint8_t dumpHistogram, uint8_t activeRange) {
+                                    uint32_t intMask, uint8_t dumpHistogram) {
   int8_t stat = APP_ERROR_PARAM;
   stat = tmf8828LoadConfigPageCommon(
       driver); // first load the page, then only overwrite the registers you
@@ -979,9 +979,6 @@ static int8_t tmf8828ConfigInternal(tmf8828Driver *driver, uint16_t periodInMs,
     dataBuffer[0] = TMF8828_ENABLE_LOGARITHMIC_CONFIDENCE;
     i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ALG_SETTING_0, 1,
              dataBuffer);
-    // dataBuffer[0] = activeRange;
-    // i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
-    //          dataBuffer);
 
     stat = tmf8828WriteConfigPage(
         driver); // as a last step write the config page back
@@ -1003,7 +1000,7 @@ int8_t tmf8828Configure(tmf8828Driver *driver, uint16_t periodInMs,
                         uint16_t kiloIterations, uint8_t spadMapId,
                         uint16_t lowThreshold, uint16_t highThreshold,
                         uint8_t persistence, uint32_t intMask,
-                        uint8_t dumpHistogram, uint8_t activeRange) {
+                        uint8_t dumpHistogram) {
   i2cRxReg(driver, driver->i2cSlaveAddress, TMF8828_COM_TMF8828_MODE, 1,
            dataBuffer);
   if (dataBuffer[0] == TMF8828_COM_TMF8828_MODE__mode__TMF8828) {
@@ -1021,7 +1018,7 @@ int8_t tmf8828Configure(tmf8828Driver *driver, uint16_t periodInMs,
   }
   return tmf8828ConfigInternal(driver, periodInMs, kiloIterations, spadMapId,
                                lowThreshold, highThreshold, persistence,
-                               intMask, dumpHistogram, activeRange);
+                               intMask, dumpHistogram);
 }
 
 // Function to reset the factory calibration. Call this function before
@@ -1132,7 +1129,16 @@ uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange) {
   dataBuffer[0] = activeRange;
   i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
            dataBuffer);
-  return APP_SUCCESS_OK;
+  // check that the active range was updated
+  return tmf8828CheckRegister(driver, 0x19, activeRange, 1, APP_CMD_STOP_TIMEOUT_MS); 
+}
+
+uint8_t tmf8828SetShortRangeAccuracy(tmf8828Driver *driver) {
+  return tmf8828SetActiveRange(driver, TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY);
+}
+
+uint8_t tmf8828SetLongRangeAccuracy(tmf8828Driver *driver) {
+  return tmf8828SetActiveRange(driver, TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY);
 }
 
 // function reads and clears the specified interrupts

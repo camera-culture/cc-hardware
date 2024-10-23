@@ -153,9 +153,9 @@ extern "C" {
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__NO_ACTIVE_RANGE_SUPPORTED \
   0 // This device or patch does not support modes for range accuracy. 		 	
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY \
-  110 // The device is in short range accuracy mode.								
+  0x6E // The device is in short range accuracy mode.								
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY \
-  111 // The device is in long range accuracy mode.								
+  0x6F // The device is in long range accuracy mode.								
 
 // Histogram dumping requires sub-packets
 // Register offset of sub-packets
@@ -334,7 +334,7 @@ int8_t tmf8828Configure(tmf8828Driver *driver, uint16_t periodInMs,
                         uint16_t kiloIterations, uint8_t spadMapId,
                         uint16_t lowThreshold, uint16_t highThreshold,
                         uint8_t persistence, uint32_t intMask,
-                        uint8_t dumpHistogram, uint8_t activeRange);
+                        uint8_t dumpHistogram);
 
 // Function to execute an i2c address chagne
 // driver ... pointer to an instance of the tmf8828 driver data structure
@@ -390,6 +390,14 @@ int8_t tmf8828SwitchToLegacyMode(tmf8828Driver *driver);
 // range, low accuracy) Function returns APP_SUCCESS_OK if successfully switched
 // the active range, else it returns an error APP_ERROR_*
 uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange);
+
+// Function to set the short range accuracy.
+// driver ... pointer to an instance of the tmf8828 driver data structure
+uint8_t tmf8828SetShortRangeAccuracy(tmf8828Driver *driver);
+
+// Function to set the long range accuracy.
+// driver ... pointer to an instance of the tmf8828 driver data structure
+uint8_t tmf8828SetLongRangeAccuracy(tmf8828Driver *driver);
 
 // Function reads the interrupts that are set and clears those.
 // driver ... pointer to an instance of the tmf8828 driver data structure

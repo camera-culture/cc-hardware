@@ -31,6 +31,12 @@ class SPADID(Enum):
     ID15 = 15
 
 
+# Enum for ranging modes
+class RangeMode(Enum):
+    LONG = 0
+    SHORT = 1
+
+
 # ================
 
 
@@ -119,14 +125,70 @@ class TMF8828Histogram(SensorData):
         if self.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
             pixel_map = {
-                1 : 57,  2 : 61,  3 : 41,  4 : 45,  5 : 25,  6 : 29,  7 : 9 , 8 : 13,
-                11 : 58, 12 : 62, 13 : 42, 14 : 46, 15 : 26, 16 : 30, 17 : 10,18 : 14,
-                21 : 59, 22 : 63, 23 : 43, 24 : 47, 25 : 27, 26 : 31, 27 : 11,28 : 15,
-                31 : 60, 32 : 64, 33 : 44, 34 : 48, 35 : 28, 36 : 32, 37 : 12,38 : 16,
-                41 : 49, 42 : 53, 43 : 33, 44 : 37, 45 : 17, 46 : 21, 47 : 1 ,48 : 5 ,
-                51 : 50, 52 : 54, 53 : 34, 54 : 38, 55 : 18, 56 : 22, 57 : 2 ,58 : 6 ,
-                61 : 51, 62 : 55, 63 : 35, 64 : 39, 65 : 19, 66 : 23, 67 : 3 ,68 : 7 ,
-                71 : 52, 72 : 56, 73 : 36, 74 : 40, 75 : 20, 76 : 24, 77 : 4 ,78 : 8 
+                1: 57,
+                2: 61,
+                3: 41,
+                4: 45,
+                5: 25,
+                6: 29,
+                7: 9,
+                8: 13,
+                11: 58,
+                12: 62,
+                13: 42,
+                14: 46,
+                15: 26,
+                16: 30,
+                17: 10,
+                18: 14,
+                21: 59,
+                22: 63,
+                23: 43,
+                24: 47,
+                25: 27,
+                26: 31,
+                27: 11,
+                28: 15,
+                31: 60,
+                32: 64,
+                33: 44,
+                34: 48,
+                35: 28,
+                36: 32,
+                37: 12,
+                38: 16,
+                41: 49,
+                42: 53,
+                43: 33,
+                44: 37,
+                45: 17,
+                46: 21,
+                47: 1,
+                48: 5,
+                51: 50,
+                52: 54,
+                53: 34,
+                54: 38,
+                55: 18,
+                56: 22,
+                57: 2,
+                58: 6,
+                61: 51,
+                62: 55,
+                63: 35,
+                64: 39,
+                65: 19,
+                66: 23,
+                67: 3,
+                68: 7,
+                71: 52,
+                72: 56,
+                73: 36,
+                74: 40,
+                75: 20,
+                76: 24,
+                77: 4,
+                78: 8,
             }
             # Create a 3D array to hold the spatial data
             spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
@@ -190,12 +252,14 @@ class TMF8828Sensor(SPADSensor):
     def __init__(
         self,
         *,
-        spad_id: SPADID | int,
+        spad_id: SPADID | int = SPADID.ID6,
         port: str | None = None,
         setup: bool = True,
+        range_mode: RangeMode = RangeMode.LONG,
     ):
         self._initialized = False
         self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
+        self.range_mode = range_mode
         self._num_pixels = self._get_num_pixels()
         self.num_channels = self._get_num_channels()  # Including calibration channel
         self.active_channels_per_subcapture = self._get_active_channels_per_subcapture()
@@ -263,6 +327,10 @@ class TMF8828Sensor(SPADSensor):
         else:
             raise ValueError(f"Unsupported mode: {self.spad_id}")
 
+        if self.range_mode == RangeMode.SHORT:
+            # Default is LONG
+            self.write_and_wait_for_start_and_stop_talk("O")
+
         self.write_and_wait_for_stop_talk("z")
 
         get_logger().info("Sensor setup complete")
@@ -270,7 +338,7 @@ class TMF8828Sensor(SPADSensor):
     def read(self) -> bytes:
         read_line = self._arduino.readline()
         if len(read_line) > 0:
-            if read_line[0] != b'#'[0]:
+            if read_line[0] != b"#"[0]:
                 get_logger().info(read_line)
 
         return read_line
@@ -290,7 +358,9 @@ class TMF8828Sensor(SPADSensor):
             data = self.read()
         return data
 
-    def write_and_wait_for_start_talk(self, data: str, timeout: float | None = None, tries: int = 10) -> bool:
+    def write_and_wait_for_start_talk(
+        self, data: str, timeout: float | None = None, tries: int = 10
+    ) -> bool:
         """Write data to Arduino and wait for it to start talking with timeout.
         If timeout happens before something is received, resend data.
         Returns True if successful, False otherwise."""
@@ -314,22 +384,31 @@ class TMF8828Sensor(SPADSensor):
         get_logger().error(f"Failed after {tries} attempts.")
         return False
 
-    def wait_for_stop_talk(self, timeout: float = None) -> bool:
+    def wait_for_stop_talk(self, timeout: float = None) -> bytes | None:
         """Wait until Arduino stops talking. Returns True if stopped before timeout, False otherwise."""
         data = b"0"
+        accumulated_data = b""
         start_time = time.time()
         while len(data) > 0:
             if timeout is not None and time.time() - start_time > timeout:
-                return False  # Timeout occurred
+                return None  # Timeout occurred
             data = self.read()
             try:
                 data_str = re.sub(r"[\r\n]", "", data.decode("utf-8").strip())
                 get_logger().debug(data_str)
             except UnicodeDecodeError:
                 get_logger().debug(data)
-        return True  # Stopped talking before timeout
 
-    def write_and_wait_for_stop_talk(self, data: str, timeout: float | None = None, tries: int = 10) -> bool:
+            accumulated_data += data
+        return accumulated_data  # Stopped talking before timeout
+
+    def write_and_wait_for_stop_talk(
+        self,
+        data: str,
+        timeout: float | None = None,
+        tries: int = 10,
+        return_data: bool = False,
+    ) -> bool | tuple[bool, bytes | None]:
         """Write data to Arduino and wait for it to stop talking with timeout.
         If timeout happens before something is received, resend data.
         Returns True if successful, False otherwise."""
@@ -337,24 +416,31 @@ class TMF8828Sensor(SPADSensor):
             timeout = self.TIMEOUT
 
         for attempt in range(tries):
-            get_logger().debug(f"Attempt {attempt + 1}/{tries}: Writing '{data}' and waiting for Arduino to start talking.")
+            get_logger().debug(
+                f"Attempt {attempt + 1}/{tries}: Writing '{data}' and waiting for Arduino to start talking."
+            )
             self.write(data)
             received_data = self.wait_for_start_talk(timeout)
             if received_data is None:
-                get_logger().warning(f"Timeout occurred waiting for Arduino to start talking. Retrying...")
+                get_logger().warning(
+                    f"Timeout occurred waiting for Arduino to start talking. Retrying..."
+                )
                 continue  # Retry
             get_logger().debug("Arduino started talking. Waiting for it to stop.")
-            stopped = self.wait_for_stop_talk(timeout)
-            if stopped:
+            received_data += self.wait_for_stop_talk(timeout)
+            if received_data is not None:
                 get_logger().debug("Arduino stopped talking.")
-                return True
+                return True if not return_data else (True, received_data)
             else:
-                get_logger().warning(f"Timeout occurred waiting for Arduino to stop talking. Retrying...")
+                get_logger().warning(
+                    f"Timeout occurred waiting for Arduino to stop talking. Retrying..."
+                )
         get_logger().error(f"Failed after {tries} attempts.")
-        return False
+        return False if not return_data else (False, None)
 
-    
-    def write_and_wait_for_start_and_stop_talk(self, data: str, timeout: float | None = None, tries: int = 10) -> bool:
+    def write_and_wait_for_start_and_stop_talk(
+        self, data: str, timeout: float | None = None, tries: int = 10
+    ) -> bool:
         """Write data to Arduino and wait for it to start and stop talking with timeout.
         If timeout happens before either event, resend data.
         Returns True if successful, False otherwise."""
@@ -375,8 +461,8 @@ class TMF8828Sensor(SPADSensor):
                 continue  # Retry
             get_logger().debug("Arduino started talking. Waiting for it to stop.")
             # Wait for Arduino to stop talking
-            stopped = self.wait_for_stop_talk(timeout)
-            if stopped:
+            received_data = self.wait_for_stop_talk(timeout)
+            if received_data is not None:
                 get_logger().debug("Arduino stopped talking.")
                 return True
             else:
@@ -436,6 +522,34 @@ class TMF8828Sensor(SPADSensor):
             histograms = np.mean(histograms, axis=0)
 
         return histograms
+
+    def calibrate(self) -> list[str]:
+        """This performs calibration consistent with the readme defined
+        [here](https://github.com/ams-OSRAM/tmf8820_21_28_driver_arduino?tab=readme-ov-file#factory-calibration-generation-and-storing-it-for-arduino-uno).
+
+        This completes calibration for both the tmf8828 and tmf882x modes, as well
+        as both accuracy modes.
+        """
+
+        def extract_calibration(byte_data: bytes, trim_length: int = 22) -> str:
+            # Convert the bytes to string
+            input_string = byte_data.decode("utf-8")
+
+            # Remove the last 'trim_length' characters and return the resulting string
+            return input_string[:-trim_length].strip()
+
+        get_logger().info("Starting calibration...")
+        self.write_and_wait_for_start_and_stop_talk("f")
+        _, calibration_data0 = self.write_and_wait_for_stop_talk("l", return_data=True)
+        self.write_and_wait_for_start_and_stop_talk("c")
+        self.write_and_wait_for_start_and_stop_talk("f")
+        _, calibration_data1 = self.write_and_wait_for_stop_talk("l", return_data=True)
+        get_logger().info("Calibration complete")
+
+        return [
+            extract_calibration(calibration_data0),
+            extract_calibration(calibration_data1),
+        ]
 
     @property
     def is_okay(self) -> bool:

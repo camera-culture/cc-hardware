@@ -1,4 +1,4 @@
-from functools import partial, partialmethod
+from functools import partial
 from pathlib import Path
 
 import cv2
@@ -9,9 +9,7 @@ try:
     import torch
 except ImportError:
     torch = None
-    pass
 
-from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 from cc_hardware.drivers.camera import Camera
 from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.tools.app import APP
@@ -45,8 +43,9 @@ def tmf8828_dashboard(
     max_bin: int = 128,
     channel_mask: list[int] | None = None,
     spad_id: int = 6,  # 3x3
+    short_range: bool = False,
 ):
-    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
+    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor, RangeMode
 
     TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
 
@@ -55,7 +54,8 @@ def tmf8828_dashboard(
         7,
         15,
     ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
-    sensor = partial(TMF8828Sensor, spad_id=spad_id)
+    range_mode = RangeMode.SHORT if short_range else RangeMode.LONG
+    sensor = partial(TMF8828Sensor, spad_id=spad_id, range_mode=range_mode)
 
     dashboard(
         sensor,
@@ -194,6 +194,7 @@ def aruco_localization(
     **kwargs,
 ):
     from cc_hardware.utils.manager import Manager
+    from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 
     assert hasattr(cv2.aruco, aruco_dict), f"Invalid aruco_dict: {aruco_dict}"
     aruco_dict = getattr(cv2.aruco, aruco_dict)
@@ -284,6 +285,7 @@ def estimated_position(
     import matplotlib.pyplot as plt
 
     from cc_hardware.utils.manager import Manager
+    from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 
     def setup(manager: Manager, sensor: SPADSensor, camera: Camera):
         algo = ArucoLocalizationAlgorithm(
