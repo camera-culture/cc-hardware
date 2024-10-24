@@ -21,6 +21,10 @@ class Sensor(ABC):
         """Closes the sensor and releases any resources."""
         pass
 
+    def calibrate(self) -> bool:
+        """Calibrates the sensor."""
+        raise NotImplementedError("Calibration is not supported for this sensor.")
+
     def __del__(self):
         """Destructor to ensure the sensor is properly closed."""
         try:

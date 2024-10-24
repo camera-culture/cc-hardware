@@ -23,11 +23,12 @@ def upload(port: str, script: Path):
 
 
 @APP.command()
-def tmf8828_upload():
+def tmf8828_upload(port: str | None = None):
     from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
 
+    port = port or TMF8828Sensor.PORT
     get_logger().info(
         f"Uploading TMF8828 sensor sketch from {TMF8828Sensor.SCRIPT} "
-        f"to port {TMF8828Sensor.PORT}"
+        f"to port {port}"
     )
-    upload(port=TMF8828Sensor.PORT, script=TMF8828Sensor.SCRIPT)
+    upload(port=port, script=TMF8828Sensor.SCRIPT)

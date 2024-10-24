@@ -149,6 +149,14 @@ extern "C" {
 #define TMF8828_COM_CONFIG_FACTORY_CALIB__factory_calibration_size             \
   ((0xE0) - (TMF8828_COM_CONFIG_RESULT))
 
+// Enumeration for active_range
+#define TMF8X2X_COM_ACTIVE_RANGE__active_range__NO_ACTIVE_RANGE_SUPPORTED \
+  0 // This device or patch does not support modes for range accuracy. 		 	
+#define TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY \
+  0x6E // The device is in short range accuracy mode.								
+#define TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY \
+  0x6F // The device is in long range accuracy mode.								
+
 // Histogram dumping requires sub-packets
 // Register offset of sub-packets
 #define TMF8828_COM_SUBPACKET_NUMBER 0x24  // sub-packet number
@@ -318,7 +326,8 @@ int8_t tmf8828LoadConfigPageFactoryCalib(tmf8828Driver *driver);
 // threshold and high threshold to be reported intMask ... an 18-bit mask where
 // a 1 means that this zone can report distances if thresholds + persistence are
 // fullfilled dumpHistogram ... if 1 then dump raw histograms, if ==0 do not
-// dump them, if 2 dump EC histograms, if 3 dump both Function returns
+// dump them, if 2 dump EC histograms, if 3 dump both activeRange ... the active
+// range mode (short range, high accuracy or long range, low accuracy) Function returns
 // APP_SUCCESS_OK if successfully configure the device, else it returns an error
 // APP_ERROR_*
 int8_t tmf8828Configure(tmf8828Driver *driver, uint16_t periodInMs,
@@ -374,6 +383,21 @@ int8_t tmf8828SwitchTo8x8Mode(tmf8828Driver *driver);
 // Function to switch to legacy mode (tmf8821/8820 mode = 4x4 or 3x3)
 // driver ... pointer to an instance of the tmf8828 driver data structure
 int8_t tmf8828SwitchToLegacyMode(tmf8828Driver *driver);
+
+// Function to switch the active range
+// driver ... pointer to an instance of the tmf8828 driver data structure
+// activeRange ... the active range mode (short range, high accuracy or long
+// range, low accuracy) Function returns APP_SUCCESS_OK if successfully switched
+// the active range, else it returns an error APP_ERROR_*
+uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange);
+
+// Function to set the short range accuracy.
+// driver ... pointer to an instance of the tmf8828 driver data structure
+uint8_t tmf8828SetShortRangeAccuracy(tmf8828Driver *driver);
+
+// Function to set the long range accuracy.
+// driver ... pointer to an instance of the tmf8828 driver data structure
+uint8_t tmf8828SetLongRangeAccuracy(tmf8828Driver *driver);
 
 // Function reads the interrupts that are set and clears those.
 // driver ... pointer to an instance of the tmf8828 driver data structure

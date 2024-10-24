@@ -4,14 +4,26 @@ from typing import override
 import numpy as np
 import PySpin
 
-from cc_hardware.drivers.camera import Camera
+from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.singleton import SingletonABCMeta
 
 
 class FlirCamera(Camera, metaclass=SingletonABCMeta):
+    """
+    A singleton camera class for FLIR cameras using the PySpin library.
+    Captures images in a background thread and stores them in a queue.
+    """
+
     def __init__(self, camera_index: int = 0):
+        """
+        Initialize a FlirCamera instance.
+
+        Args:
+            camera_index (int, optional): Index of the camera to initialize.
+                                          Defaults to 0.
+        """
         self.camera_index = camera_index
         self.queue = BlockingDeque(maxlen=10)
         self.stop_thread = threading.Event()
@@ -32,8 +44,10 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         self.thread.start()
 
     def _background_capture(self):
-        """Initializes the camera, continuously captures images, and stores
-        them in the queue."""
+        """
+        Initializes the camera, continuously captures images, and stores 
+        them in the queue.
+        """
         get_logger().info(
             f"Starting background capture for camera index {self.camera_index}"
         )
@@ -44,7 +58,6 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
             self.cam.AcquisitionMode.SetValue(PySpin.AcquisitionMode_Continuous)
 
             self.cam.BeginAcquisition()
-
             self.has_started.set()
 
             while not self.stop_thread.is_set():
@@ -64,7 +77,20 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         )
 
     def accumulate(self, num_samples: int, *, average: bool = False) -> np.ndarray:
-        """Accumulates images from the queue."""
+        """
+        Accumulate a specified number of image samples from the queue.
+
+        Args:
+            num_samples (int): Number of image samples to accumulate.
+
+        Keyword Args:
+            average (bool, optional): Whether to average the accumulated 
+                                      images. Defaults to False.
+
+        Returns:
+            np.ndarray: Array containing the accumulated or averaged images.
+                        Returns None if no data is available.
+        """
         images = []
         while len(images) < num_samples:
             if len(self.queue) >= num_samples:
@@ -77,7 +103,15 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         return np.array(images)
 
     def _capture_image(self, cam):
-        """Captures a single image from the camera."""
+        """
+        Capture a single image from the camera.
+
+        Args:
+            cam: The camera instance to capture the image from.
+
+        Returns:
+            np.ndarray: The captured image as a numpy array.
+        """
         image_result = cam.GetNextImage()
         assert (
             not image_result.IsIncomplete()
@@ -89,13 +123,25 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
     @property
     @override
     def resolution(self) -> tuple[int, int]:
-        """Return the resolution (width, height) of the camera."""
+        """
+        Get the resolution (width, height) of the camera.
+
+        Returns:
+            tuple[int, int]: A tuple containing the width and height 
+                             of the camera.
+        """
         return int(self.cam.Width.GetValue()), int(self.cam.Height.GetValue())
 
     @property
     @override
     def is_okay(self) -> bool:
-        """Check if the camera is properly initialized."""
+        """
+        Check if the camera is properly initialized.
+
+        Returns:
+            bool: True if the camera is initialized and streaming properly, 
+                  False otherwise.
+        """
         if not hasattr(self, "cam"):
             return False
 
@@ -126,6 +172,12 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
 
 
 class GrasshopperFlirCamera(FlirCamera):
+    """
+    Specialized camera class for a Grasshopper FLIR camera model.
+    Inherits from FlirCamera and provides specific intrinsic and 
+    distortion parameters.
+    """
+
     DISTORTION_COEFFICIENTS = np.array([-0.036, -0.145, 0.001, 0.0, 1.155])
     INTRINSIC_MATRIX = np.array(
         [[1815.5, 0.0, 0.0], [0.0, 1817.753, 0.0], [721.299, 531.352, 1.0]]
@@ -134,9 +186,22 @@ class GrasshopperFlirCamera(FlirCamera):
     @property
     @override
     def distortion_coefficients(self) -> np.ndarray:
+        """
+        Get the distortion coefficients of the Grasshopper FLIR camera.
+
+        Returns:
+            np.ndarray: Array of distortion coefficients.
+        """
         return self.DISTORTION_COEFFICIENTS
 
     @property
     @override
     def intrinsic_matrix(self) -> np.ndarray:
+        """
+        Get the intrinsic matrix of the Grasshopper FLIR camera.
+
+        Returns:
+            np.ndarray: A 3x3 array representing the intrinsic matrix 
+                        of the camera.
+        """
         return self.INTRINSIC_MATRIX

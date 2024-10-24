@@ -5,15 +5,20 @@ import numpy as np
 
 from cc_hardware.algos.algo import Algorithm
 from cc_hardware.drivers.camera import Camera
-from cc_hardware.drivers.sensor import Sensor
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.writers import VideoWriter
 
 
 class ArucoLocalizationAlgorithm(Algorithm):
+    """An algorithm to localize ArUco markers using camera images.
+
+    This class processes images from a camera sensor to detect ArUco markers and
+    compute their poses relative to an origin marker.
+    """
+
     def __init__(
         self,
-        sensor: Sensor,
+        sensor: Camera,
         *,
         aruco_dict: int,
         marker_size: float,
@@ -21,10 +26,20 @@ class ArucoLocalizationAlgorithm(Algorithm):
         num_samples: int = 1,
         **marker_ids,
     ):
-        super().__init__(sensor)
+        """Initializes the ArucoLocalizationAlgorithm with specified parameters.
 
-        assert isinstance(sensor, Camera), "Aruco algo requires a camera sensor."
-        self._sensor: Camera
+        Args:
+            sensor (Camera): The camera sensor to use for capturing images.
+            aruco_dict (int): The predefined dictionary of ArUco markers to use.
+            marker_size (float): The size of the ArUco markers in meters.
+            origin_id (int, optional): The ID of the origin marker. Defaults to -1.
+            num_samples (int, optional): The number of samples to average over.
+                Defaults to 1.
+
+        Keyword Args:
+            **marker_ids: Additional marker IDs to track, passed as keyword arguments.
+        """
+        self._sensor: Camera = sensor
 
         aruco_dict = cv2.aruco.getPredefinedDictionary(aruco_dict)
         aruco_params = cv2.aruco.DetectorParameters()
@@ -45,7 +60,22 @@ class ArucoLocalizationAlgorithm(Algorithm):
         filename: Path | str | None = None,
         return_images: bool = False,
     ):
-        """Processes a single image and returns the localization result."""
+        """Processes images and returns the localization results.
+
+        Args:
+            show (bool, optional): Whether to display the image with detected markers.
+                Defaults to False.
+            save (bool, optional): Whether to save the image with detected markers.
+                Defaults to False.
+            filename (Path | str | None, optional): The filename to save the image or
+                video. Defaults to None.
+            return_images (bool, optional): Whether to return the processed images.
+                Defaults to False.
+
+        Returns:
+            dict: A dictionary containing localization results for the specified markers.
+            list: A list of processed images (if return_images is True).
+        """
         results = []
         for _ in range(self._num_samples):
             results.append(self._process_image(show=show, save=save, filename=filename))
@@ -72,7 +102,19 @@ class ArucoLocalizationAlgorithm(Algorithm):
         save: bool = False,
         filename: Path | str | None = None,
     ) -> dict:
-        """Process a single image to compute poses."""
+        """Processes a single image to compute poses of detected markers.
+
+        Args:
+            show (bool, optional): Whether to display the image with detected markers.
+                Defaults to False.
+            save (bool, optional): Whether to save the image with detected markers.
+                Defaults to False.
+            filename (Path | str | None, optional): The filename to save the image or
+                video. Defaults to None.
+
+        Returns:
+            dict: A dictionary containing poses of detected markers and the image.
+        """
         image = self._sensor.accumulate(1)
         if image is None:
             get_logger().error("No image available.")
@@ -144,6 +186,17 @@ class ArucoLocalizationAlgorithm(Algorithm):
         return results
 
     def _get_pose(self, id: int, ids: list, tvecs: np.ndarray, rvecs: np.ndarray):
+        """Gets the pose of a marker with a specific ID.
+
+        Args:
+            id (int): The ID of the marker.
+            ids (list): The list of detected marker IDs.
+            tvecs (np.ndarray): The translation vectors of detected markers.
+            rvecs (np.ndarray): The rotation vectors of detected markers.
+
+        Returns:
+            np.ndarray: The pose of the marker as [x, y, yaw].
+        """
         idx = ids.index(id)
         tvec, rvec = tvecs[idx], rvecs[idx]
         rot = cv2.Rodrigues(rvec)[0]
@@ -158,14 +211,35 @@ class ArucoLocalizationAlgorithm(Algorithm):
         tvecs: np.ndarray,
         rvecs: np.ndarray,
     ):
+        """Computes the global pose of a marker relative to the origin.
+
+        Args:
+            origin_pose (np.ndarray): The pose of the origin marker.
+            id (int): The ID of the target marker.
+            ids (list): The list of detected marker IDs.
+            tvecs (np.ndarray): The translation vectors of detected markers.
+            rvecs (np.ndarray): The rotation vectors of detected markers.
+
+        Returns:
+            np.ndarray: The global pose of the marker as [x, y, yaw].
+        """
         pose = origin_pose - self._get_pose(id, ids, tvecs, rvecs)
         pose[0] *= -1  # Flip x-axis
         return pose
 
     @property
     def is_okay(self) -> bool:
+        """Checks if the algorithm and sensor are functioning properly.
+
+        Returns:
+            bool: True if both the algorithm and sensor are okay, False otherwise.
+        """
         return self._is_okay and self._sensor.is_okay
 
     def close(self):
+        """Closes resources associated with the algorithm.
+
+        Closes any open writers and releases resources.
+        """
         if hasattr(self, "_writer"):
             self._writer.close()

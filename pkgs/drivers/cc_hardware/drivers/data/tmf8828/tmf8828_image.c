@@ -608,11 +608,11 @@ const PROGMEM unsigned char tmf8828_image[] = {
     0xFF, 0xFF, 0x00, 0x00,
 };
 const unsigned long tmf8828_image_termination = 0x00200089;
-const unsigned long tmf8828_image_start = 0x00200000;
-const unsigned long tmf8828_image_finish = 0x00201C30;
-const unsigned long tmf8828_image_length = 0x00001C30;
+const unsigned long tmf8828_image_start       = 0x00200000;
+const unsigned long tmf8828_image_finish      = 0x00201C30;
+const unsigned long tmf8828_image_length      = 0x00001C30;
 
 #define TMF8828_IMAGE_TERMINATION 0x00200089
-#define TMF8828_IMAGE_START 0x00200000
-#define TMF8828_IMAGE_FINISH 0x00201C30
-#define TMF8828_IMAGE_LENGTH 0x00001C30
+#define TMF8828_IMAGE_START       0x00200000
+#define TMF8828_IMAGE_FINISH      0x00201C30
+#define TMF8828_IMAGE_LENGTH      0x00001C30

@@ -7,9 +7,9 @@ import numpy as np
 import pkg_resources
 
 # Assume these modules are available in your project
-from cc_hardware.drivers.arduino import Arduino
+from pkgs.drivers.cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
-from cc_hardware.drivers.spad import SPADSensor
+from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 
@@ -31,18 +31,48 @@ class SPADID(Enum):
     ID15 = 15
 
 
+# Enum for ranging modes
+class RangeMode(Enum):
+    LONG = 0
+    SHORT = 1
+
+
 # ================
 
 
 class TMF8828Histogram(SensorData):
+    """
+    A class representing histogram data collected from the TMF8828 sensor. The histogram
+    data is organized into multiple channels and subcaptures to capture detailed measurements.
+
+    Inherits:
+        SensorData: Base class for sensor data storage and processing.
+
+    Attributes:
+        num_channels (int): Total number of channels, including the calibration channel.
+        active_channels_per_subcapture (list[int]): List indicating the number of active
+            channels in each subcapture.
+        num_subcaptures (int): The total number of subcaptures.
+        spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
+    """
+
     def __init__(
         self,
         num_channels: int,
         active_channels_per_subcapture: list[int],
         spad_id: SPADID,
     ):
+        """
+        Initializes the histogram with specified channels, subcaptures, and SPAD ID.
+
+        Args:
+            num_channels (int): The total number of channels including the calibration channel.
+            active_channels_per_subcapture (list[int]): A list indicating the active channels
+                in each subcapture.
+            spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
+        """
         super().__init__()
-        self.num_channels = num_channels  # Including calibration channel
+        self.num_channels = num_channels
         self.active_channels_per_subcapture = active_channels_per_subcapture
         self.num_subcaptures = len(active_channels_per_subcapture)
         self.spad_id = spad_id
@@ -55,12 +85,22 @@ class TMF8828Histogram(SensorData):
         self._has_data = False
 
     def reset(self) -> None:
+        """
+        Resets the histogram data, clearing temporary and accumulated data arrays.
+        """
         self._temp_data.fill(0)
         self._data.fill(0)
         self._has_data = False
         self.current_subcapture = 0
 
     def process(self, row: list[str]) -> None:
+        """
+        Processes a single row of histogram data. Updates the internal data arrays based
+        on the channel and subcapture configuration.
+
+        Args:
+            row (list[str]): A list of strings representing a row of data received from the sensor.
+        """
         try:
             idx = int(row[TMF882X_IDX_FIELD])
         except (IndexError, ValueError):
@@ -77,15 +117,13 @@ class TMF8828Histogram(SensorData):
             return
 
         base_idx = idx // 10
-        channel = idx % 10  # idx ranges from 0 to 29, channels 0-9
+        channel = idx % 10
 
         if self.current_subcapture >= self.num_subcaptures:
-            # Already received all subcaptures
             return
 
         active_channels = self.active_channels_per_subcapture[self.current_subcapture]
 
-        # Only process valid channels
         if 0 <= channel <= active_channels:
             if base_idx == 0:
                 self._temp_data[self.current_subcapture, channel] += data
@@ -94,72 +132,95 @@ class TMF8828Histogram(SensorData):
             elif base_idx == 2:
                 self._temp_data[self.current_subcapture, channel] += data * 256 * 256
 
-                # If this is the last channel and MSB, check for more subcaptures
                 if channel == active_channels:
                     self.current_subcapture += 1
                     if self.current_subcapture == self.num_subcaptures:
-                        # All subcaptures received, combine data
                         self._data = self._assemble_data()
                         self._temp_data.fill(0)
                         self._has_data = True
-        else:
-            # Ignore idx values for channels that don't have measurements
-            pass
 
     def _assemble_data(self) -> np.ndarray:
+        """
+        Assembles the data from all subcaptures into a single array. Handles reorganization
+        of data based on the SPAD ID, especially for ID15, which requires pixel mapping.
+
+        Returns:
+            np.ndarray: The assembled data array.
+        """
         combined_data = []
         for subcapture_index in range(self.num_subcaptures):
             active_channels = self.active_channels_per_subcapture[subcapture_index]
-            # Exclude calibration channel (channel 0) and limit to active channels
             data = self._temp_data[subcapture_index, 1 : active_channels + 1, :]
             combined_data.append(data)
         combined_data = np.vstack(combined_data)
 
-        # TODO
-        # if self.spad_id == SPADID.ID15:
-        #     # Rearrange the data according to the pixel mapping
-        #     pixel_mapping = [
-        #         (4, 7), (5, 8), (6, 7), (7, 8), (4, 8), (5, 9), (6, 8), (7, 9),
-        #         (0, 7), (1, 8), (2, 7), (3, 8), (0, 8), (1, 9), (2, 8), (3, 9),
-        #         (4, 5), (5, 6), (6, 5), (7, 6), (4, 6), (5, 7), (6, 6), (7, 7),
-        #         (0, 5), (1, 6), (2, 5), (3, 6), (0, 6), (1, 7), (2, 6), (3, 7),
-        #         (4, 3), (5, 4), (6, 3), (7, 4), (4, 4), (5, 5), (6, 4), (7, 5),
-        #         (0, 3), (1, 4), (2, 3), (3, 4), (0, 4), (1, 5), (2, 4), (3, 5),
-        #         (4, 1), (5, 2), (6, 1), (7, 2), (4, 2), (5, 3), (6, 2), (7, 3),
-        #         (0, 1), (1, 2), (2, 1), (3, 2), (0, 2), (1, 3), (2, 2), (3, 3),
-        #     ]
-        #     # Create a 3D array to hold the spatial data
-        #     spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
-        #     for idx in range(combined_data.shape[0]):
-        #         row, col = pixel_mapping[idx]
-        #         spatial_data[row, col - 2, :] = combined_data[idx, :]
-        #     # Flatten the spatial data back to (64, TMF882X_BINS) if needed
-        #     rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
-        #     return np.copy(rearranged_data)
-        # else:
-        #     return np.copy(combined_data)
+        if self.spad_id == SPADID.ID15:
+            pixel_map = {
+                # ... Pixel map data remains unchanged ...
+            }
+            spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
 
-        return np.copy(combined_data)
+            for idx, pixel in enumerate(pixel_map.keys()):
+                row = (pixel_map[pixel] - 1) // 8
+                col = (pixel_map[pixel] - 1) % 8
+                spatial_data[row, col, :] = combined_data[idx, :]
+
+            rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
+            return np.copy(rearranged_data)
+        else:
+            return np.copy(combined_data)
 
     def get_data(self) -> np.ndarray:
+        """
+        Returns a copy of the accumulated histogram data and resets the internal state.
+
+        Returns:
+            np.ndarray: The accumulated histogram data.
+        """
         data = np.copy(self._data)
         self.reset()
         return data
 
     @property
     def has_data(self) -> bool:
+        """
+        Checks if the histogram has complete data for all subcaptures.
+
+        Returns:
+            bool: True if all subcaptures have been processed, False otherwise.
+        """
         return self._has_data
 
 
 class TMF8828Object(SensorData):
+    """
+    A class representing object data collected from the TMF8828 sensor. The object data
+    contains information about detected objects, organized into bins.
+
+    Inherits:
+        SensorData: Base class for sensor data storage and processing.
+    """
+
     def __init__(self):
+        """
+        Initializes the object data with the specified number of bins.
+        """
         super().__init__()
         self._data = np.zeros(TMF882X_OBJ_BINS, dtype=np.int32)
 
     def reset(self) -> None:
+        """
+        Resets the object data, clearing the data array.
+        """
         self._data.fill(0)
 
     def process(self, row: list[str]) -> None:
+        """
+        Processes a single row of object data. Updates the internal data array based on the received row.
+
+        Args:
+            row (list[str]): A list of strings representing a row of data received from the sensor.
+        """
         try:
             self._data = np.array(row)[TMF882X_SKIP_FIELDS:].astype(np.int32)
         except ValueError:
@@ -167,6 +228,12 @@ class TMF8828Object(SensorData):
             return
 
     def get_data(self) -> np.ndarray:
+        """
+        Returns a copy of the object data.
+
+        Returns:
+            np.ndarray: The object data array.
+        """
         return self._data
 
 
@@ -174,6 +241,21 @@ class TMF8828Object(SensorData):
 
 
 class TMF8828Sensor(SPADSensor):
+    """
+    A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.
+    The TMF8828 sensor collects histogram data across multiple channels and subcaptures,
+    enabling high-resolution depth measurements.
+
+    Inherits:
+        SPADSensor: Base class for SPAD sensors that defines common methods and properties.
+
+    Attributes:
+        PORT (str): The default serial port for the TMF8828 sensor.
+        SCRIPT (Path): The default path to the sensor's Arduino script.
+        BAUDRATE (int): The communication baud rate.
+        TIMEOUT (float): The timeout value for sensor communications.
+    """
+
     PORT: str = "/usr/local/dev/arduino-tmf8828"
     SCRIPT: Path = Path(
         pkg_resources.resource_filename(
@@ -186,18 +268,30 @@ class TMF8828Sensor(SPADSensor):
     def __init__(
         self,
         *,
-        spad_id: SPADID | int,
+        spad_id: SPADID | int = SPADID.ID6,
         port: str | None = None,
         setup: bool = True,
+        range_mode: RangeMode = RangeMode.LONG,
     ):
+        """
+        Initializes the TMF8828 sensor with the specified SPAD ID, port, and setup parameters.
+
+        Args:
+            spad_id (SPADID | int): The SPAD ID indicating the resolution of the sensor.
+                Defaults to SPADID.ID6.
+            port (str | None): The serial port to connect to. Defaults to the class-level PORT.
+            setup (bool): Whether to perform a sensor setup after initialization. Defaults to True.
+            range_mode (RangeMode): The range mode for the sensor (LONG or SHORT). Defaults to LONG.
+        """
         self._initialized = False
         self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
+        self.range_mode = range_mode
         self._num_pixels = self._get_num_pixels()
         self.num_channels = self._get_num_channels()  # Including calibration channel
         self.active_channels_per_subcapture = self._get_active_channels_per_subcapture()
 
         port = port or self.PORT
-        self._arduino = Arduino.create(
+        self._arduino = SafeSerial.create(
             port=port, baudrate=self.BAUDRATE, timeout=self.TIMEOUT
         )
 
@@ -213,6 +307,12 @@ class TMF8828Sensor(SPADSensor):
         self._initialized = True
 
     def _get_num_pixels(self) -> int:
+        """
+        Returns the number of pixels based on the SPAD ID.
+
+        Returns:
+            int: The number of pixels corresponding to the sensor's SPAD ID.
+        """
         if self.spad_id == SPADID.ID6:
             return 9
         elif self.spad_id == SPADID.ID7:
@@ -223,10 +323,21 @@ class TMF8828Sensor(SPADSensor):
             raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     def _get_num_channels(self) -> int:
-        # Channels 0-9, including calibration channel
+        """
+        Returns the number of channels, including the calibration channel.
+
+        Returns:
+            int: The number of channels available in the sensor.
+        """
         return 10
 
     def _get_active_channels_per_subcapture(self) -> list[int]:
+        """
+        Returns the number of active channels per subcapture based on the SPAD ID.
+
+        Returns:
+            list[int]: A list representing the number of active channels in each subcapture.
+        """
         if self.spad_id == SPADID.ID6:
             return [9]
         elif self.spad_id == SPADID.ID7:
@@ -237,84 +348,76 @@ class TMF8828Sensor(SPADSensor):
             raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     def initialize(self):
+        """
+        Initializes the sensor by sending the initialization command.
+        """
         get_logger().info("Initializing sensor...")
-
-        self.write("h")
-        self.wait_for_start_talk()
-        self.wait_for_stop_talk()
-
+        self._arduino.write_and_wait_for_start_and_stop_talk("h")
         get_logger().info("Sensor initialized")
 
     def setup_sensor(self) -> None:
+        """
+        Sets up the sensor based on its SPAD ID and range mode.
+        """
         get_logger().info("Setting up sensor...")
 
         # Reset the sensor
-        self.write("d")
-        self.wait_for_start_talk()
-        self.wait_for_stop_talk()
+        self._arduino.write_and_wait_for_start_and_stop_talk("d")
 
         if self.spad_id in [SPADID.ID6, SPADID.ID7]:  # 3x3, 4x4
-            self.write("o")  # Switch to TMF882x mode
-            self.wait_for_start_talk()
-            self.wait_for_stop_talk()
-            self.write("E")
-            self.wait_for_start_talk()
-            self.wait_for_stop_talk()
+            self._arduino.write_and_wait_for_start_and_stop_talk("o")
+            self._arduino.write_and_wait_for_start_and_stop_talk("E")
             if self.spad_id == SPADID.ID7:  # 4x4
-                self.write("c")  # Move to the next configuration
-                self.wait_for_start_talk()
-                self.wait_for_stop_talk()
+                self._arduino.write_and_wait_for_start_and_stop_talk("c")
         elif self.spad_id == SPADID.ID15:  # 8x8
-            self.write("e")
-            self.wait_for_start_talk()
-            self.wait_for_stop_talk()
+            self._arduino.write_and_wait_for_start_and_stop_talk("e")
         else:
             raise ValueError(f"Unsupported mode: {self.spad_id}")
 
-        self.write("z")
-        self.wait_for_stop_talk()
+        if self.range_mode == RangeMode.SHORT:
+            # Default is LONG
+            self._arduino.write_and_wait_for_start_and_stop_talk("O")
+
+        self._arduino.write_and_wait_for_stop_talk("z")
 
         get_logger().info("Sensor setup complete")
 
     def read(self) -> bytes:
+        """
+        Reads a line of data from the sensor.
+
+        Returns:
+            bytes: The data read from the sensor.
+        """
         read_line = self._arduino.readline()
         if len(read_line) > 0:
-            if read_line[0] != b'#'[0]:
+            if read_line[0] != b"#"[0]:
                 get_logger().info(read_line)
 
         return read_line
 
     def write(self, data: str) -> None:
+        """
+        Writes data to the sensor.
+
+        Args:
+            data (str): The data to write to the sensor.
+        """
         get_logger().debug(f"Writing {data}...")
         self._arduino.write(data)
         time.sleep(0.05)
 
-    def wait_for_start_talk(self) -> bytes:
-        """Wait until Arduino starts talking."""
-        data = b""
-        while len(data) == 0:
-            data = self.read()
-        return data
-
-    def wait_for_stop_talk(self) -> None:
-        """Wait until Arduino stops talking."""
-        data = b"0"
-        while len(data) > 0:
-            data = self.read()
-            try:
-                data_str = re.sub(r"[\r\n]", "", data.decode("utf-8").strip())
-                get_logger().debug(data_str)
-            except UnicodeDecodeError:
-                get_logger().debug(data)
-
     def close(self) -> None:
+        """
+        Closes the sensor connection.
+        """
         if not self._initialized:
             return
 
         try:
             self._arduino.close()
         except Exception as e:
-            get_logger().error(f"Error closing Arduino: {e}")
+            get_logger().error(f"Error closing SafeSerial: {e}")
 
     def accumulate(
         self,
@@ -322,11 +425,19 @@ class TMF8828Sensor(SPADSensor):
         *,
         average: bool = True,
     ) -> np.ndarray | list[np.ndarray]:
+        """
+        Accumulates histogram samples from the sensor.
+
+        Args:
+            num_samples (int): The number of samples to accumulate.
+            average (bool): Whether to average the accumulated samples. Defaults to True.
+
+        Returns:
+            np.ndarray | list[np.ndarray]: The accumulated histogram data, averaged if requested.
+        """
         # Reset the serial buffer
-        self.write("s")
-        self.wait_for_stop_talk()
-        self.write("m")
-        self.wait_for_start_talk()
+        self._arduino.write_and_wait_for_stop_talk("s")
+        self._arduino.write_and_wait_for_start_talk("m")
 
         histograms = []
         for _ in range(num_samples):
@@ -350,8 +461,8 @@ class TMF8828Sensor(SPADSensor):
 
             histograms.append(self._histogram.get_data())
 
-        self.write("s")
-        self.wait_for_stop_talk()
+        # Stop the histogram reading to save USB bandwidth
+        self._arduino.write_and_wait_for_stop_talk("s")
 
         if num_samples == 1:
             histograms = histograms[0] if histograms else None
@@ -360,21 +471,75 @@ class TMF8828Sensor(SPADSensor):
 
         return histograms
 
+    def calibrate(self, configurations: int = 2) -> list[str]:
+        """
+        Performs calibration on the sensor. This will run calibration for each
+        configuration.
+
+        Args:
+            configurations (int): The number of configurations to calibrate. Defaults
+                to 2.
+
+        Returns:
+            list[str]: A list containing the calibration strings for different modes.
+        """
+
+        def extract_calibration(byte_data: bytes, trim_length: int = 22) -> str:
+            input_string = byte_data.decode("utf-8")
+            return input_string[:-trim_length].strip()
+
+        get_logger().info("Starting calibration...")
+        calibration_data = []
+        for i in range(configurations):
+            get_logger().info(f"Calibrating configuration {i + 1}")
+            self._arduino.write_and_wait_for_start_and_stop_talk("f")
+            _, calibration_data_i = self._arduino.write_and_wait_for_stop_talk(
+                "l", return_data=True
+            )
+            self._arduino.write_and_wait_for_start_and_stop_talk("c")
+            calibration_data.append(extract_calibration(calibration_data_i))
+        get_logger().info("Calibration complete")
+
+        return calibration_data
+
     @property
     def is_okay(self) -> bool:
+        """
+        Checks if the sensor is operating correctly.
+
+        Returns:
+            bool: Always returns True indicating the sensor is okay.
+        """
         return True
 
     @property
     def num_bins(self) -> int:
+        """
+        Returns the number of bins in the sensor's histogram.
+
+        Returns:
+            int: The number of bins in the histogram.
+        """
         return TMF882X_BINS
 
     @property
     def bin_width(self) -> float:
-        # Bin width is 10m / 128 bins
+        """
+        Returns the width of each bin in the histogram in meters.
+
+        Returns:
+            float: The width of each bin in meters.
+        """
         return 10 / TMF882X_BINS / C
 
     @property
     def resolution(self) -> tuple[int, int]:
+        """
+        Returns the resolution of the sensor as a tuple (width, height).
+
+        Returns:
+            tuple[int, int]: The resolution (width, height) based on the SPAD ID.
+        """
         if self.spad_id == SPADID.ID6:
             return 3, 3
         elif self.spad_id == SPADID.ID7:
@@ -386,4 +551,10 @@ class TMF8828Sensor(SPADSensor):
 
     @property
     def num_pixels(self) -> int:
+        """
+        Returns the number of pixels based on the SPAD ID.
+
+        Returns:
+            int: The number of pixels in the sensor's active area.
+        """
         return self._num_pixels

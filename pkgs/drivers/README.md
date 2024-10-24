@@ -1,6 +1,10 @@
 # CC Hardware Drivers
 
-## Sensors
+This package contains drivers for interfacing with hardware.
+
+## Driver API
+
+## Supported Drivers
 
 ### TMF8828
 
