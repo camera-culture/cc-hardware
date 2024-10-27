@@ -4,6 +4,7 @@ from pathlib import Path
 import cv2
 import imageio
 import numpy as np
+import typer
 
 try:
     import torch
@@ -15,7 +16,7 @@ from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.tools.app import APP
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.plotting import histogram_gui, plot_points
+from cc_hardware.utils.plotting import histogram_gui, plot_points, transient_gui
 
 # ========================
 
@@ -44,6 +45,7 @@ def tmf8828_dashboard(
     channel_mask: list[int] | None = None,
     spad_id: int = 6,  # 3x3
     short_range: bool = False,
+    fullscreen: bool = False,
 ):
     from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor, RangeMode
 
@@ -68,6 +70,7 @@ def tmf8828_dashboard(
         min_bin=min_bin,
         max_bin=max_bin,
         channel_mask=channel_mask,
+        fullscreen=fullscreen,
     )
 
 
@@ -103,6 +106,40 @@ def pkl_dashboard(
         channel_mask=channel_mask,
     )
 
+# ========================
+
+def transient_viewer(
+    sensor: type[SPADSensor] | SPADSensor,
+    **kwargs,
+):
+    from cc_hardware.utils.manager import Manager
+
+    def setup(manager: Manager, sensor: SPADSensor):
+        transient_gui(sensor, **kwargs)
+
+    with Manager(sensor=sensor) as manager:
+        manager.run(setup=setup)
+
+@APP.command()
+def pkl_transient_viewer(
+    pkl_path: Path,
+    *,
+    bin_width: float = typer.Option(..., "--bin-width", help="Bin width in meters"),
+    res: tuple[int, int] = typer.Option(..., "--res", help="width, height"),
+    min_bin: int = 0,
+    max_bin: int = 127,
+    fullscreen: bool = False,
+    normalize_per_pixel: bool = True,
+):
+    from cc_hardware.drivers.spads.pkl import PklSPADSensor
+
+    transient_viewer(
+        PklSPADSensor(pkl_path, bin_width=bin_width, resolution=res),
+        min_bin=min_bin,
+        max_bin=max_bin,
+        fullscreen=fullscreen,
+        normalize_per_pixel=normalize_per_pixel,
+    )
 
 # ========================
 

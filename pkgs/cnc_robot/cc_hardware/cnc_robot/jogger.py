@@ -41,8 +41,10 @@ class Jogger:
             self.x -= self._scale
         elif key == curses.KEY_RIGHT:
             self.x += self._scale
-        elif key == ord("h") or key == ord("H"):
+        elif key == ord("h"):
             self.home()
+        elif key == ord("H"):
+            self.home(home=True)
         elif key == ord("i") or key == ord("I"):
             self._scale *= 2
         elif key == ord("d") or key == ord("D"):
@@ -65,7 +67,7 @@ class Jogger:
 
         return True
 
-    def home(self):
+    def home(self, home: bool = False):
         self._gantry.set_current_position(0, 0, 0, 0, 0, 0)
         self._target_x = 0
         self._target_y = 0

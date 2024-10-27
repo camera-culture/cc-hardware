@@ -96,12 +96,12 @@ class KinesisStepperMotor(StepperMotor):
 
         self._is_okay = False
 
-    def home(self):
+    def home(self, **kwargs):
         if not self.is_okay:
             return
 
         try:
-            self._motor.home()
+            self._motor.home(**kwargs)
             get_logger().info("Kinesis motor homed.")
         except Exception as e:
             get_logger().error(f"Failed to home the Kinesis motor: {e}")
