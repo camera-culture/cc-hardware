@@ -41,7 +41,7 @@ def tmf8828_dashboard(
     autoscale: bool = True,
     ylim: float | None = None,
     min_bin: int = 0,
-    max_bin: int = 128,
+    max_bin: int = 127,
     channel_mask: list[int] | None = None,
     spad_id: int = 6,  # 3x3
     short_range: bool = False,
@@ -84,7 +84,7 @@ def pkl_dashboard(
     autoscale: bool = True,
     ylim: float | None = None,
     min_bin: int = 0,
-    max_bin: int = 128,
+    max_bin: int = 127,
     channel_mask: list[int] | None = None,
     resolution: tuple[int, int] = (3, 3),
 ):
@@ -119,6 +119,44 @@ def transient_viewer(
 
     with Manager(sensor=sensor) as manager:
         manager.run(setup=setup)
+
+@APP.command()
+def tmf8828_transient_viewer(
+    port: str | None = None,
+    show: bool = True,
+    save: bool = False,
+    filename: str | None = None,
+    min_bin: int = 0,
+    max_bin: int = 127,
+    spad_id: int = 6,  # 3x3
+    short_range: bool = False,
+    fullscreen: bool = False,
+    fps: int = 10,
+    normalize_per_pixel: bool = True,
+):
+    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor, RangeMode
+
+    TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
+
+    assert spad_id in (
+        6,
+        7,
+        15,
+    ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
+    range_mode = RangeMode.SHORT if short_range else RangeMode.LONG
+    sensor = partial(TMF8828Sensor, spad_id=spad_id, range_mode=range_mode)
+
+    transient_viewer(
+        sensor,
+        show=show,
+        save=save,
+        filename=filename,
+        min_bin=min_bin,
+        max_bin=max_bin,
+        fullscreen=fullscreen,
+        fps=fps,
+        normalize_per_pixel=normalize_per_pixel,
+    )
 
 @APP.command()
 def pkl_transient_viewer(
@@ -200,6 +238,7 @@ def realsense_camera_viewer(
     resolution: tuple[int, int] | None = None,
     rgb: bool | None = None,
     depth: bool | None = None,
+    exposure: int | None = None,
 ):
     from cc_hardware.drivers.cameras.realsense import RealsenseCamera
 
@@ -216,6 +255,9 @@ def realsense_camera_viewer(
                 )
 
         RealsenseCamera = DepthRealsenseCamera
+
+    if exposure is not None:
+        RealsenseCamera = partial(RealsenseCamera, exposure=exposure)
 
     camera_viewer(RealsenseCamera, num_frames, resolution)
 

@@ -243,7 +243,7 @@ def transient_gui(
         'FPS',
         valmin=1,
         valmax=50,
-        valinit=10,
+        valinit=fps,
         valstep=1,
     )
 

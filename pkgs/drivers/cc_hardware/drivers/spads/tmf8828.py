@@ -59,11 +59,13 @@ class TMF8828Histogram(SensorData):
         self._data = np.zeros((total_active_channels, TMF882X_BINS), dtype=np.int32)
         self.current_subcapture = 0
         self._has_data = False
+        self._has_bad_data = False
 
     def reset(self) -> None:
         self._temp_data.fill(0)
         self._data.fill(0)
         self._has_data = False
+        self._has_bad_data = False
         self.current_subcapture = 0
 
     def process(self, row: list[str]) -> None:
@@ -71,15 +73,18 @@ class TMF8828Histogram(SensorData):
             idx = int(row[TMF882X_IDX_FIELD])
         except (IndexError, ValueError):
             get_logger().error("Invalid index received.")
+            self._has_bad_data = True
             return
         try:
             data = np.array(row[TMF882X_SKIP_FIELDS:], dtype=np.int32)
         except ValueError:
             get_logger().error("Invalid data received.")
+            self._has_bad_data = True
             return
 
         if len(data) != TMF882X_BINS:
             get_logger().error(f"Invalid data length: {len(data)}")
+            self._has_bad_data = True
             return
 
         base_idx = idx // 10
@@ -87,6 +92,7 @@ class TMF8828Histogram(SensorData):
 
         if self.current_subcapture >= self.num_subcaptures:
             # Already received all subcaptures
+            self._has_bad_data = True
             return
 
         active_channels = self.active_channels_per_subcapture[self.current_subcapture]
@@ -107,7 +113,10 @@ class TMF8828Histogram(SensorData):
                         # All subcaptures received, combine data
                         self._data = self._assemble_data()
                         self._temp_data.fill(0)
-                        self._has_data = True
+                        if self._has_bad_data:
+                            self.reset()
+                        else:
+                            self._has_data = True
         else:
             # Ignore idx values for channels that don't have measurements
             pass
@@ -427,7 +436,9 @@ class TMF8828Sensor(SPADSensor):
                 )
                 continue  # Retry
             get_logger().debug("Arduino started talking. Waiting for it to stop.")
-            received_data += self.wait_for_stop_talk(timeout)
+            data = self.wait_for_stop_talk(timeout)
+            if data is not None:
+                received_data += data
             if received_data is not None:
                 get_logger().debug("Arduino stopped talking.")
                 return True if not return_data else (True, received_data)
