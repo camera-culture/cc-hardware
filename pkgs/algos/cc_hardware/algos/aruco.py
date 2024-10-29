@@ -60,10 +60,11 @@ class ArucoLocalizationAlgorithm(Algorithm):
             if all(key in r for r in results):
                 result[key] = np.median([r[key] for r in results], axis=0)
 
-        results = {key: result.get(key) for key in self._marker_ids}
+        if len(self._marker_ids) > 0:
+            result = {key: result.get(key) for key in self._marker_ids}
         if return_images:
-            return results, images
-        return results
+            return result, images
+        return result
 
     def _process_image(
         self,
@@ -124,20 +125,21 @@ class ArucoLocalizationAlgorithm(Algorithm):
 
         # Check that origin marker is detected
         ids_list = ids.flatten().tolist()
-        if self._origin_id not in ids_list:
-            get_logger().warning(f"Origin marker (ID {self._origin_id}) not detected.")
-            return {}
-
-        # Get origin pose
-        origin_pose = self._get_pose(self._origin_id, ids_list, tvecs, rvecs)
+        if self._origin_id == -1 or self._origin_id not in ids_list:
+            origin_pose = np.array([0, 0, 0])
+        else:
+            # Get origin pose
+            origin_pose = self._get_pose(self._origin_id, ids_list, tvecs, rvecs)
 
         # Compute global poses for all specified markers
         results = {}
-        for key, id in self._marker_ids.items():
+        marker_ids = self._marker_ids if len(self._marker_ids) > 0 else {k: k for k in ids_list}
+        for key, id in marker_ids.items():
             if id in ids_list:
                 global_pose = self._get_global_pose(
                     origin_pose, id, ids_list, tvecs, rvecs
                 )
+                assert key not in results, f"Duplicate key: {key}"
                 results[key] = global_pose
 
         results["image"] = image

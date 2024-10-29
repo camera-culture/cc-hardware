@@ -1,5 +1,6 @@
 from functools import partial
 from pathlib import Path
+import pickle
 
 import cv2
 import imageio
@@ -270,35 +271,45 @@ def aruco_localization(
     num_frames: int,
     aruco_dict: str,
     marker_size: float,
+    origin_id: int = -1,
+    results_filename: Path | None = None,
     **kwargs,
 ):
     from cc_hardware.utils.manager import Manager
+    from cc_hardware.utils.writers import PklWriter
     from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
 
     assert hasattr(cv2.aruco, aruco_dict), f"Invalid aruco_dict: {aruco_dict}"
     aruco_dict = getattr(cv2.aruco, aruco_dict)
 
-    def setup(manager: Manager, camera: Camera):
+    def setup(manager: Manager, camera: Camera, writer: PklWriter | None):
         algo = ArucoLocalizationAlgorithm(
             camera,
             aruco_dict=aruco_dict,
             marker_size=marker_size,
-            origin_id=116,
+            origin_id=origin_id,
         )
         manager.add(algo=algo)
 
     def loop(
-        iter: int, manager: Manager, camera: Camera, algo: ArucoLocalizationAlgorithm
+        iter: int, manager: Manager, camera: Camera, algo: ArucoLocalizationAlgorithm, writer: PklWriter | None
     ) -> bool:
+        get_logger().info(f"Processing frame {iter}...")
         if num_frames != -1 and iter >= num_frames:
             get_logger().info(f"Finished capturing {num_frames} frames.")
             return False
 
-        algo.run(**kwargs)
+        results = algo.run(**kwargs)
+        if results_filename is not None:
+            writer.append(results)
 
         return True
 
-    with Manager(camera=camera) as manager:
+    writer: PklWriter | None = None
+    if results_filename is not None:
+        writer = PklWriter(results_filename)
+
+    with Manager(camera=camera, writer=writer) as manager:
         manager.run(setup=setup, loop=loop)
 
 
@@ -333,17 +344,20 @@ def pkl_aruco_localization(
     save: bool = False,
     filename: str | None = None,
     num_frames: int = -1,
+    key: str = "images",
+    results_filename: Path | None = None,
 ):
     from cc_hardware.drivers.cameras.pkl import PklCamera
 
     aruco_localization(
-        PklCamera(pkl_path),
+        PklCamera(pkl_path, key=key),
         aruco_dict=aruco_dict,
         marker_size=marker_size,
         show=show,
         save=save,
         filename=filename,
         num_frames=num_frames,
+        results_filename=results_filename,
     )
 
 

@@ -8,8 +8,10 @@ from cc_hardware.utils.writers import PklWriter
 
 
 class PklCamera(Camera):
-    def __init__(self, pkl_path: Path | str):
+    def __init__(self, pkl_path: Path | str, key: str = "images"):
         self._pkl_path = Path(pkl_path)
+        self._key = key
+
         self._data = PklWriter.load_all(self._pkl_path)
         self._data_iterator = iter(self._data)
         get_logger().info(f"Loaded {len(self._data)} entries from {self._pkl_path}.")
@@ -20,10 +22,7 @@ class PklCamera(Camera):
         assert len(self._data) > 0, f"No data found in {self._pkl_path}"
 
         entry = self._data[0]
-        assert "images" in entry, f"Entry does not contain images: {entry}"
-
-        images = entry["images"]
-        assert len(images) == 1, f"Invalid number of images: {len(images)} != 1"
+        assert self._key in entry, f"Entry does not contain images: {entry}"
 
     def accumulate(self, num_samples: int) -> np.ndarray:
         if self._data_iterator is None:
@@ -40,10 +39,7 @@ class PklCamera(Camera):
                 self._data_iterator = None
                 break
 
-            assert (
-                len(entry["images"]) == 1
-            ), f"Invalid number of images: {len(entry['images'])} != 1"
-            images.append(entry["images"][0])
+            images.append(entry[self._key])
         else:
             return np.array(images)
 

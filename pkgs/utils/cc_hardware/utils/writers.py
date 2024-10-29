@@ -66,7 +66,8 @@ class VideoWriter:
     def close(self):
         if self._frames:
             self._flush()
-        self._writer.close()
+        if hasattr(self, "_writer"):
+            self._writer.close()
 
     def __del__(self):
         self.close()
