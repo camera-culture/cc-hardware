@@ -11,8 +11,8 @@ try:
 except ImportError:
     torch = None
 
-from cc_hardware.drivers.camera import Camera
-from cc_hardware.drivers.spad import SPADSensor
+from cc_hardware.drivers.cameras.camera import Camera
+from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.tools.app import APP
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger

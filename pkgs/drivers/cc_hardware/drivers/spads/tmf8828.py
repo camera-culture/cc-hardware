@@ -125,11 +125,8 @@ class TMF8828Histogram(SensorData):
         channel = idx % 10
 
         if self.current_subcapture >= self.num_subcaptures:
-<<<<<<< HEAD
-=======
             # Already received all subcaptures
             self._has_bad_data = True
->>>>>>> origin/surfels2
             return
 
         active_channels = self.active_channels_per_subcapture[self.current_subcapture]
@@ -147,9 +144,6 @@ class TMF8828Histogram(SensorData):
                     if self.current_subcapture == self.num_subcaptures:
                         self._data = self._assemble_data()
                         self._temp_data.fill(0)
-<<<<<<< HEAD
-                        self._has_data = True
-=======
                         if self._has_bad_data:
                             self.reset()
                         else:
@@ -157,7 +151,6 @@ class TMF8828Histogram(SensorData):
         else:
             # Ignore idx values for channels that don't have measurements
             pass
->>>>>>> origin/surfels2
 
     def _assemble_data(self) -> np.ndarray:
         """
@@ -174,14 +167,6 @@ class TMF8828Histogram(SensorData):
             combined_data.append(data)
         combined_data = np.vstack(combined_data)
 
-<<<<<<< HEAD
-        if self.spad_id == SPADID.ID15:
-            pixel_map = {
-                # ... Pixel map data remains unchanged ...
-            }
-            spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
-=======
-        # TODO
         if self.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
             pixel_map = {
@@ -260,17 +245,6 @@ class TMF8828Histogram(SensorData):
                 spatial_data[row, col, :] = combined_data[idx, :]
 
             # Flatten the spatial data back to (64, TMF882X_BINS) if needed
-            rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
-            return np.copy(rearranged_data)
-        else:
-            return np.copy(combined_data)
->>>>>>> origin/surfels2
-
-            for idx, pixel in enumerate(pixel_map.keys()):
-                row = (pixel_map[pixel] - 1) // 8
-                col = (pixel_map[pixel] - 1) % 8
-                spatial_data[row, col, :] = combined_data[idx, :]
-
             rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
             return np.copy(rearranged_data)
         else:
@@ -458,13 +432,7 @@ class TMF8828Sensor(SPADSensor):
         Initializes the sensor by sending the initialization command.
         """
         get_logger().info("Initializing sensor...")
-<<<<<<< HEAD
         self._arduino.write_and_wait_for_start_and_stop_talk("h")
-=======
-
-        self.write_and_wait_for_start_and_stop_talk("h")
-
->>>>>>> origin/surfels2
         get_logger().info("Sensor initialized")
 
     def setup_sensor(self) -> None:
@@ -474,7 +442,6 @@ class TMF8828Sensor(SPADSensor):
         get_logger().info("Setting up sensor...")
 
         # Reset the sensor
-<<<<<<< HEAD
         self._arduino.write_and_wait_for_start_and_stop_talk("d")
 
         if self.spad_id in [SPADID.ID6, SPADID.ID7]:  # 3x3, 4x4
@@ -484,31 +451,14 @@ class TMF8828Sensor(SPADSensor):
                 self._arduino.write_and_wait_for_start_and_stop_talk("c")
         elif self.spad_id == SPADID.ID15:  # 8x8
             self._arduino.write_and_wait_for_start_and_stop_talk("e")
-=======
-        self.write_and_wait_for_start_and_stop_talk("d")
-
-        if self.spad_id in [SPADID.ID6, SPADID.ID7]:  # 3x3, 4x4
-            self.write_and_wait_for_start_and_stop_talk("o")
-            self.write_and_wait_for_start_and_stop_talk("E")
-            if self.spad_id == SPADID.ID7:  # 4x4
-                self.write_and_wait_for_start_and_stop_talk("c")
-        elif self.spad_id == SPADID.ID15:  # 8x8
-            self.write_and_wait_for_start_and_stop_talk("e")
->>>>>>> origin/surfels2
         else:
             raise ValueError(f"Unsupported mode: {self.spad_id}")
 
         if self.range_mode == RangeMode.SHORT:
             # Default is LONG
-<<<<<<< HEAD
             self._arduino.write_and_wait_for_start_and_stop_talk("O")
 
         self._arduino.write_and_wait_for_stop_talk("z")
-=======
-            self.write_and_wait_for_start_and_stop_talk("O")
-
-        self.write_and_wait_for_stop_talk("z")
->>>>>>> origin/surfels2
 
         get_logger().info("Sensor setup complete")
 
@@ -537,135 +487,6 @@ class TMF8828Sensor(SPADSensor):
         self._arduino.write(data)
         time.sleep(0.05)
 
-<<<<<<< HEAD
-=======
-    def wait_for_start_talk(self, timeout: float = None) -> bytes | None:
-        """Wait until Arduino starts talking. Returns data if successful, None if timeout."""
-        data = b""
-        start_time = time.time()
-        while len(data) == 0:
-            if timeout is not None and time.time() - start_time > timeout:
-                return None  # Timeout occurred
-            data = self.read()
-        return data
-
-    def write_and_wait_for_start_talk(
-        self, data: str, timeout: float | None = None, tries: int = 10
-    ) -> bool:
-        """Write data to Arduino and wait for it to start talking with timeout.
-        If timeout happens before something is received, resend data.
-        Returns True if successful, False otherwise."""
-        if timeout is None:
-            timeout = self.TIMEOUT
-
-        for attempt in range(tries):
-            get_logger().debug(
-                f"Attempt {attempt + 1}/{tries}: Writing '{data}' and waiting for Arduino to start talking."
-            )
-            self.write(data)
-            received_data = self.wait_for_start_talk(timeout)
-            if received_data is not None:
-                get_logger().debug("Arduino started talking.")
-                return True
-            else:
-                get_logger().warning(
-                    "Timeout occurred waiting for Arduino to start talking. Retrying..."
-                )
-                continue  # Retry
-        get_logger().error(f"Failed after {tries} attempts.")
-        return False
-
-    def wait_for_stop_talk(self, timeout: float = None) -> bytes | None:
-        """Wait until Arduino stops talking. Returns True if stopped before timeout, False otherwise."""
-        data = b"0"
-        accumulated_data = b""
-        start_time = time.time()
-        while len(data) > 0:
-            if timeout is not None and time.time() - start_time > timeout:
-                return None  # Timeout occurred
-            data = self.read()
-            try:
-                data_str = re.sub(r"[\r\n]", "", data.decode("utf-8").strip())
-                get_logger().debug(data_str)
-            except UnicodeDecodeError:
-                get_logger().debug(data)
-
-            accumulated_data += data
-        return accumulated_data  # Stopped talking before timeout
-
-    def write_and_wait_for_stop_talk(
-        self,
-        data: str,
-        timeout: float | None = None,
-        tries: int = 10,
-        return_data: bool = False,
-    ) -> bool | tuple[bool, bytes | None]:
-        """Write data to Arduino and wait for it to stop talking with timeout.
-        If timeout happens before something is received, resend data.
-        Returns True if successful, False otherwise."""
-        if timeout is None:
-            timeout = self.TIMEOUT
-
-        for attempt in range(tries):
-            get_logger().debug(
-                f"Attempt {attempt + 1}/{tries}: Writing '{data}' and waiting for Arduino to start talking."
-            )
-            self.write(data)
-            received_data = self.wait_for_start_talk(timeout)
-            if received_data is None:
-                get_logger().warning(
-                    f"Timeout occurred waiting for Arduino to start talking. Retrying..."
-                )
-                continue  # Retry
-            get_logger().debug("Arduino started talking. Waiting for it to stop.")
-            data = self.wait_for_stop_talk(timeout)
-            if data is not None:
-                received_data += data
-            if received_data is not None:
-                get_logger().debug("Arduino stopped talking.")
-                return True if not return_data else (True, received_data)
-            else:
-                get_logger().warning(
-                    f"Timeout occurred waiting for Arduino to stop talking. Retrying..."
-                )
-        get_logger().error(f"Failed after {tries} attempts.")
-        return False if not return_data else (False, None)
-
-    def write_and_wait_for_start_and_stop_talk(
-        self, data: str, timeout: float | None = None, tries: int = 10
-    ) -> bool:
-        """Write data to Arduino and wait for it to start and stop talking with timeout.
-        If timeout happens before either event, resend data.
-        Returns True if successful, False otherwise."""
-        if timeout is None:
-            timeout = self.TIMEOUT
-
-        for attempt in range(tries):
-            get_logger().debug(
-                f"Attempt {attempt + 1}/{tries}: Writing '{data}' and waiting for Arduino to start and stop talking."
-            )
-            self.write(data)
-            # Wait for Arduino to start talking
-            received_data = self.wait_for_start_talk(timeout)
-            if received_data is None:
-                get_logger().warning(
-                    "Timeout occurred waiting for Arduino to start talking. Retrying..."
-                )
-                continue  # Retry
-            get_logger().debug("Arduino started talking. Waiting for it to stop.")
-            # Wait for Arduino to stop talking
-            received_data = self.wait_for_stop_talk(timeout)
-            if received_data is not None:
-                get_logger().debug("Arduino stopped talking.")
-                return True
-            else:
-                get_logger().warning(
-                    "Timeout occurred waiting for Arduino to stop talking. Retrying..."
-                )
-        get_logger().error(f"Failed after {tries} attempts.")
-        return False
-
->>>>>>> origin/surfels2
     def close(self) -> None:
         """
         Closes the sensor connection.
@@ -695,13 +516,8 @@ class TMF8828Sensor(SPADSensor):
             np.ndarray | list[np.ndarray]: The accumulated histogram data, averaged if requested.
         """
         # Reset the serial buffer
-<<<<<<< HEAD
         self._arduino.write_and_wait_for_stop_talk("s")
         self._arduino.write_and_wait_for_start_talk("m")
-=======
-        self.write_and_wait_for_stop_talk("s")
-        self.write_and_wait_for_start_talk("m")
->>>>>>> origin/surfels2
 
         histograms = []
         for _ in range(num_samples):
@@ -725,13 +541,8 @@ class TMF8828Sensor(SPADSensor):
 
             histograms.append(self._histogram.get_data())
 
-<<<<<<< HEAD
         # Stop the histogram reading to save USB bandwidth
         self._arduino.write_and_wait_for_stop_talk("s")
-=======
-        # Stop the histogram reading to save usb bandwidth
-        self.write_and_wait_for_stop_talk("s")
->>>>>>> origin/surfels2
 
         if num_samples == 1:
             histograms = histograms[0] if histograms else None
@@ -740,7 +551,6 @@ class TMF8828Sensor(SPADSensor):
 
         return histograms
 
-<<<<<<< HEAD
     def calibrate(self, configurations: int = 2) -> list[str]:
         """
         Performs calibration on the sensor. This will run calibration for each
@@ -771,35 +581,6 @@ class TMF8828Sensor(SPADSensor):
         get_logger().info("Calibration complete")
 
         return calibration_data
-=======
-    def calibrate(self) -> list[str]:
-        """This performs calibration consistent with the readme defined
-        [here](https://github.com/ams-OSRAM/tmf8820_21_28_driver_arduino?tab=readme-ov-file#factory-calibration-generation-and-storing-it-for-arduino-uno).
-
-        This completes calibration for both the tmf8828 and tmf882x modes, as well
-        as both accuracy modes.
-        """
-
-        def extract_calibration(byte_data: bytes, trim_length: int = 22) -> str:
-            # Convert the bytes to string
-            input_string = byte_data.decode("utf-8")
-
-            # Remove the last 'trim_length' characters and return the resulting string
-            return input_string[:-trim_length].strip()
-
-        get_logger().info("Starting calibration...")
-        self.write_and_wait_for_start_and_stop_talk("f")
-        _, calibration_data0 = self.write_and_wait_for_stop_talk("l", return_data=True)
-        self.write_and_wait_for_start_and_stop_talk("c")
-        self.write_and_wait_for_start_and_stop_talk("f")
-        _, calibration_data1 = self.write_and_wait_for_stop_talk("l", return_data=True)
-        get_logger().info("Calibration complete")
-
-        return [
-            extract_calibration(calibration_data0),
-            extract_calibration(calibration_data1),
-        ]
->>>>>>> origin/surfels2
 
     @property
     def is_okay(self) -> bool:
