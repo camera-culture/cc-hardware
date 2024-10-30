@@ -14,35 +14,25 @@ class KinesisStepperMotor(StepperMotor):
         port (str): The port of the Kinesis motor.
 
     Keyword Args:
+        channel (int): The channel of the motor. Defaults to 1.
         is_rack_system (bool): Whether the motor is part of a rack system. Defaults to
             True.
-        scale (float): The scale factor for motor movement. Defaults to 1.0.
-        channel (str): The channel of the motor. Defaults to 1.
-        lower_limit (float, optional): The lower movement limit of the motor. Defaults
-            to None.
-        upper_limit (float, optional): The upper movement limit of the motor. Defaults
-            to None.
-        clip_at_limits (bool): If True, the motor will clip movements at the set limits.
-            If False, an error will be logged if the limits are exceeded. Defaults to
-            False.
+        scale (float): The scaling factor for motor positions. Defaults to 1.0.
     """
 
     def __init__(
         self,
         port: str,
         *,
+        channel: int = 1,
         is_rack_system: bool = True,
         scale: float = 1.0,
-        channel: str = 1,
-        lower_limit: float | None = None,
-        upper_limit: float | None = None,
-        clip_at_limits: bool = False,
     ):
         self._is_okay = False
         self._scale = scale
-        self._lower_limit = lower_limit
-        self._upper_limit = upper_limit
-        self._clip_at_limits = (lower_limit or upper_limit) and clip_at_limits
+        self._lower_limit = None
+        self._upper_limit = None
+        self._clip_at_limits = False
 
         self._motor = KinesisMotor(
             port, is_rack_system=is_rack_system, default_channel=channel
@@ -57,24 +47,41 @@ class KinesisStepperMotor(StepperMotor):
 
     def initialize(
         self,
-        inital_position: float | None = None,
         *,
+        max_velocity: float | None = None,
+        acceleration: float | None = None,
+        lower_limit: float | None = None,
+        upper_limit: float | None = None,
+        clip_at_limits: bool = False,
+        initial_position: float | None = None,
+        reference_position: float | None = None,
         home: bool = False,
         check_homed: bool | None = None,
-        reference_position: float | None = None,
     ) -> bool:
         """
         Initialize the Kinesis motor, with options to home and set a reference position.
 
-        Args:
-            inital_position (float, optional): The initial position to move the motor
+        Keyword Args:
+            max_velocity (float, optional): The maximum velocity of the motor. Defaults
+                to None.
+            acceleration (float, optional): The acceleration of the motor. Defaults to
+
+            lower_limit (float, optional): The lower limit of the motor. Defaults to
+                None.
+            upper_limit (float, optional): The upper limit of the motor. Defaults to
+                None.
+            clip_at_limits (bool, optional): Whether to clip the motor position at the
+                limits. Defaults to False.
+
+            initial_position (float, optional): The initial position to move the motor
                 to. Defaults to None.
+            reference_position (float, optional): The reference position to set.
+                Defaults to None.
+
             home (bool): Whether to home the motor during initialization. Defaults to
                 False.
             check_homed (bool, optional): Whether to check if the motor is homed.
                 Defaults to the opposite of `home`.
-            reference_position (float, optional): The reference position to set.
-                Defaults to None.
 
         Returns:
             bool: True if the motor is successfully initialized, False otherwise.
@@ -83,18 +90,31 @@ class KinesisStepperMotor(StepperMotor):
             get_logger().warning("Kinesis motor is not operational.")
             return False
 
+        self._lower_limit = lower_limit
+        self._upper_limit = upper_limit
+        self._clip_at_limits = (lower_limit or upper_limit) and clip_at_limits
+
         check_homed = check_homed if check_homed is not None else not home
 
         try:
+            # Set velocity and acceleration
+            self._motor.setup_velocity(
+                acceleration=acceleration, max_velocity=max_velocity
+            )
+
+            # Homing sequence
             if home:
                 self.home()
             if check_homed and not self._motor.is_homed():
                 get_logger().error("Kinesis motor is not homed.")
                 return False
+
+            # Set reference and initial position
             if reference_position is not None:
                 self._motor.set_position_reference(reference_position)
-            if inital_position is not None:
-                self.move_to(inital_position)
+            if initial_position is not None:
+                self.move_to(initial_position)
+
             get_logger().info("Kinesis motor initialized.")
         except Exception as e:
             get_logger().error(f"Failed to initialize the Kinesis motor: {e}")
@@ -124,7 +144,7 @@ class KinesisStepperMotor(StepperMotor):
 
         self._is_okay = False
 
-    def home(self):
+    def home(self, **kwargs):
         """
         Homes the Kinesis motor to its reference or zero position.
         """
@@ -132,7 +152,7 @@ class KinesisStepperMotor(StepperMotor):
             return
 
         try:
-            self._motor.home()
+            self._motor.home(**kwargs)
             get_logger().info("Kinesis motor homed.")
         except Exception as e:
             get_logger().error(f"Failed to home the Kinesis motor: {e}")
@@ -299,3 +319,34 @@ class KinesisStepperMotor(StepperMotor):
             float: The converted position.
         """
         return position / self._scale
+
+
+class KinesisRotationStage(KinesisStepperMotor):
+    IS_RACK_SYSTEM = True
+    SCALE = 75000
+
+    # Parameters taken from SCurve profile in Thorlabs Kinesis software
+    ACCELERATION = 1877344.2032468664
+    MAX_VELOCITY = 3755159.538002981
+
+    def __init__(
+        self,
+        *args,
+        is_rack_system: bool | None = None,
+        scale: int | None = None,
+        **kwargs,
+    ):
+        if is_rack_system is None:
+            is_rack_system = self.IS_RACK_SYSTEM
+        kwargs.setdefault("is_rack_system", is_rack_system)
+        if scale is None:
+            scale = self.SCALE
+        kwargs.setdefault("scale", scale)
+
+        super().__init__(*args, **kwargs)
+
+    def initialize(self, **kwargs) -> bool:
+        kwargs.setdefault("max_velocity", self.MAX_VELOCITY)
+        kwargs.setdefault("acceleration", self.ACCELERATION)
+
+        return super().initialize(**kwargs)

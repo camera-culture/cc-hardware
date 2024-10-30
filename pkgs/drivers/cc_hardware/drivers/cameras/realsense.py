@@ -21,6 +21,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         camera_index: int = 0,
         start_pipeline_once: bool = True,
         force_autoexposure: bool = False,
+        exposure: int | list[int] | None = None,
     ):
         """
         Initialize a RealsenseCamera instance.
@@ -35,6 +36,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         self.camera_index = camera_index
         self.start_pipeline_once = start_pipeline_once
         self.force_autoexposure = force_autoexposure
+
         self.queue = BlockingDeque(maxlen=10)
         self.stop_thread = threading.Event()
         self.has_started = threading.Event()
@@ -46,10 +48,10 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         self.config.enable_stream(rs.stream.color, 1920, 1080, rs.format.bgr8, 6)
         self.config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 6)
 
-        # Flag to check if exposure has been initialized
-        self.exposure_initialized = False
         # Store exposure settings
-        self.exposure_settings = []
+        self.exposure_settings = exposure if exposure is not None else []
+        # Flag to check if exposure has been initialized
+        self.exposure_initialized = exposure is not None
 
         self._start_background_capture()
 
@@ -67,10 +69,8 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         self.thread.start()
 
     def _background_capture(self):
-        """
-        Initializes the camera, continuously captures RGB and depth images, and
-        stores them in the queue.
-        """
+        """Initializes the camera, continuously captures RGB, depth images, and
+        stores them in the queue."""
         get_logger().info(
             f"Starting background capture for camera index {self.camera_index}"
         )
@@ -93,6 +93,9 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
                     # Run exposure initialization
                     self._initialize_exposure(sensors)
                 else:
+                    if isinstance(self.exposure_settings, int):
+                        self.exposure_settings = [self.exposure_settings] * len(sensors)
+
                     # Re-apply saved exposure settings
                     get_logger().debug("Re-applying exposure settings...")
                     for sensor, exposure_value in zip(sensors, self.exposure_settings):
@@ -147,7 +150,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
 
         # Enable auto-exposure for a few frames to stabilize
         get_logger().debug("Starting autoexposure procedure...")
-        for _ in range(20):  # Let it run for 20 frames to stabilize the exposure
+        for _ in range(10):  # Let it run for 10 frames to stabilize the exposure
             _ = self.pipeline.wait_for_frames()
             for sensor in sensors:
                 if sensor.supports(rs.option.enable_auto_exposure):
@@ -219,7 +222,6 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
                 result.append(np.array(color_images))
             if return_depth:
                 result.append(np.array(depth_images))
-
             return tuple(result) if len(result) > 1 else result[0]
         finally:
             if not self.start_pipeline_once:
