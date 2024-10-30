@@ -1,8 +1,10 @@
 from typing import Any
 from abc import ABC, abstractmethod
 
+from cc_hardware.utils.registry import Registry
 
-class Algorithm(ABC):
+
+class Algorithm(Registry, ABC):
     """This is an algorithm interface that all algorithms should implement."""
 
     def __init__(self):

@@ -8,8 +8,10 @@ from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.singleton import SingletonABCMeta
+from cc_hardware.utils.registry import register
 
 
+@register
 class FlirCamera(Camera, metaclass=SingletonABCMeta):
     """
     A singleton camera class for FLIR cameras using the PySpin library.
@@ -45,7 +47,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
 
     def _background_capture(self):
         """
-        Initializes the camera, continuously captures images, and stores 
+        Initializes the camera, continuously captures images, and stores
         them in the queue.
         """
         get_logger().info(
@@ -84,7 +86,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
             num_samples (int): Number of image samples to accumulate.
 
         Keyword Args:
-            average (bool, optional): Whether to average the accumulated 
+            average (bool, optional): Whether to average the accumulated
                                       images. Defaults to False.
 
         Returns:
@@ -127,7 +129,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         Get the resolution (width, height) of the camera.
 
         Returns:
-            tuple[int, int]: A tuple containing the width and height 
+            tuple[int, int]: A tuple containing the width and height
                              of the camera.
         """
         return int(self.cam.Width.GetValue()), int(self.cam.Height.GetValue())
@@ -139,7 +141,7 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
         Check if the camera is properly initialized.
 
         Returns:
-            bool: True if the camera is initialized and streaming properly, 
+            bool: True if the camera is initialized and streaming properly,
                   False otherwise.
         """
         if not hasattr(self, "cam"):
@@ -171,10 +173,11 @@ class FlirCamera(Camera, metaclass=SingletonABCMeta):
             self.system.ReleaseInstance()
 
 
+@register
 class GrasshopperFlirCamera(FlirCamera):
     """
     Specialized camera class for a Grasshopper FLIR camera model.
-    Inherits from FlirCamera and provides specific intrinsic and 
+    Inherits from FlirCamera and provides specific intrinsic and
     distortion parameters.
     """
 
@@ -201,7 +204,7 @@ class GrasshopperFlirCamera(FlirCamera):
         Get the intrinsic matrix of the Grasshopper FLIR camera.
 
         Returns:
-            np.ndarray: A 3x3 array representing the intrinsic matrix 
+            np.ndarray: A 3x3 array representing the intrinsic matrix
                         of the camera.
         """
         return self.INTRINSIC_MATRIX

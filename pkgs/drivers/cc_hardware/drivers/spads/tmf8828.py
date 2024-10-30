@@ -12,6 +12,7 @@ from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import register
 
 # ================
 
@@ -320,6 +321,7 @@ class TMF8828Object(SensorData):
 # ================
 
 
+@register
 class TMF8828Sensor(SPADSensor):
     """
     A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.

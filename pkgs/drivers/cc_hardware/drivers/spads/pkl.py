@@ -2,11 +2,13 @@ from pathlib import Path
 
 import numpy as np
 
-from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.writers import PklWriter
+from cc_hardware.utils.registry import register
+from cc_hardware.drivers.spads import SPADSensor
 
 
+@register
 class PklSPADSensor(SPADSensor):
     """
     A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded

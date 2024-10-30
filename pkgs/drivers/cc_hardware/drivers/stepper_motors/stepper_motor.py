@@ -1,6 +1,10 @@
+from typing import Any
 from abc import ABC, abstractmethod
 
-class StepperMotor(ABC):
+from cc_hardware.utils.registry import register, Registry
+from cc_hardware.utils.logger import get_logger
+
+class StepperMotor(Registry, ABC):
     """
     An abstract base class for controlling a stepper motor. This class provides a 
     unified interface for common operations such as moving to a specific position, 
@@ -10,6 +14,9 @@ class StepperMotor(ABC):
     Any subclass must implement all the defined abstract methods to ensure 
     compatibility with the expected motor control behavior.
     """
+
+    def initialize(self):
+        get_logger().info(f"Initialized {self.__class__.__name__}.")
 
     @abstractmethod
     def close(self) -> None:
@@ -55,6 +62,28 @@ class StepperMotor(ABC):
         """
         pass
 
+    @abstractmethod
+    def wait_for_move(self) -> None:
+        """
+        Waits for the motor to complete its current move operation. This method should 
+        block the execution until the motor has reached its target position or 
+        completed the current motion command.
+        """
+        pass
+
+    @property
+    @abstractmethod
+    def position(self) -> float:
+        """
+        Returns the current position of the stepper motor. The position value should 
+        represent the motor's current location in the same units as the move_to and 
+        move_by methods.
+
+        Returns:
+            float: The current position of the motor.
+        """
+        pass
+
     @property
     @abstractmethod
     def is_okay(self) -> bool:
@@ -66,4 +95,23 @@ class StepperMotor(ABC):
         Returns:
             bool: True if the motor is operational, False otherwise.
         """
+        pass
+
+
+@register
+class DummyStepperMotor:
+    """This is a dummy stepper motor class that does nothing. This is useful for testing
+    or when you don't have the stepper connected to the computer. Also can be used for
+    axes which don't have a motor attached to them."""
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def __getattr__(self, name: str) -> Any:
+        def noop(*args, **kwargs) -> Any:
+            pass
+
+        return noop
+
+    def __del__(self):
         pass

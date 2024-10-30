@@ -14,4 +14,5 @@ include = [{ path = "./cc_hardware/drivers/data" }]
 [tool.poetry.dependencies]
 python = ">=3.12"
 numpy = ">=1.26.4, <2.0.0"
+telemetrix = { git = "https://github.com/AaronYoung5/telemetrix.git" }
 utils = { path = "../utils", develop = true }

@@ -3,12 +3,14 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from cc_hardware.algos.algo import Algorithm
-from cc_hardware.drivers.camera import Camera
+from cc_hardware.algos.algorithm import Algorithm
+from cc_hardware.drivers.cameras import Camera
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.writers import VideoWriter
+from cc_hardware.utils.registry import register
 
 
+@register
 class ArucoLocalizationAlgorithm(Algorithm):
     """An algorithm to localize ArUco markers using camera images.
 

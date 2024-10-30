@@ -5,8 +5,10 @@ import numpy as np
 from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.writers import PklWriter
+from cc_hardware.utils.registry import register
 
 
+@register
 class PklCamera(Camera):
     """
     Camera class that loads and reads images from a pickle (.pkl) file. 

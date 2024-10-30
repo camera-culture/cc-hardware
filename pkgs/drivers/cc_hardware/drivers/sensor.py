@@ -5,9 +5,10 @@ from typing import Any
 import numpy as np
 
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import Registry
 
 
-class Sensor(ABC):
+class Sensor(Registry, ABC):
     """Abstract base class for sensors."""
 
     @property

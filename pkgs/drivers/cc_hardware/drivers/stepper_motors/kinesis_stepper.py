@@ -1,9 +1,17 @@
 from pylablib.devices.Thorlabs import KinesisMotor
 
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.drivers.stepper_motors.stepper_motor import StepperMotor
+from cc_hardware.utils.registry import register
+from cc_hardware.drivers.stepper_motors import (
+    StepperMotor,
+    StepperMotorSystem,
+    StepperMotorSystemAxis,
+)
+
+# ======================
 
 
+@register
 class KinesisStepperMotor(StepperMotor):
     """
     A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
@@ -158,15 +166,13 @@ class KinesisStepperMotor(StepperMotor):
             get_logger().error(f"Failed to home the Kinesis motor: {e}")
             self.close(home=False)
 
-    def move_by(self, relative_position: float, wait_for_stop: bool = True):
+    def move_by(self, relative_position: float):
         """
         Moves the motor by a specified relative position.
 
         Args:
             relative_position (float): The amount to move the motor by, relative to
                 its current position.
-            wait_for_stop (bool): Whether to wait for the motor to stop after moving.
-                Defaults to True.
         """
         if not self.is_okay:
             get_logger().warning("Kinesis motor is not operational.")
@@ -177,22 +183,18 @@ class KinesisStepperMotor(StepperMotor):
             if relative_position is None:
                 return
 
+            get_logger().info(f"Rotating by {relative_position} degrees...")
             self._motor.move_by(self._convert_to(relative_position))
-            if wait_for_stop:
-                self._motor.wait_for_stop()
-            get_logger().info(f"Rotated by {relative_position} degrees.")
         except Exception as e:
             get_logger().error(f"Failed to rotate the Kinesis motor: {e}")
             self.close()
 
-    def move_to(self, position: float, wait_for_stop: bool = True):
+    def move_to(self, position: float):
         """
         Moves the motor to a specified absolute position.
 
         Args:
             position (float): The target absolute position to move the motor to.
-            wait_for_stop (bool): Whether to wait for the motor to stop after moving.
-                Defaults to True.
         """
         if not self.is_okay:
             get_logger().warning("Kinesis motor is not operational.")
@@ -203,10 +205,8 @@ class KinesisStepperMotor(StepperMotor):
             if position is None:
                 return
 
+            get_logger().info(f"Rotating to {position} degrees...")
             self._motor.move_to(self._convert_to(position))
-            if wait_for_stop:
-                self._motor.wait_for_stop()
-            get_logger().info(f"Rotated to {position} degrees.")
         except Exception as e:
             get_logger().error(f"Failed to rotate the Kinesis motor: {e}")
             self.close()
@@ -243,6 +243,31 @@ class KinesisStepperMotor(StepperMotor):
             get_logger().error("Position is above the upper limit.")
             return None
         return position
+
+    def wait_for_move(self) -> None:
+        """
+        Waits for the motor to complete its current move operation.
+        """
+        if not self.is_okay:
+            get_logger().warning("Kinesis motor is not operational.")
+            return
+
+        self._motor.wait_for_stop()
+        get_logger().info("Kinesis motor has stopped moving.")
+
+    @property
+    def position(self) -> float:
+        """
+        Get the current absolute position of the motor.
+
+        Returns:
+            float: The current position of the motor, or 0.0 if the motor is not
+                operational.
+        """
+        if not self.is_okay:
+            return 0.0
+
+        return self._convert_from(self._motor.get_position())
 
     @property
     def is_okay(self) -> bool:
@@ -321,6 +346,10 @@ class KinesisStepperMotor(StepperMotor):
         return position / self._scale
 
 
+# ======================
+
+
+@register
 class KinesisRotationStage(KinesisStepperMotor):
     IS_RACK_SYSTEM = True
     SCALE = 75000
@@ -350,3 +379,49 @@ class KinesisRotationStage(KinesisStepperMotor):
         kwargs.setdefault("acceleration", self.ACCELERATION)
 
         return super().initialize(**kwargs)
+
+
+# ======================
+
+
+@register
+class KinesisStepperMotorSystem(StepperMotorSystem):
+    """
+    A wrapper around multiple Kinesis stepper motors which defines the system as a
+    whole.
+
+    Args:
+        port (str): The port of the Kinesis motor device (has different channels for
+            different axes).
+        axes (dict[StepperMotorSystemAxis, list[type[KinesisStepperMotor]]]): A
+            dictionary of axes and the motors that are attached to them. The motors are
+            specified as classes, which will be instantiated with the port and any
+            additional keyword arguments.
+    """
+
+    def __init__(
+        self,
+        port: str,
+        axes: dict[StepperMotorSystemAxis, list[type[KinesisStepperMotor]]],
+    ):
+        axes = {
+            axis: [motor(port) for motor in motors] for axis, motors in axes.items()
+        }
+        super().__init__(axes)
+
+
+@register
+class AzimuthElevationSystem(KinesisStepperMotorSystem):
+    """
+    A predefined multi-axis system for an azimuth-elevation setup.
+
+    Args:
+        port (str): The port of the Kinesis motor device.
+    """
+
+    def __init__(self, port: str):
+        axes = {
+            StepperMotorSystemAxis.AZIMUTH: [KinesisRotationStage(port, channel=1)],
+            StepperMotorSystemAxis.ELEVATION: [KinesisRotationStage(port, channel=2)],
+        }
+        super().__init__(port, axes)
