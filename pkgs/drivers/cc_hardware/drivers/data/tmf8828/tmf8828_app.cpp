@@ -304,7 +304,7 @@ static const uint8_t *getPrecollectedFactoryCalibration(uint8_t id) {
   {
     if (isLongRangeMode) {
       factory_calib = tmf882x_calib_long_0;
-      if (configNr == 1) 
+      if (configNr == 1)
         factory_calib = tmf882x_calib_long_1;
     }
     else {

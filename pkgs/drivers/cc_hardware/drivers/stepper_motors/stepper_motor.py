@@ -1,17 +1,18 @@
-from typing import Any
 from abc import ABC, abstractmethod
+from typing import Any
 
-from cc_hardware.utils.registry import register, Registry
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import Registry, register
+
 
 class StepperMotor(Registry, ABC):
     """
-    An abstract base class for controlling a stepper motor. This class provides a 
-    unified interface for common operations such as moving to a specific position, 
-    homing, and closing the motor. It also includes a property to check the operational 
+    An abstract base class for controlling a stepper motor. This class provides a
+    unified interface for common operations such as moving to a specific position,
+    homing, and closing the motor. It also includes a property to check the operational
     status of the motor.
 
-    Any subclass must implement all the defined abstract methods to ensure 
+    Any subclass must implement all the defined abstract methods to ensure
     compatibility with the expected motor control behavior.
     """
 
@@ -21,8 +22,8 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def close(self) -> None:
         """
-        Closes the connection or shuts down the stepper motor safely. Implementations 
-        should ensure that the motor is properly powered down and any resources are 
+        Closes the connection or shuts down the stepper motor safely. Implementations
+        should ensure that the motor is properly powered down and any resources are
         released to avoid damage or memory leaks.
         """
         pass
@@ -30,9 +31,9 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def home(self) -> None:
         """
-        Homes the stepper motor to its reference or zero position. This method should 
-        move the motor to a predefined starting point, which could involve moving 
-        until a limit switch or sensor is triggered to establish a known starting 
+        Homes the stepper motor to its reference or zero position. This method should
+        move the motor to a predefined starting point, which could involve moving
+        until a limit switch or sensor is triggered to establish a known starting
         position.
         """
         pass
@@ -43,8 +44,8 @@ class StepperMotor(Registry, ABC):
         Moves the stepper motor to a specific absolute position.
 
         Args:
-            position (float): The target absolute position to move the motor to. The 
-                interpretation of this value may depend on the specific implementation 
+            position (float): The target absolute position to move the motor to. The
+                interpretation of this value may depend on the specific implementation
                 and motor characteristics (e.g., steps, angle).
         """
         pass
@@ -52,12 +53,12 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def move_by(self, relative_position: float) -> None:
         """
-        Moves the stepper motor by a specified relative amount from its current 
+        Moves the stepper motor by a specified relative amount from its current
         position.
 
         Args:
-            relative_position (float): The amount to move the motor by, relative to its 
-                current position. This could represent steps, degrees, or any other 
+            relative_position (float): The amount to move the motor by, relative to its
+                current position. This could represent steps, degrees, or any other
                 unit, depending on the motor's configuration.
         """
         pass
@@ -65,8 +66,8 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def wait_for_move(self) -> None:
         """
-        Waits for the motor to complete its current move operation. This method should 
-        block the execution until the motor has reached its target position or 
+        Waits for the motor to complete its current move operation. This method should
+        block the execution until the motor has reached its target position or
         completed the current motion command.
         """
         pass
@@ -75,8 +76,8 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def position(self) -> float:
         """
-        Returns the current position of the stepper motor. The position value should 
-        represent the motor's current location in the same units as the move_to and 
+        Returns the current position of the stepper motor. The position value should
+        represent the motor's current location in the same units as the move_to and
         move_by methods.
 
         Returns:
@@ -88,8 +89,8 @@ class StepperMotor(Registry, ABC):
     @abstractmethod
     def is_okay(self) -> bool:
         """
-        Checks if the stepper motor is in a healthy operational state. This could 
-        involve verifying that the motor is not in an error state, is receiving power, 
+        Checks if the stepper motor is in a healthy operational state. This could
+        involve verifying that the motor is not in an error state, is receiving power,
         and has no detected hardware issues.
 
         Returns:

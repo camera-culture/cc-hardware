@@ -7,8 +7,8 @@ import PySpin
 from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.singleton import SingletonABCMeta
 from cc_hardware.utils.registry import register
+from cc_hardware.utils.singleton import SingletonABCMeta
 
 
 @register

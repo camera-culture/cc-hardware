@@ -1,14 +1,15 @@
 import curses
 import logging
-from collections import deque
 import sys
+from collections import deque
 
-from cc_hardware.utils.logger import get_logger
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
+from cc_hardware.utils.logger import get_logger
 
 get_logger(level=logging.DEBUG)
 
 # ======================
+
 
 class OutputCapture:
     """Captures stdout and stderr output and stores it in a buffer."""
@@ -34,6 +35,7 @@ class LogBufferHandler(logging.Handler):
     def emit(self, record):
         msg = self.format(record)
         self.buffer.append(msg)
+
 
 # ======================
 
@@ -198,7 +200,9 @@ class Jogger:
         self._motor_x.move_by(dx)
         self._motor_y.move_by(dy)
 
+
 # ======================
+
 
 def main():
     import argparse

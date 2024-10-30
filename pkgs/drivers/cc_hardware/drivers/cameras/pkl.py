@@ -4,14 +4,14 @@ import numpy as np
 
 from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.writers import PklWriter
 from cc_hardware.utils.registry import register
+from cc_hardware.utils.writers import PklWriter
 
 
 @register
 class PklCamera(Camera):
     """
-    Camera class that loads and reads images from a pickle (.pkl) file. 
+    Camera class that loads and reads images from a pickle (.pkl) file.
     Inherits from the abstract Camera class.
     """
 
@@ -20,7 +20,7 @@ class PklCamera(Camera):
         Initialize a PklCamera instance.
 
         Args:
-            pkl_path (Path | str): Path to the pickle file containing 
+            pkl_path (Path | str): Path to the pickle file containing
                                    the image data.
         """
         self._pkl_path = Path(pkl_path)
@@ -35,7 +35,7 @@ class PklCamera(Camera):
         Validate the loaded data to ensure it contains image entries.
 
         Raises:
-            AssertionError: If no data is found or if an entry does not 
+            AssertionError: If no data is found or if an entry does not
                             contain a valid image.
         """
         assert len(self._data) > 0, f"No data found in {self._pkl_path}"
@@ -85,7 +85,7 @@ class PklCamera(Camera):
         Get the resolution of the images.
 
         Returns:
-            tuple[int, int]: A tuple containing the height and width 
+            tuple[int, int]: A tuple containing the height and width
                              of the images.
         """
         return self._data[0]["image"].shape[:2]
@@ -107,7 +107,7 @@ class PklCamera(Camera):
         Get the intrinsic matrix of the camera.
 
         Returns:
-            np.ndarray: A 3x3 array representing the intrinsic matrix 
+            np.ndarray: A 3x3 array representing the intrinsic matrix
                         of the camera.
         """
         # TODO: Load from pkl
@@ -127,7 +127,7 @@ class PklCamera(Camera):
 
     def close(self) -> None:
         """
-        Close any open resources. This method is a placeholder for 
+        Close any open resources. This method is a placeholder for
         potential cleanup logic.
         """
         pass

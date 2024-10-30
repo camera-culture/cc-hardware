@@ -8,7 +8,7 @@ from cc_hardware.utils.registry import Registry
 
 class Camera(Registry, Sensor):
     """
-    Abstract base class for a Camera sensor, extending the Sensor class. 
+    Abstract base class for a Camera sensor, extending the Sensor class.
     Defines methods and properties for specific for cameras.
     """
 
@@ -57,7 +57,7 @@ class Camera(Registry, Sensor):
         Get the camera's resolution.
 
         Returns:
-            tuple[int, int]: A tuple containing the width and height of 
+            tuple[int, int]: A tuple containing the width and height of
                              the camera resolution.
         """
         pass

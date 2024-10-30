@@ -1,5 +1,6 @@
-from typing import Self
 from abc import ABCMeta
+from typing import Self
+
 
 class SingletonMeta(type):
     _instances = {}
@@ -15,6 +16,7 @@ class SingletonMeta(type):
         if cls not in cls._instances:
             cls._instances[cls] = cls()
         return cls._instances[cls]
+
 
 class SingletonABCMeta(ABCMeta, SingletonMeta):
     pass

@@ -1130,7 +1130,7 @@ uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange) {
   i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
            dataBuffer);
   // check that the active range was updated
-  return tmf8828CheckRegister(driver, 0x19, activeRange, 1, APP_CMD_STOP_TIMEOUT_MS); 
+  return tmf8828CheckRegister(driver, 0x19, activeRange, 1, APP_CMD_STOP_TIMEOUT_MS);
 }
 
 uint8_t tmf8828SetShortRangeAccuracy(tmf8828Driver *driver) {

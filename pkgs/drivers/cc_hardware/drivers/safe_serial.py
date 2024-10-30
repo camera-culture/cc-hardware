@@ -1,8 +1,8 @@
-from typing import Any, Self
+import re
 import threading
 import time
 from functools import singledispatchmethod
-import re
+from typing import Any, Self
 
 import serial
 from serial.serialutil import SerialException
@@ -216,7 +216,8 @@ class SafeSerial(serial.Serial):
 
         Returns:
             bool | tuple[bool, bytes | None]: True if successful, otherwise False.
-                If return_data is True, returns a tuple of success status and accumulated data.
+                If return_data is True, returns a tuple of success status and
+                accumulated data.
         """
         for attempt in range(tries):
             get_logger().debug(

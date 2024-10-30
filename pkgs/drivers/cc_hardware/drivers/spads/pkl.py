@@ -2,10 +2,10 @@ from pathlib import Path
 
 import numpy as np
 
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.writers import PklWriter
-from cc_hardware.utils.registry import register
 from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import register
+from cc_hardware.utils.writers import PklWriter
 
 
 @register
@@ -16,12 +16,13 @@ class PklSPADSensor(SPADSensor):
     for testing or simulations without actual hardware.
 
     Inherits:
-        SPADSensor: Base class for SPAD sensors that defines common methods and properties.
+        SPADSensor: Base class for SPAD sensors that defines common methods and
+            properties.
 
     Attributes:
         _pkl_path (Path): Path to the PKL file containing pre-recorded data.
-        _data (list[dict]): A list of entries loaded from the PKL file, each entry containing
-            a histogram.
+        _data (list[dict]): A list of entries loaded from the PKL file, each entry
+            containing a histogram.
         _data_iterator (iterator): An iterator over the loaded data entries.
         _bin_width (float): The width of each bin in the histogram.
         _resolution (tuple[int, int]): The spatial resolution of the sensor.
@@ -31,12 +32,15 @@ class PklSPADSensor(SPADSensor):
         self, pkl_path: Path | str, *, bin_width: float, resolution: tuple[int, int]
     ):
         """
-        Initializes the PklSPADSensor with the path to the PKL file, bin width, and resolution.
+        Initializes the PklSPADSensor with the path to the PKL file, bin width, and
+        resolution.
 
         Args:
-            pkl_path (Path | str): Path to the PKL file containing the pre-recorded data.
+            pkl_path (Path | str): Path to the PKL file containing the pre-recorded
+                data.
             bin_width (float): The width of each bin in the histogram.
-            resolution (tuple[int, int]): The spatial resolution of the sensor (width, height).
+            resolution (tuple[int, int]): The spatial resolution of the sensor
+                (width, height).
         """
         self._pkl_path = Path(pkl_path)
         self._data = PklWriter.load_all(self._pkl_path)
@@ -65,11 +69,13 @@ class PklSPADSensor(SPADSensor):
 
     def accumulate(self, num_samples: int, *, average: bool = True) -> np.ndarray:
         """
-        Accumulates the specified number of histogram samples from the pre-recorded data.
+        Accumulates the specified number of histogram samples from the pre-recorded
+        data.
 
         Args:
             num_samples (int): The number of samples to accumulate.
-            average (bool): Whether to average the accumulated samples. Defaults to True.
+            average (bool): Whether to average the accumulated samples. Defaults to
+                True.
 
         Returns:
             np.ndarray: The accumulated histogram data, averaged if requested.

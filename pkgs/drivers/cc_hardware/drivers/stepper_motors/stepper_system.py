@@ -1,15 +1,13 @@
-from typing import Any, overload
 from enum import Enum
+from typing import Any, overload
 
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register, Registry
+from cc_hardware.drivers.stepper_motors import DummyStepperMotor, StepperMotor
 from cc_hardware.utils.asyncio_utils import call_async_gather
-from cc_hardware.drivers.stepper_motors import (
-    StepperMotor,
-    DummyStepperMotor,
-)
+from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import Registry, register
 
 # ======================
+
 
 class StepperMotorSystemAxis(Enum):
     X = "X"
@@ -33,8 +31,8 @@ class StepperMotorSystem(Registry, StepperMotor):
     as a whole (i.e. a gantry or multi-axis rotation stage).
 
     Args:
-        axes (dict[StepperMotorSystemAxis, list[StepperMotor]]): A dictionary of axes and the
-            motors that are attached to them.
+        axes (dict[StepperMotorSystemAxis, list[StepperMotor]]): A dictionary of axes
+            and the motors that are attached to them.
     """
 
     def __init__(
@@ -71,10 +69,12 @@ class StepperMotorSystem(Registry, StepperMotor):
         self.move_by(**positions)
 
     @overload
-    def move_by(self, *positions: float): ...
+    def move_by(self, *positions: float):
+        ...
 
     @overload
-    def move_by(self, **positions: float): ...
+    def move_by(self, **positions: float):
+        ...
 
     def move_by(self, *args: float, **kwargs: float):
         """Moves the steppers to the specified positions."""
@@ -89,7 +89,10 @@ class StepperMotorSystem(Registry, StepperMotor):
             assert len(kwargs) == len(
                 self._axes
             ), f"Got {len(kwargs)} kwargs, expected {len(self._axes)}"
-            positions = {StepperMotorSystemAxis[axis.upper()]: pos for axis, pos in kwargs.items()}
+            positions = {
+                StepperMotorSystemAxis[axis.upper()]: pos
+                for axis, pos in kwargs.items()
+            }
 
         # Set the target position of each motor
         for axis, position in positions.items():

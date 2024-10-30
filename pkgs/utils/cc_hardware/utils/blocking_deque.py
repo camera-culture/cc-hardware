@@ -1,6 +1,6 @@
-from typing import Any
 import threading
 from collections import deque
+from typing import Any
 
 
 class BlockingDeque:

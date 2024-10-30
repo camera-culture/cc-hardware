@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-from cc_hardware.utils.registry import register, Registry
+from cc_hardware.utils.registry import Registry, register
 
 # ======================
 

@@ -1,5 +1,5 @@
-from typing import Any
 from abc import ABC, abstractmethod
+from typing import Any
 
 from cc_hardware.utils.registry import Registry
 
@@ -13,8 +13,8 @@ class Algorithm(Registry, ABC):
     @abstractmethod
     def run(self) -> Any:
         """Runs the algorithm and returns the result.
-        
-        Each subclass can add additional parameters to this method and specify it's 
+
+        Each subclass can add additional parameters to this method and specify it's
         return type.
         """
         pass
@@ -29,7 +29,7 @@ class Algorithm(Registry, ABC):
         pass
 
     def close(self):
-        """Closes the algorithm and releases any resources. A default implementation 
+        """Closes the algorithm and releases any resources. A default implementation
         is provided here, but subclasses can override this method to provide their own
         implementation.
         """

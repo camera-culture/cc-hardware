@@ -1,6 +1,6 @@
 from cc_hardware.drivers.stepper_motors.stepper_motor import (
-    StepperMotor,
     DummyStepperMotor,
+    StepperMotor,
 )
 from cc_hardware.drivers.stepper_motors.stepper_system import (
     StepperMotorSystem,

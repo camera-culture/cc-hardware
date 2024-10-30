@@ -1,12 +1,12 @@
 from pylablib.devices.Thorlabs import KinesisMotor
 
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
 from cc_hardware.drivers.stepper_motors import (
     StepperMotor,
     StepperMotorSystem,
     StepperMotorSystemAxis,
 )
+from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import register
 
 # ======================
 
@@ -278,20 +278,6 @@ class KinesisStepperMotor(StepperMotor):
             bool: True if the motor is operational, False otherwise.
         """
         return self._is_okay
-
-    @property
-    def position(self) -> float:
-        """
-        Get the current absolute position of the motor.
-
-        Returns:
-            float: The current position of the motor, or 0.0 if the motor is not
-                operational.
-        """
-        if not self.is_okay:
-            return 0.0
-
-        return self._convert_from(self._motor.get_position())
 
     @property
     def lower_limit(self) -> float | None:

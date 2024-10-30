@@ -29,8 +29,8 @@ tar -xvzf spinnaker_python-<version>-cp<version>-<os>-<version>-<arch>.tar.gz
 pip install spinnaker_python-<version>-cp<version>-<os>-<version>-<arch>.whl
 
 # But this will fail for python versions > 3.10. To install on newer versions,
-# replace the cp<version> with your python version. For instance, for python 3.11 on 
-# M2 Mac, the command would turn from 
+# replace the cp<version> with your python version. For instance, for python 3.11 on
+# M2 Mac, the command would turn from
 tar -xvzf spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.tar.gz
 pip instal spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.whl
 # To

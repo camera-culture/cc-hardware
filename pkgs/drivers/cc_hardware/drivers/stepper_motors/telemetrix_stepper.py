@@ -1,17 +1,17 @@
-from typing import Any
 import inspect
 from functools import partial
+from typing import Any
 
 from telemetrix import telemetrix
 
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
-from cc_hardware.utils.asyncio_utils import call_async
 from cc_hardware.drivers.stepper_motors import (
     StepperMotor,
     StepperMotorSystem,
     StepperMotorSystemAxis,
 )
+from cc_hardware.utils.asyncio_utils import call_async
+from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import register
 
 # ======================
 
@@ -84,7 +84,8 @@ class TelemetrixStepperMotor(StepperMotor):
         self.set_absolute_target_position_cm(position)
 
     def move_by(self, relative_position: float) -> None:
-        """Moves the stepper motor by a specified relative amount from its current position.
+        """Moves the stepper motor by a specified relative amount from its current
+        position.
 
         Args:
             relative_position (float): The amount to move the motor by, relative to its

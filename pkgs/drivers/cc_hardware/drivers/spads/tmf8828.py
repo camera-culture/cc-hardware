@@ -1,18 +1,18 @@
-import re
+import time
 from enum import Enum
 from pathlib import Path
-import time
 
 import numpy as np
 import pkg_resources
 
-# Assume these modules are available in your project
-from pkgs.drivers.cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
+
+# Assume these modules are available in your project
+from pkgs.drivers.cc_hardware.drivers.safe_serial import SafeSerial
 
 # ================
 
@@ -44,7 +44,8 @@ class RangeMode(Enum):
 class TMF8828Histogram(SensorData):
     """
     A class representing histogram data collected from the TMF8828 sensor. The histogram
-    data is organized into multiple channels and subcaptures to capture detailed measurements.
+    data is organized into multiple channels and subcaptures to capture detailed
+    measurements.
 
     Inherits:
         SensorData: Base class for sensor data storage and processing.
@@ -67,9 +68,10 @@ class TMF8828Histogram(SensorData):
         Initializes the histogram with specified channels, subcaptures, and SPAD ID.
 
         Args:
-            num_channels (int): The total number of channels including the calibration channel.
-            active_channels_per_subcapture (list[int]): A list indicating the active channels
-                in each subcapture.
+            num_channels (int): The total number of channels including the calibration
+                channel.
+            active_channels_per_subcapture (list[int]): A list indicating the active
+                channels in each subcapture.
             spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
         """
         super().__init__()
@@ -102,7 +104,8 @@ class TMF8828Histogram(SensorData):
         on the channel and subcapture configuration.
 
         Args:
-            row (list[str]): A list of strings representing a row of data received from the sensor.
+            row (list[str]): A list of strings representing a row of data received from
+                the sensor.
         """
         try:
             idx = int(row[TMF882X_IDX_FIELD])
@@ -155,8 +158,9 @@ class TMF8828Histogram(SensorData):
 
     def _assemble_data(self) -> np.ndarray:
         """
-        Assembles the data from all subcaptures into a single array. Handles reorganization
-        of data based on the SPAD ID, especially for ID15, which requires pixel mapping.
+        Assembles the data from all subcaptures into a single array. Handles
+        reorganization of data based on the SPAD ID, especially for ID15, which requires
+        pixel mapping.
 
         Returns:
             np.ndarray: The assembled data array.
@@ -297,10 +301,12 @@ class TMF8828Object(SensorData):
 
     def process(self, row: list[str]) -> None:
         """
-        Processes a single row of object data. Updates the internal data array based on the received row.
+        Processes a single row of object data. Updates the internal data array based on
+        the received row.
 
         Args:
-            row (list[str]): A list of strings representing a row of data received from the sensor.
+            row (list[str]): A list of strings representing a row of data received from
+                the sensor.
         """
         try:
             self._data = np.array(row)[TMF882X_SKIP_FIELDS:].astype(np.int32)
@@ -329,7 +335,8 @@ class TMF8828Sensor(SPADSensor):
     enabling high-resolution depth measurements.
 
     Inherits:
-        SPADSensor: Base class for SPAD sensors that defines common methods and properties.
+        SPADSensor: Base class for SPAD sensors that defines common methods and
+            properties.
 
     Attributes:
         PORT (str): The default serial port for the TMF8828 sensor.
@@ -356,14 +363,18 @@ class TMF8828Sensor(SPADSensor):
         range_mode: RangeMode = RangeMode.LONG,
     ):
         """
-        Initializes the TMF8828 sensor with the specified SPAD ID, port, and setup parameters.
+        Initializes the TMF8828 sensor with the specified SPAD ID, port, and setup
+        parameters.
 
         Args:
             spad_id (SPADID | int): The SPAD ID indicating the resolution of the sensor.
                 Defaults to SPADID.ID6.
-            port (str | None): The serial port to connect to. Defaults to the class-level PORT.
-            setup (bool): Whether to perform a sensor setup after initialization. Defaults to True.
-            range_mode (RangeMode): The range mode for the sensor (LONG or SHORT). Defaults to LONG.
+            port (str | None): The serial port to connect to. Defaults to the
+                class-level PORT.
+            setup (bool): Whether to perform a sensor setup after initialization.
+                Defaults to True.
+            range_mode (RangeMode): The range mode for the sensor (LONG or SHORT).
+                Defaults to LONG.
         """
         self._initialized = False
         self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
@@ -418,7 +429,8 @@ class TMF8828Sensor(SPADSensor):
         Returns the number of active channels per subcapture based on the SPAD ID.
 
         Returns:
-            list[int]: A list representing the number of active channels in each subcapture.
+            list[int]: A list representing the number of active channels in each
+                subcapture.
         """
         if self.spad_id == SPADID.ID6:
             return [9]
@@ -512,10 +524,12 @@ class TMF8828Sensor(SPADSensor):
 
         Args:
             num_samples (int): The number of samples to accumulate.
-            average (bool): Whether to average the accumulated samples. Defaults to True.
+            average (bool): Whether to average the accumulated samples. Defaults to
+                True.
 
         Returns:
-            np.ndarray | list[np.ndarray]: The accumulated histogram data, averaged if requested.
+            np.ndarray | list[np.ndarray]: The accumulated histogram data, averaged if
+                requested.
         """
         # Reset the serial buffer
         self._arduino.write_and_wait_for_stop_talk("s")

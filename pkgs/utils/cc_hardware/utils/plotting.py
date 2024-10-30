@@ -2,9 +2,9 @@ from itertools import chain
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button, RangeSlider, Slider
-import numpy as np
 
 from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.utils.logger import get_logger
@@ -164,6 +164,7 @@ def histogram_gui(
         ani.save(filename, writer="ffmpeg", dpi=400, fps=10)
         plt.close(fig)
 
+
 def transient_gui(
     sensor: SPADSensor,
     *,
@@ -208,13 +209,13 @@ def transient_gui(
     # Initialize the image plot
     image_plot = ax.imshow(
         np.zeros((h, w)),
-        cmap='gray',
+        cmap="gray",
         vmin=0,
         vmax=1,
-        interpolation='nearest',
-        aspect='auto',
+        interpolation="nearest",
+        aspect="auto",
     )
-    ax.axis('off')
+    ax.axis("off")
 
     # Initialize variables
     paused = [False]  # Use a list to make it mutable in nested function
@@ -230,7 +231,7 @@ def transient_gui(
     # Initialize the bin range slider
     bin_range_slider = RangeSlider(
         ax_slider_bin,
-        'Bin Range',
+        "Bin Range",
         valmin=0,
         valmax=num_bins[0] - 1,
         valinit=(0, num_bins[0] - 1),
@@ -240,7 +241,7 @@ def transient_gui(
     # Initialize the fps slider
     fps_slider = Slider(
         ax_slider_fps,
-        'FPS',
+        "FPS",
         valmin=1,
         valmax=50,
         valinit=fps,
@@ -293,10 +294,10 @@ def transient_gui(
 
     # Key press callback
     def on_key_press(event):
-        if event.key == ' ':
+        if event.key == " ":
             paused[0] = not paused[0]
             get_logger().info(f"Animation {'paused' if paused[0] else 'resumed'}")
-        elif event.key == 'enter':
+        elif event.key == "enter":
             capture_transient()
 
     # Slider callbacks
@@ -325,11 +326,11 @@ def transient_gui(
 
     # Add the "Capture Transient" button
     ax_button = plt.axes([0.4, 0.02, 0.2, 0.05])  # Adjusted position
-    btn_capture = Button(ax_button, 'Capture Transient')
+    btn_capture = Button(ax_button, "Capture Transient")
     btn_capture.on_clicked(on_button_clicked)
 
     # Connect key press events
-    fig.canvas.mpl_connect('key_press_event', on_key_press)
+    fig.canvas.mpl_connect("key_press_event", on_key_press)
 
     # Save the animation as mp4 if required
     if save and filename:
@@ -337,7 +338,7 @@ def transient_gui(
             filename += ".mp4"
         Path(filename).parent.mkdir(parents=True, exist_ok=True)
         get_logger().info(f"Saving animation to {filename}...")
-        ani.save(filename, writer='ffmpeg', fps=fps)
+        ani.save(filename, writer="ffmpeg", fps=fps)
         plt.close(fig)
 
     # Show the GUI

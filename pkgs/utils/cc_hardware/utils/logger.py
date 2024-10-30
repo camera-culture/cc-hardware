@@ -80,9 +80,13 @@ LOGGING_CONFIG = {
 }
 
 
-def get_logger(name: str = "cc_hardware", *, overrides: dict = {}, level: int | None = None) -> logging.Logger:
+def get_logger(
+    name: str = "cc_hardware", *, overrides: dict = {}, level: int | None = None
+) -> logging.Logger:
     if level is not None:
-        LOGGING_CONFIG.setdefault("loggers", {}).setdefault(name, {}).setdefault("level", {}) 
+        LOGGING_CONFIG.setdefault("loggers", {}).setdefault(name, {}).setdefault(
+            "level", {}
+        )
         LOGGING_CONFIG["loggers"][name]["level"] = level
     LOGGING_CONFIG.update(overrides)
     logging.config.dictConfig(LOGGING_CONFIG)

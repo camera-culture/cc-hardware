@@ -1,5 +1,6 @@
-from typing import Any
 import asyncio
+from typing import Any
+
 
 async def _async_wrapper(fn, callback):
     loop = asyncio.get_running_loop()

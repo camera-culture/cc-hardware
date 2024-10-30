@@ -6,8 +6,8 @@ import numpy as np
 from cc_hardware.algos.algorithm import Algorithm
 from cc_hardware.drivers.cameras import Camera
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.writers import VideoWriter
 from cc_hardware.utils.registry import register
+from cc_hardware.utils.writers import VideoWriter
 
 
 @register
@@ -75,7 +75,8 @@ class ArucoLocalizationAlgorithm(Algorithm):
                 Defaults to False.
 
         Returns:
-            dict: A dictionary containing localization results for the specified markers.
+            dict: A dictionary containing localization results for the specified
+                markers.
             list: A list of processed images (if return_images is True).
         """
         results = []

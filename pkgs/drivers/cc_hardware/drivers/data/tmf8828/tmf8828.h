@@ -151,11 +151,11 @@ extern "C" {
 
 // Enumeration for active_range
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__NO_ACTIVE_RANGE_SUPPORTED \
-  0 // This device or patch does not support modes for range accuracy. 		 	
+  0 // This device or patch does not support modes for range accuracy.
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY \
-  0x6E // The device is in short range accuracy mode.								
+  0x6E // The device is in short range accuracy mode.
 #define TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY \
-  0x6F // The device is in long range accuracy mode.								
+  0x6F // The device is in long range accuracy mode.
 
 // Histogram dumping requires sub-packets
 // Register offset of sub-packets
