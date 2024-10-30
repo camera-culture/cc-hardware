@@ -333,6 +333,9 @@
 #define TMF8X2X_COM_ALG_SETTING_0                                              \
   0x35 // register that holds the algorithm settings
 
+// Active range configuration
+#define TMF8X2X_COM_ACTIVE_RANGE 0x08
+
 /* show distance results with extended confidence range
    report distances -> 0x04
    switch on extended confidence range -> 0x80
@@ -1119,6 +1122,22 @@ int8_t tmf8828SwitchToLegacyMode(tmf8828Driver *driver) {
   return tmf8828SwitchToMode(
       driver, TMF8828_COM_CMD_STAT__cmd_stat__CMD_SWITCH_TMF8821_MODE,
       TMF8828_COM_TMF8828_MODE__mode__TMF8821);
+}
+
+uint8_t tmf8828SetActiveRange(tmf8828Driver *driver, uint8_t activeRange) {
+  dataBuffer[0] = activeRange;
+  i2cTxReg(driver, driver->i2cSlaveAddress, TMF8X2X_COM_ACTIVE_RANGE, 1,
+           dataBuffer);
+  // check that the active range was updated
+  return tmf8828CheckRegister(driver, 0x19, activeRange, 1, APP_CMD_STOP_TIMEOUT_MS); 
+}
+
+uint8_t tmf8828SetShortRangeAccuracy(tmf8828Driver *driver) {
+  return tmf8828SetActiveRange(driver, TMF8X2X_COM_ACTIVE_RANGE__active_range__SHORT_RANGE_ACCURACY);
+}
+
+uint8_t tmf8828SetLongRangeAccuracy(tmf8828Driver *driver) {
+  return tmf8828SetActiveRange(driver, TMF8X2X_COM_ACTIVE_RANGE__active_range__LONG_RANGE_ACCURACY);
 }
 
 // function reads and clears the specified interrupts
