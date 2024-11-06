@@ -98,7 +98,7 @@ def histogram_gui(
             get_logger().info("Closing GUI...")
             return
 
-        get_logger().info(f"Frame {frame}")
+        # get_logger().info(f"Frame {frame}")
 
         histograms = sensor.accumulate(1)
 
