@@ -57,7 +57,8 @@ def register(class_type: type[Registry]) -> type[Registry]:
     Returns:
         The registered class.
     """
-    # Register the class in the registry of each of its base classes that are subclasses of RegistryBase
+    # Register the class in the registry of each of its base classes that are
+    # subclasses of RegistryBase
     for base in class_type.__bases__:
         if issubclass(base, Registry):
             base.register(class_type)
