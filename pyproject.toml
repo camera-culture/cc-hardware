@@ -28,6 +28,15 @@ pyright = "^1.1.381"
 pytest = "^8.3.3"
 pre-commit = "^3.8.0"
 
+[tool.poetry.group.docs.dependencies]
+sphinx = "7.2.6"
+furo = "2023.9.10"
+sphinx-autoapi = "3.0.0"
+sphinx-autobuild = "2021.3.14"
+myst-parser = "2.0.0"
+sphinx-argparse = "0.4.0"
+sphinxcontrib-typer = "0.5.1"
+
 [tool.black]
 line-length = 88
 target-version = ['py312']

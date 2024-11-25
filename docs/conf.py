@@ -26,8 +26,7 @@ sys.setrecursionlimit(1500)
 project = "cc-hardware"
 copyright = f"{date.today().year}, Camera Culture, MIT Media Lab"
 author = "Camera Culture, MIT Media Lab"
-
-release = get_version("cc-hardware")
+release = get_version(project)
 
 # -- General configuration ---------------------------------------------------
 
