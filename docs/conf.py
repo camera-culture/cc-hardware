@@ -161,7 +161,7 @@ html_theme_options = {
     "announcement": """
         <a style=\"text-decoration: none; color: white;\"
            href=\"https://www.media.mit.edu/groups/camera-culture/overview/\">
-           <img src=\"/_static/cc-transparent.png\"
+           <img src=\"/cc-hardware/_static/cc-transparent.png\"
                 style=\"
                     vertical-align: middle;
                     display: inline;
