@@ -1,0 +1,73 @@
+:py:mod:`utils.registry`
+========================
+
+
+.. py:module:: utils.registry
+
+.. autoapi-nested-parse::
+
+   Registry base class and decorator for registering classes in the registry.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   utils.registry.Registry
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.registry.register
+
+
+
+.. py:class:: Registry
+
+
+   A base class that provides a registry for its subclasses and a factory method
+   to instantiate them.
+
+   .. py:method:: register(class_type: type[Self]) -> type[Self]
+      :classmethod:
+
+      Register the given class in the registry of the base class.
+
+      :Parameters: **class_type** -- The class to be registered.
+
+      :returns: The registered class.
+
+
+   .. py:method:: create_from_registry(name: str, *args: Any, **kwargs: Any) -> Self
+      :classmethod:
+
+      Create an instance of the class with the specified name from the registry.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the class.
+
+      :raises ValueError: If the class is not found in the registry.
+
+
+
+.. py:function:: register(class_type: type[Registry]) -> type[Registry]
+
+   Register the given class using the RegistryBase of its base class.
+
+   :Parameters: **class_type** -- The class to register.
+
+   :returns: The registered class.
+
+

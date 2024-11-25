@@ -1,0 +1,86 @@
+:py:mod:`drivers.cameras.pkl`
+=============================
+
+
+.. py:module:: drivers.cameras.pkl
+
+.. autoapi-nested-parse::
+
+   Camera sensor driver that loads pre-recorded data from a PKL file.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.cameras.pkl.PklCamera
+
+
+
+
+.. py:class:: PklCamera(pkl_path: pathlib.Path | str)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.cameras.camera.Camera`
+
+   Camera class that loads and reads images from a pickle (.pkl) file.
+   Inherits from the abstract Camera class.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Get the resolution of the images.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple containing the height and width
+                                 of the images.
+
+   .. py:property:: distortion_coefficients
+      :type: numpy.ndarray
+
+      Get the distortion coefficients of the camera.
+
+      :returns: *np.ndarray* -- Array of distortion coefficients.
+
+   .. py:property:: intrinsic_matrix
+      :type: numpy.ndarray
+
+      Get the intrinsic matrix of the camera.
+
+      :returns: *np.ndarray* --
+
+                A 3x3 array representing the intrinsic matrix
+                            of the camera.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the data iterator is not exhausted.
+
+      :returns: *bool* -- True if the iterator is still active, False otherwise.
+
+   .. py:method:: accumulate(num_samples: int) -> numpy.ndarray
+
+      Accumulate a specified number of image samples.
+
+      :Parameters: **num_samples** (*int*) -- Number of image samples to accumulate.
+
+      :returns: *np.ndarray* --
+
+                Array containing the accumulated images.
+                            Returns None if no data is available.
+
+
+   .. py:method:: close() -> None
+
+      Close any open resources. This method is a placeholder for
+      potential cleanup logic.
+
+
+

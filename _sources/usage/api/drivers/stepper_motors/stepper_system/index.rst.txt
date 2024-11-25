@@ -1,0 +1,125 @@
+:py:mod:`drivers.stepper_motors.stepper_system`
+===============================================
+
+
+.. py:module:: drivers.stepper_motors.stepper_system
+
+.. autoapi-nested-parse::
+
+   This module defines a system of stepper motors that can be controlled as a single
+   unit. This is useful for controlling a gantry or a multi-axis rotation stage.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
+   drivers.stepper_motors.stepper_system.StepperMotorSystem
+
+
+
+
+.. py:class:: StepperMotorSystemAxis(*args, **kwds)
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+.. py:class:: StepperMotorSystem(axes: dict[StepperMotorSystemAxis, list[cc_hardware.drivers.stepper_motors.StepperMotor]])
+
+
+   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotor`
+
+   This is a wrapper around multiple stepper motors which defines the system
+   as a whole (i.e. a gantry or multi-axis rotation stage).
+
+   :Parameters: **axes** (*dict[StepperMotorSystemAxis, list[StepperMotor]]*) -- A dictionary of axes
+                and the motors that are attached to them.
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+   .. py:method:: move_to(*positions: float)
+                  move_to(**positions: float)
+
+      Move to the specified position.
+
+      Grab the current position and subtract the target position to get the relative
+      position. Then move the motors by the relative position.
+
+
+   .. py:method:: move_by(*positions: float)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+   .. py:method:: wait_for_move() -> None
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+   .. py:method:: __getattr__(name: str) -> Any
+
+      This is a passthrough to the underlying motor objects.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+

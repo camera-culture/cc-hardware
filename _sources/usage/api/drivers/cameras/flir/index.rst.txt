@@ -1,0 +1,103 @@
+:py:mod:`drivers.cameras.flir`
+==============================
+
+
+.. py:module:: drivers.cameras.flir
+
+.. autoapi-nested-parse::
+
+   FlirCamera class for FLIR cameras using the PySpin library.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.cameras.flir.FlirCamera
+   drivers.cameras.flir.GrasshopperFlirCamera
+
+
+
+
+.. py:class:: FlirCamera(camera_index: int = 0)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.cameras.camera.Camera`
+
+   A singleton camera class for FLIR cameras using the PySpin library.
+   Captures images in a background thread and stores them in a queue.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Get the resolution (width, height) of the camera.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple containing the width and height
+                                 of the camera.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the camera is properly initialized.
+
+      :returns: *bool* --
+
+                True if the camera is initialized and streaming properly,
+                      False otherwise.
+
+   .. py:method:: accumulate(num_samples: int, *, average: bool = False) -> numpy.ndarray
+
+      Accumulate a specified number of image samples from the queue.
+
+      :Parameters: **num_samples** (*int*) -- Number of image samples to accumulate.
+
+      :keyword average: Whether to average the accumulated
+                        images. Defaults to False.
+      :kwtype average: bool, optional
+
+      :returns: *np.ndarray* --
+
+                Array containing the accumulated or averaged images.
+                            Returns None if no data is available.
+
+
+   .. py:method:: close()
+
+      Stops the background capture thread and deinitializes the camera.
+
+
+
+.. py:class:: GrasshopperFlirCamera(camera_index: int = 0)
+
+
+   Bases: :py:obj:`FlirCamera`
+
+   Specialized camera class for a Grasshopper FLIR camera model.
+   Inherits from FlirCamera and provides specific intrinsic and
+   distortion parameters.
+
+   .. py:property:: distortion_coefficients
+      :type: numpy.ndarray
+
+      Get the distortion coefficients of the Grasshopper FLIR camera.
+
+      :returns: *np.ndarray* -- Array of distortion coefficients.
+
+   .. py:property:: intrinsic_matrix
+      :type: numpy.ndarray
+
+      Get the intrinsic matrix of the Grasshopper FLIR camera.
+
+      :returns: *np.ndarray* --
+
+                A 3x3 array representing the intrinsic matrix
+                            of the camera.
+
+

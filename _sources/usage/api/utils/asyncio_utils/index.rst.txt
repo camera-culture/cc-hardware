@@ -1,0 +1,45 @@
+:py:mod:`utils.asyncio_utils`
+=============================
+
+
+.. py:module:: utils.asyncio_utils
+
+.. autoapi-nested-parse::
+
+   This module provides a wrapper to make asynchronous methods synchronous.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.asyncio_utils.call_async
+   utils.asyncio_utils.call_async_gather
+   utils.asyncio_utils.call_async_value
+
+
+
+.. py:function:: call_async(fn: Callable, callback: Callable) -> Any
+
+   Wraps an asynchronous method and returns the result of the callback
+   synchronously.
+
+
+.. py:function:: call_async_gather(fns: Callable, callback: Callable[[list], Any]) -> Any
+
+   Wraps multiple asynchronous methods and returns a list of all the
+   callback values.
+
+
+.. py:function:: call_async_value(fn: Callable, idx: int = 2) -> Any
+
+   Wraps an asynchronous method and returns a specific index in the callback
+   list.
+
+

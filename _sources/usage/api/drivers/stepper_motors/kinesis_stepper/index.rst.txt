@@ -1,0 +1,225 @@
+:py:mod:`drivers.stepper_motors.kinesis_stepper`
+================================================
+
+
+.. py:module:: drivers.stepper_motors.kinesis_stepper
+
+.. autoapi-nested-parse::
+
+   StepperMotor driver for Kinesis motors.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor
+   drivers.stepper_motors.kinesis_stepper.KinesisRotationStage
+   drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem
+   drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem
+
+
+
+
+.. py:class:: KinesisStepperMotor(port: str, *, channel: int = 1, is_rack_system: bool = True, scale: float = 1.0)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotor`
+
+   A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
+   This class provides additional features such as homing, movement with limits, and
+   scaling of motor positions.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor.
+
+   :keyword channel: The channel of the motor. Defaults to 1.
+   :kwtype channel: int
+   :keyword is_rack_system: Whether the motor is part of a rack system. Defaults to
+                            True.
+   :kwtype is_rack_system: bool
+   :keyword scale: The scaling factor for motor positions. Defaults to 1.0.
+   :kwtype scale: float
+
+   .. py:property:: position
+      :type: float
+
+      Get the current absolute position of the motor.
+
+      :returns: *float* --
+
+                The current position of the motor, or 0.0 if the motor is not
+                    operational.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the motor is in a healthy operational state.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+   .. py:property:: lower_limit
+      :type: float | None
+
+      Get or set the lower movement limit of the motor.
+
+      :returns: *float | None* -- The current lower limit, or None if not set.
+
+   .. py:property:: upper_limit
+      :type: float | None
+
+      Get or set the upper movement limit of the motor.
+
+      :returns: *float | None* -- The current upper limit, or None if not set.
+
+   .. py:method:: initialize(*, max_velocity: float | None = None, acceleration: float | None = None, lower_limit: float | None = None, upper_limit: float | None = None, clip_at_limits: bool = False, initial_position: float | None = None, reference_position: float | None = None, home: bool = False, check_homed: bool | None = None) -> bool
+
+      Initialize the Kinesis motor, with options to home and set a reference position.
+
+      :keyword max_velocity: The maximum velocity of the motor. Defaults
+                             to None.
+      :kwtype max_velocity: float, optional
+      :keyword acceleration: The acceleration of the motor. Defaults to
+      :kwtype acceleration: float, optional
+      :keyword lower_limit: The lower limit of the motor. Defaults to
+                            None.
+      :kwtype lower_limit: float, optional
+      :keyword upper_limit: The upper limit of the motor. Defaults to
+                            None.
+      :kwtype upper_limit: float, optional
+      :keyword clip_at_limits: Whether to clip the motor position at the
+                               limits. Defaults to False.
+      :kwtype clip_at_limits: bool, optional
+      :keyword initial_position: The initial position to move the motor
+                                 to. Defaults to None.
+      :kwtype initial_position: float, optional
+      :keyword reference_position: The reference position to set.
+                                   Defaults to None.
+      :kwtype reference_position: float, optional
+      :keyword home: Whether to home the motor during initialization. Defaults to
+                     False.
+      :kwtype home: bool
+      :keyword check_homed: Whether to check if the motor is homed.
+                            Defaults to the opposite of `home`.
+      :kwtype check_homed: bool, optional
+
+      :returns: *bool* -- True if the motor is successfully initialized, False otherwise.
+
+
+   .. py:method:: close(home: bool = False)
+
+      Closes the Kinesis motor connection, with an optional homing operation.
+
+      :Parameters: **home** (*bool*) -- Whether to home the motor before closing. Defaults to False.
+
+
+   .. py:method:: home(**kwargs)
+
+      Homes the Kinesis motor to its reference or zero position.
+
+
+   .. py:method:: move_by(relative_position: float)
+
+      Moves the motor by a specified relative position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to
+                   its current position.
+
+
+   .. py:method:: move_to(position: float)
+
+      Moves the motor to a specified absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+   .. py:method:: wait_for_move() -> None
+
+      Waits for the motor to complete its current move operation.
+
+
+
+.. py:class:: KinesisRotationStage(*args, is_rack_system: bool | None = None, scale: int | None = None, **kwargs)
+
+
+   Bases: :py:obj:`KinesisStepperMotor`
+
+   A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
+   This class provides additional features such as homing, movement with limits, and
+   scaling of motor positions.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor.
+
+   :keyword channel: The channel of the motor. Defaults to 1.
+   :kwtype channel: int
+   :keyword is_rack_system: Whether the motor is part of a rack system. Defaults to
+                            True.
+   :kwtype is_rack_system: bool
+   :keyword scale: The scaling factor for motor positions. Defaults to 1.0.
+   :kwtype scale: float
+
+   .. py:method:: initialize(**kwargs) -> bool
+
+      Initialize the Kinesis motor, with options to home and set a reference position.
+
+      :keyword max_velocity: The maximum velocity of the motor. Defaults
+                             to None.
+      :kwtype max_velocity: float, optional
+      :keyword acceleration: The acceleration of the motor. Defaults to
+      :kwtype acceleration: float, optional
+      :keyword lower_limit: The lower limit of the motor. Defaults to
+                            None.
+      :kwtype lower_limit: float, optional
+      :keyword upper_limit: The upper limit of the motor. Defaults to
+                            None.
+      :kwtype upper_limit: float, optional
+      :keyword clip_at_limits: Whether to clip the motor position at the
+                               limits. Defaults to False.
+      :kwtype clip_at_limits: bool, optional
+      :keyword initial_position: The initial position to move the motor
+                                 to. Defaults to None.
+      :kwtype initial_position: float, optional
+      :keyword reference_position: The reference position to set.
+                                   Defaults to None.
+      :kwtype reference_position: float, optional
+      :keyword home: Whether to home the motor during initialization. Defaults to
+                     False.
+      :kwtype home: bool
+      :keyword check_homed: Whether to check if the motor is homed.
+                            Defaults to the opposite of `home`.
+      :kwtype check_homed: bool, optional
+
+      :returns: *bool* -- True if the motor is successfully initialized, False otherwise.
+
+
+
+.. py:class:: KinesisStepperMotorSystem(port: str, axes: dict[cc_hardware.drivers.stepper_motors.StepperMotorSystemAxis, list[type[KinesisStepperMotor]]])
+
+
+   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotorSystem`
+
+   A wrapper around multiple Kinesis stepper motors which defines the system as a
+   whole.
+
+   :Parameters: * **port** (*str*) -- The port of the Kinesis motor device (has different channels for
+                  different axes).
+                * **axes** (*dict[StepperMotorSystemAxis, list[type[KinesisStepperMotor]]]*) -- A
+                  dictionary of axes and the motors that are attached to them. The motors are
+                  specified as classes, which will be instantiated with the port and any
+                  additional keyword arguments.
+
+
+.. py:class:: AzimuthElevationSystem(port: str)
+
+
+   Bases: :py:obj:`KinesisStepperMotorSystem`
+
+   A predefined multi-axis system for an azimuth-elevation setup.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor device.
+
+

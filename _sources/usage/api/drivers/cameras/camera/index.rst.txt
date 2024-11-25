@@ -1,0 +1,74 @@
+:py:mod:`drivers.cameras.camera`
+================================
+
+
+.. py:module:: drivers.cameras.camera
+
+.. autoapi-nested-parse::
+
+   Base class for cameras.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.cameras.camera.Camera
+
+
+
+
+.. py:class:: Camera
+
+
+   Bases: :py:obj:`cc_hardware.drivers.sensor.Sensor`
+
+   Abstract base class for a Camera sensor, extending the Sensor class.
+   Defines methods and properties for specific for cameras.
+
+   .. py:property:: distortion_coefficients
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the camera's distortion coefficients.
+
+      :returns: *np.ndarray* -- An array representing the distortion coefficients.
+
+   .. py:property:: intrinsic_matrix
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the camera's intrinsic matrix.
+
+      :returns: *np.ndarray* -- A 3x3 matrix representing the camera intrinsics.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+      :abstractmethod:
+
+      Get the camera's resolution.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple containing the width and height of
+                                 the camera resolution.
+
+   .. py:method:: accumulate(num_samples: int, *, average: bool) -> numpy.ndarray
+      :abstractmethod:
+
+      Accumulate a specified number of samples from the camera.
+
+      :Parameters: **num_samples** (*int*) -- Number of samples to accumulate.
+
+      :keyword average: Whether to average the accumulated samples.
+      :kwtype average: bool
+
+      :returns: *np.ndarray* -- The accumulated samples as an array.
+
+
+

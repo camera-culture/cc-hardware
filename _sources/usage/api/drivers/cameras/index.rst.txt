@@ -1,0 +1,24 @@
+:py:mod:`drivers.cameras`
+=========================
+
+
+.. py:module:: drivers.cameras
+
+.. autoapi-nested-parse::
+
+   Camera drivers for the cc-hardware package.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   camera/index.rst
+   flir/index.rst
+   pkl/index.rst
+   realsense/index.rst
+
+

@@ -1,0 +1,69 @@
+:py:mod:`algos.aruco`
+=====================
+
+
+.. py:module:: algos.aruco
+
+.. autoapi-nested-parse::
+
+   An algorithm to localize ArUco markers using camera images.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   algos.aruco.ArucoLocalizationAlgorithm
+
+
+
+
+.. py:class:: ArucoLocalizationAlgorithm(sensor: cc_hardware.drivers.cameras.Camera, *, aruco_dict: int, marker_size: float, origin_id: int = -1, num_samples: int = 1, **marker_ids)
+
+
+   Bases: :py:obj:`cc_hardware.algos.algorithm.Algorithm`
+
+   An algorithm to localize ArUco markers using camera images.
+
+   This class processes images from a camera sensor to detect ArUco markers and
+   compute their poses relative to an origin marker.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the algorithm and sensor are functioning properly.
+
+      :returns: *bool* -- True if both the algorithm and sensor are okay, False otherwise.
+
+   .. py:method:: run(*, show: bool = False, save: bool = False, filename: pathlib.Path | str | None = None, return_images: bool = False)
+
+      Processes images and returns the localization results.
+
+      :Parameters: * **show** (*bool, optional*) -- Whether to display the image with detected markers.
+                     Defaults to False.
+                   * **save** (*bool, optional*) -- Whether to save the image with detected markers.
+                     Defaults to False.
+                   * **filename** (*Path | str | None, optional*) -- The filename to save the image or
+                     video. Defaults to None.
+                   * **return_images** (*bool, optional*) -- Whether to return the processed images.
+                     Defaults to False.
+
+      :returns: *dict | list* --
+
+                A dictionary containing localization results for the specified
+                    markers. A list of processed images (if return_images is True).
+
+
+   .. py:method:: close()
+
+      Closes resources associated with the algorithm.
+
+      Closes any open writers and releases resources.
+
+
+

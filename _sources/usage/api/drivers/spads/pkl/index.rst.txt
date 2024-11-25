@@ -1,0 +1,97 @@
+:py:mod:`drivers.spads.pkl`
+===========================
+
+
+.. py:module:: drivers.spads.pkl
+
+.. autoapi-nested-parse::
+
+   SPAD sensor driver that loads pre-recorded data from a PKL file.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.spads.pkl.PklSPADSensor
+
+
+
+
+.. py:class:: PklSPADSensor(pkl_path: pathlib.Path | str, *, bin_width: float, resolution: tuple[int, int])
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.SPADSensor`
+
+   A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded
+   histogram data from a PKL file. This class inherits from SPADSensor and is used
+   for testing or simulations without actual hardware.
+
+   Inherits:
+       SPADSensor: Base class for SPAD sensors that defines common methods and
+           properties.
+
+   :ivar _pkl_path: Path to the PKL file containing pre-recorded data.
+   :vartype _pkl_path: Path
+   :ivar _data: A list of entries loaded from the PKL file, each entry
+                containing a histogram.
+   :vartype _data: list[dict]
+   :ivar _data_iterator: An iterator over the loaded data entries.
+   :vartype _data_iterator: iterator
+   :ivar _bin_width: The width of each bin in the histogram.
+   :vartype _bin_width: float
+   :ivar _resolution: The spatial resolution of the sensor.
+
+   :vartype _resolution: tuple[int, int]
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram.
+
+      :returns: *int* -- The number of bins in the histogram.
+
+   .. py:property:: bin_width
+      :type: float
+
+      Returns the width of each bin in the histogram.
+
+      :returns: *float* -- The width of each bin.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height).
+
+      :returns: *tuple[int, int]* -- The resolution (width, height) of the sensor.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the data iterator is still active and not exhausted.
+
+      :returns: *bool* -- True if the iterator is active, False if exhausted.
+
+   .. py:method:: accumulate(num_samples: int, *, average: bool = True) -> numpy.ndarray
+
+      Accumulates the specified number of histogram samples from the pre-recorded
+      data.
+
+      :Parameters: * **num_samples** (*int*) -- The number of samples to accumulate.
+                   * **average** (*bool*) -- Whether to average the accumulated samples. Defaults to
+                     True.
+
+      :returns: *np.ndarray* -- The accumulated histogram data, averaged if requested.
+
+
+   .. py:method:: close() -> None
+
+      Closes the sensor connection. This method is a no-op for this fake sensor.
+
+
+

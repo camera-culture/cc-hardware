@@ -1,0 +1,311 @@
+:py:mod:`drivers.spads.tmf8828`
+===============================
+
+
+.. py:module:: drivers.spads.tmf8828
+
+.. autoapi-nested-parse::
+
+   TMF8828 sensor driver for SPAD sensors.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.spads.tmf8828.SPADID
+   drivers.spads.tmf8828.RangeMode
+   drivers.spads.tmf8828.TMF8828Histogram
+   drivers.spads.tmf8828.TMF8828Object
+   drivers.spads.tmf8828.TMF8828Sensor
+
+
+
+
+.. py:class:: SPADID(*args, **kwds)
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+.. py:class:: RangeMode(*args, **kwds)
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+.. py:class:: TMF8828Histogram(num_channels: int, active_channels_per_subcapture: list[int], spad_id: SPADID)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.sensor.SensorData`
+
+   A class representing histogram data collected from the TMF8828 sensor. The histogram
+   data is organized into multiple channels and subcaptures to capture detailed
+   measurements.
+
+   Inherits:
+       SensorData: Base class for sensor data storage and processing.
+
+   :ivar num_channels: Total number of channels, including the calibration channel.
+   :vartype num_channels: int
+   :ivar active_channels_per_subcapture: List indicating the number of active
+                                         channels in each subcapture.
+   :vartype active_channels_per_subcapture: list[int]
+   :ivar num_subcaptures: The total number of subcaptures.
+   :vartype num_subcaptures: int
+   :ivar spad_id: The SPAD ID indicating the resolution of the sensor.
+
+   :vartype spad_id: SPADID
+
+   .. py:property:: has_data
+      :type: bool
+
+      Checks if the histogram has complete data for all subcaptures.
+
+      :returns: *bool* -- True if all subcaptures have been processed, False otherwise.
+
+   .. py:method:: reset() -> None
+
+      Resets the histogram data, clearing temporary and accumulated data arrays.
+
+
+   .. py:method:: process(row: list[str]) -> None
+
+      Processes a single row of histogram data. Updates the internal data arrays based
+      on the channel and subcapture configuration.
+
+      :Parameters: **row** (*list[str]*) -- A list of strings representing a row of data received from
+                   the sensor.
+
+
+   .. py:method:: get_data() -> numpy.ndarray
+
+      Returns a copy of the accumulated histogram data and resets the internal state.
+
+      :returns: *np.ndarray* -- The accumulated histogram data.
+
+
+
+.. py:class:: TMF8828Object
+
+
+   Bases: :py:obj:`cc_hardware.drivers.sensor.SensorData`
+
+   A class representing object data collected from the TMF8828 sensor. The object data
+   contains information about detected objects, organized into bins.
+
+   Inherits:
+       SensorData: Base class for sensor data storage and processing.
+
+   .. py:method:: reset() -> None
+
+      Resets the object data, clearing the data array.
+
+
+   .. py:method:: process(row: list[str]) -> None
+
+      Processes a single row of object data. Updates the internal data array based on
+      the received row.
+
+      :Parameters: **row** (*list[str]*) -- A list of strings representing a row of data received from
+                   the sensor.
+
+
+   .. py:method:: get_data() -> numpy.ndarray
+
+      Returns a copy of the object data.
+
+      :returns: *np.ndarray* -- The object data array.
+
+
+
+.. py:class:: TMF8828Sensor(port: str, *, spad_id: SPADID | int = SPADID.ID6, setup: bool = True, range_mode: RangeMode = RangeMode.LONG)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
+
+   A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.
+   The TMF8828 sensor collects histogram data across multiple channels and subcaptures,
+   enabling high-resolution depth measurements.
+
+   Inherits:
+       SPADSensor: Base class for SPAD sensors that defines common methods and
+           properties.
+
+   :ivar SCRIPT: The default path to the sensor's Arduino script.
+   :vartype SCRIPT: Path
+   :ivar BAUDRATE: The communication baud rate.
+   :vartype BAUDRATE: int
+   :ivar TIMEOUT: The timeout value for sensor communications.
+
+   :vartype TIMEOUT: float
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operating correctly.
+
+      :returns: *bool* -- Always returns True indicating the sensor is okay.
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram.
+
+      :returns: *int* -- The number of bins in the histogram.
+
+   .. py:property:: bin_width
+      :type: float
+
+      Returns the width of each bin in the histogram in meters.
+
+      :returns: *float* -- The width of each bin in meters.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height).
+
+      :returns: *tuple[int, int]* -- The resolution (width, height) based on the SPAD ID.
+
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the number of pixels based on the SPAD ID.
+
+      :returns: *int* -- The number of pixels in the sensor's active area.
+
+   .. py:method:: initialize()
+
+      Initializes the sensor by sending the initialization command.
+
+
+   .. py:method:: setup_sensor() -> None
+
+      Sets up the sensor based on its SPAD ID and range mode.
+
+
+   .. py:method:: read() -> bytes
+
+      Reads a line of data from the sensor.
+
+      :returns: *bytes* -- The data read from the sensor.
+
+
+   .. py:method:: write(data: str) -> None
+
+      Writes data to the sensor.
+
+      :Parameters: **data** (*str*) -- The data to write to the sensor.
+
+
+   .. py:method:: close() -> None
+
+      Closes the sensor connection.
+
+
+   .. py:method:: accumulate(num_samples: int, *, average: bool = True) -> numpy.ndarray | list[numpy.ndarray]
+
+      Accumulates histogram samples from the sensor.
+
+      :Parameters: * **num_samples** (*int*) -- The number of samples to accumulate.
+                   * **average** (*bool*) -- Whether to average the accumulated samples. Defaults to
+                     True.
+
+      :returns: *np.ndarray | list[np.ndarray]* --
+
+                The accumulated histogram data, averaged if
+                    requested.
+
+
+   .. py:method:: calibrate(configurations: int = 2) -> list[str]
+
+      Performs calibration on the sensor. This will run calibration for each
+      configuration.
+
+      :Parameters: **configurations** (*int*) -- The number of configurations to calibrate. Defaults
+                   to 2.
+
+      :returns: *list[str]* -- A list containing the calibration strings for different modes.
+
+
+

@@ -1,0 +1,119 @@
+:py:mod:`utils.manager`
+=======================
+
+
+.. py:module:: utils.manager
+
+.. autoapi-nested-parse::
+
+   This module contains a manager for handling components which must be closed.
+
+   The manager can be used as a context manager or run with a setup, loop, and cleanup
+   function. The manager will ensure all components are properly closed when it is closed.
+
+   Example:
+
+   .. code-block:: python
+
+       from cc_hardware.utils.manager import Manager
+
+       def setup(manager, camera):
+           camera.start()
+
+       def loop(i, manager, camera):
+           if i > 100:
+               return False
+           return camera.is_okay
+
+       def cleanup(manager, camera):
+           camera.stop()
+
+       with Manager(camera=Camera()) as manager:
+           manager.run(setup=setup, loop=loop, cleanup=cleanup)
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   utils.manager.Component
+   utils.manager.Manager
+
+
+
+
+.. py:class:: Component
+
+
+   Bases: :py:obj:`Protocol`
+
+   Protocol for components which can be closed.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the component is operational.
+
+   .. py:method:: close() -> None
+
+      Closes the component and releases any resources.
+
+
+
+.. py:class:: Manager(**components: Type[Component] | Component)
+
+
+   This is a manager for handling components which must be closed. It is
+   essentially just a context manager which calls close on all components when
+   it is closed.
+
+   .. py:property:: components
+      :type: dict[str, Component]
+
+      Returns a dictionary of components.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if all components are okay.
+
+   .. py:method:: add(**components: Component)
+
+      Adds additional components to the manager.
+
+
+   .. py:method:: run(*, setup: Callable[Ellipsis, None] | None = None, loop: Callable[Ellipsis, bool] | None = None, cleanup: Callable[Ellipsis, None] | None = None) -> None
+
+      Runs a setup and loop function until all components are okay.
+
+      :Parameters: * **setup** (*Callable[..., None] | None, optional*) -- Setup function to run before
+                     the loop. Accepts keyword arguments, returns None. Defaults to None.
+                   * **loop** (*Callable[..., bool] | None, optional*) -- Loop function to run until all
+                     components are okay. Accepts keyword arguments, returns bool. When
+                     False, the loop will stop and cleanup will begin. Defaults to None.
+                   * **cleanup** (*Callable[..., None] | None, optional*) -- Cleanup function to run
+                     after the loop. Accepts keyword arguments, returns None. Defaults to
+                     None.
+
+
+   .. py:method:: __enter__()
+
+      Allows this class to be used as a context manager.
+
+
+   .. py:method:: __exit__(exc_type, exc_value, traceback)
+
+      Ensures each component is properly closed when used as a context manager.
+
+
+   .. py:method:: close()
+
+      Closes all components.
+
+
+

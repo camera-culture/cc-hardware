@@ -1,0 +1,23 @@
+:py:mod:`drivers.spads`
+=======================
+
+
+.. py:module:: drivers.spads
+
+.. autoapi-nested-parse::
+
+   SPAD sensor drivers for the cc-hardware package.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   pkl/index.rst
+   spad/index.rst
+   tmf8828/index.rst
+
+

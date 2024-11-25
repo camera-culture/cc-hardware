@@ -1,0 +1,43 @@
+:py:mod:`utils.plotting`
+========================
+
+
+.. py:module:: utils.plotting
+
+.. autoapi-nested-parse::
+
+   Plotting utilities for sensor data visualization.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.plotting.set_matplotlib_style
+   utils.plotting.transient_gui
+
+
+
+.. py:function:: set_matplotlib_style(*, use_scienceplots: bool = True)
+
+   Set the default style for matplotlib plots.
+
+
+.. py:function:: transient_gui(sensor: cc_hardware.drivers.spads.spad.SPADSensor, *, show: bool = True, save: bool = False, filename: str = None, fps: int = 10, fullscreen: bool = False, min_bin: int = 0, max_bin: int = 127, normalize_per_pixel: bool = False)
+
+   Create a GUI interface for visualizing the transient data from a SPAD sensor.
+
+   :Parameters: * **sensor** -- SPADSensor instance.
+                * **show** -- Whether to show the GUI.
+                * **save** -- Whether to save the animation to a file.
+                * **filename** -- Filename to save the animation.
+                * **fps** -- Base frames per second for the animation.
+                * **fullscreen** -- Whether to display the GUI in fullscreen mode.
+
+

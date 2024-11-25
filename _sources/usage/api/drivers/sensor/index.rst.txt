@@ -1,0 +1,108 @@
+:py:mod:`drivers.sensor`
+========================
+
+
+.. py:module:: drivers.sensor
+
+.. autoapi-nested-parse::
+
+   Base classes for sensors and sensor data processing.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.sensor.Sensor
+   drivers.sensor.SensorData
+   drivers.sensor.SensorDataThreaded
+
+
+
+
+.. py:class:: Sensor
+
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`cc_hardware.utils.registry.Registry`
+
+   Abstract base class for sensors.
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the sensor is operational.
+
+   .. py:method:: close() -> None
+      :abstractmethod:
+
+      Closes the sensor and releases any resources.
+
+
+   .. py:method:: calibrate() -> bool
+      :abstractmethod:
+
+      Calibrates the sensor.
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
+
+
+.. py:class:: SensorData
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Abstract base class for handling sensor data.
+
+   .. py:method:: reset() -> None
+      :abstractmethod:
+
+      Resets the sensor data to its initial state.
+
+
+   .. py:method:: process(row: list[Any]) -> None
+      :abstractmethod:
+
+      Processes a new row of data.
+
+      :Parameters: **row** (*list[Any]*) -- Row of sensor data to process.
+
+
+   .. py:method:: get_data() -> numpy.ndarray
+      :abstractmethod:
+
+      Retrieves the processed sensor data.
+
+      :returns: *np.ndarray* -- The processed data.
+
+
+
+.. py:class:: SensorDataThreaded
+
+
+   Bases: :py:obj:`SensorData`
+
+   Handles sensor data processing with threading support.
+
+   .. py:method:: reset() -> None
+
+      Resets the threading event and clears any existing data.
+
+
+   .. py:method:: get_data() -> numpy.ndarray
+
+      Waits until data is ready and retrieves it.
+
+      :returns: *np.ndarray* -- The processed data.
+
+
+

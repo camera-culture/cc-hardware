@@ -1,0 +1,87 @@
+:py:mod:`drivers.cameras.realsense`
+===================================
+
+
+.. py:module:: drivers.cameras.realsense
+
+.. autoapi-nested-parse::
+
+   Camera driver for Intel RealSense devices.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.cameras.realsense.RealsenseCamera
+
+
+
+
+.. py:class:: RealsenseCamera(camera_index: int = 0, start_pipeline_once: bool = True, force_autoexposure: bool = False, exposure: int | list[int] | None = None)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.cameras.camera.Camera`
+
+   Camera class for Intel RealSense devices. Captures RGB and depth images
+   in a background thread and stores them in a queue.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Return the resolution (width, height) of the camera.
+
+      :returns: *Tuple[int, int]* -- The resolution of the color stream.
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the camera is properly initialized.
+
+      :returns: *bool* -- True if the camera is initialized and ready, False otherwise.
+
+   .. py:property:: intrinsic_matrix
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the intrinsic matrix of the camera.
+
+      :returns: *np.ndarray* -- The intrinsic matrix of the camera.
+
+      :raises NotImplementedError: This method is not yet implemented.
+
+   .. py:property:: distortion_coefficients
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the distortion coefficients of the camera.
+
+      :returns: *np.ndarray* -- The distortion coefficients of the camera.
+
+      :raises NotImplementedError: This method is not yet implemented.
+
+   .. py:method:: accumulate(num_samples: int, return_rgb: bool = True, return_depth: bool = False) -> list[numpy.ndarray] | tuple[list[numpy.ndarray] | list[numpy.ndarray]]
+
+      Accumulates RGB and depth images from the queue.
+
+      :Parameters: **num_samples** (*int*) -- Number of image samples to accumulate.
+
+      :keyword return_rgb: Whether to return RGB images. Defaults to True.
+      :kwtype return_rgb: bool
+      :keyword return_depth: Whether to return depth images. Defaults to False.
+      :kwtype return_depth: bool
+
+      :returns: *List[np.ndarray] or Tuple[List[np.ndarray], List[np.ndarray]]* --   Accumulated images. Returns a list of RGB images, depth images, or both.
+
+
+   .. py:method:: close()
+
+      Stops the background capture thread and deinitializes the camera.
+
+
+
