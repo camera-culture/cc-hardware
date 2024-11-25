@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cc_hardware"
-version = "0.0"
+version = "0.0.0"
 authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CC Hardware"
 readme = "README.md"
@@ -58,6 +58,9 @@ strictListInference = true       # Use union types when inferring types of lists
 
 [tool.poetry-monorepo-dependency-plugin]
 enable = true
+
+[tool.setuptools_scm]
+write_to = "cc_hardware/_version.py"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
