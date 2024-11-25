@@ -1,3 +1,5 @@
+"""Camera driver for Intel RealSense devices."""
+
 import threading
 from typing import override
 

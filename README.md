@@ -22,12 +22,11 @@ cd cc_hardware
 poetry install
 ```
 
-> [!NOTE]
-> `poetry install` will install the package and it's dependencies in develop mode.
-> This allows you to make changes to the code and have them reflected in the package
-> without having to reinstall the package (i.e. a symlink is created to the package).
-> You can also install `cc_hardware` with `pip install .` if you don't need this
-> behavior.
+`poetry install` will install the package and it's dependencies in develop mode.
+This allows you to make changes to the code and have them reflected in the package
+without having to reinstall the package (i.e. a symlink is created to the package).
+You can also install `cc_hardware` with `pip install .` if you don't need this
+behavior.
 
 ## Repo Structure
 

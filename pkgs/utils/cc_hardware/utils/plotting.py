@@ -1,3 +1,5 @@
+"""Plotting utilities for sensor data visualization."""
+
 from itertools import chain
 from pathlib import Path
 
@@ -6,11 +8,13 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button, RangeSlider, Slider
 
-from cc_hardware.drivers.spad import SPADSensor
+from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.logger import get_logger
 
 
 def set_matplotlib_style(*, use_scienceplots: bool = True):
+    """Set the default style for matplotlib plots."""
+
     import matplotlib.pyplot as plt
     import seaborn as sns
 
@@ -42,7 +46,7 @@ def histogram_gui(
     num_frames: int = 100,
     show: bool = True,
     save: bool = False,
-    filename: str = None,
+    filename: str | None = None,
     min_bin: int = 0,
     max_bin: int = 128,
     autoscale: bool = True,

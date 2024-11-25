@@ -1,3 +1,5 @@
+"""SPAD sensor driver that loads pre-recorded data from a PKL file."""
+
 from pathlib import Path
 
 import numpy as np

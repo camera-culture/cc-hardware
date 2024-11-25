@@ -1,3 +1,5 @@
+"""An algorithm to localize ArUco markers using camera images."""
+
 from pathlib import Path
 
 import cv2
@@ -75,9 +77,8 @@ class ArucoLocalizationAlgorithm(Algorithm):
                 Defaults to False.
 
         Returns:
-            dict: A dictionary containing localization results for the specified
-                markers.
-            list: A list of processed images (if return_images is True).
+            dict | list: A dictionary containing localization results for the specified
+                markers. A list of processed images (if return_images is True).
         """
         results = []
         for _ in range(self._num_samples):

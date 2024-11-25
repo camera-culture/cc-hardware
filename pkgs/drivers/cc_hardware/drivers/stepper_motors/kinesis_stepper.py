@@ -1,3 +1,5 @@
+"""StepperMotor driver for Kinesis motors."""
+
 from pylablib.devices.Thorlabs import KinesisMotor
 
 from cc_hardware.drivers.stepper_motors import (

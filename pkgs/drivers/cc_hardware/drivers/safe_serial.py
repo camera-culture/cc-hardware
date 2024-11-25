@@ -1,3 +1,5 @@
+"""SafeSerial class for thread-safe serial communication."""
+
 import re
 import threading
 import time

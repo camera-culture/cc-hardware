@@ -1,3 +1,5 @@
+"""Stepper motor drivers for the cc-hardware package."""
+
 from cc_hardware.drivers.stepper_motors.stepper_motor import (
     DummyStepperMotor,
     StepperMotor,

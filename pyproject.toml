@@ -12,7 +12,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.12"
+python = ">=3.12,<4.0"
 drivers = { path = "pkgs/drivers", develop = true }
 tools = { path = "pkgs/tools", develop = true }
 utils = { path = "pkgs/utils", develop = true }
@@ -52,8 +52,8 @@ per-file-ignores = ['__init__.py:F401']
 max-line-length = 88
 count = true
 
-[tools.pyright]
-reportMissingTypeArgument = true # Report generic classes used without type arguments
+# [tool.pyright]
+# reportMissingTypeArgument = true # Report generic classes used without type arguments
 strictListInference = true       # Use union types when inferring types of lists elements, instead of Any
 
 [tool.poetry-monorepo-dependency-plugin]

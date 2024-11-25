@@ -1,3 +1,5 @@
+"""FlirCamera class for FLIR cameras using the PySpin library."""
+
 import threading
 from typing import override
 

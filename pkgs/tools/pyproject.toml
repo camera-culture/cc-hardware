@@ -19,4 +19,4 @@ utils = {path = "../utils", develop = true}
 drivers = {path = "../drivers", develop = true}
 
 [tool.poetry.scripts]
-cc_hardware = "cc_hardware.tools.main:cc"
+cc_hardware = "cc_hardware.tools:APP"

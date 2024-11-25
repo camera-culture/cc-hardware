@@ -1,3 +1,8 @@
+"""This module contains the TelemetrixStepperMotor and TelemetrixStepperMotorSystem
+classes which are wrappers around the Telemetrix library's interface with stepper
+motors. These classes provide a unified interface for controlling stepper motors
+connected to a CNCShield using the Telemetrix library."""
+
 import inspect
 from functools import partial
 from typing import Any

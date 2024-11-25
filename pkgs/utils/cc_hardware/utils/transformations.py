@@ -1,3 +1,5 @@
+"""This module provides classes for working with transformations in 3D space."""
+
 from typing import Annotated, Optional, Self, TypeAlias
 
 import numpy as np

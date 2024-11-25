@@ -1,3 +1,5 @@
+"""TMF8828 sensor driver for SPAD sensors."""
+
 import time
 from enum import Enum
 from pathlib import Path
@@ -5,14 +7,12 @@ from pathlib import Path
 import numpy as np
 import pkg_resources
 
+from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
-
-# Assume these modules are available in your project
-from pkgs.drivers.cc_hardware.drivers.safe_serial import SafeSerial
 
 # ================
 
@@ -339,13 +339,11 @@ class TMF8828Sensor(SPADSensor):
             properties.
 
     Attributes:
-        PORT (str): The default serial port for the TMF8828 sensor.
         SCRIPT (Path): The default path to the sensor's Arduino script.
         BAUDRATE (int): The communication baud rate.
         TIMEOUT (float): The timeout value for sensor communications.
     """
 
-    PORT: str = "/usr/local/dev/arduino-tmf8828"
     SCRIPT: Path = Path(
         pkg_resources.resource_filename(
             "cc_hardware.drivers", str(Path("data") / "tmf8828" / "tmf8828.ino")
@@ -356,9 +354,9 @@ class TMF8828Sensor(SPADSensor):
 
     def __init__(
         self,
+        port: str,
         *,
         spad_id: SPADID | int = SPADID.ID6,
-        port: str | None = None,
         setup: bool = True,
         range_mode: RangeMode = RangeMode.LONG,
     ):
@@ -367,10 +365,11 @@ class TMF8828Sensor(SPADSensor):
         parameters.
 
         Args:
+            port (str): The port to use for communication with the sensor.
+
+        Keyword Args:
             spad_id (SPADID | int): The SPAD ID indicating the resolution of the sensor.
                 Defaults to SPADID.ID6.
-            port (str | None): The serial port to connect to. Defaults to the
-                class-level PORT.
             setup (bool): Whether to perform a sensor setup after initialization.
                 Defaults to True.
             range_mode (RangeMode): The range mode for the sensor (LONG or SHORT).
@@ -383,7 +382,7 @@ class TMF8828Sensor(SPADSensor):
         self.num_channels = self._get_num_channels()  # Including calibration channel
         self.active_channels_per_subcapture = self._get_active_channels_per_subcapture()
 
-        port = port or self.PORT
+        port = port
         self._arduino = SafeSerial.create(
             port=port, baudrate=self.BAUDRATE, timeout=self.TIMEOUT
         )

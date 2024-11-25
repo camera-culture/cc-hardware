@@ -1,3 +1,18 @@
+"""Logging utilities for the cc_hardware package.
+
+This module provides a custom logger that uses tqdm.write to log messages to the
+console. It also provides a filter to set a maximum logging level for a logger.
+
+Example:
+
+.. code-block:: python
+
+    from cc_hardware.utils.logger import get_logger
+
+    get_logger().info("This is an info message.")
+
+"""
+
 import logging
 import logging.config
 

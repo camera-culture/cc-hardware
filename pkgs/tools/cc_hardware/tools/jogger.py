@@ -1,3 +1,5 @@
+"""Joystick-like interface for controlling the gantry system."""
+
 import curses
 import logging
 import sys

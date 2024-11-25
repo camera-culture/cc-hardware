@@ -1,10 +1,11 @@
+"""Visualizations for various sensors."""
+
 from functools import partial
 from pathlib import Path
 
 import cv2
 import imageio
 import numpy as np
-import typer
 
 try:
     import torch
@@ -13,10 +14,15 @@ except ImportError:
 
 from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.drivers.spads.spad import SPADSensor
-from cc_hardware.tools.app import APP
+from cc_hardware.tools.app import APP, typer
 from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.plotting import histogram_gui, plot_points, transient_gui
+
+# ========================
+
+visualizations_APP = typer.Typer()
+APP.add_typer(visualizations_APP, name="vis")
 
 # ========================
 
@@ -31,9 +37,9 @@ def dashboard(spad: type[SPADSensor] | SPADSensor, **kwargs):
         manager.run(setup=setup)
 
 
-@APP.command()
+@visualizations_APP.command()
 def tmf8828_dashboard(
-    port: str | None = None,
+    port: str,
     num_frames: int = 100,
     show: bool = True,
     save: bool = False,
@@ -47,9 +53,9 @@ def tmf8828_dashboard(
     short_range: bool = False,
     fullscreen: bool = False,
 ):
-    from cc_hardware.drivers.spads.tmf8828 import RangeMode, TMF8828Sensor
+    """Dashboard for the TMF8828 sensor."""
 
-    TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
+    from cc_hardware.drivers.spads.tmf8828 import RangeMode, TMF8828Sensor
 
     assert spad_id in (
         6,
@@ -57,7 +63,7 @@ def tmf8828_dashboard(
         15,
     ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
     range_mode = RangeMode.SHORT if short_range else RangeMode.LONG
-    sensor = partial(TMF8828Sensor, spad_id=spad_id, range_mode=range_mode)
+    sensor = partial(TMF8828Sensor, port=port, spad_id=spad_id, range_mode=range_mode)
 
     dashboard(
         sensor,
@@ -74,7 +80,7 @@ def tmf8828_dashboard(
     )
 
 
-@APP.command()
+@visualizations_APP.command()
 def pkl_dashboard(
     pkl_path: Path,
     num_frames: int = 100,
@@ -88,6 +94,8 @@ def pkl_dashboard(
     channel_mask: list[int] | None = None,
     resolution: tuple[int, int] = (3, 3),
 ):
+    """Dashboard for a pkl sensor."""
+
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
 
     # TODO: Load directly from the pkl
@@ -114,6 +122,8 @@ def transient_viewer(
     sensor: type[SPADSensor] | SPADSensor,
     **kwargs,
 ):
+    """View transient data from a sensor. Renders as a video."""
+
     from cc_hardware.utils.manager import Manager
 
     def setup(manager: Manager, sensor: SPADSensor):
@@ -123,9 +133,9 @@ def transient_viewer(
         manager.run(setup=setup)
 
 
-@APP.command()
+@visualizations_APP.command()
 def tmf8828_transient_viewer(
-    port: str | None = None,
+    port: str,
     show: bool = True,
     save: bool = False,
     filename: str | None = None,
@@ -137,9 +147,9 @@ def tmf8828_transient_viewer(
     fps: int = 10,
     normalize_per_pixel: bool = True,
 ):
-    from cc_hardware.drivers.spads.tmf8828 import RangeMode, TMF8828Sensor
+    """Transient viewer for the TMF8828 sensor."""
 
-    TMF8828Sensor.PORT = port or TMF8828Sensor.PORT
+    from cc_hardware.drivers.spads.tmf8828 import RangeMode, TMF8828Sensor
 
     assert spad_id in (
         6,
@@ -147,7 +157,7 @@ def tmf8828_transient_viewer(
         15,
     ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
     range_mode = RangeMode.SHORT if short_range else RangeMode.LONG
-    sensor = partial(TMF8828Sensor, spad_id=spad_id, range_mode=range_mode)
+    sensor = partial(TMF8828Sensor, port=port, spad_id=spad_id, range_mode=range_mode)
 
     transient_viewer(
         sensor,
@@ -162,7 +172,7 @@ def tmf8828_transient_viewer(
     )
 
 
-@APP.command()
+@visualizations_APP.command()
 def pkl_transient_viewer(
     pkl_path: Path,
     *,
@@ -173,6 +183,8 @@ def pkl_transient_viewer(
     fullscreen: bool = False,
     normalize_per_pixel: bool = True,
 ):
+    """Transient viewer for a SPAD pkl file."""
+
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
 
     transient_viewer(
@@ -193,6 +205,8 @@ def camera_viewer(
     resolution: tuple[int, int] | None = None,
     **kwargs,
 ):
+    """View images from a camera."""
+
     from cc_hardware.utils.manager import Manager
 
     def setup(manager: Manager, camera: Camera):
@@ -221,23 +235,27 @@ def camera_viewer(
         manager.run(setup=setup, loop=loop)
 
 
-@APP.command()
+@visualizations_APP.command()
 def flir_camera_viewer(num_frames: int = -1, resolution: tuple[int, int] | None = None):
+    """View images from a FLIR camera."""
+
     from cc_hardware.drivers.cameras.flir import GrasshopperFlirCamera
 
     camera_viewer(GrasshopperFlirCamera, num_frames, resolution)
 
 
-@APP.command()
+@visualizations_APP.command()
 def pkl_camera_viewer(
     pkl_path: Path, num_frames: int = -1, resolution: tuple[int, int] | None = None
 ):
+    """View images from a pkl camera."""
+
     from cc_hardware.drivers.cameras.pkl import PklCamera
 
     camera_viewer(PklCamera(pkl_path), num_frames, resolution)
 
 
-@APP.command()
+@visualizations_APP.command()
 def realsense_camera_viewer(
     num_frames: int = -1,
     resolution: tuple[int, int] | None = None,
@@ -245,6 +263,8 @@ def realsense_camera_viewer(
     depth: bool | None = None,
     exposure: int | None = None,
 ):
+    """View images from a RealSense camera."""
+
     from cc_hardware.drivers.cameras.realsense import RealsenseCamera
 
     assert not (rgb and depth), "Cannot show both RGB and depth images."
@@ -277,6 +297,8 @@ def aruco_localization(
     marker_size: float,
     **kwargs,
 ):
+    """Localize an Aruco marker in the camera feed."""
+
     from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
     from cc_hardware.utils.manager import Manager
 
@@ -307,7 +329,7 @@ def aruco_localization(
         manager.run(setup=setup, loop=loop)
 
 
-@APP.command()
+@visualizations_APP.command()
 def flir_aruco_localization(
     aruco_dict: str,
     marker_size: float = 8.25,
@@ -316,6 +338,8 @@ def flir_aruco_localization(
     filename: str | None = None,
     num_frames: int = -1,
 ):
+    """Localize an Aruco marker in the FLIR camera feed."""
+
     from cc_hardware.drivers.cameras.flir import GrasshopperFlirCamera
 
     aruco_localization(
@@ -329,7 +353,7 @@ def flir_aruco_localization(
     )
 
 
-@APP.command()
+@visualizations_APP.command()
 def pkl_aruco_localization(
     pkl_path: Path,
     aruco_dict: str,
@@ -339,6 +363,8 @@ def pkl_aruco_localization(
     filename: str | None = None,
     num_frames: int = -1,
 ):
+    """Localize an Aruco marker in saved pkl data camera feed."""
+
     from cc_hardware.drivers.cameras.pkl import PklCamera
 
     aruco_localization(
@@ -366,6 +392,8 @@ def estimated_position(
     save: bool = False,
     filename: str | None = None,
 ):
+    """Estimate the position of an object using a sensor and camera."""
+
     import matplotlib.pyplot as plt
 
     from cc_hardware.algos.aruco import ArucoLocalizationAlgorithm
@@ -458,7 +486,7 @@ def estimated_position(
         manager.run(setup=setup, loop=loop, cleanup=cleanup)
 
 
-@APP.command()
+@visualizations_APP.command()
 def pkl_estimated_position(
     pkl_path: Path,
     aruco_dict: str,
@@ -468,6 +496,8 @@ def pkl_estimated_position(
     save: bool = False,
     filename: str | None = None,
 ):
+    """Estimate the position of an object using a pkl sensor and camera."""
+
     from cc_hardware.drivers.cameras.pkl import PklCamera
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
     from cc_hardware.utils.writers import PklWriter

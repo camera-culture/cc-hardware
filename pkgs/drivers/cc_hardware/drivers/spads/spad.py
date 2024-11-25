@@ -1,10 +1,11 @@
+"""Base class for Single-Photon Avalanche Diode (SPAD) sensors."""
+
 from abc import abstractmethod
 
 from cc_hardware.drivers.sensor import Sensor
-from cc_hardware.utils.registry import Registry
 
 
-class SPADSensor(Registry, Sensor):
+class SPADSensor(Sensor):
     """
     An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
     to manage histogram-based measurements. This class defines methods and properties

@@ -1,3 +1,5 @@
+"""Registry base class and decorator for registering classes in the registry."""
+
 from typing import Any, Self
 
 

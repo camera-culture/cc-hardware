@@ -1,12 +1,13 @@
+"""Base class for cameras."""
+
 from abc import abstractmethod
 
 import numpy as np
 
 from cc_hardware.drivers.sensor import Sensor
-from cc_hardware.utils.registry import Registry
 
 
-class Camera(Registry, Sensor):
+class Camera(Sensor):
     """
     Abstract base class for a Camera sensor, extending the Sensor class.
     Defines methods and properties for specific for cameras.

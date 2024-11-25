@@ -1,3 +1,5 @@
+"""Base classes for sensors and sensor data processing."""
+
 import threading
 from abc import ABC, abstractmethod
 from typing import Any
@@ -8,7 +10,7 @@ from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import Registry
 
 
-class Sensor(Registry, ABC):
+class Sensor(ABC, Registry):
     """Abstract base class for sensors."""
 
     @property

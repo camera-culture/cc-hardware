@@ -1,3 +1,29 @@
+"""This module contains a manager for handling components which must be closed.
+
+The manager can be used as a context manager or run with a setup, loop, and cleanup
+function. The manager will ensure all components are properly closed when it is closed.
+
+Example:
+
+.. code-block:: python
+
+    from cc_hardware.utils.manager import Manager
+
+    def setup(manager, camera):
+        camera.start()
+
+    def loop(i, manager, camera):
+        if i > 100:
+            return False
+        return camera.is_okay
+
+    def cleanup(manager, camera):
+        camera.stop()
+
+    with Manager(camera=Camera()) as manager:
+        manager.run(setup=setup, loop=loop, cleanup=cleanup)
+"""
+
 from functools import partial
 from typing import Callable, Protocol, Type
 

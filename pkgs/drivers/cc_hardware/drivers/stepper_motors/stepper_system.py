@@ -1,10 +1,12 @@
+"""This module defines a system of stepper motors that can be controlled as a single
+unit. This is useful for controlling a gantry or a multi-axis rotation stage."""
+
 from enum import Enum
-from typing import Any, overload
+from typing import Any, Callable, overload
 
 from cc_hardware.drivers.stepper_motors import DummyStepperMotor, StepperMotor
 from cc_hardware.utils.asyncio_utils import call_async_gather
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import Registry, register
 
 # ======================
 
@@ -25,8 +27,7 @@ class StepperMotorSystemAxis(Enum):
 # ======================
 
 
-@register
-class StepperMotorSystem(Registry, StepperMotor):
+class StepperMotorSystem(StepperMotor):
     """This is a wrapper around multiple stepper motors which defines the system
     as a whole (i.e. a gantry or multi-axis rotation stage).
 
@@ -110,7 +111,7 @@ class StepperMotorSystem(Registry, StepperMotor):
     def position(self) -> list:
         return [[motor.position for motor in motors] for motors in self._axes.values()]
 
-    def _run_async_gather(self, fn: str, callback: callable[[list], Any]):
+    def _run_async_gather(self, fn: str, callback: Callable[[list], Any]):
         """Runs the specified function on all motors asynchronously."""
         # TODO: can re remove DummyStepperMotor dependence?
         fns = [
