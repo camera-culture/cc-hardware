@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
+from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import Registry, register
 
 # ======================
@@ -87,5 +88,7 @@ class SnakeStepperController(StepperController):
                 current_position[axis_name] = axis_positions[
                     len(axis_positions) - 1 - index
                 ]
+
+            get_logger().info(f"Axis {axis_name}: {current_position[axis_name]}")
 
         return current_position

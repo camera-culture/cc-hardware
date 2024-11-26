@@ -500,7 +500,7 @@ def pkl_estimated_position(
 
     from cc_hardware.drivers.cameras.pkl import PklCamera
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
-    from cc_hardware.utils.writers import PklWriter
+    from cc_hardware.utils.file_handlers import PklHandler
 
     assert hasattr(cv2.aruco, aruco_dict), f"Invalid aruco_dict: {aruco_dict}"
     aruco_dict = getattr(cv2.aruco, aruco_dict)
@@ -510,7 +510,7 @@ def pkl_estimated_position(
     class PklModel(torch.nn.Module):
         def __init__(self, pkl_path: Path):
             super().__init__()
-            self._data = PklWriter.load_all(pkl_path)
+            self._data = PklHandler.load_all(pkl_path)
             self._data_iterator = iter(self._data)
 
         def forward(self, histogram, camera_pose):

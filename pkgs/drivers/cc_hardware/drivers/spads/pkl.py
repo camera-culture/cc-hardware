@@ -5,9 +5,9 @@ from pathlib import Path
 import numpy as np
 
 from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
-from cc_hardware.utils.writers import PklWriter
 
 
 @register
@@ -45,7 +45,7 @@ class PklSPADSensor(SPADSensor):
                 (width, height).
         """
         self._pkl_path = Path(pkl_path)
-        self._data = PklWriter.load_all(self._pkl_path)
+        self._data = PklHandler.load_all(self._pkl_path)
         self._data_iterator = iter(self._data)
         get_logger().info(f"Loaded {len(self._data)} entries from {self._pkl_path}.")
 
