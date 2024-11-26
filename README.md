@@ -37,10 +37,10 @@ subdirectory within the `pkgs` directory and should be installed as a separate p
 
 The current supported packages are as follows:
 
-- [`algos`](./pkgs/algos/README.md): Contains algorithms for processing data.
-- [`drivers`](./pkgs/drivers/README.md): Contains drivers for interfacing with hardware.
-- [`utils`](./pkgs/utils/README.md): Contains utility functions and classes.
-- [`tools`](./pkgs/tools/README.md): Contains tools for working with hardware, such as
+- [`algos`](https://camera-culture.github.io/cc-hardware/usage/api/algos): Contains algorithms for processing data.
+- [`drivers`](https://camera-culture.github.io/cc-hardware/usage/api/drivers): Contains drivers for interfacing with hardware.
+- [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/utils): Contains utility functions and classes.
+- [`tools`](https://camera-culture.github.io/cc-hardware/usage/cli): Contains tools for working with hardware, such as
     calibration or visualization scripts.
 
 ### Package Structure
