@@ -81,6 +81,41 @@ def tmf8828_dashboard(
 
 
 @visualizations_APP.command()
+def vl53l8ch_dashboard(
+    port: str,
+    num_frames: int = 100,
+    show: bool = True,
+    save: bool = False,
+    filename: str | None = None,
+    autoscale: bool = True,
+    ylim: float | None = None,
+    min_bin: int = 0,
+    max_bin: int = 127,
+    channel_mask: list[int] | None = None,
+    fullscreen: bool = False,
+):
+    """Dashboard for the VL53L8CH sensor."""
+
+    from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
+
+    sensor = partial(VL53L8CHSensor, port=port)
+
+    dashboard(
+        sensor,
+        num_frames=num_frames,
+        show=show,
+        save=save,
+        filename=filename,
+        autoscale=autoscale,
+        ylim=ylim,
+        min_bin=min_bin,
+        max_bin=max_bin,
+        channel_mask=channel_mask,
+        fullscreen=fullscreen,
+    )
+
+
+@visualizations_APP.command()
 def pkl_dashboard(
     pkl_path: Path,
     num_frames: int = 100,
