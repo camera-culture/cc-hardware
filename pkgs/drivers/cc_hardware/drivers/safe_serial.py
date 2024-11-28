@@ -1,8 +1,9 @@
 """SafeSerial class for thread-safe serial communication.
 
-The :class:`~drivers.safe_serial.SafeSerial` class is a wrapper around the 
-`serial.Serial <https://pyserial.readthedocs.io/en/latest/pyserial_api.html#serial.Serial>`_
-class that provides a thread-safe interface for reading and writing to a serial device. 
+The :class:`~drivers.safe_serial.SafeSerial` class is a wrapper around the
+`serial.Serial \
+    <https://pyserial.readthedocs.io/en/latest/pyserial_api.html#serial.Serial>`_
+class that provides a thread-safe interface for reading and writing to a serial device.
 It also provides a few convenience methods for reading and writing data.
 """
 

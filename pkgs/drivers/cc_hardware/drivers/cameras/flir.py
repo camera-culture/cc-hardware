@@ -1,11 +1,11 @@
-"""The :class:`~drivers.cameras.flir.FlirCamera` class is a wrapper around the 
-PySpin library for interfacing with FLIR cameras. 
+"""The :class:`~drivers.cameras.flir.FlirCamera` class is a wrapper around the
+PySpin library for interfacing with FLIR cameras.
 
-It provides a simple interface for capturing images and setting camera 
+It provides a simple interface for capturing images and setting camera
 parameters. It is implemented as a singleton to ensure that only one instance of the
 camera is created. To create a new instance of the camera, one has to override the base
-:class:`~drivers.cameras.flir.FlirCamera` class and implement the 
-:func:`~drivers.cameras.flir.FlirCamera.distortion_coefficients` and 
+:class:`~drivers.cameras.flir.FlirCamera` class and implement the
+:func:`~drivers.cameras.flir.FlirCamera.distortion_coefficients` and
 :func:`~drivers.cameras.flir.FlirCamera.intrinsic_matrix` methods.
 
 Example:
@@ -15,7 +15,7 @@ Example:
     class GrasshopperFlirCamera(FlirCamera):
         \"\"\"
         Specialized camera class for a Grasshopper FLIR camera model.
-        Inherits from FlirCamera and provides specific intrinsic and 
+        Inherits from FlirCamera and provides specific intrinsic and
         distortion parameters.
         \"\"\"
 
@@ -42,7 +42,7 @@ Example:
             Get the intrinsic matrix of the Grasshopper FLIR camera.
 
             Returns:
-                np.ndarray: A 3x3 array representing the intrinsic matrix 
+                np.ndarray: A 3x3 array representing the intrinsic matrix
                             of the camera.
             \"\"\"
             return self.INTRINSIC_MATRIX
@@ -50,7 +50,7 @@ Example:
 PySpin Installation
 -------------------
 
-You will need to install PySpin and Spinnaker 
+You will need to install PySpin and Spinnaker
 `as usual <https://www.flir.co.uk/products/spinnaker-sdk>`_.
 As of writing (2024-09-21), PySpin only supports <= 3.10. To install PySpin on newer
 versions of Python, you can use the following steps:
@@ -62,8 +62,8 @@ versions of Python, you can use the following steps:
     pip install spinnaker_python-<version>-cp<version>-<os>-<version>-<arch>.whl
 
     # But this will fail for python versions > 3.10. To install on newer versions,
-    # replace the cp<version> with your python version. For instance, for python 3.11 on 
-    # M2 Mac, the command would turn from 
+    # replace the cp<version> with your python version. For instance, for python 3.11 on
+    # M2 Mac, the command would turn from
     tar -xvzf spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.tar.gz
     pip instal spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.whl
     # To

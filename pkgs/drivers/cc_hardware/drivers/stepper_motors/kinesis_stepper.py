@@ -1,8 +1,8 @@
 """StepperMotor driver for Kinesis motors.
 
-The :class:`~drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor` 
-class is a wrapper around the Thorlabs Kinesis C API 
-(accessed via the ``pylablib.devices.Throlabs.KinesisMotor`` class). It provides a 
+The :class:`~drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor`
+class is a wrapper around the Thorlabs Kinesis C API
+(accessed via the ``pylablib.devices.Throlabs.KinesisMotor`` class). It provides a
 simple interface for controlling the motor.
 
 .. note::
