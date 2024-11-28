@@ -4,7 +4,7 @@ Contributing to the repository is fairly easy, so please see below for instructi
 
 ## Setup
 
-There are two forms of contributions: source code or documentation. Editing the documentation is as simple as cloning the repo and adding/editing content within the `docs` folder. All documentation is written in `markdown` and converted to `html` through `myst_parser` and `sphinx`. To edit the source code, as well as the documentation, you will want to install the package [through a symlink](./setup.md#from-sources).
+There are two forms of contributions: source code or documentation. Editing the documentation is as simple as cloning the repo and adding/editing content within the `docs` folder. All documentation is written in `markdown` and converted to `html` through `myst_parser` and `sphinx`. To edit the source code, as well as the documentation, you will want to install the package through a symlink.
 
 ```{note}
 A `conda` or `virtualenv` will add isolation to your python environments and reduce conflicts amongst packages. It is _highly_ recommended to use one!!
@@ -38,13 +38,11 @@ poetry install
 <!-- git push origin main --tags -->
 <!-- ``` -->
 
-#### Versioning
+<!-- #### Versioning
 
-Versioning is done automatically through `tags` by [setuptools_scm](https://github.com/pypa/setuptools_scm). When a tag is pushed to the `main` branch, a new package is pushed to PyPI with the attached tag. Therefore, you must ensure the tag you push is _after_ the previous tags seen on GitHub (otherwise nothing will push to PyPI).
+Versioning is done automatically through `tags` by [setuptools_scm](https://github.com/pypa/setuptools_scm). When a tag is pushed to the `main` branch, a new package is pushed to PyPI with the attached tag. Therefore, you must ensure the tag you push is _after_ the previous tags seen on GitHub (otherwise nothing will push to PyPI). -->
 
 ## Guidelines
-
-A lot of work has gone into making this package functional and scalable. Please consider all of the following guidelines and follow them to ensure the repository will persist for a long time.
 
 ### File Structure
 
@@ -56,7 +54,8 @@ cc-hardware/
 │   ├── algos/          # Contains algorithms for processing data
 │   ├── drivers/        # Contains drivers for interfacing with hardware
 │   ├── utils/          # Contains utility functions and classes
-│   └── tools/          # Contains tools for working with hardware, such as calibration or visualization scripts
+│   ├── tools/          # Contains tools for working with hardware, such as calibration or visualization scripts
+│   └── .../            # Additional packages
 ├── docs/               # Contains documentation
 ├── LICENSE
 └── pyproject.toml      # Package description and installation instructions for poetry
@@ -79,7 +78,7 @@ If you plan on editing the source code, please visit the corresponding package u
 
 #### Commenting
 
-Please follow [Google's guidelines for Python Styling](https://google.github.io/styleguide/pyguide.html). These comments are also used to automatically generate the documentation. For Visual Studio Code users, the [Python Docstring Generator](https://github.com/NilsJPWerner/autoDocstring) package may be helpful.
+Please follow [Google's guidelines for Python Styling](https://google.github.io/styleguide/pyguide.html). These comments are also used to automatically generate the documentation.
 
 ```{note}
 Any docstrings parsed by `autosimple`, such as the functions in [usage.md](./usage/index.md), are parsed as markdown. Docstrings parsed by autoapi, such as in [cambrian.envs.MjCambrianEnv](./usage/api/cambrian/envs/env/index), are parsed as reStructuredText.
@@ -87,7 +86,7 @@ Any docstrings parsed by `autosimple`, such as the functions in [usage.md](./usa
 
 ### Editing the Documentation
 
-If you plan on editing the documentation pages (i.e. adding a tutorial or fixing an existing page), please visit the `docs/` folder. The `docs/` folder is structured as follows:
+If you plan on editing the documentation pages (i.e. adding a tutorial or fixing an existing page), please see the `docs/` folder. The `docs/` folder is structured as follows:
 
 ```
 docs/
@@ -96,8 +95,6 @@ docs/
 │   └── ...             # Images, favicons, etc.
 ├── usage/              # Usage reference guide for the EyesOfCambrian package
 │   └── ...
-├── setup.md            # Installation build instructions
-├── contributing.md     # Contributing tab with instructions on how to contribute to the repo
 ├── conf.py             # Settings related to extensions, themes, etc.
 └── index.md            # The "home" page
 ```
@@ -111,9 +108,9 @@ Markdown files are converted to reStructuredText by `myst_parser` which is used 
 There are multiple ways to build sphinx documentation. The easiest is using the `Makefile` or `make.bat` file provided directly in this repository. You will need to install all the necessary dependencies and build the html pages. To do that, run the following commands:
 
 ```bash
-cd cc-hardware/docs
-pip install poetry
-poetry install
+cd cc-hardware/
+poetry install --with dev --with docs
+cd docs/
 make clean html
 ```
 

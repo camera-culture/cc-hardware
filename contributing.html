@@ -177,9 +177,6 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
-<li class="toctree-l1"><a class="reference internal" href="background.html">Background</a></li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration/index.html">Configuration</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="usage/index.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage/cli.html">CLI Documentation</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -276,7 +273,7 @@
 <p>Contributing to the repository is fairly easy, so please see below for instructions on how to actually make contributions to this project.</p>
 <section id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
-<p>There are two forms of contributions: source code or documentation. Editing the documentation is as simple as cloning the repo and adding/editing content within the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder. All documentation is written in <code class="docutils literal notranslate"><span class="pre">markdown</span></code> and converted to <code class="docutils literal notranslate"><span class="pre">html</span></code> through <code class="docutils literal notranslate"><span class="pre">myst_parser</span></code> and <code class="docutils literal notranslate"><span class="pre">sphinx</span></code>. To edit the source code, as well as the documentation, you will want to install the package <a class="reference internal" href="setup.html#from-sources"><span class="std std-ref">through a symlink</span></a>.</p>
+<p>There are two forms of contributions: source code or documentation. Editing the documentation is as simple as cloning the repo and adding/editing content within the <code class="docutils literal notranslate"><span class="pre">docs</span></code> folder. All documentation is written in <code class="docutils literal notranslate"><span class="pre">markdown</span></code> and converted to <code class="docutils literal notranslate"><span class="pre">html</span></code> through <code class="docutils literal notranslate"><span class="pre">myst_parser</span></code> and <code class="docutils literal notranslate"><span class="pre">sphinx</span></code>. To edit the source code, as well as the documentation, you will want to install the package through a symlink.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>A <code class="docutils literal notranslate"><span class="pre">conda</span></code> or <code class="docutils literal notranslate"><span class="pre">virtualenv</span></code> will add isolation to your python environments and reduce conflicts amongst packages. It is <em>highly</em> recommended to use one!!</p>
@@ -305,15 +302,13 @@ poetry<span class="w"> </span>install
 <!-- git tag <tag> # An example tag is v3.0.1 -->
 <!-- git push origin main --tags -->
 <!-- ``` -->
-<section id="versioning">
-<h4>Versioning<a class="headerlink" href="#versioning" title="Link to this heading">#</a></h4>
-<p>Versioning is done automatically through <code class="docutils literal notranslate"><span class="pre">tags</span></code> by <a class="reference external" href="https://github.com/pypa/setuptools_scm">setuptools_scm</a>. When a tag is pushed to the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, a new package is pushed to PyPI with the attached tag. Therefore, you must ensure the tag you push is <em>after</em> the previous tags seen on GitHub (otherwise nothing will push to PyPI).</p>
-</section>
+<!-- #### Versioning
+
+Versioning is done automatically through `tags` by [setuptools_scm](https://github.com/pypa/setuptools_scm). When a tag is pushed to the `main` branch, a new package is pushed to PyPI with the attached tag. Therefore, you must ensure the tag you push is _after_ the previous tags seen on GitHub (otherwise nothing will push to PyPI). -->
 </section>
 </section>
 <section id="guidelines">
 <h2>Guidelines<a class="headerlink" href="#guidelines" title="Link to this heading">#</a></h2>
-<p>A lot of work has gone into making this package functional and scalable. Please consider all of the following guidelines and follow them to ensure the repository will persist for a long time.</p>
 <section id="file-structure">
 <h3>File Structure<a class="headerlink" href="#file-structure" title="Link to this heading">#</a></h3>
 <p>The repository is structured as follows:</p>
@@ -322,7 +317,8 @@ poetry<span class="w"> </span>install
 │   ├── algos/          # Contains algorithms for processing data
 │   ├── drivers/        # Contains drivers for interfacing with hardware
 │   ├── utils/          # Contains utility functions and classes
-│   └── tools/          # Contains tools for working with hardware, such as calibration or visualization scripts
+│   ├── tools/          # Contains tools for working with hardware, such as calibration or visualization scripts
+│   └── .../            # Additional packages
 ├── docs/               # Contains documentation
 ├── LICENSE
 └── pyproject.toml      # Package description and installation instructions for poetry
@@ -344,7 +340,7 @@ poetry<span class="w"> </span>install
 </div>
 <section id="commenting">
 <h4>Commenting<a class="headerlink" href="#commenting" title="Link to this heading">#</a></h4>
-<p>Please follow <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google’s guidelines for Python Styling</a>. These comments are also used to automatically generate the documentation. For Visual Studio Code users, the <a class="reference external" href="https://github.com/NilsJPWerner/autoDocstring">Python Docstring Generator</a> package may be helpful.</p>
+<p>Please follow <a class="reference external" href="https://google.github.io/styleguide/pyguide.html">Google’s guidelines for Python Styling</a>. These comments are also used to automatically generate the documentation.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Any docstrings parsed by <code class="docutils literal notranslate"><span class="pre">autosimple</span></code>, such as the functions in <a class="reference internal" href="usage/index.html"><span class="std std-doc">usage.md</span></a>, are parsed as markdown. Docstrings parsed by autoapi, such as in <a class="reference internal" href="#./usage/api/cambrian/envs/env/index"><span class="xref myst">cambrian.envs.MjCambrianEnv</span></a>, are parsed as reStructuredText.</p>
@@ -353,15 +349,13 @@ poetry<span class="w"> </span>install
 </section>
 <section id="editing-the-documentation">
 <h3>Editing the Documentation<a class="headerlink" href="#editing-the-documentation" title="Link to this heading">#</a></h3>
-<p>If you plan on editing the documentation pages (i.e. adding a tutorial or fixing an existing page), please visit the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder is structured as follows:</p>
+<p>If you plan on editing the documentation pages (i.e. adding a tutorial or fixing an existing page), please see the <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder. The <code class="docutils literal notranslate"><span class="pre">docs/</span></code> folder is structured as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docs/
 ├── _static/            # Static files that persist through the build process
 │   ├── css/custom.css  # Custom css changes that are different from the default furo theme
 │   └── ...             # Images, favicons, etc.
 ├── usage/              # Usage reference guide for the EyesOfCambrian package
 │   └── ...
-├── setup.md            # Installation build instructions
-├── contributing.md     # Contributing tab with instructions on how to contribute to the repo
 ├── conf.py             # Settings related to extensions, themes, etc.
 └── index.md            # The &quot;home&quot; page
 </pre></div>
@@ -373,9 +367,9 @@ poetry<span class="w"> </span>install
 <section id="building-the-documentation">
 <h2>Building the Documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading">#</a></h2>
 <p>There are multiple ways to build sphinx documentation. The easiest is using the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> or <code class="docutils literal notranslate"><span class="pre">make.bat</span></code> file provided directly in this repository. You will need to install all the necessary dependencies and build the html pages. To do that, run the following commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>cc-hardware/docs
-pip<span class="w"> </span>install<span class="w"> </span>poetry
-poetry<span class="w"> </span>install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>cc-hardware/
+poetry<span class="w"> </span>install<span class="w"> </span>--with<span class="w"> </span>dev<span class="w"> </span>--with<span class="w"> </span>docs
+<span class="nb">cd</span><span class="w"> </span>docs/
 make<span class="w"> </span>clean<span class="w"> </span>html
 </pre></div>
 </div>
@@ -435,10 +429,7 @@ make<span class="w"> </span>clean<span class="w"> </span>html
 <li><a class="reference internal" href="#setup">Setup</a><ul>
 <li><a class="reference internal" href="#cloning-the-repo">Cloning the Repo</a></li>
 <li><a class="reference internal" href="#installing">Installing</a></li>
-<li><a class="reference internal" href="#deploy-your-changes">Deploy your Changes</a><ul>
-<li><a class="reference internal" href="#versioning">Versioning</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#deploy-your-changes">Deploy your Changes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#guidelines">Guidelines</a><ul>
