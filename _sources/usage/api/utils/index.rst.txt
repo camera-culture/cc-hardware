@@ -16,12 +16,12 @@ Submodules
    asyncio_utils/index.rst
    blocking_deque/index.rst
    constants/index.rst
+   file_handlers/index.rst
    logger/index.rst
    manager/index.rst
    plotting/index.rst
    registry/index.rst
    singleton/index.rst
    transformations/index.rst
-   writers/index.rst
 
 

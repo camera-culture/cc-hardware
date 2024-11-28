@@ -8,6 +8,15 @@
 
    Camera driver for Intel RealSense devices.
 
+   The :class:`~drivers.cameras.realsense.RealsenseCamera` class is a wrapper around the
+   PyRealSense library for interfacing with a D435i RealSense camera. It provides a simple
+   interface for capturing images and setting camera parameters. It is implemented as a
+   singleton to ensure that only one instance of the camera is created. It will capture
+   both color and depth images, but the
+   :func:`~drivers.cameras.realsense.RealsenseCamera.accumulate` method will only return
+   the color image by default (set ``return_depth=True`` to return the depth image, as
+   well).
+
 
 
 Module Contents

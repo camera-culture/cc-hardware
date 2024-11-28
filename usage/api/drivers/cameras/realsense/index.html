@@ -218,13 +218,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -274,6 +274,14 @@
           <section id="module-drivers.cameras.realsense">
 <span id="drivers-cameras-realsense"></span><h1><a class="reference internal" href="#module-drivers.cameras.realsense" title="drivers.cameras.realsense"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.cameras.realsense</span></code></a><a class="headerlink" href="#module-drivers.cameras.realsense" title="Link to this heading">#</a></h1>
 <p>Camera driver for Intel RealSense devices.</p>
+<p>The <a class="reference internal" href="#drivers.cameras.realsense.RealsenseCamera" title="drivers.cameras.realsense.RealsenseCamera"><code class="xref py py-class docutils literal notranslate"><span class="pre">RealsenseCamera</span></code></a> class is a wrapper around the
+PyRealSense library for interfacing with a D435i RealSense camera. It provides a simple
+interface for capturing images and setting camera parameters. It is implemented as a
+singleton to ensure that only one instance of the camera is created. It will capture
+both color and depth images, but the
+<a class="reference internal" href="#drivers.cameras.realsense.RealsenseCamera.accumulate" title="drivers.cameras.realsense.RealsenseCamera.accumulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">accumulate()</span></code></a> method will only return
+the color image by default (set <code class="docutils literal notranslate"><span class="pre">return_depth=True</span></code> to return the depth image, as
+well).</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <section id="classes">

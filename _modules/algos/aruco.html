@@ -217,13 +217,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -279,9 +279,9 @@
 
 <span class="kn">from</span> <span class="nn">cc_hardware.algos.algorithm</span> <span class="kn">import</span> <span class="n">Algorithm</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.cameras</span> <span class="kn">import</span> <span class="n">Camera</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.file_handlers</span> <span class="kn">import</span> <span class="n">VideoWriter</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.registry</span> <span class="kn">import</span> <span class="n">register</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.writers</span> <span class="kn">import</span> <span class="n">VideoWriter</span>
 
 
 <span class="nd">@register</span>

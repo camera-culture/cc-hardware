@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="Contributing" href="../../../../contributing.html" /><link rel="prev" title="utils.transformations" href="../transformations/index.html" />
+<link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="utils.logger" href="../logger/index.html" /><link rel="prev" title="utils.constants" href="../constants/index.html" />
 
     <link rel="shortcut icon" href="../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>utils.writers - cc-hardware 0.0.0 documentation</title>
+        <title>utils.file_handlers - cc-hardware 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
@@ -218,13 +218,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -271,8 +271,8 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-utils.writers">
-<span id="utils-writers"></span><h1><a class="reference internal" href="#module-utils.writers" title="utils.writers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a><a class="headerlink" href="#module-utils.writers" title="Link to this heading">#</a></h1>
+          <section id="module-utils.file_handlers">
+<span id="utils-file-handlers"></span><h1><a class="reference internal" href="#module-utils.file_handlers" title="utils.file_handlers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a><a class="headerlink" href="#module-utils.file_handlers" title="Link to this heading">#</a></h1>
 <p>This module provides utility classes for writing data to files.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
@@ -281,69 +281,91 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.writers.PklWriter" title="utils.writers.PklWriter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklWriter</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.file_handlers.PklHandler" title="utils.file_handlers.PklHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklHandler</span></code></a></p></td>
 <td><p>A utility class for writing and reading data to/from pickle files.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.writers.VideoWriter" title="utils.writers.VideoWriter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VideoWriter</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.file_handlers.VideoWriter" title="utils.file_handlers.VideoWriter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VideoWriter</span></code></a></p></td>
 <td><p>A utility class for writing video frames to a file.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="utils.writers.PklWriter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/writers.html#PklWriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.PklWriter" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">update_index_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler" title="Link to this definition">#</a></dt>
 <dd><p>A utility class for writing and reading data to/from pickle files.</p>
 <p>Provides methods to write data, append data, and load single or multiple
-records from a pickle file.</p>
+records from a pickle file. It also supports indexing for random access
+to records without loading the entire file into memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite existing file when writing. Defaults to
+True.</p>
+</dd>
+</dl>
 <p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">writer</span> <span class="o">=</span> <span class="n">PklWriter</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">)</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
-<span class="n">writer</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;another_key&quot;</span><span class="p">:</span> <span class="s2">&quot;another_value&quot;</span><span class="p">})</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">handler</span> <span class="o">=</span> <span class="n">PklHandler</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">)</span>
+<span class="n">handler</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
+<span class="n">handler</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;another_key&quot;</span><span class="p">:</span> <span class="s2">&quot;another_value&quot;</span><span class="p">})</span>
 
-<span class="n">data</span> <span class="o">=</span> <span class="n">PklWriter</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">)</span>
-<span class="n">all_data</span> <span class="o">=</span> <span class="n">PklWriter</span><span class="o">.</span><span class="n">load_all</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">)</span>
+<span class="n">record</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="c1"># {&quot;key&quot;: &quot;value&quot;}</span>
+<span class="n">record</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="c1"># {&quot;another_key&quot;: &quot;another_value&quot;}</span>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="utils.writers.PklWriter.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/writers.html#PklWriter.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.PklWriter.write" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.update_index">
+<span class="sig-name descname"><span class="pre">update_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">lambda</span> <span class="pre">_:</span> <span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.update_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.update_index" title="Link to this definition">#</a></dt>
+<dd><p>Build an index of record positions in the pickle file for random access.</p>
+<p>This method scans the pickle file and records the file positions
+where each record starts. The positions are stored in self._index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prune_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>Any</em><em>]</em><em>, </em><em>bool</em><em>]</em>) – Optional function to filter records when
+building the index. The function should take a record as input and
+return True to exclude the record from the index.
+Defaults to lambda _: False.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.write" title="Link to this definition">#</a></dt>
 <dd><p>Write data to the pickle file, overwriting any existing content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – The data to write.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – The data to write.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="utils.writers.PklWriter.append">
-<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/writers.html#PklWriter.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.PklWriter.append" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.append" title="Link to this definition">#</a></dt>
 <dd><p>Append data to the pickle file without overwriting.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – The data to append.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – The data to append.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="utils.writers.PklWriter.load">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../../../_modules/utils/writers.html#PklWriter.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.PklWriter.load" title="Link to this definition">#</a></dt>
-<dd><p>Load a single record from the pickle file.</p>
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.load" title="Link to this definition">#</a></dt>
+<dd><p>Load the first record from the pickle file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to the pickle file.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>dict</em> – The loaded data.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Any</em> – The loaded record.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="utils.writers.PklWriter.load_all">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/utils/writers.html#PklWriter.load_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.PklWriter.load_all" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.load_all">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.load_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.load_all" title="Link to this definition">#</a></dt>
 <dd><p>Load all records from the pickle file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -353,7 +375,18 @@ records from a pickle file.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>list[dict]</em> – A list of all records, or specific values if a key is provided.</p>
+<dd class="field-even"><p><em>list[Any]</em> – A list of all records, or specific values if a key is provided.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.file_handlers.PklHandler.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#PklHandler.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.PklHandler.__len__" title="Link to this definition">#</a></dt>
+<dd><p>Get the number of records in the pickle file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The number of records.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -361,8 +394,8 @@ records from a pickle file.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="utils.writers.VideoWriter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VideoWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/writers.html#VideoWriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.VideoWriter" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.VideoWriter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VideoWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flush_interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#VideoWriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.VideoWriter" title="Link to this definition">#</a></dt>
 <dd><p>A utility class for writing video frames to a file.</p>
 <p>Frames are buffered and written to the video file periodically, based on
 the specified flush interval.</p>
@@ -374,14 +407,26 @@ the specified flush interval.</p>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="utils.writers.VideoWriter.append">
-<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/writers.html#VideoWriter.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.writers.VideoWriter.append" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="utils.file_handlers.VideoWriter.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#VideoWriter.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.VideoWriter.append" title="Link to this definition">#</a></dt>
 <dd><p>Append a video frame to the buffer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>frame</strong> (<em>np.ndarray</em>) – A single video frame to append.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.file_handlers.VideoWriter.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#VideoWriter.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.VideoWriter.close" title="Link to this definition">#</a></dt>
+<dd><p>Flush any remaining frames and close the video writer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.file_handlers.VideoWriter.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/file_handlers.html#VideoWriter.__del__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.file_handlers.VideoWriter.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensure that the video writer is properly closed when the object is deleted.</p>
 </dd></dl>
 
 </dd></dl>
@@ -395,23 +440,23 @@ the specified flush interval.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../../../contributing.html">
+          <a class="next-page" href="../logger/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Contributing</div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../transformations/index.html">
+          <a class="prev-page" href="../constants/index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></div>
                 
               </div>
             </a>
@@ -445,18 +490,22 @@ the specified flush interval.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#utils.writers.PklWriter"><code class="docutils literal notranslate"><span class="pre">PklWriter</span></code></a><ul>
-<li><a class="reference internal" href="#utils.writers.PklWriter.write"><code class="docutils literal notranslate"><span class="pre">PklWriter.write()</span></code></a></li>
-<li><a class="reference internal" href="#utils.writers.PklWriter.append"><code class="docutils literal notranslate"><span class="pre">PklWriter.append()</span></code></a></li>
-<li><a class="reference internal" href="#utils.writers.PklWriter.load"><code class="docutils literal notranslate"><span class="pre">PklWriter.load()</span></code></a></li>
-<li><a class="reference internal" href="#utils.writers.PklWriter.load_all"><code class="docutils literal notranslate"><span class="pre">PklWriter.load_all()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler"><code class="docutils literal notranslate"><span class="pre">PklHandler</span></code></a><ul>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.update_index"><code class="docutils literal notranslate"><span class="pre">PklHandler.update_index()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.write"><code class="docutils literal notranslate"><span class="pre">PklHandler.write()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.append"><code class="docutils literal notranslate"><span class="pre">PklHandler.append()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.load"><code class="docutils literal notranslate"><span class="pre">PklHandler.load()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.load_all"><code class="docutils literal notranslate"><span class="pre">PklHandler.load_all()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.PklHandler.__len__"><code class="docutils literal notranslate"><span class="pre">PklHandler.__len__()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#utils.writers.VideoWriter"><code class="docutils literal notranslate"><span class="pre">VideoWriter</span></code></a><ul>
-<li><a class="reference internal" href="#utils.writers.VideoWriter.append"><code class="docutils literal notranslate"><span class="pre">VideoWriter.append()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.VideoWriter"><code class="docutils literal notranslate"><span class="pre">VideoWriter</span></code></a><ul>
+<li><a class="reference internal" href="#utils.file_handlers.VideoWriter.append"><code class="docutils literal notranslate"><span class="pre">VideoWriter.append()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.VideoWriter.close"><code class="docutils literal notranslate"><span class="pre">VideoWriter.close()</span></code></a></li>
+<li><a class="reference internal" href="#utils.file_handlers.VideoWriter.__del__"><code class="docutils literal notranslate"><span class="pre">VideoWriter.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

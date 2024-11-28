@@ -218,13 +218,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -274,6 +274,10 @@
           <section id="module-drivers.safe_serial">
 <span id="drivers-safe-serial"></span><h1><a class="reference internal" href="#module-drivers.safe_serial" title="drivers.safe_serial"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.safe_serial</span></code></a><a class="headerlink" href="#module-drivers.safe_serial" title="Link to this heading">#</a></h1>
 <p>SafeSerial class for thread-safe serial communication.</p>
+<p>The <a class="reference internal" href="#drivers.safe_serial.SafeSerial" title="drivers.safe_serial.SafeSerial"><code class="xref py py-class docutils literal notranslate"><span class="pre">SafeSerial</span></code></a> class is a wrapper around the
+<a class="reference external" href="https://pyserial.readthedocs.io/en/latest/pyserial_api.html#serial.Serial">serial.Serial</a>
+class that provides a thread-safe interface for reading and writing to a serial device.
+It also provides a few convenience methods for reading and writing data.</p>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
 <section id="classes">

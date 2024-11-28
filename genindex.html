@@ -216,13 +216,13 @@
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="usage/api/utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +280,11 @@
         <li><a href="usage/api/utils/singleton/index.html#utils.singleton.SingletonMeta.__call__">__call__() (SingletonMeta method)</a>
 </li>
         <li><a href="usage/api/drivers/sensor/index.html#drivers.sensor.Sensor.__del__">__del__() (Sensor method)</a>
+
+        <ul>
+          <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.__del__">(VideoWriter method)</a>
 </li>
+        </ul></li>
         <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager.__enter__">__enter__() (Manager method)</a>
 </li>
         <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager.__exit__">__exit__() (Manager method)</a>
@@ -298,7 +302,11 @@
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque.__getitem__">__getitem__() (BlockingDeque method)</a>
 </li>
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque.__len__">__len__() (BlockingDeque method)</a>
+
+        <ul>
+          <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.__len__">(PklHandler method)</a>
 </li>
+        </ul></li>
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque.__repr__">__repr__() (BlockingDeque method)</a>
 </li>
     </ul></td>
@@ -355,9 +363,9 @@
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque.append">append() (BlockingDeque method)</a>
 
         <ul>
-          <li><a href="usage/api/utils/writers/index.html#utils.writers.PklWriter.append">(PklWriter method)</a>
+          <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.append">(PklHandler method)</a>
 </li>
-          <li><a href="usage/api/utils/writers/index.html#utils.writers.VideoWriter.append">(VideoWriter method)</a>
+          <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.append">(VideoWriter method)</a>
 </li>
         </ul></li>
         <li><a href="usage/api/algos/aruco/index.html#algos.aruco.ArucoLocalizationAlgorithm">ArucoLocalizationAlgorithm (class in algos.aruco)</a>
@@ -445,6 +453,8 @@
           <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close">(TelemetrixStepperMotorSystem method)</a>
 </li>
           <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.TMF8828Sensor.close">(TMF8828Sensor method)</a>
+</li>
+          <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.close">(VideoWriter method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -769,9 +779,9 @@
   <h2>L</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/utils/writers/index.html#utils.writers.PklWriter.load">load() (PklWriter static method)</a>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.load">load() (PklHandler method)</a>
 </li>
-        <li><a href="usage/api/utils/writers/index.html#utils.writers.PklWriter.load_all">load_all() (PklWriter static method)</a>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.load_all">load_all() (PklHandler static method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -845,6 +855,8 @@
 </li>
           <li><a href="usage/api/utils/constants/index.html#module-utils.constants">utils.constants</a>
 </li>
+          <li><a href="usage/api/utils/file_handlers/index.html#module-utils.file_handlers">utils.file_handlers</a>
+</li>
           <li><a href="usage/api/utils/logger/index.html#module-utils.logger">utils.logger</a>
 </li>
           <li><a href="usage/api/utils/manager/index.html#module-utils.manager">utils.manager</a>
@@ -856,8 +868,6 @@
           <li><a href="usage/api/utils/singleton/index.html#module-utils.singleton">utils.singleton</a>
 </li>
           <li><a href="usage/api/utils/transformations/index.html#module-utils.transformations">utils.transformations</a>
-</li>
-          <li><a href="usage/api/utils/writers/index.html#module-utils.writers">utils.writers</a>
 </li>
         </ul></li>
     </ul></td>
@@ -912,9 +922,9 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/cameras/pkl/index.html#drivers.cameras.pkl.PklCamera">PklCamera (class in drivers.cameras.pkl)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/pkl/index.html#drivers.spads.pkl.PklSPADSensor">PklSPADSensor (class in drivers.spads.pkl)</a>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler">PklHandler (class in utils.file_handlers)</a>
 </li>
-        <li><a href="usage/api/utils/writers/index.html#utils.writers.PklWriter">PklWriter (class in utils.writers)</a>
+        <li><a href="usage/api/drivers/spads/pkl/index.html#drivers.spads.pkl.PklSPADSensor">PklSPADSensor (class in drivers.spads.pkl)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.position">position (KinesisStepperMotor property)</a>
 
@@ -1094,6 +1104,8 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.update_index">update_index() (PklHandler method)</a>
+</li>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.upper_limit">upper_limit (KinesisStepperMotor property)</a>
 </li>
         <li>
@@ -1125,14 +1137,21 @@
 </li>
         </ul></li>
         <li>
+    utils.file_handlers
+
+        <ul>
+          <li><a href="usage/api/utils/file_handlers/index.html#module-utils.file_handlers">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
     utils.logger
 
         <ul>
           <li><a href="usage/api/utils/logger/index.html#module-utils.logger">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     utils.manager
 
@@ -1168,13 +1187,6 @@
           <li><a href="usage/api/utils/transformations/index.html#module-utils.transformations">module</a>
 </li>
         </ul></li>
-        <li>
-    utils.writers
-
-        <ul>
-          <li><a href="usage/api/utils/writers/index.html#module-utils.writers">module</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1183,7 +1195,7 @@
   <h2>V</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/utils/writers/index.html#utils.writers.VideoWriter">VideoWriter (class in utils.writers)</a>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter">VideoWriter (class in utils.file_handlers)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1209,7 +1221,7 @@
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/utils/writers/index.html#utils.writers.PklWriter.write">write() (PklWriter method)</a>
+        <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.write">write() (PklHandler method)</a>
 
         <ul>
           <li><a href="usage/api/drivers/safe_serial/index.html#drivers.safe_serial.SafeSerial.write">(SafeSerial method)</a>

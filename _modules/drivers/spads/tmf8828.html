@@ -217,13 +217,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -270,7 +270,19 @@
         </div>
         <article role="main">
           <h1>Source code for drivers.spads.tmf8828</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;TMF8828 sensor driver for SPAD sensors.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;TMF8828 sensor driver for SPAD sensors.</span>
+
+<span class="sd">The `TMF8828 \</span>
+<span class="sd">    &lt;https://ams-osram.com/products/sensor-solutions/\</span>
+<span class="sd">        direct-time-of-flight-sensors-dtof/\</span>
+<span class="sd">            ams-tmf8828-configurable-8x8-multi-zone-time-of-flight-sensor&gt;`_</span>
+<span class="sd">is a 8x8 multi-zone time-of-flight sensor made by AMS. It uses a wide VCSEL and supports</span>
+<span class="sd">custom mapping of SPAD pixels to allow for 3x3, 4x4, 3x6, and 8x8 multizone output. The</span>
+<span class="sd">:class:`~drivers.spads.tmf8828.TMF8828Sensor` class was developed to interface with the</span>
+<span class="sd">`TMF882X Arduino Shield \</span>
+<span class="sd">    &lt;https://ams-osram.com/products/boards-kits-accessories/kits/\</span>
+<span class="sd">        ams-tmf882x-evm-eb-shield-evaluation-kit&gt;`_.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>

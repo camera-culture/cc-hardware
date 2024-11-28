@@ -217,13 +217,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -270,7 +270,89 @@
         </div>
         <article role="main">
           <h1>Source code for drivers.cameras.flir</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;FlirCamera class for FLIR cameras using the PySpin library.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;The :class:`~drivers.cameras.flir.FlirCamera` class is a wrapper around the</span>
+<span class="sd">PySpin library for interfacing with FLIR cameras.</span>
+
+<span class="sd">It provides a simple interface for capturing images and setting camera</span>
+<span class="sd">parameters. It is implemented as a singleton to ensure that only one instance of the</span>
+<span class="sd">camera is created. To create a new instance of the camera, one has to override the base</span>
+<span class="sd">:class:`~drivers.cameras.flir.FlirCamera` class and implement the</span>
+<span class="sd">:func:`~drivers.cameras.flir.FlirCamera.distortion_coefficients` and</span>
+<span class="sd">:func:`~drivers.cameras.flir.FlirCamera.intrinsic_matrix` methods.</span>
+
+<span class="sd">Example:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    class GrasshopperFlirCamera(FlirCamera):</span>
+<span class="sd">        \&quot;\&quot;\&quot;</span>
+<span class="sd">        Specialized camera class for a Grasshopper FLIR camera model.</span>
+<span class="sd">        Inherits from FlirCamera and provides specific intrinsic and</span>
+<span class="sd">        distortion parameters.</span>
+<span class="sd">        \&quot;\&quot;\&quot;</span>
+
+<span class="sd">        DISTORTION_COEFFICIENTS = np.array([-0.036, -0.145, 0.001, 0.0, 1.155])</span>
+<span class="sd">        INTRINSIC_MATRIX = np.array(</span>
+<span class="sd">            [[1815.5, 0.0, 0.0], [0.0, 1817.753, 0.0], [721.299, 531.352, 1.0]]</span>
+<span class="sd">        )</span>
+
+<span class="sd">        @property</span>
+<span class="sd">        @override</span>
+<span class="sd">        def distortion_coefficients(self) -&gt; np.ndarray:</span>
+<span class="sd">            \&quot;\&quot;\&quot;</span>
+<span class="sd">            Get the distortion coefficients of the Grasshopper FLIR camera.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: Array of distortion coefficients.</span>
+<span class="sd">            \&quot;\&quot;\&quot;</span>
+<span class="sd">            return self.DISTORTION_COEFFICIENTS</span>
+
+<span class="sd">        @property</span>
+<span class="sd">        @override</span>
+<span class="sd">        def intrinsic_matrix(self) -&gt; np.ndarray:</span>
+<span class="sd">            \&quot;\&quot;\&quot;</span>
+<span class="sd">            Get the intrinsic matrix of the Grasshopper FLIR camera.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                np.ndarray: A 3x3 array representing the intrinsic matrix</span>
+<span class="sd">                            of the camera.</span>
+<span class="sd">            \&quot;\&quot;\&quot;</span>
+<span class="sd">            return self.INTRINSIC_MATRIX</span>
+
+<span class="sd">PySpin Installation</span>
+<span class="sd">-------------------</span>
+
+<span class="sd">You will need to install PySpin and Spinnaker</span>
+<span class="sd">`as usual &lt;https://www.flir.co.uk/products/spinnaker-sdk&gt;`_.</span>
+<span class="sd">As of writing (2024-09-21), PySpin only supports &lt;= 3.10. To install PySpin on newer</span>
+<span class="sd">versions of Python, you can use the following steps:</span>
+
+<span class="sd">.. code-block:: bash</span>
+
+<span class="sd">    # After installing Spinnaker, you&#39;re instructed to run the following command:</span>
+<span class="sd">    tar -xvzf spinnaker_python-&lt;version&gt;-cp&lt;version&gt;-&lt;os&gt;-&lt;version&gt;-&lt;arch&gt;.tar.gz</span>
+<span class="sd">    pip install spinnaker_python-&lt;version&gt;-cp&lt;version&gt;-&lt;os&gt;-&lt;version&gt;-&lt;arch&gt;.whl</span>
+
+<span class="sd">    # But this will fail for python versions &gt; 3.10. To install on newer versions,</span>
+<span class="sd">    # replace the cp&lt;version&gt; with your python version. For instance, for python 3.11 on</span>
+<span class="sd">    # M2 Mac, the command would turn from</span>
+<span class="sd">    tar -xvzf spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.tar.gz</span>
+<span class="sd">    pip instal spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.whl</span>
+<span class="sd">    # To</span>
+<span class="sd">    tar -xvzf spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.tar.gz</span>
+<span class="sd">    mv spinnaker_python-4.1.0.172-cp310-cp310-macosx_13_0_arm64.whl \</span>
+<span class="sd">        spinnaker_python-4.1.0.172-cp311-cp311-macosx_13_0_arm64.whl</span>
+<span class="sd">    pip install spinnaker_python-4.1.0.172-cp311-cp311-macosx_13_0_arm64.whl</span>
+
+<span class="sd">    # And then go to your site packages and do</span>
+<span class="sd">    mv _PySpin.cpython-310-darwin.so _PySpin.cpython-311-darwin.so</span>
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    Installing PySpin on newer versions of Python is not officially supported and may</span>
+<span class="sd">    cause issues. Use at your own risk.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">override</span>

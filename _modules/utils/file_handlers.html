@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <link rel="shortcut icon" href="../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>utils.writers - cc-hardware 0.0.0 documentation</title>
+        <title>utils.file_handlers - cc-hardware 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
@@ -217,13 +217,13 @@
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/writers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.writers</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -269,97 +269,148 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for utils.writers</h1><div class="highlight"><pre>
+          <h1>Source code for utils.file_handlers</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module provides utility classes for writing data to files.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">imageio</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="c1"># ==================</span>
 
-<div class="viewcode-block" id="PklWriter">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.PklWriter">[docs]</a>
-<span class="k">class</span> <span class="nc">PklWriter</span><span class="p">:</span>
+
+<div class="viewcode-block" id="PklHandler">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler">[docs]</a>
+<span class="k">class</span> <span class="nc">PklHandler</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A utility class for writing and reading data to/from pickle files.</span>
 
 <span class="sd">    Provides methods to write data, append data, and load single or multiple</span>
-<span class="sd">    records from a pickle file.</span>
+<span class="sd">    records from a pickle file. It also supports indexing for random access</span>
+<span class="sd">    to records without loading the entire file into memory.</span>
+
+<span class="sd">    Keyword Args:</span>
+<span class="sd">        overwrite (bool): If True, overwrite existing file when writing. Defaults to</span>
+<span class="sd">            True.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        .. code-block:: python</span>
 
-<span class="sd">            writer = PklWriter(&quot;data.pkl&quot;)</span>
-<span class="sd">            writer.write({&quot;key&quot;: &quot;value&quot;})</span>
-<span class="sd">            writer.append({&quot;another_key&quot;: &quot;another_value&quot;})</span>
+<span class="sd">            handler = PklHandler(&quot;data.pkl&quot;)</span>
+<span class="sd">            handler.write({&quot;key&quot;: &quot;value&quot;})</span>
+<span class="sd">            handler.append({&quot;another_key&quot;: &quot;another_value&quot;})</span>
 
-<span class="sd">            data = PklWriter.load(&quot;data.pkl&quot;)</span>
-<span class="sd">            all_data = PklWriter.load_all(&quot;data.pkl&quot;)</span>
+<span class="sd">            record = handler.load()</span>
+<span class="sd">            print(record) # {&quot;key&quot;: &quot;value&quot;}</span>
+<span class="sd">            record = handler.load(1)</span>
+<span class="sd">            print(record) # {&quot;another_key&quot;: &quot;another_value&quot;}</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">update_index_kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the PklWriter.</span>
+<span class="sd">        Initialize the PklHandler.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            path (Path | str): The path to the pickle file.</span>
+<span class="sd">            overwrite (bool): If True, overwrite existing file when writing. Defaults</span>
+<span class="sd">                to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PklWriter.write">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.PklWriter.write">[docs]</a>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_index</span><span class="p">(</span><span class="o">**</span><span class="n">update_index_kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PklHandler.update_index">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.update_index">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">prune_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build an index of record positions in the pickle file for random access.</span>
+
+<span class="sd">        This method scans the pickle file and records the file positions</span>
+<span class="sd">        where each record starts. The positions are stored in self._index.</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            prune_fn (Callable[[Any], bool]): Optional function to filter records when</span>
+<span class="sd">                building the index. The function should take a record as input and</span>
+<span class="sd">                return True to exclude the record from the index.</span>
+<span class="sd">                Defaults to lambda _: False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">pos</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">prune_fn</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)):</span>
+                        <span class="k">continue</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+                    <span class="k">break</span></div>
+
+
+<div class="viewcode-block" id="PklHandler.write">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.write">[docs]</a>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write data to the pickle file, overwriting any existing content.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data (dict): The data to write.</span>
+<span class="sd">            data (Any): The data to write.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PklWriter.append">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.PklWriter.append">[docs]</a>
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="PklHandler.append">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.append">[docs]</a>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Append data to the pickle file without overwriting.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            data (dict): The data to append.</span>
+<span class="sd">            data (Any): The data to append.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;ab&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 
 
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PklWriter.load">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.PklWriter.load">[docs]</a>
-    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="PklHandler.load">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Load a single record from the pickle file.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            path (Path | str): The path to the pickle file.</span>
+<span class="sd">        Load the first record from the pickle file.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: The loaded data.</span>
+<span class="sd">            Any: The loaded record.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
 
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="PklWriter.load_all">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.PklWriter.load_all">[docs]</a>
-    <span class="k">def</span> <span class="nf">load_all</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<div class="viewcode-block" id="PklHandler.load_all">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.load_all">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_all</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load all records from the pickle file.</span>
 
@@ -368,7 +419,7 @@
 <span class="sd">            key (str | None): Optional key to extract specific values from each record.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list[dict]: A list of all records, or specific values if a key is provided.</span>
+<span class="sd">            list[Any]: A list of all records, or specific values if a key is provided.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -379,12 +430,27 @@
             <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
                 <span class="k">pass</span>
         <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="PklHandler.__len__">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.__len__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the number of records in the pickle file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">)</span></div>
 </div>
 
 
 
+<span class="c1"># ==================</span>
+
+
 <div class="viewcode-block" id="VideoWriter">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.VideoWriter">[docs]</a>
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter">[docs]</a>
 <span class="k">class</span> <span class="nc">VideoWriter</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A utility class for writing video frames to a file.</span>
@@ -393,6 +459,7 @@
 <span class="sd">    the specified flush interval.</span>
 
 <span class="sd">    Example:</span>
+
 <span class="sd">        .. code-block:: python</span>
 
 <span class="sd">            writer = VideoWriter(&quot;output.mp4&quot;, fps=30)</span>
@@ -424,7 +491,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">get_writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fps</span><span class="p">)</span>
 
 <div class="viewcode-block" id="VideoWriter.append">
-<a class="viewcode-back" href="../../usage/api/utils/writers/index.html#utils.writers.VideoWriter.append">[docs]</a>
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.append">[docs]</a>
     <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Append a video frame to the buffer.</span>
@@ -441,7 +508,30 @@
     <span class="k">def</span> <span class="nf">_flush</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write all buffered frames to the video file.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">append_data</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frames</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="VideoWriter.close">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flush any remaining frames and close the video writer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_flush</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="VideoWriter.__del__">
+<a class="viewcode-back" href="../../usage/api/utils/file_handlers/index.html#utils.file_handlers.VideoWriter.__del__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Ensure that the video writer is properly closed when the object is deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
 
 </pre></div>
         </article>
