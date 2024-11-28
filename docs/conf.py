@@ -108,9 +108,9 @@ autoapi_options = [
     "imported-members",
     # "inherited-members"  # Doesn't work with viewcode extension
 ]
-autoapi_ignore = ["*/pkgs/tools/*", "*/_templates/*"]
+autoapi_ignore = ["*/pkgs/tools/*", "*/_templates/*", "*/usage/api/*"]
 autoapi_keep_files = False
-autoapi_keep_files = True
+# autoapi_keep_files = True
 autoapi_generate_api_docs = True
 autoapi_add_toctree_entry = False
 autoapi_root = "usage/api/"

@@ -1,4 +1,11 @@
-"""TMF8828 sensor driver for SPAD sensors."""
+"""TMF8828 sensor driver for SPAD sensors.
+
+The `TMF8828 <https://ams-osram.com/products/sensor-solutions/direct-time-of-flight-sensors-dtof/ams-tmf8828-configurable-8x8-multi-zone-time-of-flight-sensor>`_ 
+is a 8x8 multi-zone time-of-flight sensor made by AMS. It uses a wide VCSEL and supports
+custom mapping of SPAD pixels to allow for 3x3, 4x4, 3x6, and 8x8 multizone output. The
+:class:`~drivers.spads.tmf8828.TMF8828Sensor` class was developed to interface with the 
+`TMF882X Arduino Shield <https://ams-osram.com/products/boards-kits-accessories/kits/ams-tmf882x-evm-eb-shield-evaluation-kit>`_.
+"""
 
 import time
 from enum import Enum
