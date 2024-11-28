@@ -37,11 +37,15 @@ subdirectory within the `pkgs` directory and should be installed as a separate p
 
 The current supported packages are as follows:
 
-- [`algos`](https://camera-culture.github.io/cc-hardware/usage/api/algos): Contains algorithms for processing data.
-- [`drivers`](https://camera-culture.github.io/cc-hardware/usage/api/drivers): Contains drivers for interfacing with hardware.
-- [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/utils): Contains utility functions and classes.
-- [`tools`](https://camera-culture.github.io/cc-hardware/usage/cli): Contains tools for working with hardware, such as
-    calibration or visualization scripts.
+- [`algos`](https://camera-culture.github.io/cc-hardware/usage/api/algos):
+    Contains algorithms for processing data.
+- [`drivers`](https://camera-culture.github.io/cc-hardware/usage/api/drivers):
+    Contains drivers for interfacing with hardware.
+- [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/utils):
+    Contains utility functions and classes.
+- [`tools`](https://camera-culture.github.io/cc-hardware/usage/cli):
+    Contains tools for working with hardware, such as calibration or visualization
+    scripts.
 
 ### Package Structure
 

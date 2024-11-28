@@ -6,13 +6,9 @@
 :maxdepth: 2
 
 Home <self>
-background
-setup
-configuration/index
 usage/index
 contributing
 ```
-
 
 ```{toctree}
 :caption: External Links
