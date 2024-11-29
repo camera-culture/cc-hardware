@@ -7,6 +7,7 @@ class that provides a thread-safe interface for reading and writing to a serial 
 It also provides a few convenience methods for reading and writing data.
 """
 
+import multiprocessing
 import re
 import threading
 import time
@@ -20,20 +21,25 @@ from serial.tools import list_ports
 from cc_hardware.utils.logger import get_logger
 
 
-class SafeSerial(serial.Serial):
+class SafeSerial:
     """
     A thread-safe implementation of the serial.Serial class that synchronizes read and
     write operations using a lock. Provides additional utility methods for creating
     instances and handling data writes in different formats.
 
-    Args:
-        *args: Positional arguments passed to the parent serial.Serial class.
-        **kwargs: Keyword arguments passed to the parent serial.Serial class.
+    Keyword Args:
+        lock_type (str): The type of lock to use. Defaults to "threading". Can be
+            "threading" or "multiprocessing".
     """
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._lock = threading.Lock()
+    def __init__(self, *args, lock_type: str = "threading", **kwargs):
+        self._serial = serial.Serial(*args, **kwargs)
+        if lock_type == "multiprocessing":
+            self._lock = multiprocessing.Lock()
+        elif lock_type == "threading":
+            self._lock = threading.Lock()
+        else:
+            raise ValueError(f"Invalid lock type: {lock_type}")
         self.flush()
 
     @classmethod
@@ -94,7 +100,7 @@ class SafeSerial(serial.Serial):
         """
         get_logger().warning(f"Invalid data type: {type(data)}")
         with self._lock:
-            super().write(data)
+            self._serial.write(data)
 
     @write.register
     def _(self, data: str):
@@ -108,7 +114,7 @@ class SafeSerial(serial.Serial):
             None
         """
         with self._lock:
-            super().write(bytes(data, "utf-8"))
+            self._serial.write(bytes(data, "utf-8"))
 
     def read(self, size: int = 1) -> bytes:
         """
@@ -121,7 +127,7 @@ class SafeSerial(serial.Serial):
             bytes: The bytes read from the serial port.
         """
         with self._lock:
-            return super().read(size)
+            return self._serial.read(size)
 
     def wait_for_start_talk(self, timeout: float = None) -> bytes | None:
         """
@@ -279,3 +285,18 @@ class SafeSerial(serial.Serial):
                 get_logger().debug("SafeSerial stopped talking.")
                 return True
         return False
+
+    def __getattr__(self, name: str) -> Any:
+        """
+        Forward attribute access to the parent serial.Serial class.
+
+        Applies the lock to prevent concurrent access to the serial port.
+
+        Args:
+            name (str): The attribute name to access.
+
+        Returns:
+            Any: The attribute value.
+        """
+        with self._lock:
+            return getattr(self._serial, name)

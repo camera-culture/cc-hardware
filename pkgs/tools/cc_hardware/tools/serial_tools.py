@@ -45,3 +45,28 @@ def tmf8828_upload(port: str, script: Path | None = None):
     script = script or TMF8828Sensor.SCRIPT
     get_logger().info(f"Uploading TMF8828 sensor sketch from {script} to port {port}")
     arduino_upload(port=port, script=script)
+
+
+@serial_tools_APP.command()
+def vl53l8ch_upload(
+    port: str, script: Path | None = None, *, build: bool = True, verbose: bool = False
+):
+    """Upload the VL53L8CH sensor sketch to the given port.
+
+    Uses the VL53L8CHSensor.SCRIPT attribute to locate the sketch if none is provided.
+    """
+
+    from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
+
+    script = script or VL53L8CHSensor.SCRIPT
+
+    if build:
+        get_logger().info(f"Building VL53L8CH sensor sketch from {script}")
+        cmd = f"make -C {script.parent} clean all {'-s' if not verbose else ''}"
+        if os.system(cmd) != 0:
+            raise RuntimeError("Failed to build the sketch")
+
+    get_logger().info(f"Uploading VL53L8CH sensor sketch from {script} to port {port}")
+    cmd = f"make -C {script.parent} upload PORT={port}"
+    if os.system(cmd) != 0:
+        raise RuntimeError("Failed to upload the sketch")

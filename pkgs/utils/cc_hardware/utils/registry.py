@@ -9,7 +9,7 @@ class Registry:
     to instantiate them.
     """
 
-    registry: dict[str, Self] = {}
+    registry: dict[str, dict[str, Self]] = {}
 
     @classmethod
     def register(cls: type[Self], class_type: type[Self]) -> type[Self]:
@@ -22,7 +22,7 @@ class Registry:
         Returns:
             The registered class.
         """
-        cls.registry[class_type.__name__] = class_type
+        cls.registry.setdefault(cls.__name__, {})[class_type.__name__] = class_type
         return class_type
 
     @classmethod
@@ -43,9 +43,17 @@ class Registry:
         Raises:
             ValueError: If the class is not found in the registry.
         """
-        if name not in cls.registry:
-            raise ValueError(f"Class '{name}' not found in {cls.__name__}'s registry.")
-        class_type = cls.registry[name]
+        if cls.__name__ not in cls.registry:
+            raise ValueError(
+                f"Class '{name}' not found in {cls.__name__}'s registry. "
+                "Ensure the class inherits from Registry."
+            )
+        elif name not in cls.registry[cls.__name__]:
+            raise ValueError(
+                f"Class '{name}' not found in {cls.__name__}'s registry. "
+                f"Available classes: {list(cls.registry[cls.__name__].keys())}"
+            )
+        class_type = cls.registry[cls.__name__][name]
         return class_type(*args, **kwargs)
 
 

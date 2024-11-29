@@ -38,6 +38,52 @@ def dashboard(spad: type[SPADSensor] | SPADSensor, **kwargs):
 
 
 @visualizations_APP.command()
+def spad_dashboard(
+    dashboard_name: str,
+    spad_name: str,
+    port: str,
+    num_frames: int = 100,
+    show: bool = True,
+    save: bool = False,
+    filename: str | None = None,
+    autoscale: bool = True,
+    ylim: float | None = None,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
+    channel_mask: list[int] | None = None,
+    short_range: bool = False,
+    fullscreen: bool = False,
+):
+    from cc_hardware.drivers.spads import SPADSensor
+    from cc_hardware.drivers.spads.dashboard import SPADDashboard
+    from cc_hardware.utils.manager import Manager
+
+    spad = partial(SPADSensor.create_from_registry, spad_name, port=port)
+
+    def setup(manager: Manager, spad: SPADSensor):
+        dashboard = SPADDashboard.create_from_registry(
+            dashboard_name,
+            sensor=spad,
+            num_frames=num_frames,
+            show=show,
+            save=save,
+            filename=filename,
+            autoscale=autoscale,
+            ylim=ylim,
+            min_bin=min_bin,
+            max_bin=max_bin,
+            channel_mask=channel_mask,
+            fullscreen=fullscreen,
+        )
+        manager.add(dashboard=dashboard)
+
+        dashboard.run()
+
+    with Manager(spad=spad) as manager:
+        manager.run(setup=setup)
+
+
+@visualizations_APP.command()
 def tmf8828_dashboard(
     port: str,
     num_frames: int = 100,
@@ -46,8 +92,8 @@ def tmf8828_dashboard(
     filename: str | None = None,
     autoscale: bool = True,
     ylim: float | None = None,
-    min_bin: int = 0,
-    max_bin: int = 127,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
     channel_mask: list[int] | None = None,
     spad_id: int = 6,  # 3x3
     short_range: bool = False,
@@ -89,8 +135,8 @@ def vl53l8ch_dashboard(
     filename: str | None = None,
     autoscale: bool = True,
     ylim: float | None = None,
-    min_bin: int = 0,
-    max_bin: int = 127,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
     channel_mask: list[int] | None = None,
     fullscreen: bool = False,
 ):
@@ -124,8 +170,8 @@ def pkl_dashboard(
     filename: str | None = None,
     autoscale: bool = True,
     ylim: float | None = None,
-    min_bin: int = 0,
-    max_bin: int = 127,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
     channel_mask: list[int] | None = None,
     resolution: tuple[int, int] = (3, 3),
 ):
