@@ -281,16 +281,16 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Abstract base class for SPAD sensor dashboards.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard" title="drivers.spads.dashboard.MatplotlibDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MatplotlibDashboard</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Dashboard implementation using Matplotlib for visualization.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard" title="drivers.spads.dashboard.PyQtGraphDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PyQtGraphDashboard</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Dashboard implementation using PyQtGraph for real-time visualization.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard" title="drivers.spads.dashboard.DashDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DashDashboard</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Dashboard implementation using Dash and Plotly for web-based visualization.</p></td>
 </tr>
 </tbody>
 </table>
@@ -299,32 +299,163 @@
 <dt class="sig sig-object py" id="drivers.spads.dashboard.SPADDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoscale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#SPADDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.SPADDashboard" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.registry.Registry</span></code></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Abstract base class for SPAD sensor dashboards.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sensor</strong> (<em>SPADSensor</em>) – The SPAD sensor instance.</p></li>
+<li><p><strong>num_frames</strong> (<em>int</em>) – Number of frames to process. Default is 1,000,000.</p></li>
+<li><p><strong>show</strong> (<em>bool</em>) – Whether to display the dashboard. Default is True.</p></li>
+<li><p><strong>save</strong> (<em>bool</em>) – Whether to save the output. Default is False.</p></li>
+<li><p><strong>filename</strong> (<em>str, optional</em>) – Filename to save the output if <cite>save</cite> is True.</p></li>
+<li><p><strong>min_bin</strong> (<em>int, optional</em>) – Minimum bin value for histogram.</p></li>
+<li><p><strong>max_bin</strong> (<em>int, optional</em>) – Maximum bin value for histogram.</p></li>
+<li><p><strong>autoscale</strong> (<em>bool</em>) – Whether to autoscale the histogram. Default is True.</p></li>
+<li><p><strong>ylim</strong> (<em>float, optional</em>) – Y-axis limit for the histogram.</p></li>
+<li><p><strong>channel_mask</strong> (<em>list[int], optional</em>) – List of channels to display.</p></li>
+<li><p><strong>fullscreen</strong> (<em>bool</em>) – Whether to display in fullscreen mode. Default is False.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.SPADDashboard.validate_parameters">
+<span class="sig-name descname"><span class="pre">validate_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#SPADDashboard.validate_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.SPADDashboard.validate_parameters" title="Link to this definition">#</a></dt>
+<dd><p>Validates the initialization parameters to ensure correct usage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.SPADDashboard.setup_sensor">
+<span class="sig-name descname"><span class="pre">setup_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#SPADDashboard.setup_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.SPADDashboard.setup_sensor" title="Link to this definition">#</a></dt>
+<dd><p>Configures the sensor settings and channel mask.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.SPADDashboard.run">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#SPADDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.SPADDashboard.run" title="Link to this definition">#</a></dt>
+<dd><p>Abstract method to run the dashboard.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MatplotlibDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoscale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Dashboard implementation using Matplotlib for visualization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard.run" title="Link to this definition">#</a></dt>
+<dd><p>Executes the Matplotlib dashboard with real-time updates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard.setup_plot">
+<span class="sig-name descname"><span class="pre">setup_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard.setup_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard.setup_plot" title="Link to this definition">#</a></dt>
+<dd><p>Sets up the Matplotlib plot layout and styling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the histogram data for each frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<em>int</em>) – Current frame number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard.adjust_ylim">
+<span class="sig-name descname"><span class="pre">adjust_ylim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histograms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard.adjust_ylim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard.adjust_ylim" title="Link to this definition">#</a></dt>
+<dd><p>Adjusts the Y-axis limits based on the histogram data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>histograms</strong> (<em>np.ndarray</em>) – Histogram data for all channels.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.MatplotlibDashboard.save_animation">
+<span class="sig-name descname"><span class="pre">save_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ani</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#MatplotlibDashboard.save_animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.MatplotlibDashboard.save_animation" title="Link to this definition">#</a></dt>
+<dd><p>Saves the animation to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ani</strong> (<em>FuncAnimation</em>) – The animation object to save.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoscale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Dashboard implementation using PyQtGraph for real-time visualization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.run" title="Link to this definition">#</a></dt>
+<dd><p>Executes the PyQtGraph dashboard application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.setup_plots">
+<span class="sig-name descname"><span class="pre">setup_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.setup_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.setup_plots" title="Link to this definition">#</a></dt>
+<dd><p>Sets up the plots for each channel in the dashboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>win</strong> (<em>DashboardWindow</em>) – The main window for the plots.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the histogram data in the plots.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DashDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoscale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Dashboard implementation using Dash and Plotly for web-based visualization.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.run" title="Link to this definition">#</a></dt>
+<dd><p>Executes the Dash dashboard application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.setup_layout">
+<span class="sig-name descname"><span class="pre">setup_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.setup_layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.setup_layout" title="Link to this definition">#</a></dt>
+<dd><p>Sets up the layout and figures for the Dash application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.run_dash">
+<span class="sig-name descname"><span class="pre">run_dash</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.run_dash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.run_dash" title="Link to this definition">#</a></dt>
+<dd><p>Runs the Dash server in a separate thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.update_graph_live">
+<span class="sig-name descname"><span class="pre">update_graph_live</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_fig</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.update_graph_live"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.update_graph_live" title="Link to this definition">#</a></dt>
+<dd><p>Updates the live graph with new histogram data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_intervals</strong> (<em>int</em>) – The number of intervals that have passed.</p></li>
+<li><p><strong>existing_fig</strong> (<em>dict</em>) – The existing figure to update.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -389,10 +520,33 @@ inheritance.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard"><code class="docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard"><code class="docutils literal notranslate"><span class="pre">DashDashboard</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard"><code class="docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard.validate_parameters"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.validate_parameters()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard.setup_sensor"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.setup_sensor()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard.run"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.run()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard.run"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard.run()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard.setup_plot"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard.setup_plot()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard.update"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard.update()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard.adjust_ylim"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard.adjust_ylim()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.MatplotlibDashboard.save_animation"><code class="docutils literal notranslate"><span class="pre">MatplotlibDashboard.save_animation()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.run"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.run()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.setup_plots"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.setup_plots()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.update"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard"><code class="docutils literal notranslate"><span class="pre">DashDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.run"><code class="docutils literal notranslate"><span class="pre">DashDashboard.run()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.setup_layout"><code class="docutils literal notranslate"><span class="pre">DashDashboard.setup_layout()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.run_dash"><code class="docutils literal notranslate"><span class="pre">DashDashboard.run_dash()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.update_graph_live"><code class="docutils literal notranslate"><span class="pre">DashDashboard.update_graph_live()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
