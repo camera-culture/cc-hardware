@@ -17,6 +17,23 @@ from cc_hardware.utils.registry import Registry, register
 
 
 class SPADDashboard(ABC, Registry):
+    """
+    Abstract base class for SPAD sensor dashboards.
+
+    Parameters:
+        sensor (SPADSensor): The SPAD sensor instance.
+        num_frames (int): Number of frames to process. Default is 1,000,000.
+        show (bool): Whether to display the dashboard. Default is True.
+        save (bool): Whether to save the output. Default is False.
+        filename (str, optional): Filename to save the output if `save` is True.
+        min_bin (int, optional): Minimum bin value for histogram.
+        max_bin (int, optional): Maximum bin value for histogram.
+        autoscale (bool): Whether to autoscale the histogram. Default is True.
+        ylim (float, optional): Y-axis limit for the histogram.
+        channel_mask (list[int], optional): List of channels to display.
+        fullscreen (bool): Whether to display in fullscreen mode. Default is False.
+    """
+
     def __init__(
         self,
         sensor: SPADSensor,
@@ -48,11 +65,17 @@ class SPADDashboard(ABC, Registry):
         get_logger().info("Starting histogram GUI...")
 
     def validate_parameters(self):
+        """
+        Validates the initialization parameters to ensure correct usage.
+        """
         assert self.save or self.show, "Either show or save must be True."
         if self.save and not self.filename:
             raise ValueError("Filename must be provided if save is True.")
 
     def setup_sensor(self):
+        """
+        Configures the sensor settings and channel mask.
+        """
         h, w = self.sensor.resolution
         total_channels = h * w
         if self.channel_mask is None:
@@ -62,6 +85,9 @@ class SPADDashboard(ABC, Registry):
 
     @abstractmethod
     def run(self):
+        """
+        Abstract method to run the dashboard.
+        """
         pass
 
 
@@ -70,7 +96,14 @@ class SPADDashboard(ABC, Registry):
 
 @register
 class MatplotlibDashboard(SPADDashboard):
+    """
+    Dashboard implementation using Matplotlib for visualization.
+    """
+
     def run(self):
+        """
+        Executes the Matplotlib dashboard with real-time updates.
+        """
         global plt, Slider
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
@@ -95,6 +128,9 @@ class MatplotlibDashboard(SPADDashboard):
             self.save_animation(ani)
 
     def setup_plot(self):
+        """
+        Sets up the Matplotlib plot layout and styling.
+        """
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
@@ -132,6 +168,12 @@ class MatplotlibDashboard(SPADDashboard):
         plt.tight_layout()
 
     def update(self, frame):
+        """
+        Updates the histogram data for each frame.
+
+        Parameters:
+            frame (int): Current frame number.
+        """
         if not plt.fignum_exists(self.fig.number) and self.show:
             get_logger().info("Closing GUI...")
             return
@@ -148,6 +190,12 @@ class MatplotlibDashboard(SPADDashboard):
         return list(chain(*self.containers))
 
     def adjust_ylim(self, histograms):
+        """
+        Adjusts the Y-axis limits based on the histogram data.
+
+        Parameters:
+            histograms (np.ndarray): Histogram data for all channels.
+        """
         if self.ylim is not None:
             for ax in self.axes:
                 ax.set_ylim(0, self.ylim)
@@ -166,6 +214,12 @@ class MatplotlibDashboard(SPADDashboard):
                 ax.set_ylim(0, max_count)
 
     def save_animation(self, ani):
+        """
+        Saves the animation to a file.
+
+        Parameters:
+            ani (FuncAnimation): The animation object to save.
+        """
         get_logger().info("Saving animation...")
         filename = self.filename
         if not filename.endswith(".mp4"):
@@ -182,7 +236,14 @@ class MatplotlibDashboard(SPADDashboard):
 
 @register
 class PyQtGraphDashboard(SPADDashboard):
+    """
+    Dashboard implementation using PyQtGraph for real-time visualization.
+    """
+
     def run(self):
+        """
+        Executes the PyQtGraph dashboard application.
+        """
         global pg, QtWidgets, QtCore
         import pyqtgraph as pg
         from pyqtgraph.Qt import QtCore, QtWidgets
@@ -190,10 +251,17 @@ class PyQtGraphDashboard(SPADDashboard):
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
         class DashboardWindow(pg.GraphicsLayoutWidget):
+            """
+            Custom window class for handling key events.
+            """
+
             def __init__(self, parent=None):
                 super().__init__(parent)
 
             def keyPressEvent(self, event):
+                """
+                Handles key press events to allow exiting the application.
+                """
                 if hasattr(QtCore.Qt, "Key_Escape"):
                     # PyQt5
                     escape_list = [QtCore.Qt.Key_Escape, QtCore.Qt.Key_Q]
@@ -220,6 +288,12 @@ class PyQtGraphDashboard(SPADDashboard):
             app.exec()
 
     def setup_plots(self, win):
+        """
+        Sets up the plots for each channel in the dashboard.
+
+        Parameters:
+            win (DashboardWindow): The main window for the plots.
+        """
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
@@ -241,6 +315,9 @@ class PyQtGraphDashboard(SPADDashboard):
             p.setXRange(self.min_bin, self.max_bin, padding=0)
 
     def update(self):
+        """
+        Updates the histogram data in the plots.
+        """
         histograms = self.sensor.accumulate(1)
         for idx, channel in enumerate(self.channel_mask):
             histogram = histograms[channel, self.min_bin : self.max_bin]
@@ -259,7 +336,14 @@ class PyQtGraphDashboard(SPADDashboard):
 
 @register
 class DashDashboard(SPADDashboard):
+    """
+    Dashboard implementation using Dash and Plotly for web-based visualization.
+    """
+
     def run(self):
+        """
+        Executes the Dash dashboard application.
+        """
         global make_subplots, go, dash, dcc, html, Input, Output, State
         import dash
         import plotly.graph_objs as go
@@ -280,6 +364,9 @@ class DashDashboard(SPADDashboard):
             get_logger().info("Closing GUI...")
 
     def setup_layout(self):
+        """
+        Sets up the layout and figures for the Dash application.
+        """
         self.bins = np.arange(self.min_bin, self.max_bin)
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
@@ -335,9 +422,19 @@ class DashDashboard(SPADDashboard):
         )(self.update_graph_live)
 
     def run_dash(self):
+        """
+        Runs the Dash server in a separate thread.
+        """
         self.app.run_server(debug=False, use_reloader=False)
 
     def update_graph_live(self, n_intervals, existing_fig):
+        """
+        Updates the live graph with new histogram data.
+
+        Parameters:
+            n_intervals (int): The number of intervals that have passed.
+            existing_fig (dict): The existing figure to update.
+        """
         if n_intervals is None:
             return dash.no_update
         acquired = self.lock.acquire(blocking=False)
