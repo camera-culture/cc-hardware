@@ -2,6 +2,8 @@ import re
 from enum import Enum
 from pathlib import Path
 import time
+import threading
+from typing import override
 
 import numpy as np
 import pkg_resources
@@ -11,6 +13,7 @@ from cc_hardware.drivers.arduino import Arduino
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spad import SPADSensor
 from cc_hardware.utils.constants import C
+from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
 
 # ================
@@ -84,90 +87,18 @@ class VL53L8CHHistogram(SensorData):
             get_logger().error("Invalid data formatting received.")
             return
         
-        if len(self._pixel_histograms) == 16:
+        # if len(self._pixel_histograms) == 16:
+        #     self._data = np.array(self._pixel_histograms)
+        #     self._has_data = True
+
+
+    def _assemble_data(self, num_hist_expected: int) -> None:
+        # if len(self._pixel_histograms) == 16:
+        if len(self._pixel_histograms) == num_hist_expected:
             self._data = np.array(self._pixel_histograms)
             self._has_data = True
-        
-        # try:
-        #     idx = int(row[TMF882X_IDX_FIELD])
-        # except (IndexError, ValueError):
-        #     get_logger().error("Invalid index received.")
-        #     return
-        # try:
-        #     data = np.array(row[TMF882X_SKIP_FIELDS:], dtype=np.int32)
-        # except ValueError:
-        #     get_logger().error("Invalid data received.")
-        #     return
-
-        # if len(data) != TMF882X_BINS:
-        #     get_logger().error(f"Invalid data length: {len(data)}")
-        #     return
-
-        # base_idx = idx // 10
-        # channel = idx % 10  # idx ranges from 0 to 29, channels 0-9
-
-        # if self.current_subcapture >= self.num_subcaptures:
-        #     # Already received all subcaptures
-        #     return
-
-        # active_channels = self.active_channels_per_subcapture[self.current_subcapture]
-
-        # # Only process valid channels
-        # if 0 <= channel <= active_channels:
-        #     if base_idx == 0:
-        #         self._temp_data[self.current_subcapture, channel] += data
-        #     elif base_idx == 1:
-        #         self._temp_data[self.current_subcapture, channel] += data * 256
-        #     elif base_idx == 2:
-        #         self._temp_data[self.current_subcapture, channel] += data * 256 * 256
-
-        #         # If this is the last channel and MSB, check for more subcaptures
-        #         if channel == active_channels:
-        #             self.current_subcapture += 1
-        #             if self.current_subcapture == self.num_subcaptures:
-        #                 # All subcaptures received, combine data
-        #                 self._data = self._assemble_data()
-        #                 self._temp_data.fill(0)
-        #                 self._has_data = True
-        # else:
-        #     # Ignore idx values for channels that don't have measurements
-        #     pass
-
-    def _assemble_data(self) -> np.ndarray:
-        pass
-        # combined_data = []
-        # for subcapture_index in range(self.num_subcaptures):
-        #     active_channels = self.active_channels_per_subcapture[subcapture_index]
-        #     # Exclude calibration channel (channel 0) and limit to active channels
-        #     data = self._temp_data[subcapture_index, 1 : active_channels + 1, :]
-        #     combined_data.append(data)
-        # combined_data = np.vstack(combined_data)
-
-        # # TODO
-        # # if self.spad_id == SPADID.ID15:
-        # #     # Rearrange the data according to the pixel mapping
-        # #     pixel_mapping = [
-        # #         (4, 7), (5, 8), (6, 7), (7, 8), (4, 8), (5, 9), (6, 8), (7, 9),
-        # #         (0, 7), (1, 8), (2, 7), (3, 8), (0, 8), (1, 9), (2, 8), (3, 9),
-        # #         (4, 5), (5, 6), (6, 5), (7, 6), (4, 6), (5, 7), (6, 6), (7, 7),
-        # #         (0, 5), (1, 6), (2, 5), (3, 6), (0, 6), (1, 7), (2, 6), (3, 7),
-        # #         (4, 3), (5, 4), (6, 3), (7, 4), (4, 4), (5, 5), (6, 4), (7, 5),
-        # #         (0, 3), (1, 4), (2, 3), (3, 4), (0, 4), (1, 5), (2, 4), (3, 5),
-        # #         (4, 1), (5, 2), (6, 1), (7, 2), (4, 2), (5, 3), (6, 2), (7, 3),
-        # #         (0, 1), (1, 2), (2, 1), (3, 2), (0, 2), (1, 3), (2, 2), (3, 3),
-        # #     ]
-        # #     # Create a 3D array to hold the spatial data
-        # #     spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
-        # #     for idx in range(combined_data.shape[0]):
-        # #         row, col = pixel_mapping[idx]
-        # #         spatial_data[row, col - 2, :] = combined_data[idx, :]
-        # #     # Flatten the spatial data back to (64, TMF882X_BINS) if needed
-        # #     rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
-        # #     return np.copy(rearranged_data)
-        # # else:
-        # #     return np.copy(combined_data)
-
-        # return np.copy(combined_data)
+        else:
+            self.reset()
 
     def get_data(self) -> np.ndarray:
         data = np.copy(self._data)
@@ -177,28 +108,6 @@ class VL53L8CHHistogram(SensorData):
     @property
     def has_data(self) -> bool:
         return self._has_data
-
-
-# class TMF8828Object(SensorData):
-#     def __init__(self):
-#         super().__init__()
-#         self._data = np.zeros(TMF882X_OBJ_BINS, dtype=np.int32)
-
-#     def reset(self) -> None:
-#         self._data.fill(0)
-
-#     def process(self, row: list[str]) -> None:
-#         try:
-#             self._data = np.array(row)[TMF882X_SKIP_FIELDS:].astype(np.int32)
-#         except ValueError:
-#             get_logger().error("Invalid data received.")
-#             return
-
-#     def get_data(self) -> np.ndarray:
-#         return self._data
-
-
-# ================
 
 
 class VL53L8CHSensor(SPADSensor):
@@ -217,11 +126,12 @@ class VL53L8CHSensor(SPADSensor):
         # spad_id: SPADID | int,
         port: str | None = None,
         # setup: bool = True,
+        init: bool = True,  # If you want multiple references to the same sensor for I/O operations
+        # only initialize the one reading data
         debug: bool = False,
     ):
         self._initialized = False
         # self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
-        self._num_pixels = self._get_num_pixels()
         # self.num_channels = self._get_num_channels()  # Including calibration channel
         # self.active_channels_per_subcapture = self._get_active_channels_per_subcapture()
 
@@ -233,8 +143,6 @@ class VL53L8CHSensor(SPADSensor):
             # stopbits=serial.STOPBITS_ONE,
             # bytesize=serial.EIGHTBITS,
         )
-
-        self.initialize()
         # if setup:
         #     self.setup_sensor()
 
@@ -245,18 +153,23 @@ class VL53L8CHSensor(SPADSensor):
         )
         # self._object = TMF8828Object()
         self._debug = debug
+
+        if init:
+            # self.queue = BlockingDeque(maxlen=5)
+            # self.stop_thread = threading.Event()
+            # self.has_started = threading.Event()
+            # self.start_capture_event = threading.Event()
+            # self._start_background_capture()
+
+            self.initialize()
+
+        self._resolution = 4, 4
+        self._num_pixels = self._get_num_pixels()
+
         self._initialized = True
 
     def _get_num_pixels(self) -> int:
-        return 16
-        # if self.spad_id == SPADID.ID6:
-        #     return 9
-        # elif self.spad_id == SPADID.ID7:
-        #     return 16
-        # elif self.spad_id == SPADID.ID15:
-        #     return 64
-        # else:
-        #     raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
+        return self._resolution[0] * self._resolution[1]
 
     def _get_num_channels(self) -> int:
         # Channels 0-9, including calibration channel
@@ -264,14 +177,6 @@ class VL53L8CHSensor(SPADSensor):
 
     def _get_active_channels_per_subcapture(self) -> list[int]:
         return [9]
-        # if self.spad_id == SPADID.ID6:
-        #     return [9]
-        # elif self.spad_id == SPADID.ID7:
-        #     return [8, 8]
-        # elif self.spad_id == SPADID.ID15:
-        #     return [8, 8, 8, 8, 8, 8, 8, 8]
-        # else:
-        #     raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
 
     def initialize(self):
         pass
@@ -315,6 +220,71 @@ class VL53L8CHSensor(SPADSensor):
 
         # get_logger().info("Sensor setup complete")
 
+    def _start_background_capture(self):
+        """Starts the background thread to initialize the camera and capture images."""
+        self.thread = threading.Thread(target=self._background_capture)
+        self.thread.start()
+
+    def _background_capture(self):
+        """Initializes the camera, continuously captures histograms and stores them in the queue."""
+        get_logger().info(f"Starting background capture for spad")
+        while not self.stop_thread.is_set():
+            # Wait until capture is started
+            self.start_capture_event.wait()
+            try:
+                self.has_started.set()
+
+                while not self.stop_thread.is_set():
+                    # get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
+
+                    began_read = False
+                    # count = 0
+                    while not self._histogram.has_data:
+                        line = self.read()
+                        get_logger().debug(line)
+                        try:
+                            line = line.decode("utf-8").replace("\n", "")
+                            # data = data.decode("utf-8").replace("\r", "").replace("\n", "")
+                        except UnicodeDecodeError:
+                            get_logger().error("Error decoding data")
+                            continue
+                        # row = data.split(",")
+                        # print(f'line: {line}')
+
+                        if line[:10] == "Print data":
+                            began_read = True
+                            # print("began read")
+                            continue
+                        
+                        if began_read:
+                            if len(line) > 0 and line[0] != "":
+                                tokens = []
+                                for raw_token in line.split(","):
+                                    token = raw_token.strip()
+                                    if len(token) > 0:
+                                        tokens.append(token)
+                                self._histogram.process(tokens)
+                        
+                        # count += 1
+                        # if count >= 50:
+                        #     break
+
+                    # histograms.append(self._histogram.get_data())
+
+                    # Store histogram in queue
+                    get_logger().info("Storing histogram in queue")
+                    self.queue.append(self._histogram.get_data())
+            except Exception as ex:
+                get_logger().error(f"Camera error: {ex}")
+            finally:
+                # Stop the pipeline and reset events
+                get_logger().info(f"Stopping pipeline")
+                # self.pipeline.stop()
+                self.has_started.clear()
+                self.start_capture_event.clear()
+
+        get_logger().info(f"Background capture thread ending")
+
     def read(self) -> bytes:
         read_line = self._arduino.readline()
         if self._debug and len(read_line) > 0:
@@ -333,14 +303,23 @@ class VL53L8CHSensor(SPADSensor):
 
     def write(self, data: str) -> None:
         get_logger().debug(f"Writing {data}...")
-        padded_str = data.rjust(10, " ")
+        padded_str = data.ljust(10, " ")
         self._arduino.write(padded_str)
         # time.sleep(0.05)
 
     def change_num_bins(self, num_bins: int) -> None:
         get_logger().info(f"Changing num_bins to {num_bins}")
-        self.write(f"{num_bins}")
+        self.write(f"b{num_bins}")
         self._histogram = VL53L8CHHistogram()
+    
+    def change_resolution(self, resolution: int) -> None:
+        get_logger().info(f"Changing resolution to {resolution}")
+        self.write(f"r{resolution}")
+        if resolution == 1:
+            self._resolution = 8, 8
+        else:
+            self._resolution = 4, 4
+        self._num_pixels = self._get_num_pixels()
 
     # def wait_for_start_talk(self) -> bytes:
     #     """Wait until Arduino starts talking."""
@@ -375,11 +354,35 @@ class VL53L8CHSensor(SPADSensor):
         *,
         average: bool = True,
     ) -> np.ndarray | list[np.ndarray]:
-        # Reset the serial buffer
-        # self.write("s")
-        # self.wait_for_stop_talk()
-        # self.write("m")
-        # self.wait_for_start_talk()
+        # self.start_capture_event.set()
+        # try:
+        #     histograms = []
+
+        #     while len(histograms) < num_samples:
+        #         try:
+        #             hist_item = self.queue.popleft()
+
+        #             histograms.append(hist_item)
+        #         except IndexError:
+        #             continue  # Wait for more data if queue is empty
+
+        #     if num_samples == 1:
+        #         histograms = histograms[0] if histograms else None
+        #     elif average:
+        #         histograms = np.mean(histograms, axis=0)
+        #     # print(histograms)
+        #     return histograms
+        # finally:
+        #     self.start_capture_event.clear()
+        #     self.has_started.clear()
+
+        # flush serial buffer if needed
+        BUFFER_FLUSH_THRESHOLD = 500
+        if self._arduino.in_waiting > BUFFER_FLUSH_THRESHOLD:
+            if self._debug:
+                pass
+                # get_logger().info(f"Flushed buffer: cleared {self._arduino.in_waiting} bytes")
+            self._arduino.reset_input_buffer()
 
         histograms = []
         for _ in range(num_samples):
@@ -403,13 +406,12 @@ class VL53L8CHSensor(SPADSensor):
                     began_read = True
                     # print("began read")
                     continue
-                
-                if began_read:
+                if line[:10] == "EndMessage":
+                    num_hist_expected = int(line.split(" ")[1])
+                    self._histogram._assemble_data(num_hist_expected)
+                    continue
+                elif began_read:
                     if len(line) > 0 and line[0] != "":
-                        # if row[0] == "#Obj":
-                        #     self._object.process(row)
-                        # elif row[0] == "#Raw":
-                        #     self._histogram.process(row)
                         tokens = []
                         for raw_token in line.split(","):
                             token = raw_token.strip()
@@ -420,11 +422,7 @@ class VL53L8CHSensor(SPADSensor):
                 # count += 1
                 # if count >= 50:
                 #     break
-
             histograms.append(self._histogram.get_data())
-
-        # self.write("s")
-        # self.wait_for_stop_talk()
 
         if num_samples == 1:
             histograms = histograms[0] if histograms else None
@@ -448,16 +446,17 @@ class VL53L8CHSensor(SPADSensor):
 
     @property
     def resolution(self) -> tuple[int, int]:
-        return 4, 4
-        # if self.spad_id == SPADID.ID6:
-        #     return 3, 3
-        # elif self.spad_id == SPADID.ID7:
-        #     return 4, 4
-        # elif self.spad_id == SPADID.ID15:
-        #     return 8, 8
-        # else:
-        #     raise ValueError(f"Unsupported SPAD ID: {self.spad_id}")
+        return self._resolution
 
     @property
     def num_pixels(self) -> int:
         return self._num_pixels
+    
+    # @override
+    # def close(self):
+    #     """Stops the background capture thread"""
+    #     self.stop_thread.set()  # Signal the background thread to stop
+    #     self.start_capture_event.set()  # Unblock the thread if waiting
+    #     if self.thread is not None:
+    #         self.thread.join()  # Wait for the thread to finish
+    #         self.thread = None
