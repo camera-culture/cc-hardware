@@ -22,7 +22,6 @@ import pkg_resources
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor
-from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
 
@@ -628,16 +627,6 @@ class TMF8828Sensor(SPADSensor):
             int: The number of bins in the histogram.
         """
         return TMF882X_BINS
-
-    @property
-    def bin_width(self) -> float:
-        """
-        Returns the width of each bin in the histogram in meters.
-
-        Returns:
-            float: The width of each bin in meters.
-        """
-        return 10 / TMF882X_BINS / C
 
     @property
     def resolution(self) -> tuple[int, int]:

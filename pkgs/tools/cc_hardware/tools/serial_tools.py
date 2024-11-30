@@ -55,6 +55,7 @@ def vl53l8ch_upload(
 
     Uses the VL53L8CHSensor.SCRIPT attribute to locate the sketch if none is provided.
     """
+    assert Path(port).exists(), f"Port {port} does not exist"
 
     from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
 

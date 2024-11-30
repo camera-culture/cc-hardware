@@ -20,14 +20,14 @@ class SPADDashboard(ABC, Registry):
     def __init__(
         self,
         sensor: SPADSensor,
-        num_frames: int = 100,
+        num_frames: int = 1_000_000,
         show: bool = True,
         save: bool = False,
         filename: str | None = None,
         min_bin: int | None = None,
         max_bin: int | None = None,
         autoscale: bool = True,
-        ylim: float | None = 5000,
+        ylim: float | None = None,
         channel_mask: list[int] | None = None,
         fullscreen: bool = False,
     ):
@@ -71,9 +71,10 @@ class SPADDashboard(ABC, Registry):
 @register
 class MatplotlibDashboard(SPADDashboard):
     def run(self):
-        global plt
+        global plt, Slider
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
+        from matplotlib.widgets import Slider
 
         from cc_hardware.utils.plotting import set_matplotlib_style
 
@@ -210,6 +211,7 @@ class PyQtGraphDashboard(SPADDashboard):
             win.show()
 
         self.setup_plots(win)
+
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(self.update)
         self.timer.start(1)
@@ -226,7 +228,7 @@ class PyQtGraphDashboard(SPADDashboard):
         bins = np.arange(self.min_bin, self.max_bin)
         for idx, channel in enumerate(self.channel_mask):
             row, col = divmod(idx, cols)
-            if idx % 1 == 0:
+            if col == 0:
                 win.nextRow()
             p = win.addPlot()
             self.plots.append(p)
@@ -247,9 +249,6 @@ class PyQtGraphDashboard(SPADDashboard):
                 self.plots[idx].setYRange(0, self.ylim)
             elif self.autoscale:
                 self.plots[idx].enableAutoRange(axis="y")
-            else:
-                max_count = histogram.max()
-                self.plots[idx].setYRange(0, max_count)
         if not any([plot.isVisible() for plot in self.plots]):
             get_logger().info("Closing GUI...")
             QtWidgets.QApplication.quit()
@@ -360,7 +359,4 @@ class DashDashboard(SPADDashboard):
                 existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
             elif self.autoscale:
                 existing_fig["layout"][yaxis_key]["autorange"] = True
-            else:
-                max_count = histogram.max()
-                existing_fig["layout"][yaxis_key]["range"] = [0, max_count]
         return existing_fig

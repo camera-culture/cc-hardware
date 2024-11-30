@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
@@ -26,13 +26,10 @@ class PklSPADSensor(SPADSensor):
         _data (list[dict]): A list of entries loaded from the PKL file, each entry
             containing a histogram.
         _data_iterator (iterator): An iterator over the loaded data entries.
-        _bin_width (float): The width of each bin in the histogram.
         _resolution (tuple[int, int]): The spatial resolution of the sensor.
     """
 
-    def __init__(
-        self, pkl_path: Path | str, *, bin_width: float, resolution: tuple[int, int]
-    ):
+    def __init__(self, pkl_path: Path | str, *, resolution: tuple[int, int]):
         """
         Initializes the PklSPADSensor with the path to the PKL file, bin width, and
         resolution.
@@ -40,7 +37,6 @@ class PklSPADSensor(SPADSensor):
         Args:
             pkl_path (Path | str): Path to the PKL file containing the pre-recorded
                 data.
-            bin_width (float): The width of each bin in the histogram.
             resolution (tuple[int, int]): The spatial resolution of the sensor
                 (width, height).
         """
@@ -49,7 +45,6 @@ class PklSPADSensor(SPADSensor):
         self._data_iterator = iter(self._data)
         get_logger().info(f"Loaded {len(self._data)} entries from {self._pkl_path}.")
 
-        self._bin_width = bin_width
         self._resolution = resolution
 
         self._check_data()
@@ -115,16 +110,6 @@ class PklSPADSensor(SPADSensor):
             int: The number of bins in the histogram.
         """
         return self._data[0]["histogram"].shape[-1]
-
-    @property
-    def bin_width(self) -> float:
-        """
-        Returns the width of each bin in the histogram.
-
-        Returns:
-            float: The width of each bin.
-        """
-        return self._bin_width
 
     @property
     def resolution(self) -> tuple[int, int]:

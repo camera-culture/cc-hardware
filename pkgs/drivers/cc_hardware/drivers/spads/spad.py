@@ -3,6 +3,7 @@
 from abc import abstractmethod
 
 from cc_hardware.drivers.sensor import Sensor
+from cc_hardware.utils.logger import get_logger
 
 # ================
 
@@ -43,18 +44,16 @@ class SPADSensor(Sensor):
         """
         pass
 
-    @property
-    @abstractmethod
-    def bin_width(self) -> float:
+    @num_bins.setter
+    def num_bins(self, value: int):
         """
-        Returns the width of each bin in the histogram. This indicates the time or
-        distance resolution of the sensor, representing the range covered by each bin.
-        The exact units should be documented in the derived sensor class.
+        Sets the number of bins in the sensor's histogram. This method allows the
+        number of bins to be dynamically adjusted to match the sensor's configuration.
 
-        Returns:
-            float: The width of each bin in the histogram.
+        Args:
+            value (int): The new number of bins in the histogram.
         """
-        pass
+        get_logger().warning(f"Setting the number of bins is not supported for {self}.")
 
     @property
     @abstractmethod
@@ -69,3 +68,15 @@ class SPADSensor(Sensor):
                 (width, height).
         """
         pass
+
+    @resolution.setter
+    def resolution(self, value: tuple[int, int]):
+        """
+        Sets the resolution of the sensor. This method allows the resolution to be
+        dynamically adjusted to match the sensor's configuration.
+
+        Args:
+            value (tuple[int, int]): The new resolution of the sensor as a tuple
+                (width, height).
+        """
+        get_logger().warning(f"Setting the resolution is not supported for {self}.")

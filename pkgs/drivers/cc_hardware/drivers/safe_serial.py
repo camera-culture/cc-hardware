@@ -32,7 +32,7 @@ class SafeSerial:
             "threading" or "multiprocessing".
     """
 
-    def __init__(self, *args, lock_type: str = "threading", **kwargs):
+    def __init__(self, *args, lock_type: str = "multiprocessing", **kwargs):
         self._serial = serial.Serial(*args, **kwargs)
         if lock_type == "multiprocessing":
             self._lock = multiprocessing.Lock()
@@ -44,7 +44,7 @@ class SafeSerial:
 
     @classmethod
     def create(
-        cls, port: str | None = None, *, wait: int = 2, **kwargs
+        cls, port: str | None = None, *, wait: int = 1, **kwargs
     ) -> Self | list[Self]:
         """
         Create an instance of SafeSerial from a serial port. Checks all available ports
@@ -98,7 +98,6 @@ class SafeSerial:
         Returns:
             None
         """
-        get_logger().warning(f"Invalid data type: {type(data)}")
         with self._lock:
             self._serial.write(data)
 

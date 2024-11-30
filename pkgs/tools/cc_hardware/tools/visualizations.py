@@ -15,9 +15,8 @@ except ImportError:
 from cc_hardware.drivers.cameras.camera import Camera
 from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.tools.app import APP, typer
-from cc_hardware.utils.constants import C
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.plotting import histogram_gui, plot_points, transient_gui
+from cc_hardware.utils.plotting import plot_points, transient_gui
 
 # ========================
 
@@ -27,22 +26,13 @@ APP.add_typer(visualizations_APP, name="vis")
 # ========================
 
 
-def dashboard(spad: type[SPADSensor] | SPADSensor, **kwargs):
-    from cc_hardware.utils.manager import Manager
-
-    def setup(manager: Manager, spad: SPADSensor):
-        histogram_gui(spad, **kwargs)
-
-    with Manager(spad=spad) as manager:
-        manager.run(setup=setup)
-
-
 @visualizations_APP.command()
 def spad_dashboard(
-    dashboard_name: str,
-    spad_name: str,
+    dashboard_type: str,
+    spad_type: str,
+    *,
     port: str,
-    num_frames: int = 100,
+    num_frames: int = 1_000_000,
     show: bool = True,
     save: bool = False,
     filename: str | None = None,
@@ -50,19 +40,17 @@ def spad_dashboard(
     ylim: float | None = None,
     min_bin: int | None = None,
     max_bin: int | None = None,
-    channel_mask: list[int] | None = None,
-    short_range: bool = False,
     fullscreen: bool = False,
 ):
     from cc_hardware.drivers.spads import SPADSensor
     from cc_hardware.drivers.spads.dashboard import SPADDashboard
     from cc_hardware.utils.manager import Manager
 
-    spad = partial(SPADSensor.create_from_registry, spad_name, port=port)
+    spad = partial(SPADSensor.create_from_registry, spad_type, port=port)
 
     def setup(manager: Manager, spad: SPADSensor):
         dashboard = SPADDashboard.create_from_registry(
-            dashboard_name,
+            dashboard_type,
             sensor=spad,
             num_frames=num_frames,
             show=show,
@@ -72,7 +60,6 @@ def spad_dashboard(
             ylim=ylim,
             min_bin=min_bin,
             max_bin=max_bin,
-            channel_mask=channel_mask,
             fullscreen=fullscreen,
         )
         manager.add(dashboard=dashboard)
@@ -81,119 +68,6 @@ def spad_dashboard(
 
     with Manager(spad=spad) as manager:
         manager.run(setup=setup)
-
-
-@visualizations_APP.command()
-def tmf8828_dashboard(
-    port: str,
-    num_frames: int = 100,
-    show: bool = True,
-    save: bool = False,
-    filename: str | None = None,
-    autoscale: bool = True,
-    ylim: float | None = None,
-    min_bin: int | None = None,
-    max_bin: int | None = None,
-    channel_mask: list[int] | None = None,
-    spad_id: int = 6,  # 3x3
-    short_range: bool = False,
-    fullscreen: bool = False,
-):
-    """Dashboard for the TMF8828 sensor."""
-
-    from cc_hardware.drivers.spads.tmf8828 import RangeMode, TMF8828Sensor
-
-    assert spad_id in (
-        6,
-        7,
-        15,
-    ), f"Only 6 (3x3), 7 (4x4), and 15 (8x8) sensors are supported, got {spad_id}."
-    range_mode = RangeMode.SHORT if short_range else RangeMode.LONG
-    sensor = partial(TMF8828Sensor, port=port, spad_id=spad_id, range_mode=range_mode)
-
-    dashboard(
-        sensor,
-        num_frames=num_frames,
-        show=show,
-        save=save,
-        filename=filename,
-        autoscale=autoscale,
-        ylim=ylim,
-        min_bin=min_bin,
-        max_bin=max_bin,
-        channel_mask=channel_mask,
-        fullscreen=fullscreen,
-    )
-
-
-@visualizations_APP.command()
-def vl53l8ch_dashboard(
-    port: str,
-    num_frames: int = 100,
-    show: bool = True,
-    save: bool = False,
-    filename: str | None = None,
-    autoscale: bool = True,
-    ylim: float | None = None,
-    min_bin: int | None = None,
-    max_bin: int | None = None,
-    channel_mask: list[int] | None = None,
-    fullscreen: bool = False,
-):
-    """Dashboard for the VL53L8CH sensor."""
-
-    from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
-
-    sensor = partial(VL53L8CHSensor, port=port)
-
-    dashboard(
-        sensor,
-        num_frames=num_frames,
-        show=show,
-        save=save,
-        filename=filename,
-        autoscale=autoscale,
-        ylim=ylim,
-        min_bin=min_bin,
-        max_bin=max_bin,
-        channel_mask=channel_mask,
-        fullscreen=fullscreen,
-    )
-
-
-@visualizations_APP.command()
-def pkl_dashboard(
-    pkl_path: Path,
-    num_frames: int = 100,
-    show: bool = True,
-    save: bool = False,
-    filename: str | None = None,
-    autoscale: bool = True,
-    ylim: float | None = None,
-    min_bin: int | None = None,
-    max_bin: int | None = None,
-    channel_mask: list[int] | None = None,
-    resolution: tuple[int, int] = (3, 3),
-):
-    """Dashboard for a pkl sensor."""
-
-    from cc_hardware.drivers.spads.pkl import PklSPADSensor
-
-    # TODO: Load directly from the pkl
-    bin_width = 10 / 128 / C
-
-    dashboard(
-        PklSPADSensor(pkl_path, bin_width=bin_width, resolution=resolution),
-        num_frames=num_frames,
-        show=show,
-        save=save,
-        filename=filename,
-        autoscale=autoscale,
-        ylim=ylim,
-        min_bin=min_bin,
-        max_bin=max_bin,
-        channel_mask=channel_mask,
-    )
 
 
 # ========================
@@ -257,7 +131,6 @@ def tmf8828_transient_viewer(
 def pkl_transient_viewer(
     pkl_path: Path,
     *,
-    bin_width: float = typer.Option(..., "--bin-width", help="Bin width in meters"),
     res: tuple[int, int] = typer.Option(..., "--res", help="width, height"),
     min_bin: int = 0,
     max_bin: int = 127,
@@ -269,7 +142,7 @@ def pkl_transient_viewer(
     from cc_hardware.drivers.spads.pkl import PklSPADSensor
 
     transient_viewer(
-        PklSPADSensor(pkl_path, bin_width=bin_width, resolution=res),
+        PklSPADSensor(pkl_path, resolution=res),
         min_bin=min_bin,
         max_bin=max_bin,
         fullscreen=fullscreen,
@@ -613,7 +486,7 @@ def pkl_estimated_position(
     model.eval()
 
     estimated_position(
-        PklSPADSensor(pkl_path, bin_width=10 / 128 / C, resolution=(3, 3)),
+        PklSPADSensor(pkl_path, resolution=(3, 3)),
         PklCamera(pkl_path),
         model,
         aruco_dict=aruco_dict,
