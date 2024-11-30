@@ -32,7 +32,7 @@ Classes
    A base class that provides a registry for its subclasses and a factory method
    to instantiate them.
 
-   .. py:method:: get_position(iter: int) -> list[float]
+   .. py:method:: get_position(iter)
       :abstractmethod:
 
       Get the position for the given iteration.
@@ -43,7 +43,7 @@ Classes
 
 
 
-.. py:class:: SnakeStepperController(axis_configs: list[dict])
+.. py:class:: SnakeStepperController(axis_configs)
 
 
    Bases: :py:obj:`StepperController`
@@ -51,7 +51,7 @@ Classes
    A base class that provides a registry for its subclasses and a factory method
    to instantiate them.
 
-   .. py:method:: get_position(iter: int) -> dict
+   .. py:method:: get_position(iter)
 
       Get the current position for all axes.
 

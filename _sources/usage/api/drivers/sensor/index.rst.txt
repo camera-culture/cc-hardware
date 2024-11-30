@@ -38,13 +38,13 @@ Classes
 
       Checks if the sensor is operational.
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
       :abstractmethod:
 
       Closes the sensor and releases any resources.
 
 
-   .. py:method:: calibrate() -> bool
+   .. py:method:: calibrate()
       :abstractmethod:
 
       Calibrates the sensor.
@@ -63,13 +63,13 @@ Classes
 
    Abstract base class for handling sensor data.
 
-   .. py:method:: reset() -> None
+   .. py:method:: reset()
       :abstractmethod:
 
       Resets the sensor data to its initial state.
 
 
-   .. py:method:: process(row: list[Any]) -> None
+   .. py:method:: process(row)
       :abstractmethod:
 
       Processes a new row of data.
@@ -77,7 +77,7 @@ Classes
       :Parameters: **row** (*list[Any]*) -- Row of sensor data to process.
 
 
-   .. py:method:: get_data() -> numpy.ndarray
+   .. py:method:: get_data()
       :abstractmethod:
 
       Retrieves the processed sensor data.
@@ -93,12 +93,12 @@ Classes
 
    Handles sensor data processing with threading support.
 
-   .. py:method:: reset() -> None
+   .. py:method:: reset()
 
       Resets the threading event and clears any existing data.
 
 
-   .. py:method:: get_data() -> numpy.ndarray
+   .. py:method:: get_data()
 
       Waits until data is ready and retrieves it.
 

@@ -38,7 +38,7 @@ Classes
       An algorithm may not be okay if it either has not been initialized properly or
       if it has encountered an error.
 
-   .. py:method:: run() -> Any
+   .. py:method:: run()
       :abstractmethod:
 
       Runs the algorithm and returns the result.

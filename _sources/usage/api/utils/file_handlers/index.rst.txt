@@ -24,7 +24,7 @@ Classes
 
 
 
-.. py:class:: PklHandler(path: pathlib.Path | str, *, overwrite: bool = True, **update_index_kwargs)
+.. py:class:: PklHandler(path, *, overwrite = True, **update_index_kwargs)
 
 
    A utility class for writing and reading data to/from pickle files.
@@ -50,7 +50,7 @@ Classes
        record = handler.load(1)
        print(record) # {"another_key": "another_value"}
 
-   .. py:method:: update_index(*, prune_fn: Callable[[Any], bool] | None = lambda _: False)
+   .. py:method:: update_index(*, prune_fn = lambda _: False)
 
       Build an index of record positions in the pickle file for random access.
 
@@ -64,28 +64,28 @@ Classes
       :kwtype prune_fn: Callable[[Any], bool]
 
 
-   .. py:method:: write(data: Any)
+   .. py:method:: write(data)
 
       Write data to the pickle file, overwriting any existing content.
 
       :Parameters: **data** (*Any*) -- The data to write.
 
 
-   .. py:method:: append(data: Any)
+   .. py:method:: append(data)
 
       Append data to the pickle file without overwriting.
 
       :Parameters: **data** (*Any*) -- The data to append.
 
 
-   .. py:method:: load(index: int | None = None) -> Any
+   .. py:method:: load(index = None)
 
       Load the first record from the pickle file.
 
       :returns: *Any* -- The loaded record.
 
 
-   .. py:method:: load_all(path: pathlib.Path | str, *, key: str = None) -> list[Any]
+   .. py:method:: load_all(path, *, key = None)
       :staticmethod:
 
       Load all records from the pickle file.
@@ -96,7 +96,7 @@ Classes
       :returns: *list[Any]* -- A list of all records, or specific values if a key is provided.
 
 
-   .. py:method:: __len__() -> int
+   .. py:method:: __len__()
 
       Get the number of records in the pickle file.
 
@@ -104,7 +104,7 @@ Classes
 
 
 
-.. py:class:: VideoWriter(path: pathlib.Path | str, fps: float, flush_interval: int = 10)
+.. py:class:: VideoWriter(path, fps, flush_interval = 10)
 
 
    A utility class for writing video frames to a file.
@@ -121,7 +121,7 @@ Classes
            writer.append(frame)
        writer.close()
 
-   .. py:method:: append(frame: numpy.ndarray)
+   .. py:method:: append(frame)
 
       Append a video frame to the buffer.
 

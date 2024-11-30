@@ -57,7 +57,7 @@ Classes
 
       :returns: *bool* -- True if the motor is operational, False otherwise.
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
       :abstractmethod:
 
       Closes the connection or shuts down the stepper motor safely. Implementations
@@ -65,7 +65,7 @@ Classes
       released to avoid damage or memory leaks.
 
 
-   .. py:method:: home() -> None
+   .. py:method:: home()
       :abstractmethod:
 
       Homes the stepper motor to its reference or zero position. This method should
@@ -74,7 +74,7 @@ Classes
       position.
 
 
-   .. py:method:: move_to(position: float) -> None
+   .. py:method:: move_to(position)
       :abstractmethod:
 
       Moves the stepper motor to a specific absolute position.
@@ -84,7 +84,7 @@ Classes
                    and motor characteristics (e.g., steps, angle).
 
 
-   .. py:method:: move_by(relative_position: float) -> None
+   .. py:method:: move_by(relative_position)
       :abstractmethod:
 
       Moves the stepper motor by a specified relative amount from its current
@@ -95,7 +95,7 @@ Classes
                    unit, depending on the motor's configuration.
 
 
-   .. py:method:: wait_for_move() -> None
+   .. py:method:: wait_for_move()
       :abstractmethod:
 
       Waits for the motor to complete its current move operation. This method should

@@ -23,7 +23,7 @@ Classes
 
 
 
-.. py:class:: PklCamera(pkl_path: pathlib.Path | str)
+.. py:class:: PklCamera(pkl_path)
 
 
    Bases: :py:obj:`cc_hardware.drivers.cameras.camera.Camera`
@@ -65,7 +65,7 @@ Classes
 
       :returns: *bool* -- True if the iterator is still active, False otherwise.
 
-   .. py:method:: accumulate(num_samples: int) -> numpy.ndarray
+   .. py:method:: accumulate(num_samples)
 
       Accumulate a specified number of image samples.
 
@@ -77,7 +77,7 @@ Classes
                             Returns None if no data is available.
 
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
 
       Close any open resources. This method is a placeholder for
       potential cleanup logic.

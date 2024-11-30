@@ -24,12 +24,12 @@ Functions
 
 
 
-.. py:function:: set_matplotlib_style(*, use_scienceplots: bool = True)
+.. py:function:: set_matplotlib_style(*, use_scienceplots = True)
 
    Set the default style for matplotlib plots.
 
 
-.. py:function:: transient_gui(sensor: cc_hardware.drivers.spads.spad.SPADSensor, *, show: bool = True, save: bool = False, filename: str = None, fps: int = 10, fullscreen: bool = False, min_bin: int | None = None, max_bin: int | None = None, normalize_per_pixel: bool = False)
+.. py:function:: transient_gui(sensor, *, show = True, save = False, filename = None, fps = 10, fullscreen = False, min_bin = None, max_bin = None, normalize_per_pixel = False)
 
    Create a GUI interface for visualizing the transient data from a SPAD sensor.
 

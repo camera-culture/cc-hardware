@@ -28,7 +28,7 @@ Classes
 
 
 
-.. py:class:: SafeSerial(*args, lock_type: str = 'multiprocessing', **kwargs)
+.. py:class:: SafeSerial(*args, lock_type = 'multiprocessing', **kwargs)
 
 
    A thread-safe implementation of the serial.Serial class that synchronizes read and
@@ -39,7 +39,7 @@ Classes
                        "threading" or "multiprocessing".
    :kwtype lock_type: str
 
-   .. py:method:: create(port: str | None = None, *, wait: int = 1, **kwargs) -> Self | list[Self]
+   .. py:method:: create(port = None, *, wait = 1, **kwargs)
       :classmethod:
 
       Create an instance of SafeSerial from a serial port. Checks all available ports
@@ -58,7 +58,7 @@ Classes
                     or multiple instances if no port is specified.
 
 
-   .. py:method:: write(data: Any)
+   .. py:method:: write(data)
 
       Write data to the serial port. If the data type is invalid, a warning is logged.
 
@@ -67,7 +67,7 @@ Classes
       :returns: None
 
 
-   .. py:method:: read(size: int = 1) -> bytes
+   .. py:method:: read(size = 1)
 
       Read a specified number of bytes from the serial port.
 
@@ -76,7 +76,7 @@ Classes
       :returns: *bytes* -- The bytes read from the serial port.
 
 
-   .. py:method:: wait_for_start_talk(timeout: float = None) -> bytes | None
+   .. py:method:: wait_for_start_talk(timeout = None)
 
       Wait until SafeSerial starts talking. Returns data if successful,
       None if timeout.
@@ -90,7 +90,7 @@ Classes
                     None.
 
 
-   .. py:method:: wait_for_stop_talk(timeout: float = None) -> bytes | None
+   .. py:method:: wait_for_stop_talk(timeout = None)
 
       Wait until SafeSerial stops talking. Returns accumulated data if stopped before
           timeout.
@@ -104,7 +104,7 @@ Classes
                     None.
 
 
-   .. py:method:: write_and_wait_for_start_talk(data: str, timeout: float | None = None, tries: int = 10) -> bool
+   .. py:method:: write_and_wait_for_start_talk(data, timeout = None, tries = 10)
 
       Write data to SafeSerial and wait for it to start talking with timeout.
       If timeout happens before something is received, resend data.
@@ -117,7 +117,7 @@ Classes
       :returns: *bool* -- True if successful, False otherwise.
 
 
-   .. py:method:: write_and_wait_for_stop_talk(data: str, timeout: float | None = None, tries: int = 10, return_data: bool = False) -> bool | tuple[bool, bytes | None]
+   .. py:method:: write_and_wait_for_stop_talk(data, timeout = None, tries = 10, return_data = False)
 
       Write data to SafeSerial and wait for it to stop talking with timeout.
       If timeout happens before something is received, resend data.
@@ -136,7 +136,7 @@ Classes
                     accumulated data.
 
 
-   .. py:method:: write_and_wait_for_start_and_stop_talk(data: str, timeout: float | None = None, tries: int = 10) -> bool
+   .. py:method:: write_and_wait_for_start_and_stop_talk(data, timeout = None, tries = 10)
 
       Write data to SafeSerial and wait for it to start and stop talking with timeout.
       If timeout happens before either event, resend data.
@@ -149,7 +149,7 @@ Classes
       :returns: *bool* -- True if successful, False otherwise.
 
 
-   .. py:method:: __getattr__(name: str) -> Any
+   .. py:method:: __getattr__(name)
 
       Forward attribute access to the parent serial.Serial class.
 

@@ -59,7 +59,7 @@ Classes
                 A tuple representing the sensor's resolution
                     (width, height).
 
-   .. py:method:: accumulate(num_samples: int)
+   .. py:method:: accumulate(num_samples)
       :abstractmethod:
 
       Accumulates the specified number of histogram samples from the sensor.

@@ -66,7 +66,7 @@ Classes
 
    :vartype agg_rows: int
 
-   .. py:method:: pack() -> bytes
+   .. py:method:: pack()
 
       Packs the sensor configuration into a byte structure.
 
@@ -121,14 +121,14 @@ Classes
 
       :returns: *bool* -- True if data is available, False otherwise.
 
-   .. py:method:: reset(num_pixels: int | None = None) -> None
+   .. py:method:: reset(num_pixels = None)
 
       Resets the histogram data.
 
       :Parameters: **num_pixels** (*int*) -- Number of pixels expected in the histogram data.
 
 
-   .. py:method:: process(row: list[str]) -> bool
+   .. py:method:: process(row)
 
       Processes a row of histogram data.
 
@@ -137,7 +137,7 @@ Classes
       :returns: *bool* -- True if processing is successful, False otherwise.
 
 
-   .. py:method:: get_data() -> numpy.ndarray
+   .. py:method:: get_data()
 
       Retrieves the processed histogram data.
 
@@ -145,7 +145,7 @@ Classes
 
 
 
-.. py:class:: VL53L8CHSensor(*, port: str | None = None, **kwargs)
+.. py:class:: VL53L8CHSensor(*, port = None, **kwargs)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
@@ -182,7 +182,7 @@ Classes
 
       :returns: *bool* -- Always returns True. Implement actual checks as needed.
 
-   .. py:method:: update(**kwargs) -> None
+   .. py:method:: update(**kwargs)
 
       Updates the sensor configuration with provided keyword arguments.
 
@@ -190,7 +190,7 @@ Classes
                    the fields of SensorConfig.
 
 
-   .. py:method:: accumulate(num_samples: int, *, average: bool = True) -> numpy.ndarray | list[numpy.ndarray]
+   .. py:method:: accumulate(num_samples, *, average = True)
 
       Accumulates histogram data from the sensor.
 
@@ -204,7 +204,7 @@ Classes
                     either averaged or as a list of samples.
 
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
 
       Closes the sensor connection and stops background processes.
 

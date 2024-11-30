@@ -23,7 +23,7 @@ Classes
 
 
 
-.. py:class:: PklSPADSensor(pkl_path: pathlib.Path | str, *, resolution: tuple[int, int])
+.. py:class:: PklSPADSensor(pkl_path, *, resolution)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
@@ -68,7 +68,7 @@ Classes
 
       :returns: *bool* -- True if the iterator is active, False if exhausted.
 
-   .. py:method:: accumulate(num_samples: int, *, average: bool = True) -> numpy.ndarray
+   .. py:method:: accumulate(num_samples, *, average = True)
 
       Accumulates the specified number of histogram samples from the pre-recorded
       data.
@@ -80,7 +80,7 @@ Classes
       :returns: *np.ndarray* -- The accumulated histogram data, averaged if requested.
 
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
 
       Closes the sensor connection. This method is a no-op for this fake sensor.
 

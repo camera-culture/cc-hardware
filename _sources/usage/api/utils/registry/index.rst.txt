@@ -37,7 +37,7 @@ Functions
    A base class that provides a registry for its subclasses and a factory method
    to instantiate them.
 
-   .. py:method:: register(class_type: type[Self]) -> type[Self]
+   .. py:method:: register(class_type)
       :classmethod:
 
       Register the given class in the registry of the base class.
@@ -47,7 +47,7 @@ Functions
       :returns: The registered class.
 
 
-   .. py:method:: create_from_registry(name: str, *args: Any, **kwargs: Any) -> Self
+   .. py:method:: create_from_registry(name, *args, **kwargs)
       :classmethod:
 
       Create an instance of the class with the specified name from the registry.
@@ -62,7 +62,7 @@ Functions
 
 
 
-.. py:function:: register(class_type: type[Registry]) -> type[Registry]
+.. py:function:: register(class_type)
 
    Register the given class using the RegistryBase of its base class.
 

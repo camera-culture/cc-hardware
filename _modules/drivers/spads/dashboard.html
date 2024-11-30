@@ -269,7 +269,36 @@
         </div>
         <article role="main">
           <h1>Source code for drivers.spads.dashboard</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Dashboard for SPAD sensors.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Dashboard for SPAD sensors.</span>
+
+<span class="sd">This module provides a dashboard for visualizing SPAD sensor data in real-time. There</span>
+<span class="sd">are three implementations available with different supported features:</span>
+
+<span class="sd">- :class:`~drivers.spads.dashboard.MatplotlibDashboard`: Uses Matplotlib for</span>
+<span class="sd">    visualization.</span>
+<span class="sd">- :class:`~drivers.spads.dashboard.PyQtGraphDashboard`: Uses PyQtGraph for</span>
+<span class="sd">    visualization.</span>
+<span class="sd">- :class:`~drivers.spads.dashboard.DashDashboard`: Uses Dash and Plotly for web-based</span>
+<span class="sd">    visualization.</span>
+
+<span class="sd">You can specify user-defined callbacks to be executed on each update of the dashboard.</span>
+
+<span class="sd">Example:</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    from cc_hardware.drivers.spads import SPADSensor</span>
+<span class="sd">    from cc_hardware.drivers.spads.dashboard import SPADDashboard</span>
+
+<span class="sd">    sensor = SPADSensor.create_from_registry(...)</span>
+<span class="sd">    dashboard = SPADDashboard.create_from_registry(</span>
+<span class="sd">        ...,</span>
+<span class="sd">        sensor=sensor,</span>
+<span class="sd">        user_callback=my_callback,</span>
+<span class="sd">    )</span>
+
+<span class="sd">    dashboard.run()</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">threading</span>
@@ -277,6 +306,7 @@
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Self</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -296,57 +326,43 @@
 <span class="sd">    Parameters:</span>
 <span class="sd">        sensor (SPADSensor): The SPAD sensor instance.</span>
 <span class="sd">        num_frames (int): Number of frames to process. Default is 1,000,000.</span>
-<span class="sd">        show (bool): Whether to display the dashboard. Default is True.</span>
-<span class="sd">        save (bool): Whether to save the output. Default is False.</span>
-<span class="sd">        filename (str, optional): Filename to save the output if `save` is True.</span>
 <span class="sd">        min_bin (int, optional): Minimum bin value for histogram.</span>
 <span class="sd">        max_bin (int, optional): Maximum bin value for histogram.</span>
 <span class="sd">        autoscale (bool): Whether to autoscale the histogram. Default is True.</span>
 <span class="sd">        ylim (float, optional): Y-axis limit for the histogram.</span>
 <span class="sd">        channel_mask (list[int], optional): List of channels to display.</span>
-<span class="sd">        fullscreen (bool): Whether to display in fullscreen mode. Default is False.</span>
+<span class="sd">        user_callback (Callable[[Self], None], optional): User-defined callback</span>
+<span class="sd">            function. It should accept the dashboard instance as an argument.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span>
         <span class="n">num_frames</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1_000_000</span><span class="p">,</span>
-        <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">save</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">min_bin</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">max_bin</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">autoscale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">ylim</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">channel_mask</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">user_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Self</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span> <span class="o">=</span> <span class="n">sensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">=</span> <span class="n">num_frames</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="n">show</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save</span> <span class="o">=</span> <span class="n">save</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="o">=</span> <span class="n">min_bin</span> <span class="ow">or</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span> <span class="o">=</span> <span class="n">max_bin</span> <span class="ow">or</span> <span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_min_bin</span> <span class="o">=</span> <span class="n">min_bin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_bin</span> <span class="o">=</span> <span class="n">max_bin</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="n">autoscale</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="o">=</span> <span class="n">ylim</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span> <span class="o">=</span> <span class="n">channel_mask</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen</span> <span class="o">=</span> <span class="n">fullscreen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="o">=</span> <span class="n">user_callback</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">validate_parameters</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Autoscale is enabled, but ylim is set. Disabling autoscale.&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_sensor</span><span class="p">()</span>
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting histogram GUI...&quot;</span><span class="p">)</span>
-
-<div class="viewcode-block" id="SPADDashboard.validate_parameters">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.validate_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">validate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Validates the initialization parameters to ensure correct usage.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">save</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">,</span> <span class="s2">&quot;Either show or save must be True.&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Filename must be provided if save is True.&quot;</span><span class="p">)</span></div>
-
 
 <div class="viewcode-block" id="SPADDashboard.setup_sensor">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.setup_sensor">[docs]</a>
@@ -365,11 +381,52 @@
     <span class="nd">@abstractmethod</span>
 <div class="viewcode-block" id="SPADDashboard.run">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Abstract method to run the dashboard.</span>
+<span class="sd">        Abstract method to display the dashboard.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fullscreen (bool): Whether to display in fullscreen mode.</span>
+<span class="sd">            headless (bool): Whether to run in headless mode.</span>
+<span class="sd">            save (Path | None): If provided, save the output to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
+
+
+    <span class="c1"># ================</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SPADDashboard.min_bin">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.min_bin">[docs]</a>
+    <span class="k">def</span> <span class="nf">min_bin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Minimum bin value for the histogram.</span>
+
+<span class="sd">        Supports variable sized bins based on the sensor configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_bin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_min_bin</span></div>
+
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SPADDashboard.max_bin">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.max_bin">[docs]</a>
+    <span class="k">def</span> <span class="nf">max_bin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Maximum bin value for the histogram.</span>
+
+<span class="sd">        Supports variable sized bins based on the sensor configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_bin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_bin</span></div>
 </div>
 
 
@@ -387,21 +444,37 @@
 
 <div class="viewcode-block" id="MatplotlibDashboard.run">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Executes the Matplotlib dashboard with real-time updates.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fullscreen (bool): Whether to display in fullscreen mode.</span>
+<span class="sd">            headless (bool): Whether to run in headless mode (without GUI).</span>
+<span class="sd">            save (Path | None): If provided, save the output to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">global</span> <span class="n">plt</span><span class="p">,</span> <span class="n">Slider</span>
         <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
         <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
-        <span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Slider</span>
 
         <span class="kn">from</span> <span class="nn">cc_hardware.utils.plotting</span> <span class="kn">import</span> <span class="n">set_matplotlib_style</span>
 
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span>
+
         <span class="n">set_matplotlib_style</span><span class="p">()</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen_mode</span> <span class="o">=</span> <span class="n">fullscreen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">save</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless</span> <span class="o">=</span> <span class="n">headless</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_plot</span><span class="p">()</span>
-        <span class="n">ani</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ani</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span>
             <span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">),</span>
@@ -409,10 +482,12 @@
             <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save_animation</span><span class="p">(</span><span class="n">ani</span><span class="p">)</span></div>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_animation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ani</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">headless</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="MatplotlibDashboard.setup_plot">
@@ -421,13 +496,15 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the Matplotlib plot layout and styling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span><span class="p">)))</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span> <span class="o">/</span> <span class="n">rows</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">rows</span> <span class="o">/</span> <span class="n">cols</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen_mode</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">manager</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_current_fig_manager</span><span class="p">()</span>
                 <span class="n">manager</span><span class="o">.</span><span class="n">full_screen_toggle</span><span class="p">()</span>
@@ -467,25 +544,44 @@
 <span class="sd">        Parameters:</span>
 <span class="sd">            frame (int): Current frame number.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">plt</span><span class="o">.</span><span class="n">fignum_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">number</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">plt</span><span class="o">.</span><span class="n">fignum_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frame </span><span class="si">{</span><span class="n">frame</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check if the user has updated the number of bins</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="c1"># Update x-axis</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Adjust bin range</span>
+            <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">rect</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">rect</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Update x-coordinates of histogram bars</span>
+            <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">)</span>  <span class="c1"># Update x-axis limits</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Update x-ticks</span>
+
         <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjust_ylim</span><span class="p">(</span><span class="n">histograms</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
             <span class="n">container</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
             <span class="n">histogram</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">container</span><span class="p">:</span>
-                <span class="n">rect</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">rect</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">histogram</span><span class="p">):</span>
                 <span class="n">rect</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">adjust_ylim</span><span class="p">(</span><span class="n">histograms</span><span class="p">)</span>
+
+        <span class="c1"># Call user callback if provided</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Force a background flush to update the plot</span>
+
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="MatplotlibDashboard.adjust_ylim">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.adjust_ylim">[docs]</a>
-    <span class="k">def</span> <span class="nf">adjust_ylim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">histograms</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">adjust_ylim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">histograms</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adjusts the Y-axis limits based on the histogram data.</span>
 
@@ -512,15 +608,17 @@
 
 <div class="viewcode-block" id="MatplotlibDashboard.save_animation">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.save_animation">[docs]</a>
-    <span class="k">def</span> <span class="nf">save_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ani</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">save_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ani</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves the animation to a file.</span>
 
 <span class="sd">        Parameters:</span>
 <span class="sd">            ani (FuncAnimation): The animation object to save.</span>
+<span class="sd">            filename (str): The filename to save the output.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving animation...&quot;</span><span class="p">)</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.mp4&quot;</span><span class="p">):</span>
             <span class="n">filename</span> <span class="o">+=</span> <span class="s2">&quot;.mp4&quot;</span>
         <span class="n">Path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -545,52 +643,125 @@
 
 <div class="viewcode-block" id="PyQtGraphDashboard.run">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Executes the PyQtGraph dashboard application.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fullscreen (bool): Whether to display in fullscreen mode.</span>
+<span class="sd">            headless (bool): Whether to run in headless mode.</span>
+<span class="sd">            save (Path | None): If provided, save the output to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;Headless mode is not supported for PyQtGraphDashboard.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;Save functionality is not implemented for PyQtGraphDashboard.&quot;</span>
+            <span class="p">)</span>
+
         <span class="k">global</span> <span class="n">pg</span><span class="p">,</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtCore</span>
         <span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
         <span class="kn">from</span> <span class="nn">pyqtgraph.Qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span>
 
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span>
 
-        <span class="k">class</span> <span class="nc">DashboardWindow</span><span class="p">(</span><span class="n">pg</span><span class="o">.</span><span class="n">GraphicsLayoutWidget</span><span class="p">):</span>
+        <span class="k">class</span> <span class="nc">DashboardWindow</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">            Custom window class for handling key events.</span>
+<span class="sd">            Custom window class with a fixed settings panel on the right.</span>
 <span class="sd">            &quot;&quot;&quot;</span>
 
             <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
                 <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">init_ui</span><span class="p">()</span>
+
+            <span class="k">def</span> <span class="nf">init_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Initializes the user interface with a settings panel and plots.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="c1"># Main horizontal splitter</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSplitter</span><span class="p">(</span>
+                    <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Orientation</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">,</span> <span class="bp">self</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Left: PyQtGraph area</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">graphic_view</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">GraphicsLayoutWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graphic_view</span><span class="p">)</span>
+
+                <span class="c1"># Right: Settings panel</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_panel</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_panel</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">settings_panel</span><span class="p">)</span>
+
+                <span class="c1"># Add settings widgets</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">autoscale_checkbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="s2">&quot;Autoscale&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Default value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">shared_y_checkbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="s2">&quot;Shared Y-Axis&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Default value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;Enter Y-Limit&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Y-Limit&quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>  <span class="c1"># Add spacer to align widgets at top</span>
+
+                <span class="c1"># Set proportions</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Graphics view takes more space</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="o">.</span><span class="n">setStretchFactor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Settings panel takes less space</span>
+
+                <span class="c1"># Main layout</span>
+                <span class="n">layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">splitter</span><span class="p">)</span>
 
             <span class="k">def</span> <span class="nf">keyPressEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
 <span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">                Handles key press events to allow exiting the application.</span>
 <span class="sd">                &quot;&quot;&quot;</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="p">,</span> <span class="s2">&quot;Key_Escape&quot;</span><span class="p">):</span>
-                    <span class="c1"># PyQt5</span>
-                    <span class="n">escape_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key_Q</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="c1"># PyQt6</span>
-                    <span class="n">escape_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">Key_Q</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="n">escape_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">Key_Q</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Key</span><span class="o">.</span><span class="n">Key_Escape</span><span class="p">]:</span>
                     <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
 
         <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
         <span class="n">win</span> <span class="o">=</span> <span class="n">DashboardWindow</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullscreen</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">win</span>
+        <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
             <span class="n">win</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">win</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_plots</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_plots</span><span class="p">(</span><span class="n">win</span><span class="o">.</span><span class="n">graphic_view</span><span class="p">)</span>
+
+        <span class="c1"># Connect settings to functionality</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_y_limit</span><span class="p">)</span>
+
+        <span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">y_limit_slider</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QTimer</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">timeout</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">:</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span></div>
+        <span class="n">app</span><span class="o">.</span><span class="n">exec</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="PyQtGraphDashboard.setup_plots">
@@ -602,12 +773,14 @@
 <span class="sd">        Parameters:</span>
 <span class="sd">            win (DashboardWindow): The main window for the plots.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span><span class="p">)))</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span> <span class="o">/</span> <span class="n">rows</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">plots</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bars</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
             <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -615,12 +788,15 @@
             <span class="n">p</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">addPlot</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
-            <span class="n">bg</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">BarGraphItem</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">brush</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+            <span class="n">bg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_bar_graph_item</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">bg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bg</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="s2">&quot;bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;Bin&quot;</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;Photon Counts&quot;</span><span class="p">)</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+            <span class="n">p</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="PyQtGraphDashboard.update">
@@ -629,18 +805,90 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the histogram data in the plots.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">histograms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="n">ylim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
+            <span class="n">ylim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
+            <span class="c1"># Set ylim to be max of _all_ channels</span>
+            <span class="n">ylim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">histograms</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
+
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
             <span class="n">histogram</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setOpts</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">histogram</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setOpts</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">histogram</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Histogram size has changed.&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Histogram size has changed.</span>
+                <span class="c1"># Remove the old BarGraphItem if the shape has changed</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">removeItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+                <span class="c1"># Create a new BarGraphItem and add it to the plot</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">histogram</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                    <span class="n">histogram</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">histogram</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">histogram</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_bar_graph_item</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Call user callback if provided</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">plot</span><span class="o">.</span><span class="n">isVisible</span><span class="p">()</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">]):</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span>
             <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
-</div>
+
+
+    <span class="k">def</span> <span class="nf">_create_bar_graph_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span> <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">pg</span><span class="o">.</span><span class="n">BarGraphItem</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">brush</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Autoscale: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shared Y-Axis: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
+            <span class="n">y_link_reference</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">y_link_reference</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">y_link_reference</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span><span class="o">.</span><span class="n">setYLink</span><span class="p">(</span><span class="n">y_link_reference</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span><span class="o">.</span><span class="n">setYLink</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update_y_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y-Limit set to: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid Y-Limit input&quot;</span><span class="p">)</span></div>
 
 
 
@@ -657,10 +905,30 @@
 
 <div class="viewcode-block" id="DashDashboard.run">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Executes the Dash dashboard application.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            fullscreen (bool): Unused parameter for DashDashboard.</span>
+<span class="sd">            headless (bool): Whether to run in headless mode.</span>
+<span class="sd">            save (Path | None): If provided, save the dashboard to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Fullscreen functionality is not applicable for DashDashboard.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s2">&quot;Save functionality is not implemented for DashDashboard.&quot;</span>
+            <span class="p">)</span>
+
         <span class="k">global</span> <span class="n">make_subplots</span><span class="p">,</span> <span class="n">go</span><span class="p">,</span> <span class="n">dash</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
         <span class="kn">import</span> <span class="nn">dash</span>
         <span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
@@ -670,15 +938,18 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">histograms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_layout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_dash</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
-                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span></div>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">headless</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DashDashboard.setup_layout">
@@ -687,6 +958,11 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the layout and figures for the Dash application.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">dash</span>
+        <span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="k">as</span> <span class="nn">go</span>
+        <span class="kn">from</span> <span class="nn">dash</span> <span class="kn">import</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">html</span>
+        <span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
         <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span><span class="p">)))</span>
         <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_channels</span> <span class="o">/</span> <span class="n">rows</span><span class="p">))</span>
@@ -728,18 +1004,66 @@
                 <span class="p">),</span>
                 <span class="n">dcc</span><span class="o">.</span><span class="n">Interval</span><span class="p">(</span>
                     <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;interval-component&quot;</span><span class="p">,</span>
-                    <span class="n">interval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                    <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                     <span class="n">n_intervals</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                     <span class="n">max_intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">],</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+        <span class="nd">@self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
             <span class="n">Output</span><span class="p">(</span><span class="s2">&quot;live-update-graph&quot;</span><span class="p">,</span> <span class="s2">&quot;figure&quot;</span><span class="p">),</span>
             <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="s2">&quot;interval-component&quot;</span><span class="p">,</span> <span class="s2">&quot;n_intervals&quot;</span><span class="p">)],</span>
             <span class="p">[</span><span class="n">State</span><span class="p">(</span><span class="s2">&quot;live-update-graph&quot;</span><span class="p">,</span> <span class="s2">&quot;figure&quot;</span><span class="p">)],</span>
-        <span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_graph_live</span><span class="p">)</span></div>
+        <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">update_graph_live</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">existing_fig</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Updates the live graph with new histogram data.</span>
+
+<span class="sd">            Parameters:</span>
+<span class="sd">                n_intervals (int): The number of intervals that have passed.</span>
+<span class="sd">                existing_fig (dict): The existing figure to update.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">n_intervals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dash</span><span class="o">.</span><span class="n">no_update</span>
+
+            <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="n">blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">finally</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">histograms</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">histograms</span> <span class="o">=</span> <span class="n">histograms</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
+                <span class="n">histogram</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span>
+                <span class="n">xaxis_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;xaxis</span><span class="si">{</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;xaxis&quot;</span>
+                <span class="n">yaxis_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;yaxis</span><span class="si">{</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;yaxis&quot;</span>
+
+                <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
+
+                <span class="c1"># Update x and y for each channel</span>
+                <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">histogram</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+                    <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bins</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                    <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">xaxis_key</span><span class="p">][</span><span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">,</span>
+                    <span class="p">]</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+                    <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;autorange&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Call user callback if provided</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">existing_fig</span></div>
 
 
 <div class="viewcode-block" id="DashDashboard.run_dash">
@@ -749,40 +1073,6 @@
 <span class="sd">        Runs the Dash server in a separate thread.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="DashDashboard.update_graph_live">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.update_graph_live">[docs]</a>
-    <span class="k">def</span> <span class="nf">update_graph_live</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">,</span> <span class="n">existing_fig</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the live graph with new histogram data.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">            n_intervals (int): The number of intervals that have passed.</span>
-<span class="sd">            existing_fig (dict): The existing figure to update.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">n_intervals</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">dash</span><span class="o">.</span><span class="n">no_update</span>
-        <span class="n">acquired</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">(</span><span class="n">blocking</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">acquired</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="k">finally</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">histograms</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">histograms</span> <span class="o">=</span> <span class="n">histograms</span>
-
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
-            <span class="n">histogram</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="n">channel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span>
-            <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][</span><span class="s2">&quot;y&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">histogram</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">yaxis_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;yaxis</span><span class="si">{</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;yaxis&quot;</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
-                <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;autorange&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="n">existing_fig</span></div>
 </div>
 
 </pre></div>

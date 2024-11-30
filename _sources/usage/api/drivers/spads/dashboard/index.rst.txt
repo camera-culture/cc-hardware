@@ -8,6 +8,34 @@
 
    Dashboard for SPAD sensors.
 
+   This module provides a dashboard for visualizing SPAD sensor data in real-time. There
+   are three implementations available with different supported features:
+
+   - :class:`~drivers.spads.dashboard.MatplotlibDashboard`: Uses Matplotlib for
+       visualization.
+   - :class:`~drivers.spads.dashboard.PyQtGraphDashboard`: Uses PyQtGraph for
+       visualization.
+   - :class:`~drivers.spads.dashboard.DashDashboard`: Uses Dash and Plotly for web-based
+       visualization.
+
+   You can specify user-defined callbacks to be executed on each update of the dashboard.
+
+   Example:
+
+   .. code-block:: python
+
+       from cc_hardware.drivers.spads import SPADSensor
+       from cc_hardware.drivers.spads.dashboard import SPADDashboard
+
+       sensor = SPADSensor.create_from_registry(...)
+       dashboard = SPADDashboard.create_from_registry(
+           ...,
+           sensor=sensor,
+           user_callback=my_callback,
+       )
+
+       dashboard.run()
+
 
 
 Module Contents
@@ -26,7 +54,7 @@ Classes
 
 
 
-.. py:class:: SPADDashboard(sensor: cc_hardware.drivers.spads.spad.SPADSensor, num_frames: int = 1000000, show: bool = True, save: bool = False, filename: str | None = None, min_bin: int | None = None, max_bin: int | None = None, autoscale: bool = True, ylim: float | None = None, channel_mask: list[int] | None = None, fullscreen: bool = False)
+.. py:class:: SPADDashboard(sensor, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
 
 
    Bases: :py:obj:`abc.ABC`, :py:obj:`cc_hardware.utils.registry.Registry`
@@ -35,43 +63,58 @@ Classes
 
    :Parameters: * **sensor** (*SPADSensor*) -- The SPAD sensor instance.
                 * **num_frames** (*int*) -- Number of frames to process. Default is 1,000,000.
-                * **show** (*bool*) -- Whether to display the dashboard. Default is True.
-                * **save** (*bool*) -- Whether to save the output. Default is False.
-                * **filename** (*str, optional*) -- Filename to save the output if `save` is True.
                 * **min_bin** (*int, optional*) -- Minimum bin value for histogram.
                 * **max_bin** (*int, optional*) -- Maximum bin value for histogram.
                 * **autoscale** (*bool*) -- Whether to autoscale the histogram. Default is True.
                 * **ylim** (*float, optional*) -- Y-axis limit for the histogram.
                 * **channel_mask** (*list[int], optional*) -- List of channels to display.
-                * **fullscreen** (*bool*) -- Whether to display in fullscreen mode. Default is False.
+                * **user_callback** (*Callable[[Self], None], optional*) -- User-defined callback
+                  function. It should accept the dashboard instance as an argument.
 
-   .. py:method:: validate_parameters()
+   .. py:property:: min_bin
+      :type: int
 
-      Validates the initialization parameters to ensure correct usage.
+      Minimum bin value for the histogram.
 
+      Supports variable sized bins based on the sensor configuration.
+
+   .. py:property:: max_bin
+      :type: int
+
+      Maximum bin value for the histogram.
+
+      Supports variable sized bins based on the sensor configuration.
 
    .. py:method:: setup_sensor()
 
       Configures the sensor settings and channel mask.
 
 
-   .. py:method:: run()
+   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
       :abstractmethod:
 
-      Abstract method to run the dashboard.
+      Abstract method to display the dashboard.
+
+      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
+                   * **headless** (*bool*) -- Whether to run in headless mode.
+                   * **save** (*Path | None*) -- If provided, save the output to this file.
 
 
 
-.. py:class:: MatplotlibDashboard(sensor: cc_hardware.drivers.spads.spad.SPADSensor, num_frames: int = 1000000, show: bool = True, save: bool = False, filename: str | None = None, min_bin: int | None = None, max_bin: int | None = None, autoscale: bool = True, ylim: float | None = None, channel_mask: list[int] | None = None, fullscreen: bool = False)
+.. py:class:: MatplotlibDashboard(sensor, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
 
 
    Bases: :py:obj:`SPADDashboard`
 
    Dashboard implementation using Matplotlib for visualization.
 
-   .. py:method:: run()
+   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
 
       Executes the Matplotlib dashboard with real-time updates.
+
+      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
+                   * **headless** (*bool*) -- Whether to run in headless mode (without GUI).
+                   * **save** (*Path | None*) -- If provided, save the output to this file.
 
 
    .. py:method:: setup_plot()
@@ -93,24 +136,29 @@ Classes
       :Parameters: **histograms** (*np.ndarray*) -- Histogram data for all channels.
 
 
-   .. py:method:: save_animation(ani)
+   .. py:method:: save_animation(ani, filename)
 
       Saves the animation to a file.
 
-      :Parameters: **ani** (*FuncAnimation*) -- The animation object to save.
+      :Parameters: * **ani** (*FuncAnimation*) -- The animation object to save.
+                   * **filename** (*str*) -- The filename to save the output.
 
 
 
-.. py:class:: PyQtGraphDashboard(sensor: cc_hardware.drivers.spads.spad.SPADSensor, num_frames: int = 1000000, show: bool = True, save: bool = False, filename: str | None = None, min_bin: int | None = None, max_bin: int | None = None, autoscale: bool = True, ylim: float | None = None, channel_mask: list[int] | None = None, fullscreen: bool = False)
+.. py:class:: PyQtGraphDashboard(sensor, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
 
 
    Bases: :py:obj:`SPADDashboard`
 
    Dashboard implementation using PyQtGraph for real-time visualization.
 
-   .. py:method:: run()
+   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
 
       Executes the PyQtGraph dashboard application.
+
+      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
+                   * **headless** (*bool*) -- Whether to run in headless mode.
+                   * **save** (*Path | None*) -- If provided, save the output to this file.
 
 
    .. py:method:: setup_plots(win)
@@ -126,16 +174,20 @@ Classes
 
 
 
-.. py:class:: DashDashboard(sensor: cc_hardware.drivers.spads.spad.SPADSensor, num_frames: int = 1000000, show: bool = True, save: bool = False, filename: str | None = None, min_bin: int | None = None, max_bin: int | None = None, autoscale: bool = True, ylim: float | None = None, channel_mask: list[int] | None = None, fullscreen: bool = False)
+.. py:class:: DashDashboard(sensor, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
 
 
    Bases: :py:obj:`SPADDashboard`
 
    Dashboard implementation using Dash and Plotly for web-based visualization.
 
-   .. py:method:: run()
+   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
 
       Executes the Dash dashboard application.
+
+      :Parameters: * **fullscreen** (*bool*) -- Unused parameter for DashDashboard.
+                   * **headless** (*bool*) -- Whether to run in headless mode.
+                   * **save** (*Path | None*) -- If provided, save the dashboard to this file.
 
 
    .. py:method:: setup_layout()
@@ -146,14 +198,6 @@ Classes
    .. py:method:: run_dash()
 
       Runs the Dash server in a separate thread.
-
-
-   .. py:method:: update_graph_live(n_intervals, existing_fig)
-
-      Updates the live graph with new histogram data.
-
-      :Parameters: * **n_intervals** (*int*) -- The number of intervals that have passed.
-                   * **existing_fig** (*dict*) -- The existing figure to update.
 
 
 

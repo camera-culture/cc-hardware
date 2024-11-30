@@ -66,7 +66,7 @@ Classes
       :returns: *Self* -- The single instance of the class.
 
 
-   .. py:method:: instance() -> Self
+   .. py:method:: instance()
       :classmethod:
 
       Retrieve the Singleton instance, creating it if necessary.

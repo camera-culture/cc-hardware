@@ -297,7 +297,7 @@ making it suitable for use in multi-threaded environments where safe
 access to a shared deque is required.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="utils.blocking_deque.BlockingDeque.append">
-<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.append" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.append" title="Link to this definition">#</a></dt>
 <dd><p>Append an item to the deque and notify any waiting threads.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -308,7 +308,7 @@ access to a shared deque is required.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="utils.blocking_deque.BlockingDeque.__getattr__">
-<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__getattr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__getattr__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__getattr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>Access attributes of the underlying deque in a thread-safe manner.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -322,7 +322,7 @@ access to a shared deque is required.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="utils.blocking_deque.BlockingDeque.__getitem__">
-<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__getitem__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__getitem__" title="Link to this definition">#</a></dt>
 <dd><p>Retrieve an item from the deque by index, blocking if the deque is empty.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -336,7 +336,7 @@ access to a shared deque is required.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="utils.blocking_deque.BlockingDeque.__len__">
-<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__len__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__len__" title="Link to this definition">#</a></dt>
 <dd><p>Get the number of items in the deque.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -347,7 +347,7 @@ access to a shared deque is required.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="utils.blocking_deque.BlockingDeque.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__repr__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/blocking_deque.html#BlockingDeque.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.blocking_deque.BlockingDeque.__repr__" title="Link to this definition">#</a></dt>
 <dd><p>Get the string representation of the deque.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

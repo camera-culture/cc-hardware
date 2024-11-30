@@ -280,13 +280,13 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async" title="utils.asyncio_utils.call_async"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async</span></code></a>(→ Any)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async" title="utils.asyncio_utils.call_async"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async</span></code></a>(fn, callback)</p></td>
 <td><p>Wraps an asynchronous method and returns the result of the callback</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async_gather" title="utils.asyncio_utils.call_async_gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_gather</span></code></a>(→ Any)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async_gather" title="utils.asyncio_utils.call_async_gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_gather</span></code></a>(fns, callback)</p></td>
 <td><p>Wraps multiple asynchronous methods and returns a list of all the</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async_value" title="utils.asyncio_utils.call_async_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_value</span></code></a>(→ Any)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.asyncio_utils.call_async_value" title="utils.asyncio_utils.call_async_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_value</span></code></a>(fn[, idx])</p></td>
 <td><p>Wraps an asynchronous method and returns a specific index in the callback</p></td>
 </tr>
 </tbody>
@@ -294,21 +294,21 @@
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.asyncio_utils.call_async">
-<span class="sig-name descname"><span class="pre">call_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">call_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async" title="Link to this definition">#</a></dt>
 <dd><p>Wraps an asynchronous method and returns the result of the callback
 synchronously.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.asyncio_utils.call_async_gather">
-<span class="sig-name descname"><span class="pre">call_async_gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async_gather"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async_gather" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">call_async_gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async_gather"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async_gather" title="Link to this definition">#</a></dt>
 <dd><p>Wraps multiple asynchronous methods and returns a list of all the
 callback values.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.asyncio_utils.call_async_value">
-<span class="sig-name descname"><span class="pre">call_async_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async_value" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">call_async_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/utils/asyncio_utils.html#call_async_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.asyncio_utils.call_async_value" title="Link to this definition">#</a></dt>
 <dd><p>Wraps an asynchronous method and returns a specific index in the callback
 list.</p>
 </dd></dl>

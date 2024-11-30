@@ -58,7 +58,7 @@ Classes
                 A tuple containing the width and height of
                                  the camera resolution.
 
-   .. py:method:: accumulate(num_samples: int, *, average: bool) -> numpy.ndarray
+   .. py:method:: accumulate(num_samples, *, average)
       :abstractmethod:
 
       Accumulate a specified number of samples from the camera.

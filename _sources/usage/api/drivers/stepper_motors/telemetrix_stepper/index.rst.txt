@@ -40,7 +40,7 @@ Classes
 
 
 
-.. py:class:: TelemetrixStepperMotor(board: telemetrix.telemetrix.Telemetrix, *, distance_pin: int, direction_pin: int, enable_pin: int, cm_per_rev: float, steps_per_rev: int, speed: float, flip_direction: bool = False)
+.. py:class:: TelemetrixStepperMotor(board, *, distance_pin, direction_pin, enable_pin, cm_per_rev, steps_per_rev, speed, flip_direction = False)
 
 
    Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotor`
@@ -83,19 +83,19 @@ Classes
 
       Checks if the stepper motor is in a healthy operational state.
 
-   .. py:method:: home() -> None
+   .. py:method:: home()
 
       Homes the stepper motor to its reference or zero position.
 
 
-   .. py:method:: move_to(position: float) -> None
+   .. py:method:: move_to(position)
 
       Moves the stepper motor to a specific absolute position.
 
       :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
 
 
-   .. py:method:: move_by(relative_position: float) -> None
+   .. py:method:: move_by(relative_position)
 
       Moves the stepper motor by a specified relative amount from its current
       position.
@@ -104,41 +104,41 @@ Classes
                    current position.
 
 
-   .. py:method:: wait_for_move() -> None
+   .. py:method:: wait_for_move()
 
       Waits for the motor to complete its current move operation. This method should
       block the execution until the motor has reached its target position or
       completed the current motion command.
 
 
-   .. py:method:: set_target_position_cm(relative_cm: float)
+   .. py:method:: set_target_position_cm(relative_cm)
 
       Sets the target position of the motor relative to current position.
 
       :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
 
 
-   .. py:method:: set_absolute_target_position_cm(position_cm: float)
+   .. py:method:: set_absolute_target_position_cm(position_cm)
 
       Sets the absolute target position in cm.
 
 
-   .. py:method:: cm_to_revs(cm: float) -> int
+   .. py:method:: cm_to_revs(cm)
 
       Converts cm to steps.
 
 
-   .. py:method:: revs_to_cm(revs: int) -> float
+   .. py:method:: revs_to_cm(revs)
 
       Converts steps to cm.
 
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
 
       Closes the connection or shuts down the stepper motor safely.
 
 
-   .. py:method:: __getattr__(key: str) -> Any
+   .. py:method:: __getattr__(key)
 
       This is a passthrough to the underlying stepper object.
 
@@ -149,7 +149,7 @@ Classes
 
 
 
-.. py:class:: TelemetrixStepperMotorSystem(port: str | None = None, *, axes: dict[str, list[TelemetrixStepperMotor]])
+.. py:class:: TelemetrixStepperMotorSystem(port = None, *, axes)
 
 
    Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotorSystem`
@@ -165,13 +165,13 @@ Classes
                   value is a list of motors attached to that axis.
    :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
 
-   .. py:method:: close() -> None
+   .. py:method:: close()
 
       Closes the connection or shuts down the stepper motor safely.
 
 
 
-.. py:class:: TelemetrixStepperMotorX(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorX(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotor`
@@ -200,7 +200,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: TelemetrixStepperMotorY(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorY(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotor`
@@ -229,7 +229,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: TelemetrixStepperMotorZ(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorZ(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotor`
@@ -258,7 +258,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: TelemetrixStepperMotorXReversed(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorXReversed(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorX`
@@ -287,7 +287,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: TelemetrixStepperMotorYReversed(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorYReversed(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorY`
@@ -316,7 +316,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: TelemetrixStepperMotorZReversed(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: TelemetrixStepperMotorZReversed(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorZ`
@@ -345,7 +345,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: DualDrive2AxisGantry_X(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: DualDrive2AxisGantry_X(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorZ`
@@ -374,7 +374,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: DualDrive2AxisGantry_Y1(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: DualDrive2AxisGantry_Y1(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorY`
@@ -403,7 +403,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: DualDrive2AxisGantry_Y2(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: DualDrive2AxisGantry_Y2(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorXReversed`
@@ -432,7 +432,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: DualDrive2AxisGantry(port: str | None = None)
+.. py:class:: DualDrive2AxisGantry(port = None)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorSystem`
@@ -449,7 +449,7 @@ Classes
    :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
 
 
-.. py:class:: SingleDrive1AxisGantry_X(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: SingleDrive1AxisGantry_X(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorX`
@@ -478,7 +478,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: SingleDrive1AxisGantry_Y(board: telemetrix.telemetrix.Telemetrix, **kwargs)
+.. py:class:: SingleDrive1AxisGantry_Y(board, **kwargs)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorY`
@@ -507,7 +507,7 @@ Classes
    :kwtype flip_direction: bool
 
 
-.. py:class:: SingleDrive1AxisGantry(port: str | None = None)
+.. py:class:: SingleDrive1AxisGantry(port = None)
 
 
    Bases: :py:obj:`TelemetrixStepperMotorSystem`

@@ -23,7 +23,7 @@ Classes
 
 
 
-.. py:class:: ArucoLocalizationAlgorithm(sensor: cc_hardware.drivers.cameras.Camera, *, aruco_dict: int, marker_size: float, origin_id: int = -1, num_samples: int = 1, **marker_ids)
+.. py:class:: ArucoLocalizationAlgorithm(sensor, *, aruco_dict, marker_size, origin_id = -1, num_samples = 1, **marker_ids)
 
 
    Bases: :py:obj:`cc_hardware.algos.algorithm.Algorithm`
@@ -40,7 +40,7 @@ Classes
 
       :returns: *bool* -- True if both the algorithm and sensor are okay, False otherwise.
 
-   .. py:method:: run(*, show: bool = False, save: bool = False, filename: pathlib.Path | str | None = None, return_images: bool = False)
+   .. py:method:: run(*, show = False, save = False, filename = None, return_images = False)
 
       Processes images and returns the localization results.
 

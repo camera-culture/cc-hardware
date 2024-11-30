@@ -327,7 +327,7 @@ and has no detected hardware issues.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_motor.StepperMotor.close">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.close" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the connection or shuts down the stepper motor safely. Implementations
 should ensure that the motor is properly powered down and any resources are
 released to avoid damage or memory leaks.</p>
@@ -335,7 +335,7 @@ released to avoid damage or memory leaks.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_motor.StepperMotor.home">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.home" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.home" title="Link to this definition">#</a></dt>
 <dd><p>Homes the stepper motor to its reference or zero position. This method should
 move the motor to a predefined starting point, which could involve moving
 until a limit switch or sensor is triggered to establish a known starting
@@ -344,7 +344,7 @@ position.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_motor.StepperMotor.move_to">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.move_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.move_to" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.move_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.move_to" title="Link to this definition">#</a></dt>
 <dd><p>Moves the stepper motor to a specific absolute position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -357,7 +357,7 @@ and motor characteristics (e.g., steps, angle).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_motor.StepperMotor.move_by">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.move_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.move_by" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relative_position</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.move_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.move_by" title="Link to this definition">#</a></dt>
 <dd><p>Moves the stepper motor by a specified relative amount from its current
 position.</p>
 <dl class="field-list simple">
@@ -371,7 +371,7 @@ unit, depending on the motor’s configuration.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_motor.StepperMotor.wait_for_move">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.wait_for_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.wait_for_move" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_motor.html#StepperMotor.wait_for_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_motor.StepperMotor.wait_for_move" title="Link to this definition">#</a></dt>
 <dd><p>Waits for the motor to complete its current move operation. This method should
 block the execution until the motor has reached its target position or
 completed the current motion command.</p>

@@ -305,13 +305,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.Sensor.close">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.close" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the sensor and releases any resources.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.Sensor.calibrate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.calibrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.calibrate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.calibrate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.calibrate" title="Link to this definition">#</a></dt>
 <dd><p>Calibrates the sensor.</p>
 </dd></dl>
 
@@ -330,13 +330,13 @@
 <p>Abstract base class for handling sensor data.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.SensorData.reset">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.reset" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.reset" title="Link to this definition">#</a></dt>
 <dd><p>Resets the sensor data to its initial state.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.SensorData.process">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.process" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.process" title="Link to this definition">#</a></dt>
 <dd><p>Processes a new row of data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -347,7 +347,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.SensorData.get_data">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.get_data" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorData.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorData.get_data" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the processed sensor data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -365,13 +365,13 @@
 <p>Handles sensor data processing with threading support.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.SensorDataThreaded.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorDataThreaded.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorDataThreaded.reset" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorDataThreaded.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorDataThreaded.reset" title="Link to this definition">#</a></dt>
 <dd><p>Resets the threading event and clears any existing data.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.sensor.SensorDataThreaded.get_data">
-<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorDataThreaded.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorDataThreaded.get_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorDataThreaded.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorDataThreaded.get_data" title="Link to this definition">#</a></dt>
 <dd><p>Waits until data is ready and retrieves it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

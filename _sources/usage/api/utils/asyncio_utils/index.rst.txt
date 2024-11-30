@@ -25,19 +25,19 @@ Functions
 
 
 
-.. py:function:: call_async(fn: Callable, callback: Callable) -> Any
+.. py:function:: call_async(fn, callback)
 
    Wraps an asynchronous method and returns the result of the callback
    synchronously.
 
 
-.. py:function:: call_async_gather(fns: Callable, callback: Callable[[list], Any]) -> Any
+.. py:function:: call_async_gather(fns, callback)
 
    Wraps multiple asynchronous methods and returns a list of all the
    callback values.
 
 
-.. py:function:: call_async_value(fn: Callable, idx: int = 2) -> Any
+.. py:function:: call_async_value(fn, idx = 2)
 
    Wraps an asynchronous method and returns a specific index in the callback
    list.

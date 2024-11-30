@@ -32,7 +32,7 @@ Classes
 
 
 
-.. py:class:: RealsenseCamera(camera_index: int = 0, start_pipeline_once: bool = True, force_autoexposure: bool = False, exposure: int | list[int] | None = None)
+.. py:class:: RealsenseCamera(camera_index = 0, start_pipeline_once = True, force_autoexposure = False, exposure = None)
 
 
    Bases: :py:obj:`cc_hardware.drivers.cameras.camera.Camera`
@@ -74,7 +74,7 @@ Classes
 
       :raises NotImplementedError: This method is not yet implemented.
 
-   .. py:method:: accumulate(num_samples: int, return_rgb: bool = True, return_depth: bool = False) -> list[numpy.ndarray] | tuple[list[numpy.ndarray] | list[numpy.ndarray]]
+   .. py:method:: accumulate(num_samples, return_rgb = True, return_depth = False)
 
       Accumulates RGB and depth images from the queue.
 
