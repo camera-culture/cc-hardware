@@ -75,14 +75,31 @@ def spad_dashboard(
 
 def transient_viewer(
     sensor: type[SPADSensor] | SPADSensor,
-    **kwargs,
+    show: bool = True,
+    save: bool = False,
+    filename: str | None = None,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
+    fullscreen: bool = False,
+    fps: int = 10,
+    normalize_per_pixel: bool = True,
 ):
     """View transient data from a sensor. Renders as a video."""
 
     from cc_hardware.utils.manager import Manager
 
     def setup(manager: Manager, sensor: SPADSensor):
-        transient_gui(sensor, **kwargs)
+        transient_gui(
+            sensor,
+            show=show,
+            save=save,
+            filename=filename,
+            fps=fps,
+            fullscreen=fullscreen,
+            min_bin=min_bin,
+            max_bin=max_bin,
+            normalize_per_pixel=normalize_per_pixel,
+        )
 
     with Manager(sensor=sensor) as manager:
         manager.run(setup=setup)
@@ -123,6 +140,36 @@ def tmf8828_transient_viewer(
         max_bin=max_bin,
         fullscreen=fullscreen,
         fps=fps,
+        normalize_per_pixel=normalize_per_pixel,
+    )
+
+
+@visualizations_APP.command()
+def vl53l8ch_transient_viewer(
+    port: str,
+    show: bool = True,
+    save: bool = False,
+    filename: str | None = None,
+    num_bins: int = 32,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
+    fullscreen: bool = False,
+    normalize_per_pixel: bool = True,
+):
+    """Transient viewer for the VL53L8CH sensor."""
+
+    from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
+
+    sensor = partial(VL53L8CHSensor, port=port)
+
+    transient_viewer(
+        sensor,
+        show=show,
+        save=save,
+        filename=filename,
+        min_bin=min_bin,
+        max_bin=max_bin,
+        fullscreen=fullscreen,
         normalize_per_pixel=normalize_per_pixel,
     )
 

@@ -37,7 +37,7 @@ class SPADDashboard(ABC, Registry):
         self.save = save
         self.filename = filename
         self.min_bin = min_bin or 0
-        self.max_bin = max_bin or sensor.num_bins
+        self.max_bin = max_bin or sensor.num_bins - 1
         self.autoscale = autoscale
         self.ylim = ylim
         self.channel_mask = channel_mask

@@ -92,12 +92,11 @@ class SensorConfigShared(SensorConfig):
     Inherits from SensorConfig and provides default values for common parameters.
     """
 
-    ranging_mode: int = 1  # 1 = Continuous, 3 = Autonomous
+    ranging_mode: int = 3  # 1 = Continuous, 3 = Autonomous
     ranging_frequency_hz: int = 30
-    integration_time_ms: int = 10
+    integration_time_ms: int = 20
     cnh_start_bin: int = 0
-    cnh_num_bins: int = 10
-    cnh_subsample: int = 4
+    cnh_subsample: int = 8
     agg_start_x: int = 0
     agg_start_y: int = 0
     agg_merge_x: int = 1
@@ -113,6 +112,7 @@ class SensorConfig4x4(SensorConfigShared):
     """
 
     resolution: int = 16
+    cnh_num_bins: int = 24
     agg_cols: int = 4
     agg_rows: int = 4
 
@@ -126,6 +126,7 @@ class SensorConfig8x8(SensorConfigShared):
     """
 
     resolution: int = 64
+    cnh_num_bins: int = 12
     agg_cols: int = 8
     agg_rows: int = 8
 
@@ -250,6 +251,7 @@ class VL53L8CHSensor(SPADSensor):
         self,
         *,
         port: str | None = None,
+        **kwargs,
     ):
         """
         Initializes the VL53L8CHSensor instance.
@@ -257,12 +259,17 @@ class VL53L8CHSensor(SPADSensor):
         Args:
             port (str | None): Serial port to which the sensor is connected.
                 If None, the default port is used.
+
+        Keyword Args:
+            **kwargs: Configuration parameters to update. Keys must match
+                the fields of SensorConfig.
         """
         self._initialized = False
 
         # Use Queue for inter-process communication
         self._queue = multiprocessing.Queue(maxsize=64)
         self._stop_event = multiprocessing.Event()
+        self._lock = multiprocessing.Lock()
 
         # Open the serial connection
         self._serial_conn = SafeSerial.create(port=port, baudrate=self.BAUDRATE)
@@ -270,7 +277,7 @@ class VL53L8CHSensor(SPADSensor):
         self._config = SensorConfig8x8()
         self._histogram = VL53L8CHHistogram()
 
-        self.update()
+        self.update(**kwargs)
 
         # Start the reader process
         self._reader_thread = multiprocessing.Process(
@@ -290,20 +297,24 @@ class VL53L8CHSensor(SPADSensor):
                 the fields of SensorConfig.
         """
         for key, value in kwargs.items():
-            if key in self._config._fields:
+            if hasattr(self._config, key):
                 setattr(self._config, key, value)
             else:
                 get_logger().warning(f"Unknown config key: {key}")
 
-        self._serial_conn.write(self._config.pack())
+        with self._lock:
+            self._serial_conn.write(self._config.pack())
 
-    def _read_serial_background(self):
+    def _read_serial_background(self, **kwargs):
         """
         Background process that continuously reads data from the serial port
         and places it into a queue for processing.
         """
+        self.update(**kwargs)
+
         while not self._stop_event.is_set():
-            line = self._serial_conn.readline()
+            with self._lock:
+                line = self._serial_conn.readline()
             if not line:
                 continue
 

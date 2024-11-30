@@ -45,7 +45,8 @@ int app(volatile uint8_t *command_ready, volatile SensorConfig *sensor_config) {
   /*********************************/
 
   /* Process the config */
-  if (process_config(*sensor_config) != VL53LMZ_STATUS_OK) {
+  status = process_config(*sensor_config);
+  if (status != VL53LMZ_STATUS_OK) {
     printf("Error: process_config failed\n");
     return status;
   }

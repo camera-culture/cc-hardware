@@ -47,8 +47,8 @@ def transient_gui(
     filename: str = None,
     fps: int = 10,
     fullscreen: bool = False,
-    min_bin: int = 0,
-    max_bin: int = 127,
+    min_bin: int | None = None,
+    max_bin: int | None = None,
     normalize_per_pixel: bool = False,
 ):
     """
@@ -77,8 +77,10 @@ def transient_gui(
         except Exception as e:
             get_logger().warning(f"Failed to set fullscreen mode: {e}")
 
-    # Get the sensor resolution
+    # Get the sensor resolution and bins
     h, w = sensor.resolution
+    min_bin = min_bin or 0
+    max_bin = max_bin or sensor.num_bins - 1
 
     # Initialize the image plot
     image_plot = ax.imshow(
