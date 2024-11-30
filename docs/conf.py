@@ -119,6 +119,8 @@ autoapi_template_dir = "_templates"
 
 # suppress_warnings = ["autoapi"]
 
+autodoc_typehints = "none"
+
 add_module_names = False
 
 # Napoleon

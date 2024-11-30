@@ -51,27 +51,6 @@ DMA_HandleTypeDef hdma_usart2_tx;
 /* USER CODE BEGIN PV */
 volatile int IntCount;
 
-volatile uint8_t command_ready = 0;
-volatile SensorConfig sensor_config = {
-    16,                              // resolution
-    VL53LMZ_RANGING_MODE_AUTONOMOUS, // ranging_mode
-    5,                               // ranging_frequency_hz
-    100,                             // integration_time_ms
-    0,                               // cnh_start_bin
-    24,                              // cnh_num_bins
-    4,                               // cnh_subsample
-    0,                               // agg_start_x
-    0,                               // agg_start_y
-    1,                               // agg_merge_x
-    1,                               // agg_merge_y
-    4,                               // agg_cols
-    4,                               // agg_rows
-};
-
-// Message buffer
-uint8_t messagebuf[sizeof(SensorConfig)];
-uint8_t cpymessagebuf[sizeof(SensorConfig)];
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -187,7 +166,6 @@ void Reset_Sensor_via_GPIO(void) {
  */
 int main(void) {
   /* USER CODE BEGIN 1 */
-  int status;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -217,19 +195,16 @@ int main(void) {
 
   Reset_Sensor_via_GPIO();
 
-  printf("\n\nVL53LMZ CC Hardware Test\n\n");
+  printf("\n\nVL53LMZ CC Hardware Driver\n\n");
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  HAL_UART_Receive_IT(&huart2, messagebuf, sizeof(SensorConfig));
+  while (1) {
+    app(&huart2);
 
-  status = 0;
-  while (status == 0) {
-    status = app(&command_ready, &sensor_config);
-
-    HAL_Delay(500);
+    HAL_Delay(2000);
   }
   /* USER CODE END WHILE */
 }
@@ -420,14 +395,6 @@ static void MX_GPIO_Init(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  memcpy(cpymessagebuf, messagebuf, sizeof(SensorConfig));
-  memset(messagebuf, 0, sizeof(SensorConfig));
-  sensor_config = (*(SensorConfig *)cpymessagebuf);
-  command_ready = 1;
-  HAL_UART_Receive_IT(&huart2, messagebuf, sizeof(SensorConfig));
-}
 
 /* USER CODE END 4 */
 

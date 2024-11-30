@@ -11,11 +11,18 @@ VL53LMZ_Configuration Dev;
 VL53LMZ_Motion_Configuration cnh_config;
 uint32_t cnh_data_size;
 
+volatile uint8_t command_ready, new_config;
+volatile SensorConfig sensor_config;
+
+// Message buffer
+uint8_t messagebuf[sizeof(SensorConfig)];
+uint8_t cpymessagebuf[sizeof(SensorConfig)];
+
 // Function prototypes
 uint8_t process_config(SensorConfig config);
 
 // Main function renamed to a more relevant name
-int app(volatile uint8_t *command_ready, volatile SensorConfig *sensor_config) {
+int app(UART_HandleTypeDef *huart2) {
 
   /*********************************/
   /*   VL53LMZ ranging variables   */
@@ -34,6 +41,23 @@ int app(volatile uint8_t *command_ready, volatile SensorConfig *sensor_config) {
   int32_t *p_ambient = NULL;
   int8_t *p_ambient_scaler = NULL;
 
+  // Set defaults
+  command_ready = 0;
+  new_config = 1;
+  sensor_config.resolution = 16;
+  sensor_config.ranging_mode = VL53LMZ_RANGING_MODE_AUTONOMOUS;
+  sensor_config.ranging_frequency_hz = 5;
+  sensor_config.integration_time_ms = 100;
+  sensor_config.cnh_start_bin = 0;
+  sensor_config.cnh_num_bins = 24;
+  sensor_config.cnh_subsample = 4;
+  sensor_config.agg_start_x = 0;
+  sensor_config.agg_start_y = 0;
+  sensor_config.agg_merge_x = 1;
+  sensor_config.agg_merge_y = 1;
+  sensor_config.agg_cols = 4;
+  sensor_config.agg_rows = 4;
+
   /*********************************/
   /*      Customer platform        */
   /*********************************/
@@ -44,13 +68,6 @@ int app(volatile uint8_t *command_ready, volatile SensorConfig *sensor_config) {
   /*   Power on sensor and init    */
   /*********************************/
 
-  /* Process the config */
-  status = process_config(*sensor_config);
-  if (status != VL53LMZ_STATUS_OK) {
-    printf("Error: process_config failed\n");
-    return status;
-  }
-
   printf("VL53LMZ ULD ready! (Version: %s)\n", VL53LMZ_API_REVISION);
 
   /*********************************/
@@ -58,14 +75,20 @@ int app(volatile uint8_t *command_ready, volatile SensorConfig *sensor_config) {
   /*********************************/
 
   while (1) {
-    if (*command_ready) {
-      printf("Applying sensor configuration...\n");
-      *command_ready = 0;
-      if (process_config(*sensor_config) != VL53LMZ_STATUS_OK) {
+    HAL_UART_Receive_IT(huart2, messagebuf, sizeof(SensorConfig));
+    if (command_ready) {
+      command_ready = 0;
+      sensor_config = (*(SensorConfig *)cpymessagebuf);
+      new_config = 1;
+    }
+
+    if (new_config) {
+      new_config = 0;
+      status = process_config(sensor_config);
+      if (status != VL53LMZ_STATUS_OK) {
         printf("Error: process_config failed\n");
         return status;
       }
-      continue;
     }
 
     uint8_t isReady = 0;
@@ -126,6 +149,7 @@ uint8_t process_config(SensorConfig config) {
   /*********************************/
   /*  Set basic ranging settings   */
   /*********************************/
+  printf("Resolution: %d\n", config.resolution);
   status = vl53lmz_set_resolution(&Dev, config.resolution);
   if (status != VL53LMZ_STATUS_OK) {
     printf("ERROR at %s(%d) : vl53lmz_set_resolution failed : %d\n", __func__,
@@ -167,7 +191,6 @@ uint8_t process_config(SensorConfig config) {
   }
 
   // Create aggregate map
-  printf("Resolution: %d\n", config.resolution);
   status |= vl53lmz_cnh_create_agg_map(&cnh_config,        //
                                        config.resolution,  //
                                        config.agg_start_x, //
@@ -243,4 +266,10 @@ uint8_t process_config(SensorConfig config) {
   printf("Sensor configuration applied and ranging started.\n");
 
   return status;
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  command_ready = 1;
+  memcpy(cpymessagebuf, messagebuf, sizeof(SensorConfig));
+  memset(messagebuf, 0, sizeof(SensorConfig));
 }

@@ -1,4 +1,33 @@
-"""Dashboard for SPAD sensors."""
+"""Dashboard for SPAD sensors.
+
+This module provides a dashboard for visualizing SPAD sensor data in real-time. There
+are three implementations available with different supported features:
+
+- :class:`~drivers.spads.dashboard.MatplotlibDashboard`: Uses Matplotlib for
+    visualization.
+- :class:`~drivers.spads.dashboard.PyQtGraphDashboard`: Uses PyQtGraph for
+    visualization.
+- :class:`~drivers.spads.dashboard.DashDashboard`: Uses Dash and Plotly for web-based
+    visualization.
+
+You can specify user-defined callbacks to be executed on each update of the dashboard.
+
+Example:
+
+.. code-block:: python
+
+    from cc_hardware.drivers.spads import SPADSensor
+    from cc_hardware.drivers.spads.dashboard import SPADDashboard
+
+    sensor = SPADSensor.create_from_registry(...)
+    dashboard = SPADDashboard.create_from_registry(
+        ...,
+        sensor=sensor,
+        user_callback=my_callback,
+    )
+
+    dashboard.run()
+"""
 
 import signal
 import threading
@@ -6,6 +35,7 @@ import time
 from abc import ABC, abstractmethod
 from itertools import chain
 from pathlib import Path
+from typing import Callable, Self
 
 import numpy as np
 
@@ -23,54 +53,43 @@ class SPADDashboard(ABC, Registry):
     Parameters:
         sensor (SPADSensor): The SPAD sensor instance.
         num_frames (int): Number of frames to process. Default is 1,000,000.
-        show (bool): Whether to display the dashboard. Default is True.
-        save (bool): Whether to save the output. Default is False.
-        filename (str, optional): Filename to save the output if `save` is True.
         min_bin (int, optional): Minimum bin value for histogram.
         max_bin (int, optional): Maximum bin value for histogram.
         autoscale (bool): Whether to autoscale the histogram. Default is True.
         ylim (float, optional): Y-axis limit for the histogram.
         channel_mask (list[int], optional): List of channels to display.
-        fullscreen (bool): Whether to display in fullscreen mode. Default is False.
+        user_callback (Callable[[Self], None], optional): User-defined callback
+            function. It should accept the dashboard instance as an argument.
     """
 
     def __init__(
         self,
         sensor: SPADSensor,
         num_frames: int = 1_000_000,
-        show: bool = True,
-        save: bool = False,
-        filename: str | None = None,
         min_bin: int | None = None,
         max_bin: int | None = None,
         autoscale: bool = True,
         ylim: float | None = None,
         channel_mask: list[int] | None = None,
-        fullscreen: bool = False,
+        user_callback: Callable[[Self], None] | None = None,
     ):
         self.sensor = sensor
         self.num_frames = num_frames
-        self.show = show
-        self.save = save
-        self.filename = filename
-        self.min_bin = min_bin or 0
-        self.max_bin = max_bin or sensor.num_bins - 1
+        self._min_bin = min_bin
+        self._max_bin = max_bin
         self.autoscale = autoscale
         self.ylim = ylim
         self.channel_mask = channel_mask
-        self.fullscreen = fullscreen
+        self.user_callback = user_callback
 
-        self.validate_parameters()
+        if self.autoscale and self.ylim is not None:
+            get_logger().warning(
+                "Autoscale is enabled, but ylim is set. Disabling autoscale."
+            )
+            self.autoscale = False
+
         self.setup_sensor()
         get_logger().info("Starting histogram GUI...")
-
-    def validate_parameters(self):
-        """
-        Validates the initialization parameters to ensure correct usage.
-        """
-        assert self.save or self.show, "Either show or save must be True."
-        if self.save and not self.filename:
-            raise ValueError("Filename must be provided if save is True.")
 
     def setup_sensor(self):
         """
@@ -84,11 +103,46 @@ class SPADDashboard(ABC, Registry):
         self.num_channels = len(self.channel_mask)
 
     @abstractmethod
-    def run(self):
+    def run(
+        self,
+        *,
+        fullscreen: bool = False,
+        headless: bool = False,
+        save: Path | None = None,
+    ):
         """
-        Abstract method to run the dashboard.
+        Abstract method to display the dashboard.
+
+        Parameters:
+            fullscreen (bool): Whether to display in fullscreen mode.
+            headless (bool): Whether to run in headless mode.
+            save (Path | None): If provided, save the output to this file.
         """
         pass
+
+    # ================
+
+    @property
+    def min_bin(self) -> int:
+        """
+        Minimum bin value for the histogram.
+
+        Supports variable sized bins based on the sensor configuration.
+        """
+        if self._min_bin is None:
+            return 0
+        return self._min_bin
+
+    @property
+    def max_bin(self) -> int:
+        """
+        Maximum bin value for the histogram.
+
+        Supports variable sized bins based on the sensor configuration.
+        """
+        if self._max_bin is None:
+            return self.sensor.num_bins
+        return self._max_bin
 
 
 # ================
@@ -100,21 +154,37 @@ class MatplotlibDashboard(SPADDashboard):
     Dashboard implementation using Matplotlib for visualization.
     """
 
-    def run(self):
+    def run(
+        self,
+        *,
+        fullscreen: bool = False,
+        headless: bool = False,
+        save: Path | None = None,
+    ):
         """
         Executes the Matplotlib dashboard with real-time updates.
+
+        Parameters:
+            fullscreen (bool): Whether to display in fullscreen mode.
+            headless (bool): Whether to run in headless mode (without GUI).
+            save (Path | None): If provided, save the output to this file.
         """
-        global plt, Slider
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
-        from matplotlib.widgets import Slider
 
         from cc_hardware.utils.plotting import set_matplotlib_style
 
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+
         set_matplotlib_style()
 
+        self.fullscreen_mode = fullscreen
+        self.save_path = save
+        self.headless = headless
+
         self.setup_plot()
-        ani = FuncAnimation(
+
+        self.ani = FuncAnimation(
             self.fig,
             self.update,
             frames=range(self.num_frames),
@@ -122,22 +192,26 @@ class MatplotlibDashboard(SPADDashboard):
             repeat=False,
             blit=True,
         )
-        if self.show:
+
+        if self.save_path:
+            self.save_animation(self.ani, self.save_path)
+
+        if not self.headless:
             plt.show()
-        if self.save and self.filename:
-            self.save_animation(ani)
 
     def setup_plot(self):
         """
         Sets up the Matplotlib plot layout and styling.
         """
+        import matplotlib.pyplot as plt
+
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
         self.fig = plt.figure(figsize=(6, 6 * rows / cols))
         self.gs = plt.GridSpec(rows, cols, figure=self.fig)
 
-        if self.fullscreen:
+        if self.fullscreen_mode:
             try:
                 manager = plt.get_current_fig_manager()
                 manager.full_screen_toggle()
@@ -174,22 +248,41 @@ class MatplotlibDashboard(SPADDashboard):
         Parameters:
             frame (int): Current frame number.
         """
-        if not plt.fignum_exists(self.fig.number) and self.show:
+        import matplotlib.pyplot as plt
+
+        if not plt.fignum_exists(self.fig.number):
             get_logger().info("Closing GUI...")
             return
-        get_logger().info(f"Frame {frame}")
+
+        # Check if the user has updated the number of bins
+        if self.sensor.num_bins != self.bins.size:
+            # Update x-axis
+            self.bins = np.arange(self.sensor.num_bins + 1)  # Adjust bin range
+            for container in self.containers:
+                for rect, x in zip(container, self.bins[:-1]):
+                    rect.set_x(x)  # Update x-coordinates of histogram bars
+            for ax in self.axes:
+                ax.set_xlim(0, self.sensor.num_bins)  # Update x-axis limits
+                ax.set_xticks(np.linspace(0, self.sensor.num_bins, 5))  # Update x-ticks
+
         histograms = self.sensor.accumulate(1)
+        self.adjust_ylim(histograms)
+
         for idx, channel in enumerate(self.channel_mask):
             container = self.containers[idx]
             histogram = histograms[channel, self.min_bin : self.max_bin]
-            for rect in container:
-                rect.set_height(0)
             for rect, h in zip(container, histogram):
                 rect.set_height(h)
-        self.adjust_ylim(histograms)
+
+        # Call user callback if provided
+        if self.user_callback is not None:
+            self.user_callback(self)
+
+        # Force a background flush to update the plot
+
         return list(chain(*self.containers))
 
-    def adjust_ylim(self, histograms):
+    def adjust_ylim(self, histograms: np.ndarray):
         """
         Adjusts the Y-axis limits based on the histogram data.
 
@@ -213,15 +306,17 @@ class MatplotlibDashboard(SPADDashboard):
             for ax in self.axes:
                 ax.set_ylim(0, max_count)
 
-    def save_animation(self, ani):
+    def save_animation(self, ani, filename: str):
         """
         Saves the animation to a file.
 
         Parameters:
             ani (FuncAnimation): The animation object to save.
+            filename (str): The filename to save the output.
         """
+        import matplotlib.pyplot as plt
+
         get_logger().info("Saving animation...")
-        filename = self.filename
         if not filename.endswith(".mp4"):
             filename += ".mp4"
         Path(filename).parent.mkdir(parents=True, exist_ok=True)
@@ -240,52 +335,125 @@ class PyQtGraphDashboard(SPADDashboard):
     Dashboard implementation using PyQtGraph for real-time visualization.
     """
 
-    def run(self):
+    def run(
+        self,
+        *,
+        fullscreen: bool = False,
+        headless: bool = False,
+        save: Path | None = None,
+    ):
         """
         Executes the PyQtGraph dashboard application.
+
+        Parameters:
+            fullscreen (bool): Whether to display in fullscreen mode.
+            headless (bool): Whether to run in headless mode.
+            save (Path | None): If provided, save the output to this file.
         """
+        if headless:
+            raise NotImplementedError(
+                "Headless mode is not supported for PyQtGraphDashboard."
+            )
+        if save:
+            raise NotImplementedError(
+                "Save functionality is not implemented for PyQtGraphDashboard."
+            )
+
         global pg, QtWidgets, QtCore
         import pyqtgraph as pg
         from pyqtgraph.Qt import QtCore, QtWidgets
 
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-        class DashboardWindow(pg.GraphicsLayoutWidget):
+        class DashboardWindow(QtWidgets.QWidget):
             """
-            Custom window class for handling key events.
+            Custom window class with a fixed settings panel on the right.
             """
 
             def __init__(self, parent=None):
                 super().__init__(parent)
+                self.init_ui()
+
+            def init_ui(self):
+                """
+                Initializes the user interface with a settings panel and plots.
+                """
+                # Main horizontal splitter
+                self.splitter = QtWidgets.QSplitter(
+                    QtCore.Qt.Orientation.Horizontal, self
+                )
+
+                # Left: PyQtGraph area
+                self.graphic_view = pg.GraphicsLayoutWidget()
+                self.splitter.addWidget(self.graphic_view)
+
+                # Right: Settings panel
+                self.settings_panel = QtWidgets.QWidget()
+                self.settings_layout = QtWidgets.QVBoxLayout(self.settings_panel)
+                self.splitter.addWidget(self.settings_panel)
+
+                # Add settings widgets
+                self.autoscale_checkbox = QtWidgets.QCheckBox("Autoscale")
+                self.autoscale_checkbox.setChecked(True)  # Default value
+                self.settings_layout.addWidget(self.autoscale_checkbox)
+
+                self.shared_y_checkbox = QtWidgets.QCheckBox("Shared Y-Axis")
+                self.shared_y_checkbox.setChecked(True)  # Default value
+                self.settings_layout.addWidget(self.shared_y_checkbox)
+
+                self.y_limit_textbox = QtWidgets.QLineEdit()
+                self.y_limit_textbox.setPlaceholderText("Enter Y-Limit")
+                self.y_limit_textbox.setEnabled(not self.autoscale_checkbox.isChecked())
+                self.settings_layout.addWidget(QtWidgets.QLabel("Y-Limit"))
+                self.settings_layout.addWidget(self.y_limit_textbox)
+
+                self.settings_layout.addStretch()  # Add spacer to align widgets at top
+
+                # Set proportions
+                self.splitter.setStretchFactor(0, 4)  # Graphics view takes more space
+                self.splitter.setStretchFactor(1, 1)  # Settings panel takes less space
+
+                # Main layout
+                layout = QtWidgets.QVBoxLayout(self)
+                layout.addWidget(self.splitter)
 
             def keyPressEvent(self, event):
                 """
                 Handles key press events to allow exiting the application.
                 """
-                if hasattr(QtCore.Qt, "Key_Escape"):
-                    # PyQt5
-                    escape_list = [QtCore.Qt.Key_Escape, QtCore.Qt.Key_Q]
-                else:
-                    # PyQt6
-                    escape_list = [QtCore.Qt.Key.Key_Q, QtCore.Qt.Key.Key_Escape]
-                if event.key() in escape_list:
+                if event.key() in [QtCore.Qt.Key.Key_Q, QtCore.Qt.Key.Key_Escape]:
                     QtWidgets.QApplication.quit()
 
         app = QtWidgets.QApplication([])
         win = DashboardWindow()
-        if self.fullscreen:
+        self.win = win
+        if fullscreen:
             win.showFullScreen()
         else:
             win.show()
 
-        self.setup_plots(win)
+        self.shared_y = True
+
+        self.setup_plots(win.graphic_view)
+
+        # Connect settings to functionality
+        win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
+        win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
+        win.y_limit_textbox.textChanged.connect(self.update_y_limit)
+
+        win.autoscale_checkbox.setChecked(self.autoscale)
+        win.shared_y_checkbox.setChecked(self.shared_y)
+        if self.ylim is not None:
+            win.y_limit_slider.setValue(int(self.ylim))
+
+        self.toggle_autoscale(self.autoscale)
+        self.toggle_shared_y(self.shared_y)
 
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(self.update)
         self.timer.start(1)
 
-        if self.show:
-            app.exec()
+        app.exec()
 
     def setup_plots(self, win):
         """
@@ -294,12 +462,14 @@ class PyQtGraphDashboard(SPADDashboard):
         Parameters:
             win (DashboardWindow): The main window for the plots.
         """
+
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
         self.plots = []
         self.bars = []
         bins = np.arange(self.min_bin, self.max_bin)
+
         for idx, channel in enumerate(self.channel_mask):
             row, col = divmod(idx, cols)
             if col == 0:
@@ -307,28 +477,103 @@ class PyQtGraphDashboard(SPADDashboard):
             p = win.addPlot()
             self.plots.append(p)
             y = np.zeros_like(bins)
-            bg = pg.BarGraphItem(x=bins, height=y, width=1.0, brush="b")
+            bg = self._create_bar_graph_item(bins, y)
             p.addItem(bg)
             self.bars.append(bg)
             p.setLabel("bottom", "Bin")
             p.setLabel("left", "Photon Counts")
             p.setXRange(self.min_bin, self.max_bin, padding=0)
 
+            if not self.autoscale:
+                p.enableAutoRange(axis="y", enable=False)
+
     def update(self):
         """
         Updates the histogram data in the plots.
         """
-        histograms = self.sensor.accumulate(1)
+        histograms = np.array(self.sensor.accumulate(1))
+
+        ylim = None
+        if self.win.y_limit_textbox.isEnabled():
+            ylim = self.ylim
+        if self.autoscale and self.shared_y:
+            # Set ylim to be max of _all_ channels
+            ylim = int(histograms[:, self.min_bin : self.max_bin].max()) + 1
+
         for idx, channel in enumerate(self.channel_mask):
             histogram = histograms[channel, self.min_bin : self.max_bin]
-            self.bars[idx].setOpts(height=histogram)
-            if self.ylim is not None:
-                self.plots[idx].setYRange(0, self.ylim)
+
+            try:
+                self.bars[idx].setOpts(height=histogram)
+            except ValueError:
+                get_logger().warning("Histogram size has changed.")
+
+                # Histogram size has changed.
+                # Remove the old BarGraphItem if the shape has changed
+                self.plots[idx].removeItem(self.bars[idx])
+
+                # Create a new BarGraphItem and add it to the plot
+                x = np.arange(self.min_bin, self.max_bin)
+                if len(histogram) < len(x):
+                    histogram = np.pad(histogram, (0, len(x) - len(histogram)))
+                self.bars[idx] = self._create_bar_graph_item(x)
+                self.plots[idx].addItem(self.bars[idx])
+                self.plots[idx].setXRange(self.min_bin, self.max_bin)
+
+            if ylim is not None:
+                self.plots[idx].setYRange(0, ylim)
             elif self.autoscale:
-                self.plots[idx].enableAutoRange(axis="y")
+                self.plots[idx].enableAutoRange(axis="y", enable=True)
+
+        # Call user callback if provided
+        if self.user_callback is not None:
+            self.user_callback(self)
+
         if not any([plot.isVisible() for plot in self.plots]):
             get_logger().info("Closing GUI...")
             QtWidgets.QApplication.quit()
+
+    def _create_bar_graph_item(self, bins, y=None):
+        import pyqtgraph as pg
+
+        y = np.zeros_like(bins) if y is None else y
+        return pg.BarGraphItem(x=bins, height=y, width=1.0, brush="b")
+
+    def toggle_autoscale(self, state: int):
+        get_logger().debug(f"Autoscale: {bool(state)}")
+        self.autoscale = bool(state)
+
+        for plot in self.plots:
+            plot.enableAutoRange(axis="y", enable=self.autoscale)
+
+        self.win.y_limit_textbox.setEnabled(not self.win.autoscale_checkbox.isChecked())
+        if self.autoscale:
+            self.win.y_limit_textbox.clear()
+
+    def toggle_shared_y(self, state: int):
+        get_logger().debug(f"Shared Y-Axis: {bool(state)}")
+        self.shared_y = bool(state)
+
+        if self.shared_y:
+            y_link_reference = None
+            for plot in self.plots:
+                if y_link_reference is None:
+                    y_link_reference = plot.getViewBox()
+                else:
+                    plot.getViewBox().setYLink(y_link_reference)
+        else:
+            for plot in self.plots:
+                plot.getViewBox().setYLink(None)
+
+    def update_y_limit(self):
+        text = self.win.y_limit_textbox.text()
+        if text.isdigit():
+            self.ylim = int(text)
+            get_logger().debug(f"Y-Limit set to: {self.ylim}")
+            for plot in self.plots:
+                plot.setYRange(0, self.ylim)
+        else:
+            get_logger().debug("Invalid Y-Limit input")
 
 
 # ================
@@ -340,10 +585,30 @@ class DashDashboard(SPADDashboard):
     Dashboard implementation using Dash and Plotly for web-based visualization.
     """
 
-    def run(self):
+    def run(
+        self,
+        *,
+        fullscreen: bool = False,
+        headless: bool = False,
+        save: Path | None = None,
+    ):
         """
         Executes the Dash dashboard application.
+
+        Parameters:
+            fullscreen (bool): Unused parameter for DashDashboard.
+            headless (bool): Whether to run in headless mode.
+            save (Path | None): If provided, save the dashboard to this file.
         """
+        if fullscreen:
+            get_logger().warning(
+                "Fullscreen functionality is not applicable for DashDashboard."
+            )
+        if save:
+            raise NotImplementedError(
+                "Save functionality is not implemented for DashDashboard."
+            )
+
         global make_subplots, go, dash, dcc, html, Input, Output, State
         import dash
         import plotly.graph_objs as go
@@ -353,20 +618,28 @@ class DashDashboard(SPADDashboard):
 
         self.app = dash.Dash(__name__)
         self.histograms = np.zeros((self.num_channels, self.max_bin - self.min_bin))
+        self.num_updates = 0
         self.setup_layout()
         self.lock = threading.Lock()
         self.thread = threading.Thread(target=self.run_dash)
         self.thread.start()
-        try:
-            while self.thread.is_alive():
-                time.sleep(0.1)
-        except KeyboardInterrupt:
-            get_logger().info("Closing GUI...")
+
+        if not headless:
+            try:
+                while self.thread.is_alive():
+                    time.sleep(0.1)
+            except KeyboardInterrupt:
+                get_logger().info("Closing GUI...")
 
     def setup_layout(self):
         """
         Sets up the layout and figures for the Dash application.
         """
+        import dash
+        import plotly.graph_objs as go
+        from dash import dcc, html
+        from plotly.subplots import make_subplots
+
         self.bins = np.arange(self.min_bin, self.max_bin)
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
@@ -408,52 +681,69 @@ class DashDashboard(SPADDashboard):
                 ),
                 dcc.Interval(
                     id="interval-component",
-                    interval=0,
+                    interval=1,
                     n_intervals=0,
                     max_intervals=self.num_frames,
                 ),
             ],
         )
 
-        self.app.callback(
+        @self.app.callback(
             Output("live-update-graph", "figure"),
             [Input("interval-component", "n_intervals")],
             [State("live-update-graph", "figure")],
-        )(self.update_graph_live)
+        )
+        def update_graph_live(n_intervals, existing_fig):
+            """
+            Updates the live graph with new histogram data.
+
+            Parameters:
+                n_intervals (int): The number of intervals that have passed.
+                existing_fig (dict): The existing figure to update.
+            """
+            self.num_updates += 1
+            if n_intervals is None:
+                return dash.no_update
+
+            acquired = self.lock.acquire(blocking=False)
+            if acquired:
+                try:
+                    histograms = self.sensor.accumulate(1)
+                finally:
+                    self.lock.release()
+            else:
+                histograms = self.histograms
+            self.histograms = histograms
+
+            for idx, channel in enumerate(self.channel_mask):
+                histogram = histograms[channel, self.min_bin : self.max_bin]
+                xaxis_key = f"xaxis{idx + 1}" if idx > 0 else "xaxis"
+                yaxis_key = f"yaxis{idx + 1}" if idx > 0 else "yaxis"
+
+                bins = np.arange(self.min_bin, self.max_bin)
+
+                # Update x and y for each channel
+                existing_fig["data"][idx]["y"] = histogram.tolist()
+                if len(existing_fig["data"][idx]["x"]) != len(bins):
+                    existing_fig["data"][idx]["x"] = bins.tolist()
+                    existing_fig["layout"][xaxis_key]["range"] = [
+                        self.min_bin,
+                        self.max_bin,
+                    ]
+
+                if self.ylim is not None:
+                    existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
+                elif self.autoscale:
+                    existing_fig["layout"][yaxis_key]["autorange"] = True
+
+            # Call user callback if provided
+            if self.user_callback is not None:
+                self.user_callback(self)
+
+            return existing_fig
 
     def run_dash(self):
         """
         Runs the Dash server in a separate thread.
         """
         self.app.run_server(debug=False, use_reloader=False)
-
-    def update_graph_live(self, n_intervals, existing_fig):
-        """
-        Updates the live graph with new histogram data.
-
-        Parameters:
-            n_intervals (int): The number of intervals that have passed.
-            existing_fig (dict): The existing figure to update.
-        """
-        if n_intervals is None:
-            return dash.no_update
-        acquired = self.lock.acquire(blocking=False)
-        if acquired:
-            try:
-                histograms = self.sensor.accumulate(1)
-            finally:
-                self.lock.release()
-        else:
-            histograms = self.histograms
-        self.histograms = histograms
-
-        for idx, channel in enumerate(self.channel_mask):
-            histogram = histograms[channel, self.min_bin : self.max_bin]
-            existing_fig["data"][idx]["y"] = histogram.tolist()
-            yaxis_key = f"yaxis{idx + 1}" if idx > 0 else "yaxis"
-
-            if self.ylim is not None:
-                existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
-            elif self.autoscale:
-                existing_fig["layout"][yaxis_key]["autorange"] = True
-        return existing_fig

@@ -34,7 +34,6 @@ def spad_dashboard(
     port: str,
     num_frames: int = 1_000_000,
     show: bool = True,
-    save: bool = False,
     filename: str | None = None,
     autoscale: bool = True,
     ylim: float | None = None,
@@ -53,18 +52,14 @@ def spad_dashboard(
             dashboard_type,
             sensor=spad,
             num_frames=num_frames,
-            show=show,
-            save=save,
-            filename=filename,
-            autoscale=autoscale,
-            ylim=ylim,
             min_bin=min_bin,
             max_bin=max_bin,
-            fullscreen=fullscreen,
+            autoscale=autoscale,
+            ylim=ylim,
         )
         manager.add(dashboard=dashboard)
 
-        dashboard.run()
+        dashboard.run(save=filename, headless=not show, fullscreen=fullscreen)
 
     with Manager(spad=spad) as manager:
         manager.run(setup=setup)

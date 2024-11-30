@@ -80,10 +80,6 @@ If you plan on editing the source code, please visit the corresponding package u
 
 Please follow [Google's guidelines for Python Styling](https://google.github.io/styleguide/pyguide.html). These comments are also used to automatically generate the documentation.
 
-```{note}
-Any docstrings parsed by `autosimple`, such as the functions in [usage.md](./usage/index.md), are parsed as markdown. Docstrings parsed by autoapi, such as in [cambrian.envs.MjCambrianEnv](./usage/api/cambrian/envs/env/index), are parsed as reStructuredText.
-```
-
 ### Editing the Documentation
 
 If you plan on editing the documentation pages (i.e. adding a tutorial or fixing an existing page), please see the `docs/` folder. The `docs/` folder is structured as follows:
