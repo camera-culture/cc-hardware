@@ -192,7 +192,7 @@ class VL53L8CHHistogram(SensorData):
             ambient = float(row[3])
             bin_vals = [float(val) - ambient for val in row[5:]]
             self._pixel_histograms.append(np.clip(bin_vals, 0, None))
-        except ValueError:
+        except (ValueError, IndexError):
             get_logger().error("Invalid data formatting received.")
             return False
 
@@ -277,6 +277,7 @@ class VL53L8CHSensor(SPADSensor):
         self._config = SensorConfig8x8()
         self._histogram = VL53L8CHHistogram()
 
+        # Send the configuration to the sensor
         self.update(**kwargs)
 
         # Start the reader process
@@ -310,8 +311,6 @@ class VL53L8CHSensor(SPADSensor):
         Background process that continuously reads data from the serial port
         and places it into a queue for processing.
         """
-        self.update(**kwargs)
-
         while not self._stop_event.is_set():
             with self._lock:
                 line = self._serial_conn.readline()
@@ -406,6 +405,7 @@ class VL53L8CHSensor(SPADSensor):
         Args:
             value (int): New number of CNH bins.
         """
+        self._histogram.reset()
         self.update(cnh_num_bins=value)
 
     @property

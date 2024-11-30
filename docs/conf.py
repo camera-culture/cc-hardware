@@ -43,6 +43,7 @@ extensions = [
     "myst_parser",
     "sphinxarg.ext",
     "sphinxcontrib.typer",
+    "sphinxcontrib.googleanalytics",
 ]
 
 source_suffix = {
@@ -119,6 +120,8 @@ autoapi_template_dir = "_templates"
 
 # suppress_warnings = ["autoapi"]
 
+autodoc_typehints = "none"
+
 add_module_names = False
 
 # Napoleon
@@ -146,6 +149,8 @@ todo_include_todos = True
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["env"]
 
+# Google Analytics
+googleanalytics_id = "G-WK44DH2ZCM"
 
 # -- Options for HTML output -------------------------------------------------
 

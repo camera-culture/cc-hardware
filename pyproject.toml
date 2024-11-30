@@ -36,6 +36,7 @@ sphinx-autobuild = "2021.3.14"
 myst-parser = "2.0.0"
 sphinx-argparse = "0.4.0"
 sphinxcontrib-typer = "0.5.1"
+sphinxcontrib-googleanalytics = "0.4"
 
 [tool.black]
 line-length = 88
