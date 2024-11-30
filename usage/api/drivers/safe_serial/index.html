@@ -194,9 +194,11 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../spads/vl53l8ch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../stepper_motors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.stepper_motors</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -290,22 +292,19 @@ It also provides a few convenience methods for reading and writing data.</p>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.safe_serial.SafeSerial">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SafeSerial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/safe_serial.html#SafeSerial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.safe_serial.SafeSerial" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">serial.Serial</span></code></p>
-<p>A thread-safe implementation of the serial.Serial class that synchronizes read and
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SafeSerial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lock_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'multiprocessing'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/safe_serial.html#SafeSerial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.safe_serial.SafeSerial" title="Link to this definition">#</a></dt>
+<dd><p>A thread-safe implementation of the serial.Serial class that synchronizes read and
 write operations using a lock. Provides additional utility methods for creating
 instances and handling data writes in different formats.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>*args</strong> – Positional arguments passed to the parent serial.Serial class.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments passed to the parent serial.Serial class.</p></li>
-</ul>
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lock_type</strong> (<em>str</em>) – The type of lock to use. Defaults to “threading”. Can be
+“threading” or “multiprocessing”.</p>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.safe_serial.SafeSerial.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/drivers/safe_serial.html#SafeSerial.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.safe_serial.SafeSerial.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../../_modules/drivers/safe_serial.html#SafeSerial.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.safe_serial.SafeSerial.create" title="Link to this definition">#</a></dt>
 <dd><p>Create an instance of SafeSerial from a serial port. Checks all available ports
 if no port is specified and waits for the serial device to reset before
 establishing the connection.</p>
@@ -470,6 +469,21 @@ instance timeout.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.safe_serial.SafeSerial.__getattr__">
+<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../../../../_modules/drivers/safe_serial.html#SafeSerial.__getattr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.safe_serial.SafeSerial.__getattr__" title="Link to this definition">#</a></dt>
+<dd><p>Forward attribute access to the parent serial.Serial class.</p>
+<p>Applies the lock to prevent concurrent access to the serial port.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The attribute name to access.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em> – The attribute value.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -543,6 +557,7 @@ instance timeout.</p></li>
 <li><a class="reference internal" href="#drivers.safe_serial.SafeSerial.write_and_wait_for_start_talk"><code class="docutils literal notranslate"><span class="pre">SafeSerial.write_and_wait_for_start_talk()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.safe_serial.SafeSerial.write_and_wait_for_stop_talk"><code class="docutils literal notranslate"><span class="pre">SafeSerial.write_and_wait_for_stop_talk()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.safe_serial.SafeSerial.write_and_wait_for_start_and_stop_talk"><code class="docutils literal notranslate"><span class="pre">SafeSerial.write_and_wait_for_start_and_stop_talk()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.safe_serial.SafeSerial.__getattr__"><code class="docutils literal notranslate"><span class="pre">SafeSerial.__getattr__()</span></code></a></li>
 </ul>
 </li>
 </ul>

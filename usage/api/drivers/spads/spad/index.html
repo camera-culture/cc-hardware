@@ -194,9 +194,11 @@
 </ul>
 </li>
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../vl53l8ch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../stepper_motors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.stepper_motors</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -310,19 +312,6 @@ the bin width.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="drivers.spads.spad.SPADSensor.bin_width">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bin_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/spad.html#SPADSensor.bin_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.spad.SPADSensor.bin_width" title="Link to this definition">#</a></dt>
-<dd><p>Returns the width of each bin in the histogram. This indicates the time or
-distance resolution of the sensor, representing the range covered by each bin.
-The exact units should be documented in the derived sensor class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>float</em> – The width of each bin in the histogram.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="drivers.spads.spad.SPADSensor.resolution">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/spad.html#SPADSensor.resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.spad.SPADSensor.resolution" title="Link to this definition">#</a></dt>
 <dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
@@ -419,7 +408,6 @@ the sensor.</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#drivers.spads.spad.SPADSensor"><code class="docutils literal notranslate"><span class="pre">SPADSensor</span></code></a><ul>
 <li><a class="reference internal" href="#drivers.spads.spad.SPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADSensor.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.spad.SPADSensor.bin_width"><code class="docutils literal notranslate"><span class="pre">SPADSensor.bin_width</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.spad.SPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">SPADSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.spad.SPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADSensor.accumulate()</span></code></a></li>
 </ul>

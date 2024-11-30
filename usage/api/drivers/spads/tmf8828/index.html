@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="drivers.stepper_motors" href="../../stepper_motors/index.html" /><link rel="prev" title="drivers.spads.spad" href="../spad/index.html" />
+<link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Search" href="../../../../../search.html" /><link rel="next" title="drivers.spads.vl53l8ch" href="../vl53l8ch/index.html" /><link rel="prev" title="drivers.spads.spad" href="../spad/index.html" />
 
     <link rel="shortcut icon" href="../../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>drivers.spads.tmf8828 - cc-hardware 0.0.0 documentation</title>
@@ -194,9 +194,11 @@
 </ul>
 </li>
 <li class="toctree-l4 current has-children"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../vl53l8ch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../stepper_motors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.stepper_motors</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -546,17 +548,6 @@ enabling high-resolution depth measurements.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.bin_width">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">bin_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.bin_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.bin_width" title="Link to this definition">#</a></dt>
-<dd><p>Returns the width of each bin in the histogram in meters.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>float</em> – The width of each bin in meters.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.resolution">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.resolution" title="Link to this definition">#</a></dt>
 <dd><p>Returns the resolution of the sensor as a tuple (width, height).</p>
@@ -668,12 +659,12 @@ to 2.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../stepper_motors/index.html">
+          <a class="next-page" href="../vl53l8ch/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -739,7 +730,6 @@ to 2.</p>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor</span></code></a><ul>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.is_okay"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.num_bins"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.bin_width"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.bin_width</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.resolution"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.num_pixels"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.num_pixels</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.initialize"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.initialize()</span></code></a></li>

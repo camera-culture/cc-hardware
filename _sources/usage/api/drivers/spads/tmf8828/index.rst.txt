@@ -239,13 +239,6 @@ Classes
 
       :returns: *int* -- The number of bins in the histogram.
 
-   .. py:property:: bin_width
-      :type: float
-
-      Returns the width of each bin in the histogram in meters.
-
-      :returns: *float* -- The width of each bin in meters.
-
    .. py:property:: resolution
       :type: tuple[int, int]
 

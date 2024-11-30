@@ -1,10 +1,18 @@
-:orphan:
-
 :py:mod:`drivers.spads.vl53l8ch`
 ================================
 
 
 .. py:module:: drivers.spads.vl53l8ch
+
+.. autoapi-nested-parse::
+
+   Module for VL53L8CH Sensor Driver.
+
+   This module provides classes and functions to interface with the VL53L8CH
+   time-of-flight sensor. It includes configurations, data processing, and sensor
+   management functionalities necessary for operating the sensor within the
+   CC Hardware framework.
+
 
 
 Module Contents
@@ -15,10 +23,85 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.vl53l8ch.SensorConfig
+   drivers.spads.vl53l8ch.SensorConfigShared
+   drivers.spads.vl53l8ch.SensorConfig4x4
+   drivers.spads.vl53l8ch.SensorConfig8x8
    drivers.spads.vl53l8ch.VL53L8CHHistogram
    drivers.spads.vl53l8ch.VL53L8CHSensor
 
 
+
+
+.. py:class:: SensorConfig
+
+
+   Configuration parameters for the VL53L8CH sensor.
+
+   :ivar resolution: Sensor resolution (uint16_t).
+   :vartype resolution: int
+   :ivar ranging_mode: Ranging mode (uint16_t).
+   :vartype ranging_mode: int
+   :ivar ranging_frequency_hz: Ranging frequency in Hz (uint16_t).
+   :vartype ranging_frequency_hz: int
+   :ivar integration_time_ms: Integration time in milliseconds (uint16_t).
+   :vartype integration_time_ms: int
+   :ivar cnh_start_bin: CNH start bin (uint16_t).
+   :vartype cnh_start_bin: int
+   :ivar cnh_num_bins: Number of CNH bins (uint16_t).
+   :vartype cnh_num_bins: int
+   :ivar cnh_subsample: CNH subsample rate (uint16_t).
+   :vartype cnh_subsample: int
+   :ivar agg_start_x: Aggregation start X coordinate (uint16_t).
+   :vartype agg_start_x: int
+   :ivar agg_start_y: Aggregation start Y coordinate (uint16_t).
+   :vartype agg_start_y: int
+   :ivar agg_merge_x: Aggregation merge X parameter (uint16_t).
+   :vartype agg_merge_x: int
+   :ivar agg_merge_y: Aggregation merge Y parameter (uint16_t).
+   :vartype agg_merge_y: int
+   :ivar agg_cols: Number of aggregation columns (uint16_t).
+   :vartype agg_cols: int
+   :ivar agg_rows: Number of aggregation rows (uint16_t).
+
+   :vartype agg_rows: int
+
+   .. py:method:: pack() -> bytes
+
+      Packs the sensor configuration into a byte structure.
+
+      :returns: *bytes* -- Packed configuration data.
+
+
+
+.. py:class:: SensorConfigShared
+
+
+   Bases: :py:obj:`SensorConfig`
+
+   Shared sensor configuration with default settings.
+
+   Inherits from SensorConfig and provides default values for common parameters.
+
+
+.. py:class:: SensorConfig4x4
+
+
+   Bases: :py:obj:`SensorConfigShared`
+
+   Sensor configuration for a 4x4 resolution.
+
+   Inherits from SensorConfigShared and sets resolution and aggregation grid size.
+
+
+.. py:class:: SensorConfig8x8
+
+
+   Bases: :py:obj:`SensorConfigShared`
+
+   Sensor configuration for an 8x8 resolution.
+
+   Inherits from SensorConfigShared and sets resolution and aggregation grid size.
 
 
 .. py:class:: VL53L8CHHistogram
@@ -26,88 +109,104 @@ Classes
 
    Bases: :py:obj:`cc_hardware.drivers.sensor.SensorData`
 
-   Abstract base class for handling sensor data.
+   Processes and stores histogram data from the VL53L8CH sensor.
 
-   .. py:method:: reset() -> None
+   This class handles the accumulation and processing of histogram data
+   received from the sensor, managing multiple pixel histograms.
 
-      Resets the sensor data to its initial state.
+   .. py:property:: has_data
+      :type: bool
+
+      Checks if histogram data is available.
+
+      :returns: *bool* -- True if data is available, False otherwise.
+
+   .. py:method:: reset(num_pixels: int | None = None) -> None
+
+      Resets the histogram data.
+
+      :Parameters: **num_pixels** (*int*) -- Number of pixels expected in the histogram data.
 
 
    .. py:method:: process(row: list[str]) -> bool
 
-      Processes a new row of data.
+      Processes a row of histogram data.
 
-      :Parameters: **row** (*list[Any]*) -- Row of sensor data to process.
+      :Parameters: **row** (*list[str]*) -- A list of string values representing a row of data.
+
+      :returns: *bool* -- True if processing is successful, False otherwise.
 
 
    .. py:method:: get_data() -> numpy.ndarray
 
-      Retrieves the processed sensor data.
+      Retrieves the processed histogram data.
 
-      :returns: *np.ndarray* -- The processed data.
+      :returns: *np.ndarray* -- A copy of the histogram data.
 
 
 
-.. py:class:: VL53L8CHSensor(*, port: str | None = None, debug: bool = False)
+.. py:class:: VL53L8CHSensor(*, port: str | None = None, **kwargs)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
 
-   An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
-   to manage histogram-based measurements. This class defines methods and properties
-   related to collecting and analyzing histogram data.
+   Main sensor class for the VL53L8CH time-of-flight sensor.
 
-   Inherits:
-       Sensor: The base class for all sensors in the system.
+   This class handles communication with the sensor, configuration,
+   data acquisition, and data processing.
+
+   :ivar SCRIPT: Path to the sensor's makefile script.
+   :vartype SCRIPT: Path
+   :ivar BAUDRATE: Serial communication baud rate.
+
+   :vartype BAUDRATE: int
+
+   .. py:property:: num_bins
+      :type: int
+
+      Gets the number of CNH bins in the sensor configuration.
+
+      :returns: *int* -- Number of CNH bins.
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Gets the aggregation grid resolution.
+
+      :returns: *tuple[int, int]* -- Number of aggregation columns and rows.
 
    .. py:property:: is_okay
       :type: bool
 
       Checks if the sensor is operational.
 
-   .. py:property:: num_bins
-      :type: int
+      :returns: *bool* -- Always returns True. Implement actual checks as needed.
 
-      Returns the number of bins in the sensor's histogram. This indicates the
-      number of discrete values or ranges that the sensor can measure. The total
-      distance a sensor can measure is equal to the number of bins multiplied by
-      the bin width.
+   .. py:method:: update(**kwargs) -> None
 
-      :returns: *int* -- The total number of bins in the histogram.
+      Updates the sensor configuration with provided keyword arguments.
 
-   .. py:property:: bin_width
-      :type: float
-
-      Returns the width of each bin in the histogram. This indicates the time or
-      distance resolution of the sensor, representing the range covered by each bin.
-      The exact units should be documented in the derived sensor class.
-
-      :returns: *float* -- The width of each bin in the histogram.
-
-   .. py:property:: resolution
-      :type: tuple[int, int]
-
-      Returns the resolution of the sensor as a tuple (width, height). This indicates
-      the spatial resolution of the sensor, where the width and height refer to the
-      number of pixels or sampling points in the respective dimensions.
-
-      :returns: *tuple[int, int]* --
-
-                A tuple representing the sensor's resolution
-                    (width, height).
-
-   .. py:method:: close() -> None
-
-      Closes the sensor and releases any resources.
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
 
 
    .. py:method:: accumulate(num_samples: int, *, average: bool = True) -> numpy.ndarray | list[numpy.ndarray]
 
-      Accumulates the specified number of histogram samples from the sensor.
+      Accumulates histogram data from the sensor.
 
-      :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the histogram.
-                   The accumulation method (i.e. summing, averaging) may vary depending on
-                   the sensor.
+      :Parameters: * **num_samples** (*int*) -- Number of samples to accumulate.
+                   * **average** (*bool, optional*) -- If True, returns the average of the samples.
+                     If False, returns a list of individual samples. Defaults to True.
+
+      :returns: *np.ndarray | list[np.ndarray]* --
+
+                The accumulated histogram data,
+                    either averaged or as a list of samples.
+
+
+   .. py:method:: close() -> None
+
+      Closes the sensor connection and stops background processes.
 
 
 

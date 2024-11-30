@@ -29,7 +29,7 @@ Functions
    Set the default style for matplotlib plots.
 
 
-.. py:function:: transient_gui(sensor: cc_hardware.drivers.spads.spad.SPADSensor, *, show: bool = True, save: bool = False, filename: str = None, fps: int = 10, fullscreen: bool = False, min_bin: int = 0, max_bin: int = 127, normalize_per_pixel: bool = False)
+.. py:function:: transient_gui(sensor: cc_hardware.drivers.spads.spad.SPADSensor, *, show: bool = True, save: bool = False, filename: str = None, fps: int = 10, fullscreen: bool = False, min_bin: int | None = None, max_bin: int | None = None, normalize_per_pixel: bool = False)
 
    Create a GUI interface for visualizing the transient data from a SPAD sensor.
 

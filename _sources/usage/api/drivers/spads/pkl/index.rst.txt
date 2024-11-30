@@ -23,10 +23,10 @@ Classes
 
 
 
-.. py:class:: PklSPADSensor(pkl_path: pathlib.Path | str, *, bin_width: float, resolution: tuple[int, int])
+.. py:class:: PklSPADSensor(pkl_path: pathlib.Path | str, *, resolution: tuple[int, int])
 
 
-   Bases: :py:obj:`cc_hardware.drivers.spads.SPADSensor`
+   Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
 
    A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded
    histogram data from a PKL file. This class inherits from SPADSensor and is used
@@ -43,8 +43,6 @@ Classes
    :vartype _data: list[dict]
    :ivar _data_iterator: An iterator over the loaded data entries.
    :vartype _data_iterator: iterator
-   :ivar _bin_width: The width of each bin in the histogram.
-   :vartype _bin_width: float
    :ivar _resolution: The spatial resolution of the sensor.
 
    :vartype _resolution: tuple[int, int]
@@ -55,13 +53,6 @@ Classes
       Returns the number of bins in the sensor's histogram.
 
       :returns: *int* -- The number of bins in the histogram.
-
-   .. py:property:: bin_width
-      :type: float
-
-      Returns the width of each bin in the histogram.
-
-      :returns: *float* -- The width of each bin.
 
    .. py:property:: resolution
       :type: tuple[int, int]

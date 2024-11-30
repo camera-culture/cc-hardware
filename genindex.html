@@ -192,9 +192,11 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/vl53l8ch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="usage/api/drivers/stepper_motors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.stepper_motors</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -289,6 +291,8 @@
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque.__getattr__">__getattr__() (BlockingDeque method)</a>
 
         <ul>
+          <li><a href="usage/api/drivers/safe_serial/index.html#drivers.safe_serial.SafeSerial.__getattr__">(SafeSerial method)</a>
+</li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.__getattr__">(StepperMotorSystem method)</a>
 </li>
           <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.__getattr__">(TelemetrixStepperMotor method)</a>
@@ -379,18 +383,6 @@
   <h2>B</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/spads/pkl/index.html#drivers.spads.pkl.PklSPADSensor.bin_width">bin_width (PklSPADSensor property)</a>
-
-        <ul>
-          <li><a href="usage/api/drivers/spads/spad/index.html#drivers.spads.spad.SPADSensor.bin_width">(SPADSensor property)</a>
-</li>
-          <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.TMF8828Sensor.bin_width">(TMF8828Sensor property)</a>
-</li>
-          <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.bin_width">(VL53L8CHSensor property)</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/utils/blocking_deque/index.html#utils.blocking_deque.BlockingDeque">BlockingDeque (class in utils.blocking_deque)</a>
 </li>
     </ul></td>
@@ -480,6 +472,8 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard">DashDashboard (class in drivers.spads.dashboard)</a>
+</li>
         <li><a href="usage/api/drivers/cameras/camera/index.html#drivers.cameras.camera.Camera.distortion_coefficients">distortion_coefficients (Camera property)</a>
 
         <ul>
@@ -554,14 +548,21 @@
 </li>
         </ul></li>
         <li>
+    drivers.spads.dashboard
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/dashboard/index.html#module-drivers.spads.dashboard">module</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
     drivers.spads.pkl
 
         <ul>
           <li><a href="usage/api/drivers/spads/pkl/index.html#module-drivers.spads.pkl">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     drivers.spads.spad
 
@@ -700,7 +701,13 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.TMF8828Histogram.has_data">has_data (TMF8828Histogram property)</a>
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.has_data">(VL53L8CHHistogram property)</a>
 </li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.home">home() (KinesisStepperMotor method)</a>
 
         <ul>
@@ -813,6 +820,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager">Manager (class in utils.manager)</a>
 </li>
+        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard">MatplotlibDashboard (class in drivers.spads.dashboard)</a>
+</li>
         <li>
     module
 
@@ -842,6 +851,8 @@
           <li><a href="usage/api/drivers/sensor/index.html#module-drivers.sensor">drivers.sensor</a>
 </li>
           <li><a href="usage/api/drivers/spads/index.html#module-drivers.spads">drivers.spads</a>
+</li>
+          <li><a href="usage/api/drivers/spads/dashboard/index.html#module-drivers.spads.dashboard">drivers.spads.dashboard</a>
 </li>
           <li><a href="usage/api/drivers/spads/pkl/index.html#module-drivers.spads.pkl">drivers.spads.pkl</a>
 </li>
@@ -938,6 +949,8 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig.pack">pack() (SensorConfig method)</a>
+</li>
         <li><a href="usage/api/drivers/cameras/pkl/index.html#drivers.cameras.pkl.PklCamera">PklCamera (class in drivers.cameras.pkl)</a>
 </li>
         <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler">PklHandler (class in utils.file_handlers)</a>
@@ -966,6 +979,8 @@
           <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.process">(VL53L8CHHistogram method)</a>
 </li>
         </ul></li>
+        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard">PyQtGraphDashboard (class in drivers.spads.dashboard)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -1046,6 +1061,14 @@
 </li>
         <li><a href="usage/api/drivers/sensor/index.html#drivers.sensor.Sensor">Sensor (class in drivers.sensor)</a>
 </li>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig">SensorConfig (class in drivers.spads.vl53l8ch)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig4x4">SensorConfig4x4 (class in drivers.spads.vl53l8ch)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig8x8">SensorConfig8x8 (class in drivers.spads.vl53l8ch)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfigShared">SensorConfigShared (class in drivers.spads.vl53l8ch)</a>
+</li>
         <li><a href="usage/api/drivers/sensor/index.html#drivers.sensor.SensorData">SensorData (class in drivers.sensor)</a>
 </li>
         <li><a href="usage/api/drivers/sensor/index.html#drivers.sensor.SensorDataThreaded">SensorDataThreaded (class in drivers.sensor)</a>
@@ -1058,12 +1081,12 @@
 </li>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.TMF8828Sensor.setup_sensor">setup_sensor() (TMF8828Sensor method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry">SingleDrive1AxisGantry (class in drivers.stepper_motors.telemetrix_stepper)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X">SingleDrive1AxisGantry_X (class in drivers.stepper_motors.telemetrix_stepper)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y">SingleDrive1AxisGantry_Y (class in drivers.stepper_motors.telemetrix_stepper)</a>
 </li>
         <li><a href="usage/api/utils/singleton/index.html#utils.singleton.SingletonABCMeta">SingletonABCMeta (class in utils.singleton)</a>
@@ -1071,6 +1094,8 @@
         <li><a href="usage/api/utils/singleton/index.html#utils.singleton.SingletonMeta">SingletonMeta (class in utils.singleton)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/stepper_controller/index.html#drivers.stepper_motors.stepper_controller.SnakeStepperController">SnakeStepperController (class in drivers.stepper_motors.stepper_controller)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard">SPADDashboard (class in drivers.spads.dashboard)</a>
 </li>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.SPADID">SPADID (class in drivers.spads.tmf8828)</a>
 </li>
@@ -1128,6 +1153,8 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.update">update() (VL53L8CHSensor method)</a>
+</li>
         <li><a href="usage/api/utils/file_handlers/index.html#utils.file_handlers.PklHandler.update_index">update_index() (PklHandler method)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.upper_limit">upper_limit (KinesisStepperMotor property)</a>

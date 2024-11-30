@@ -28,19 +28,18 @@ Classes
 
 
 
-.. py:class:: SafeSerial(*args, **kwargs)
+.. py:class:: SafeSerial(*args, lock_type: str = 'multiprocessing', **kwargs)
 
-
-   Bases: :py:obj:`serial.Serial`
 
    A thread-safe implementation of the serial.Serial class that synchronizes read and
    write operations using a lock. Provides additional utility methods for creating
    instances and handling data writes in different formats.
 
-   :Parameters: * **\*args** -- Positional arguments passed to the parent serial.Serial class.
-                * **\*\*kwargs** -- Keyword arguments passed to the parent serial.Serial class.
+   :keyword lock_type: The type of lock to use. Defaults to "threading". Can be
+                       "threading" or "multiprocessing".
+   :kwtype lock_type: str
 
-   .. py:method:: create(port: str | None = None, *, wait: int = 2, **kwargs) -> Self | list[Self]
+   .. py:method:: create(port: str | None = None, *, wait: int = 1, **kwargs) -> Self | list[Self]
       :classmethod:
 
       Create an instance of SafeSerial from a serial port. Checks all available ports
@@ -148,6 +147,17 @@ Classes
                    * **tries** (*int*) -- The number of attempts to perform. Defaults to 10.
 
       :returns: *bool* -- True if successful, False otherwise.
+
+
+   .. py:method:: __getattr__(name: str) -> Any
+
+      Forward attribute access to the parent serial.Serial class.
+
+      Applies the lock to prevent concurrent access to the serial port.
+
+      :Parameters: **name** (*str*) -- The attribute name to access.
+
+      :returns: *Any* -- The attribute value.
 
 
 

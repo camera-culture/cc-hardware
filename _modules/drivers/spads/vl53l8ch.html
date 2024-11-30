@@ -193,9 +193,11 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../usage/api/drivers/spads/vl53l8ch/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.vl53l8ch</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../../usage/api/drivers/stepper_motors/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.stepper_motors</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.stepper_motors</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -267,40 +269,210 @@
         </div>
         <article role="main">
           <h1>Source code for drivers.spads.vl53l8ch</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module for VL53L8CH Sensor Driver.</span>
+
+<span class="sd">This module provides classes and functions to interface with the VL53L8CH</span>
+<span class="sd">time-of-flight sensor. It includes configurations, data processing, and sensor</span>
+<span class="sd">management functionalities necessary for operating the sensor within the</span>
+<span class="sd">CC Hardware framework.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.safe_serial</span> <span class="kn">import</span> <span class="n">SafeSerial</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.sensor</span> <span class="kn">import</span> <span class="n">SensorData</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.spad</span> <span class="kn">import</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.constants</span> <span class="kn">import</span> <span class="n">C</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.registry</span> <span class="kn">import</span> <span class="n">register</span>
 
-<span class="c1"># ================</span>
+<span class="c1"># ===============</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="SensorConfig">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">SensorConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configuration parameters for the VL53L8CH sensor.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        resolution (int): Sensor resolution (uint16_t).</span>
+<span class="sd">        ranging_mode (int): Ranging mode (uint16_t).</span>
+<span class="sd">        ranging_frequency_hz (int): Ranging frequency in Hz (uint16_t).</span>
+<span class="sd">        integration_time_ms (int): Integration time in milliseconds (uint16_t).</span>
+<span class="sd">        cnh_start_bin (int): CNH start bin (uint16_t).</span>
+<span class="sd">        cnh_num_bins (int): Number of CNH bins (uint16_t).</span>
+<span class="sd">        cnh_subsample (int): CNH subsample rate (uint16_t).</span>
+<span class="sd">        agg_start_x (int): Aggregation start X coordinate (uint16_t).</span>
+<span class="sd">        agg_start_y (int): Aggregation start Y coordinate (uint16_t).</span>
+<span class="sd">        agg_merge_x (int): Aggregation merge X parameter (uint16_t).</span>
+<span class="sd">        agg_merge_y (int): Aggregation merge Y parameter (uint16_t).</span>
+<span class="sd">        agg_cols (int): Number of aggregation columns (uint16_t).</span>
+<span class="sd">        agg_rows (int): Number of aggregation rows (uint16_t).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">ranging_mode</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">cnh_start_bin</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">cnh_subsample</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_start_x</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_start_y</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_merge_x</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_merge_y</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+
+<div class="viewcode-block" id="SensorConfig.pack">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig.pack">[docs]</a>
+    <span class="k">def</span> <span class="nf">pack</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Packs the sensor configuration into a byte structure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bytes: Packed configuration data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
+            <span class="s2">&quot;&lt;13H&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranging_mode</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranging_frequency_hz</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">integration_time_ms</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cnh_start_bin</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cnh_num_bins</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cnh_subsample</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_start_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_start_y</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_merge_x</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_merge_y</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_cols</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agg_rows</span><span class="p">,</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="SensorConfigShared">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfigShared">[docs]</a>
+<span class="k">class</span> <span class="nc">SensorConfigShared</span><span class="p">(</span><span class="n">SensorConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Shared sensor configuration with default settings.</span>
+
+<span class="sd">    Inherits from SensorConfig and provides default values for common parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ranging_mode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 1 = Continuous, 3 = Autonomous</span>
+    <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">cnh_start_bin</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">cnh_subsample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">agg_start_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">agg_start_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">agg_merge_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">agg_merge_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="SensorConfig4x4">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig4x4">[docs]</a>
+<span class="k">class</span> <span class="nc">SensorConfig4x4</span><span class="p">(</span><span class="n">SensorConfigShared</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sensor configuration for a 4x4 resolution.</span>
+
+<span class="sd">    Inherits from SensorConfigShared and sets resolution and aggregation grid size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span>
+    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span></div>
+
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="SensorConfig8x8">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig8x8">[docs]</a>
+<span class="k">class</span> <span class="nc">SensorConfig8x8</span><span class="p">(</span><span class="n">SensorConfigShared</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sensor configuration for an 8x8 resolution.</span>
+
+<span class="sd">    Inherits from SensorConfigShared and sets resolution and aggregation grid size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span></div>
+
+
+
+<span class="c1"># ===============</span>
 
 
 <div class="viewcode-block" id="VL53L8CHHistogram">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram">[docs]</a>
 <span class="k">class</span> <span class="nc">VL53L8CHHistogram</span><span class="p">(</span><span class="n">SensorData</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes and stores histogram data from the VL53L8CH sensor.</span>
+
+<span class="sd">    This class handles the accumulation and processing of histogram data</span>
+<span class="sd">    received from the sensor, managing multiple pixel histograms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the VL53L8CHHistogram instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="VL53L8CHHistogram.reset">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.reset">[docs]</a>
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_pixels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resets the histogram data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_pixels (int): Number of pixels expected in the histogram data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">[]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">num_pixels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="o">=</span> <span class="n">num_pixels</span></div>
 
 
 <div class="viewcode-block" id="VL53L8CHHistogram.process">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.process">[docs]</a>
     <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes a row of histogram data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            row (list[str]): A list of string values representing a row of data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if processing is successful, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Number of pixels not set&quot;</span>
+
         <span class="k">try</span><span class="p">:</span>
             <span class="n">agg_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">agg_num</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">):</span>
-                <span class="nb">print</span><span class="p">(</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                     <span class="s2">&quot;Mismatched histogram message: &quot;</span>
                     <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agg_num</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="p">)</span>
@@ -312,12 +484,12 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ambient</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
             <span class="n">bin_vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">-</span> <span class="n">ambient</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">:]]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">bin_vals</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">bin_vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid data formatting received.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -327,89 +499,137 @@
 <div class="viewcode-block" id="VL53L8CHHistogram.get_data">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.get_data">[docs]</a>
     <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the processed histogram data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: A copy of the histogram data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">data</span></div>
 
 
     <span class="nd">@property</span>
+<div class="viewcode-block" id="VL53L8CHHistogram.has_data">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.has_data">[docs]</a>
     <span class="k">def</span> <span class="nf">has_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if histogram data is available.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if data is available, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span></div>
+</div>
 
 
 
-<span class="c1"># ================</span>
+<span class="c1"># ===============</span>
 
 
+<span class="nd">@register</span>
 <div class="viewcode-block" id="VL53L8CHSensor">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor">[docs]</a>
 <span class="k">class</span> <span class="nc">VL53L8CHSensor</span><span class="p">(</span><span class="n">SPADSensor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main sensor class for the VL53L8CH time-of-flight sensor.</span>
+
+<span class="sd">    This class handles communication with the sensor, configuration,</span>
+<span class="sd">    data acquisition, and data processing.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        SCRIPT (Path): Path to the sensor&#39;s makefile script.</span>
+<span class="sd">        BAUDRATE (int): Serial communication baud rate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SCRIPT</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+        <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
+            <span class="s2">&quot;cc_hardware.drivers&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;vl53l8ch&quot;</span> <span class="o">/</span> <span class="s2">&quot;build&quot;</span> <span class="o">/</span> <span class="s2">&quot;makefile&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
     <span class="n">BAUDRATE</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">921_600</span>
-    <span class="n">TIMEOUT</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the VL53L8CHSensor instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            port (str | None): Serial port to which the sensor is connected.</span>
+<span class="sd">                If None, the default port is used.</span>
+
+<span class="sd">        Keyword Args:</span>
+<span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
+<span class="sd">                the fields of SensorConfig.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_num_pixels</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="n">SafeSerial</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-            <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">BAUDRATE</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="mi">1</span>
-        <span class="p">)</span>
+        <span class="c1"># Use Queue for inter-process communication</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="c1"># Open the serial connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span> <span class="o">=</span> <span class="n">SafeSerial</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">BAUDRATE</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">SensorConfig8x8</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span> <span class="o">=</span> <span class="n">VL53L8CHHistogram</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_bins</span> <span class="o">=</span> <span class="mi">24</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">change_num_bins</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_bins</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Start the reader process</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_serial_background</span><span class="p">,</span>
+            <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_get_num_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">16</span>
+<div class="viewcode-block" id="VL53L8CHSensor.update">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the sensor configuration with provided keyword arguments.</span>
 
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-        <span class="n">read_line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">read_line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">read_line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;#&quot;</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="c1"># print debug lines</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">read_line_str</span> <span class="o">=</span> <span class="p">(</span>
-                        <span class="n">read_line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                    <span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">read_line_str</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">read_line_str</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Debug&quot;</span><span class="p">:</span>
-                            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">read_line_str</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                    <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">read_line</span><span class="p">)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
+<span class="sd">                the fields of SensorConfig.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown config key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">read_line</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span></div>
 
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Writing </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-        <span class="n">padded_str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">padded_str</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">change_num_bins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Changing num_bins to </span><span class="si">{</span><span class="n">num_bins</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_bins</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span> <span class="o">=</span> <span class="n">VL53L8CHHistogram</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_num_bins</span> <span class="o">=</span> <span class="n">num_bins</span>
+    <span class="k">def</span> <span class="nf">_read_serial_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Background process that continuously reads data from the serial port</span>
+<span class="sd">        and places it into a queue for processing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="VL53L8CHSensor.close">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.close">[docs]</a>
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
-            <span class="k">return</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
 
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error closing serial: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
-
+            <span class="c1"># Put the line into the queue without blocking</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
+                <span class="c1"># Queue is full; discard the line to prevent blocking</span>
+                <span class="k">continue</span>
 
 <div class="viewcode-block" id="VL53L8CHSensor.accumulate">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.accumulate">[docs]</a>
@@ -419,37 +639,56 @@
         <span class="o">*</span><span class="p">,</span>
         <span class="n">average</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Accumulates histogram data from the sensor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_samples (int): Number of samples to accumulate.</span>
+<span class="sd">            average (bool, optional): If True, returns the average of the samples.</span>
+<span class="sd">                If False, returns a list of individual samples. Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray | list[np.ndarray]: The accumulated histogram data,</span>
+<span class="sd">                either averaged or as a list of samples.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">histograms</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
             <span class="n">began_read</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
             <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">has_data</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-                    <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="c1"># Retrieve the next line from the queue</span>
+                    <span class="n">line</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                    <span class="c1"># No data received in time; continue waiting</span>
+                    <span class="k">continue</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">line_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing line: </span><span class="si">{</span><span class="n">line_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
                     <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error decoding data&quot;</span><span class="p">)</span>
                     <span class="k">continue</span>
 
-                <span class="k">if</span> <span class="n">line</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Print data&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Data Count&quot;</span><span class="p">):</span>
                     <span class="n">began_read</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">continue</span>
 
-                <span class="k">if</span> <span class="n">began_read</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Agg&quot;</span><span class="p">:</span>
-                        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
-                        <span class="k">for</span> <span class="n">raw_token</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
-                            <span class="n">token</span> <span class="o">=</span> <span class="n">raw_token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">began_read</span> <span class="ow">and</span> <span class="n">line_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Agg&quot;</span><span class="p">):</span>
+                    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">line_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="p">]</span>
 
-                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
-                            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error processing data&quot;</span><span class="p">)</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-                            <span class="n">began_read</span> <span class="o">=</span> <span class="kc">False</span>
-                            <span class="k">continue</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+                        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Error processing data&quot;</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+                        <span class="n">began_read</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="k">continue</span>
 
-            <span class="n">histograms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">has_data</span><span class="p">:</span>
+                    <span class="n">histograms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">get_data</span><span class="p">())</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+                    <span class="k">break</span>  <span class="c1"># Move on to next sample</span>
 
         <span class="k">if</span> <span class="n">num_samples</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">histograms</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">histograms</span> <span class="k">else</span> <span class="kc">None</span>
@@ -459,36 +698,80 @@
 
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="VL53L8CHSensor.is_okay">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.is_okay">[docs]</a>
-    <span class="k">def</span> <span class="nf">is_okay</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-    <span class="nd">@property</span>
 <div class="viewcode-block" id="VL53L8CHSensor.num_bins">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins">[docs]</a>
     <span class="k">def</span> <span class="nf">num_bins</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_bins</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the number of CNH bins in the sensor configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of CNH bins.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">cnh_num_bins</span></div>
 
 
-    <span class="nd">@property</span>
-<div class="viewcode-block" id="VL53L8CHSensor.bin_width">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.bin_width">[docs]</a>
-    <span class="k">def</span> <span class="nf">bin_width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">10</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_bins</span> <span class="o">/</span> <span class="n">C</span></div>
+    <span class="nd">@num_bins</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">num_bins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the number of CNH bins in the sensor configuration.</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            value (int): New number of CNH bins.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cnh_num_bins</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="VL53L8CHSensor.resolution">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.resolution">[docs]</a>
     <span class="k">def</span> <span class="nf">resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the aggregation grid resolution.</span>
 
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple[int, int]: Number of aggregation columns and rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">agg_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">agg_rows</span></div>
+
+
+    <span class="nd">@resolution</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the aggregation grid resolution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            value (tuple[int, int]): New number of aggregation columns and rows.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">agg_cols</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">agg_rows</span><span class="o">=</span><span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">num_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span></div>
+<div class="viewcode-block" id="VL53L8CHSensor.is_okay">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.is_okay">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_okay</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the sensor is operational.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Always returns True. Implement actual checks as needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="VL53L8CHSensor.close">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.close">[docs]</a>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Closes the sensor connection and stops background processes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Signal the reader process to stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+        <span class="c1"># Close the serial connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</div>
 
 </pre></div>
         </article>
