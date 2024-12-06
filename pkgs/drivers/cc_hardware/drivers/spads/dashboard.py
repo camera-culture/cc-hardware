@@ -31,7 +31,6 @@ Example:
 
 import signal
 import threading
-import time
 from abc import ABC, abstractmethod
 from itertools import chain
 from pathlib import Path
@@ -401,6 +400,10 @@ class PyQtGraphDashboard(SPADDashboard):
                 self.shared_y_checkbox.setChecked(True)  # Default value
                 self.settings_layout.addWidget(self.shared_y_checkbox)
 
+                self.log_y_checkbox = QtWidgets.QCheckBox("Log Y-Axis")
+                self.log_y_checkbox.setChecked(False)  # Default value
+                self.settings_layout.addWidget(self.log_y_checkbox)
+
                 self.y_limit_textbox = QtWidgets.QLineEdit()
                 self.y_limit_textbox.setPlaceholderText("Enter Y-Limit")
                 self.y_limit_textbox.setEnabled(not self.autoscale_checkbox.isChecked())
@@ -440,11 +443,12 @@ class PyQtGraphDashboard(SPADDashboard):
         win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
         win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
         win.y_limit_textbox.textChanged.connect(self.update_y_limit)
+        win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
 
         win.autoscale_checkbox.setChecked(self.autoscale)
         win.shared_y_checkbox.setChecked(self.shared_y)
         if self.ylim is not None:
-            win.y_limit_slider.setValue(int(self.ylim))
+            win.y_limit_textbox.setText(str(self.ylim))
 
         self.toggle_autoscale(self.autoscale)
         self.toggle_shared_y(self.shared_y)
@@ -493,6 +497,12 @@ class PyQtGraphDashboard(SPADDashboard):
         """
         histograms = np.array(self.sensor.accumulate(1))
 
+        # If log scale is enabled, replace 0s with 1s to avoid log(0)
+        ymin = 0
+        if self.win.log_y_checkbox.isChecked():
+            histograms = np.where(histograms < 1, 1, histograms)
+            ymin = 1
+
         ylim = None
         if self.win.y_limit_textbox.isEnabled():
             ylim = self.ylim
@@ -520,10 +530,12 @@ class PyQtGraphDashboard(SPADDashboard):
                 self.plots[idx].addItem(self.bars[idx])
                 self.plots[idx].setXRange(self.min_bin, self.max_bin)
 
-            if ylim is not None:
-                self.plots[idx].setYRange(0, ylim)
-            elif self.autoscale:
-                self.plots[idx].enableAutoRange(axis="y", enable=True)
+            channel_ylim = ylim
+            if self.autoscale and not self.shared_y:
+                channel_ylim = histogram.max() + 1
+            if channel_ylim is not None:
+                self.plots[idx].setLimits(yMin=ymin, yMax=channel_ylim)
+                self.plots[idx].setYRange(ymin, channel_ylim)
 
         # Call user callback if provided
         if self.user_callback is not None:
@@ -543,9 +555,6 @@ class PyQtGraphDashboard(SPADDashboard):
         get_logger().debug(f"Autoscale: {bool(state)}")
         self.autoscale = bool(state)
 
-        for plot in self.plots:
-            plot.enableAutoRange(axis="y", enable=self.autoscale)
-
         self.win.y_limit_textbox.setEnabled(not self.win.autoscale_checkbox.isChecked())
         if self.autoscale:
             self.win.y_limit_textbox.clear()
@@ -554,16 +563,10 @@ class PyQtGraphDashboard(SPADDashboard):
         get_logger().debug(f"Shared Y-Axis: {bool(state)}")
         self.shared_y = bool(state)
 
-        if self.shared_y:
-            y_link_reference = None
-            for plot in self.plots:
-                if y_link_reference is None:
-                    y_link_reference = plot.getViewBox()
-                else:
-                    plot.getViewBox().setYLink(y_link_reference)
-        else:
-            for plot in self.plots:
-                plot.getViewBox().setYLink(None)
+    def toggle_log_y(self, state: int):
+        get_logger().debug(f"Log Y-Axis: {bool(state)}")
+        for plot in self.plots:
+            plot.setLogMode(y=bool(state))
 
     def update_y_limit(self):
         text = self.win.y_limit_textbox.text()
@@ -621,15 +624,8 @@ class DashDashboard(SPADDashboard):
         self.num_updates = 0
         self.setup_layout()
         self.lock = threading.Lock()
-        self.thread = threading.Thread(target=self.run_dash)
-        self.thread.start()
 
-        if not headless:
-            try:
-                while self.thread.is_alive():
-                    time.sleep(0.1)
-            except KeyboardInterrupt:
-                get_logger().info("Closing GUI...")
+        self.app.run(debug=False, use_reloader=False)
 
     def setup_layout(self):
         """
@@ -741,9 +737,3 @@ class DashDashboard(SPADDashboard):
                 self.user_callback(self)
 
             return existing_fig
-
-    def run_dash(self):
-        """
-        Runs the Dash server in a separate thread.
-        """
-        self.app.run_server(debug=False, use_reloader=False)

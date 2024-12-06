@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "common.h"
+#include "app.h"
 #include "vl53lmz_api.h"
 #include "vl53lmz_plugin_cnh.h"
 
@@ -179,7 +180,7 @@ uint8_t process_config(SensorConfig config) {
   /*  CNH specific configuration   */
   /*********************************/
   // Initialize CNH configuration
-  status |= vl53lmz_cnh_init_config(&cnh_config,          //
+  status = vl53lmz_cnh_init_config(&cnh_config,          //
                                     config.cnh_start_bin, //
                                     config.cnh_num_bins,  //
                                     config.cnh_subsample);
@@ -191,7 +192,7 @@ uint8_t process_config(SensorConfig config) {
   }
 
   // Create aggregate map
-  status |= vl53lmz_cnh_create_agg_map(&cnh_config,        //
+  status = vl53lmz_cnh_create_agg_map(&cnh_config,        //
                                        config.resolution,  //
                                        config.agg_start_x, //
                                        config.agg_start_y, //

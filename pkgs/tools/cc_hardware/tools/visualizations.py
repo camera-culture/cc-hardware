@@ -31,7 +31,7 @@ def spad_dashboard(
     dashboard_type: str,
     spad_type: str,
     *,
-    port: str,
+    port: str | None = None,
     num_frames: int = 1_000_000,
     show: bool = True,
     filename: str | None = None,

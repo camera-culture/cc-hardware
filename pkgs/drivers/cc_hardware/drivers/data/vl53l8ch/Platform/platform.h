@@ -55,7 +55,7 @@ typedef struct
  * an increased precision.
  */
 
-//#define 	VL53LMZ_USE_RAW_FORMAT
+// #define 	VL53LMZ_USE_RAW_FORMAT
 
 /*
  * @brief All macro below are used to configure the sensor output. User can
@@ -63,15 +63,15 @@ typedef struct
  * I2C access.
  */
 
-//#define VL53LMZ_DISABLE_AMBIENT_PER_SPAD
-//#define VL53LMZ_DISABLE_NB_SPADS_ENABLED
-//#define VL53LMZ_DISABLE_NB_TARGET_DETECTED
-//#define VL53LMZ_DISABLE_SIGNAL_PER_SPAD
-//#define VL53LMZ_DISABLE_RANGE_SIGMA_MM
-//#define VL53LMZ_DISABLE_DISTANCE_MM
-//#define VL53LMZ_DISABLE_REFLECTANCE_PERCENT
-//#define VL53LMZ_DISABLE_TARGET_STATUS
-//#define VL53LMZ_DISABLE_MOTION_INDICATOR
+// #define VL53LMZ_DISABLE_AMBIENT_PER_SPAD
+// #define VL53LMZ_DISABLE_NB_SPADS_ENABLED
+// #define VL53LMZ_DISABLE_NB_TARGET_DETECTED
+// #define VL53LMZ_DISABLE_SIGNAL_PER_SPAD
+// #define VL53LMZ_DISABLE_RANGE_SIGMA_MM
+// #define VL53LMZ_DISABLE_DISTANCE_MM
+// #define VL53LMZ_DISABLE_REFLECTANCE_PERCENT
+// #define VL53LMZ_DISABLE_TARGET_STATUS
+// #define VL53LMZ_DISABLE_MOTION_INDICATOR
 
 /**
  * @param (VL53LMZ_Platform*) p_platform : Pointer of VL53L5CX platform

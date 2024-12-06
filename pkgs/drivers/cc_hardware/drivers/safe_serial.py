@@ -15,10 +15,9 @@ from functools import singledispatchmethod
 from typing import Any, Self
 
 import serial
-from serial.serialutil import SerialException
-from serial.tools import list_ports
 
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.serial_utils import find_ports
 
 
 class SafeSerial:
@@ -28,8 +27,8 @@ class SafeSerial:
     instances and handling data writes in different formats.
 
     Keyword Args:
-        lock_type (str): The type of lock to use. Defaults to "threading". Can be
-            "threading" or "multiprocessing".
+        lock_type (str): The type of lock to use. Defaults to "multiprocessing". Can be
+            "threading", "multiprocessing", or "none".
     """
 
     def __init__(self, *args, lock_type: str = "multiprocessing", **kwargs):
@@ -37,6 +36,8 @@ class SafeSerial:
         if lock_type == "multiprocessing":
             self._lock = multiprocessing.Lock()
         elif lock_type == "threading":
+            self._lock = threading.Lock()
+        elif lock_type == "none":
             self._lock = threading.Lock()
         else:
             raise ValueError(f"Invalid lock type: {lock_type}")
@@ -62,19 +63,8 @@ class SafeSerial:
             SafeSerial | list[SafeSerial]: A single instance if a port is specified
                 or multiple instances if no port is specified.
         """
-        serial_ports = []
         if port is None:
-            get_logger().info("Opening all potential serial ports...")
-            the_ports_list = list_ports.comports()
-            for port in the_ports_list:
-                if port.pid is None:
-                    continue
-                try:
-                    serial_port = cls(port.device, **kwargs)
-                except SerialException:
-                    continue
-                serial_ports.append(serial_port)
-                get_logger().info(f"\t{port.device}")
+            serial_ports = find_ports(cls, **kwargs)
         else:
             serial_ports = [cls(port, **kwargs)]
 

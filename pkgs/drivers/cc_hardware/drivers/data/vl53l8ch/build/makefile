@@ -37,6 +37,8 @@ BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
+CFLAGS += -Wimplicit-function-declaration -Werror
+
 # Add inputs and outputs from these tool invocations to the build variables
 EXECUTABLES += \
 cc_hardware_vl53l8ch_driver.elf \

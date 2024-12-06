@@ -8,6 +8,7 @@ CC Hardware framework.
 """
 
 import multiprocessing
+import multiprocessing.synchronize
 import struct
 from dataclasses import dataclass
 from pathlib import Path
@@ -93,10 +94,10 @@ class SensorConfigShared(SensorConfig):
     """
 
     ranging_mode: int = 3  # 1 = Continuous, 3 = Autonomous
-    ranging_frequency_hz: int = 30
-    integration_time_ms: int = 20
+    ranging_frequency_hz: int = 60
+    integration_time_ms: int = 10
     cnh_start_bin: int = 0
-    cnh_subsample: int = 8
+    cnh_subsample: int = 1
     agg_start_x: int = 0
     agg_start_y: int = 0
     agg_merge_x: int = 1
@@ -112,7 +113,7 @@ class SensorConfig4x4(SensorConfigShared):
     """
 
     resolution: int = 16
-    cnh_num_bins: int = 24
+    cnh_num_bins: int = 128
     agg_cols: int = 4
     agg_rows: int = 4
 
@@ -126,7 +127,7 @@ class SensorConfig8x8(SensorConfigShared):
     """
 
     resolution: int = 64
-    cnh_num_bins: int = 12
+    cnh_num_bins: int = 8
     agg_cols: int = 8
     agg_rows: int = 8
 
@@ -148,7 +149,7 @@ class VL53L8CHHistogram(SensorData):
         """
         super().__init__()
 
-        self._pixel_histograms = []
+        self._pixel_histograms = {}
         self._has_data = False
         self._num_pixels = None
 
@@ -160,7 +161,7 @@ class VL53L8CHHistogram(SensorData):
             num_pixels (int): Number of pixels expected in the histogram data.
         """
         self._has_data = False
-        self._pixel_histograms = []
+        self._pixel_histograms = {}
         if num_pixels is not None:
             self._num_pixels = num_pixels
 
@@ -178,11 +179,8 @@ class VL53L8CHHistogram(SensorData):
 
         try:
             agg_num = int(row[1])
-            if agg_num != len(self._pixel_histograms):
-                get_logger().error(
-                    "Mismatched histogram message: "
-                    f"{agg_num} != {len(self._pixel_histograms)}"
-                )
+            if agg_num in self._pixel_histograms:
+                get_logger().error(f"Duplicate aggregation number received: {agg_num}")
                 return False
         except ValueError:
             get_logger().error("Invalid data formatting received.")
@@ -191,13 +189,16 @@ class VL53L8CHHistogram(SensorData):
         try:
             ambient = float(row[3])
             bin_vals = [float(val) - ambient for val in row[5:]]
-            self._pixel_histograms.append(np.clip(bin_vals, 0, None))
+            self._pixel_histograms[agg_num] = np.clip(bin_vals, 0, None)
         except (ValueError, IndexError):
             get_logger().error("Invalid data formatting received.")
             return False
 
         if len(self._pixel_histograms) == self._num_pixels:
-            self._data = np.array(self._pixel_histograms)
+            self._data = np.array(
+                [self._pixel_histograms[k] for k in sorted(self._pixel_histograms)]
+            )
+            self._pixel_histograms = {}
             self._has_data = True
 
         return True
@@ -264,30 +265,85 @@ class VL53L8CHSensor(SPADSensor):
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
-        self._initialized = False
+        self._config = SensorConfig4x4()
+        self._histogram = VL53L8CHHistogram()
 
         # Use Queue for inter-process communication
-        self._queue = multiprocessing.Queue(maxsize=64)
+        self._queue = multiprocessing.Queue(maxsize=self._config.resolution * 4)
+        self._write_queue = multiprocessing.Queue(maxsize=10)
+        self._initialized_event = multiprocessing.Event()
         self._stop_event = multiprocessing.Event()
-        self._lock = multiprocessing.Lock()
-
-        # Open the serial connection
-        self._serial_conn = SafeSerial.create(port=port, baudrate=self.BAUDRATE)
-
-        self._config = SensorConfig8x8()
-        self._histogram = VL53L8CHHistogram()
 
         # Send the configuration to the sensor
         self.update(**kwargs)
 
         # Start the reader process
-        self._reader_thread = multiprocessing.Process(
+        self._reader_process = multiprocessing.Process(
             target=self._read_serial_background,
+            args=(
+                port,
+                self.BAUDRATE,
+                self._stop_event,
+                self._initialized_event,
+                self._queue,
+                self._write_queue,
+            ),
             daemon=True,
         )
-        self._reader_thread.start()
+        self._reader_process.start()
+        self._initialized_event.wait()
 
-        self._initialized = True
+    @staticmethod
+    def _read_serial_background(
+        port: str,
+        baudrate: int,
+        stop_event: multiprocessing.synchronize.Event,
+        initialized_event: multiprocessing.synchronize.Event,
+        queue: multiprocessing.Queue,
+        write_queue: multiprocessing.Queue,
+    ) -> None:
+        """
+        Background process that continuously reads data from the serial port
+        and places it into a queue for processing.
+        """
+        # Open the serial connection
+        try:
+            serial_conn = SafeSerial.create(port=port, baudrate=baudrate)
+            initialized_event.set()
+        except Exception as e:
+            get_logger().error(f"Error opening serial connection: {e}")
+            return
+
+        try:
+            while not stop_event.is_set():
+                # =====
+                # READ
+                if serial_conn.in_waiting > 0:
+                    line = serial_conn.readline()
+                    assert line, "Empty line received"
+
+                    # Put the line into the queue without blocking
+                    try:
+                        queue.put(line, block=False)
+                    except multiprocessing.queues.Full:
+                        # Queue is full; discard the line to prevent blocking
+                        pass
+
+                # =====
+                # WRITE
+                try:
+                    config_data = write_queue.get(block=False)
+                    serial_conn.write(config_data)
+                except multiprocessing.queues.Empty:
+                    # No data to write
+                    pass
+
+        except Exception as e:
+            get_logger().error(f"Error in reader process: {e}")
+            stop_event.set()
+        finally:
+            if serial_conn.is_open:
+                serial_conn.close()
 
     def update(self, **kwargs) -> None:
         """
@@ -303,26 +359,11 @@ class VL53L8CHSensor(SPADSensor):
             else:
                 get_logger().warning(f"Unknown config key: {key}")
 
-        with self._lock:
-            self._serial_conn.write(self._config.pack())
-
-    def _read_serial_background(self, **kwargs):
-        """
-        Background process that continuously reads data from the serial port
-        and places it into a queue for processing.
-        """
-        while not self._stop_event.is_set():
-            with self._lock:
-                line = self._serial_conn.readline()
-            if not line:
-                continue
-
-            # Put the line into the queue without blocking
-            try:
-                self._queue.put(line, block=False)
-            except multiprocessing.queues.Full:
-                # Queue is full; discard the line to prevent blocking
-                continue
+        # Send the configuration to the sensor
+        try:
+            self._write_queue.put(self._config.pack())
+        except multiprocessing.queues.Full:
+            get_logger().error("Failed to send configuration to sensor")
 
     def accumulate(
         self,
@@ -434,20 +475,21 @@ class VL53L8CHSensor(SPADSensor):
         Checks if the sensor is operational.
 
         Returns:
-            bool: Always returns True. Implement actual checks as needed.
+            bool: True if the sensor is operational, False otherwise.
         """
-        return True
+        return (
+            self._initialized_event.is_set()
+            and self._reader_process.is_alive()
+            and not self._stop_event.is_set()
+        )
 
     def close(self) -> None:
         """
         Closes the sensor connection and stops background processes.
         """
-        if not self._initialized:
+        if not self._initialized_event.is_set():
             return
 
         # Signal the reader process to stop
         self._stop_event.set()
-        self._reader_thread.join()
-
-        # Close the serial connection
-        self._serial_conn.close()
+        self._reader_process.join()

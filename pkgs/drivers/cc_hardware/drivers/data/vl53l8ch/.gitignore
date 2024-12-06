@@ -6,4 +6,4 @@
 .settings
 .metadata
 VL53LMZ_ULD_MassMarket_Test.ioc
-*.o
+**.o
