@@ -27,7 +27,6 @@ Classes
    drivers.spads.tmf8828.SPADID
    drivers.spads.tmf8828.RangeMode
    drivers.spads.tmf8828.TMF8828Histogram
-   drivers.spads.tmf8828.TMF8828Object
    drivers.spads.tmf8828.TMF8828Sensor
 
 
@@ -75,6 +74,37 @@ Classes
    Methods can be added to enumerations, and members can have their own
    attributes -- see the documentation for details.
 
+   .. py:method:: get_num_pixels()
+
+      Returns the number of pixels based on the SPAD ID.
+
+      :returns: *int* -- The number of pixels corresponding to the SPAD ID.
+
+
+   .. py:method:: get_num_channels()
+
+      Returns the number of channels based on the SPAD ID.
+
+      :returns: *int* -- The number of channels corresponding to the SPAD ID.
+
+
+   .. py:method:: get_active_channels_per_subcapture()
+
+      Returns the number of active channels per subcapture based on the SPAD ID.
+
+      :returns: *list[int]* --
+
+                A list representing the number of active channels in each
+                    subcapture.
+
+
+   .. py:method:: get_resolution()
+
+      Returns the resolution of the sensor based on the SPAD ID.
+
+      :returns: *tuple[int, int]* -- The resolution (width, height) corresponding to the SPAD ID.
+
+
 
 .. py:class:: RangeMode(*args, **kwds)
 
@@ -119,7 +149,7 @@ Classes
    attributes -- see the documentation for details.
 
 
-.. py:class:: TMF8828Histogram(num_channels, active_channels_per_subcapture, spad_id)
+.. py:class:: TMF8828Histogram(spad_id)
 
 
    Bases: :py:obj:`cc_hardware.drivers.sensor.SensorData`
@@ -128,19 +158,7 @@ Classes
    data is organized into multiple channels and subcaptures to capture detailed
    measurements.
 
-   Inherits:
-       SensorData: Base class for sensor data storage and processing.
-
-   :ivar num_channels: Total number of channels, including the calibration channel.
-   :vartype num_channels: int
-   :ivar active_channels_per_subcapture: List indicating the number of active
-                                         channels in each subcapture.
-   :vartype active_channels_per_subcapture: list[int]
-   :ivar num_subcaptures: The total number of subcaptures.
-   :vartype num_subcaptures: int
-   :ivar spad_id: The SPAD ID indicating the resolution of the sensor.
-
-   :vartype spad_id: SPADID
+   :Parameters: **spad_id** (*SPADID*) -- The SPAD ID indicating the resolution of the sensor.
 
    .. py:property:: has_data
       :type: bool
@@ -171,40 +189,7 @@ Classes
 
 
 
-.. py:class:: TMF8828Object
-
-
-   Bases: :py:obj:`cc_hardware.drivers.sensor.SensorData`
-
-   A class representing object data collected from the TMF8828 sensor. The object data
-   contains information about detected objects, organized into bins.
-
-   Inherits:
-       SensorData: Base class for sensor data storage and processing.
-
-   .. py:method:: reset()
-
-      Resets the object data, clearing the data array.
-
-
-   .. py:method:: process(row)
-
-      Processes a single row of object data. Updates the internal data array based on
-      the received row.
-
-      :Parameters: **row** (*list[str]*) -- A list of strings representing a row of data received from
-                   the sensor.
-
-
-   .. py:method:: get_data()
-
-      Returns a copy of the object data.
-
-      :returns: *np.ndarray* -- The object data array.
-
-
-
-.. py:class:: TMF8828Sensor(port, *, spad_id = SPADID.ID6, setup = True, range_mode = RangeMode.LONG)
+.. py:class:: TMF8828Sensor(port = None, *, spad_id = SPADID.ID15, setup = True, range_mode = RangeMode.LONG)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
@@ -228,9 +213,9 @@ Classes
    .. py:property:: is_okay
       :type: bool
 
-      Checks if the sensor is operating correctly.
+      Checks if the sensor is operational.
 
-      :returns: *bool* -- Always returns True indicating the sensor is okay.
+      :returns: *bool* -- True if the sensor is operational, False otherwise.
 
    .. py:property:: num_bins
       :type: int
@@ -245,42 +230,6 @@ Classes
       Returns the resolution of the sensor as a tuple (width, height).
 
       :returns: *tuple[int, int]* -- The resolution (width, height) based on the SPAD ID.
-
-   .. py:property:: num_pixels
-      :type: int
-
-      Returns the number of pixels based on the SPAD ID.
-
-      :returns: *int* -- The number of pixels in the sensor's active area.
-
-   .. py:method:: initialize()
-
-      Initializes the sensor by sending the initialization command.
-
-
-   .. py:method:: setup_sensor()
-
-      Sets up the sensor based on its SPAD ID and range mode.
-
-
-   .. py:method:: read()
-
-      Reads a line of data from the sensor.
-
-      :returns: *bytes* -- The data read from the sensor.
-
-
-   .. py:method:: write(data)
-
-      Writes data to the sensor.
-
-      :Parameters: **data** (*str*) -- The data to write to the sensor.
-
-
-   .. py:method:: close()
-
-      Closes the sensor connection.
-
 
    .. py:method:: accumulate(num_samples, *, average = True)
 
@@ -305,6 +254,11 @@ Classes
                    to 2.
 
       :returns: *list[str]* -- A list containing the calibration strings for different modes.
+
+
+   .. py:method:: close()
+
+      Closes the sensor connection and stops background processes.
 
 
 

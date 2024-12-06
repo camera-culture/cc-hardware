@@ -303,10 +303,7 @@ custom mapping of SPAD pixels to allow for 3x3, 4x4, 3x6, and 8x8 multizone outp
 <tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Histogram" title="drivers.spads.tmf8828.TMF8828Histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TMF8828Histogram</span></code></a></p></td>
 <td><p>A class representing histogram data collected from the TMF8828 sensor. The histogram</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Object" title="drivers.spads.tmf8828.TMF8828Object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TMF8828Object</span></code></a></p></td>
-<td><p>A class representing object data collected from the TMF8828 sensor. The object data</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor" title="drivers.spads.tmf8828.TMF8828Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TMF8828Sensor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor" title="drivers.spads.tmf8828.TMF8828Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TMF8828Sensor</span></code></a></p></td>
 <td><p>A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.</p></td>
 </tr>
 </tbody>
@@ -356,6 +353,55 @@ custom mapping of SPAD pixels to allow for 3x3, 4x4, 3x6, and 8x8 multizone outp
 </div>
 <p>Methods can be added to enumerations, and members can have their own
 attributes – see the documentation for details.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.tmf8828.SPADID.get_num_pixels">
+<span class="sig-name descname"><span class="pre">get_num_pixels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#SPADID.get_num_pixels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.SPADID.get_num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of pixels based on the SPAD ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The number of pixels corresponding to the SPAD ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.tmf8828.SPADID.get_num_channels">
+<span class="sig-name descname"><span class="pre">get_num_channels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#SPADID.get_num_channels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.SPADID.get_num_channels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of channels based on the SPAD ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The number of channels corresponding to the SPAD ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.tmf8828.SPADID.get_active_channels_per_subcapture">
+<span class="sig-name descname"><span class="pre">get_active_channels_per_subcapture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#SPADID.get_active_channels_per_subcapture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.SPADID.get_active_channels_per_subcapture" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of active channels per subcapture based on the SPAD ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p><em>list[int]</em> –</p>
+<dl class="simple">
+<dt>A list representing the number of active channels in each</dt><dd><p>subcapture.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.tmf8828.SPADID.get_resolution">
+<span class="sig-name descname"><span class="pre">get_resolution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#SPADID.get_resolution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.SPADID.get_resolution" title="Link to this definition">#</a></dt>
+<dd><p>Returns the resolution of the sensor based on the SPAD ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>tuple[int, int]</em> – The resolution (width, height) corresponding to the SPAD ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -406,24 +452,14 @@ attributes – see the documentation for details.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Histogram">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">active_channels_per_subcapture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spad_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Histogram" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spad_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Histogram" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor.SensorData</span></code></p>
 <p>A class representing histogram data collected from the TMF8828 sensor. The histogram
 data is organized into multiple channels and subcaptures to capture detailed
 measurements.</p>
-<dl class="simple">
-<dt>Inherits:</dt><dd><p>SensorData: Base class for sensor data storage and processing.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>num_channels</strong> (<em>int</em>) – Total number of channels, including the calibration channel.</p></li>
-<li><p><strong>active_channels_per_subcapture</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List indicating the number of active
-channels in each subcapture.</p></li>
-<li><p><strong>num_subcaptures</strong> (<em>int</em>) – The total number of subcaptures.</p></li>
-<li><p><strong>spad_id</strong> (<a class="reference internal" href="#drivers.spads.tmf8828.SPADID" title="drivers.spads.tmf8828.SPADID"><em>SPADID</em></a>) – The SPAD ID indicating the resolution of the sensor.</p></li>
-</ul>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>spad_id</strong> (<em>SPADID</em>) – The SPAD ID indicating the resolution of the sensor.</p>
 </dd>
 </dl>
 <dl class="py property">
@@ -470,50 +506,8 @@ the sensor.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Object">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Object</span></span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Object" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor.SensorData</span></code></p>
-<p>A class representing object data collected from the TMF8828 sensor. The object data
-contains information about detected objects, organized into bins.</p>
-<dl class="simple">
-<dt>Inherits:</dt><dd><p>SensorData: Base class for sensor data storage and processing.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Object.reset">
-<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Object.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Object.reset" title="Link to this definition">#</a></dt>
-<dd><p>Resets the object data, clearing the data array.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Object.process">
-<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Object.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Object.process" title="Link to this definition">#</a></dt>
-<dd><p>Processes a single row of object data. Updates the internal data array based on
-the received row.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>row</strong> (<em>list[str]</em>) – A list of strings representing a row of data received from
-the sensor.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Object.get_data">
-<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Object.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Object.get_data" title="Link to this definition">#</a></dt>
-<dd><p>Returns a copy of the object data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>np.ndarray</em> – The object data array.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spad_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SPADID.ID6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">RangeMode.LONG</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spad_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">SPADID.ID15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">RangeMode.LONG</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></code></p>
 <p>A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.
 The TMF8828 sensor collects histogram data across multiple channels and subcaptures,
@@ -537,10 +531,10 @@ enabling high-resolution depth measurements.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.is_okay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the sensor is operating correctly.</p>
+<dd><p>Checks if the sensor is operational.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>bool</em> – Always returns True indicating the sensor is okay.</p>
+<dd class="field-odd"><p><em>bool</em> – True if the sensor is operational, False otherwise.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -565,57 +559,6 @@ enabling high-resolution depth measurements.</p>
 <dd class="field-odd"><p><em>tuple[int, int]</em> – The resolution (width, height) based on the SPAD ID.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.num_pixels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.num_pixels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.num_pixels" title="Link to this definition">#</a></dt>
-<dd><p>Returns the number of pixels based on the SPAD ID.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The number of pixels in the sensor’s active area.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.initialize">
-<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.initialize" title="Link to this definition">#</a></dt>
-<dd><p>Initializes the sensor by sending the initialization command.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.setup_sensor">
-<span class="sig-name descname"><span class="pre">setup_sensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.setup_sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.setup_sensor" title="Link to this definition">#</a></dt>
-<dd><p>Sets up the sensor based on its SPAD ID and range mode.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.read" title="Link to this definition">#</a></dt>
-<dd><p>Reads a line of data from the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>bytes</em> – The data read from the sensor.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.write" title="Link to this definition">#</a></dt>
-<dd><p>Writes data to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>str</em>) – The data to write to the sensor.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.close" title="Link to this definition">#</a></dt>
-<dd><p>Closes the sensor connection.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -655,6 +598,12 @@ to 2.</p>
 <dd class="field-even"><p><em>list[str]</em> – A list containing the calibration strings for different modes.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.tmf8828.TMF8828Sensor.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/tmf8828.html#TMF8828Sensor.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.tmf8828.TMF8828Sensor.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the sensor connection and stops background processes.</p>
 </dd></dl>
 
 </dd></dl>
@@ -721,7 +670,13 @@ to 2.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID"><code class="docutils literal notranslate"><span class="pre">SPADID</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID"><code class="docutils literal notranslate"><span class="pre">SPADID</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID.get_num_pixels"><code class="docutils literal notranslate"><span class="pre">SPADID.get_num_pixels()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID.get_num_channels"><code class="docutils literal notranslate"><span class="pre">SPADID.get_num_channels()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID.get_active_channels_per_subcapture"><code class="docutils literal notranslate"><span class="pre">SPADID.get_active_channels_per_subcapture()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.SPADID.get_resolution"><code class="docutils literal notranslate"><span class="pre">SPADID.get_resolution()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.RangeMode"><code class="docutils literal notranslate"><span class="pre">RangeMode</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Histogram"><code class="docutils literal notranslate"><span class="pre">TMF8828Histogram</span></code></a><ul>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Histogram.has_data"><code class="docutils literal notranslate"><span class="pre">TMF8828Histogram.has_data</span></code></a></li>
@@ -730,24 +685,13 @@ to 2.</p>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Histogram.get_data"><code class="docutils literal notranslate"><span class="pre">TMF8828Histogram.get_data()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Object"><code class="docutils literal notranslate"><span class="pre">TMF8828Object</span></code></a><ul>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Object.reset"><code class="docutils literal notranslate"><span class="pre">TMF8828Object.reset()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Object.process"><code class="docutils literal notranslate"><span class="pre">TMF8828Object.process()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Object.get_data"><code class="docutils literal notranslate"><span class="pre">TMF8828Object.get_data()</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor</span></code></a><ul>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.is_okay"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.num_bins"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.resolution"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.resolution</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.num_pixels"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.num_pixels</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.initialize"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.initialize()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.setup_sensor"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.setup_sensor()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.read"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.read()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.write"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.write()</span></code></a></li>
-<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.close"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.close()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.accumulate"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.calibrate"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.calibrate()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.tmf8828.TMF8828Sensor.close"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.close()</span></code></a></li>
 </ul>
 </li>
 </ul>

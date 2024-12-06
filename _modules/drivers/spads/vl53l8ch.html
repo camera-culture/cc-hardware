@@ -288,6 +288,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">multiprocessing.synchronize</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -381,10 +382,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">ranging_mode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 1 = Continuous, 3 = Autonomous</span>
-    <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
-    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">cnh_start_bin</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">cnh_subsample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">cnh_subsample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">agg_start_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">agg_start_y</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">agg_merge_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
@@ -403,7 +404,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span>
-    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span>
+    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span>
     <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
     <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span></div>
 
@@ -420,7 +421,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
-    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">cnh_num_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
     <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
     <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span></div>
 
@@ -445,7 +446,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -459,7 +460,7 @@
 <span class="sd">            num_pixels (int): Number of pixels expected in the histogram data.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">num_pixels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span> <span class="o">=</span> <span class="n">num_pixels</span></div>
 
@@ -480,11 +481,8 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">agg_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">agg_num</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">):</span>
-                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                    <span class="s2">&quot;Mismatched histogram message: &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">agg_num</span><span class="si">}</span><span class="s2"> != </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">agg_num</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">:</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate aggregation number received: </span><span class="si">{</span><span class="n">agg_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid data formatting received.&quot;</span><span class="p">)</span>
@@ -493,13 +491,16 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ambient</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
             <span class="n">bin_vals</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">-</span> <span class="n">ambient</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">:]]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">bin_vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">[</span><span class="n">agg_num</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">bin_vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Invalid data formatting received.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_pixels</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span><span class="p">)]</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_histograms</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_has_data</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="kc">True</span></div>
@@ -576,30 +577,85 @@
 <span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
 <span class="sd">                the fields of SensorConfig.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">SensorConfig4x4</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span> <span class="o">=</span> <span class="n">VL53L8CHHistogram</span><span class="p">()</span>
 
         <span class="c1"># Use Queue for inter-process communication</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">resolution</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-
-        <span class="c1"># Open the serial connection</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span> <span class="o">=</span> <span class="n">SafeSerial</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">BAUDRATE</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">SensorConfig8x8</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span> <span class="o">=</span> <span class="n">VL53L8CHHistogram</span><span class="p">()</span>
 
         <span class="c1"># Send the configuration to the sensor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Start the reader process</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
             <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_serial_background</span><span class="p">,</span>
+            <span class="n">args</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">port</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">BAUDRATE</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span><span class="p">,</span>
+            <span class="p">),</span>
             <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_read_serial_background</span><span class="p">(</span>
+        <span class="n">port</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">baudrate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">stop_event</span><span class="p">:</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">synchronize</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
+        <span class="n">initialized_event</span><span class="p">:</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">synchronize</span><span class="o">.</span><span class="n">Event</span><span class="p">,</span>
+        <span class="n">queue</span><span class="p">:</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">,</span>
+        <span class="n">write_queue</span><span class="p">:</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Background process that continuously reads data from the serial port</span>
+<span class="sd">        and places it into a queue for processing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Open the serial connection</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">serial_conn</span> <span class="o">=</span> <span class="n">SafeSerial</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="n">baudrate</span><span class="p">)</span>
+            <span class="n">initialized_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error opening serial connection: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
+                <span class="c1"># =====</span>
+                <span class="c1"># READ</span>
+                <span class="k">if</span> <span class="n">serial_conn</span><span class="o">.</span><span class="n">in_waiting</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">line</span> <span class="o">=</span> <span class="n">serial_conn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                    <span class="k">assert</span> <span class="n">line</span><span class="p">,</span> <span class="s2">&quot;Empty line received&quot;</span>
+
+                    <span class="c1"># Put the line into the queue without blocking</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
+                        <span class="c1"># Queue is full; discard the line to prevent blocking</span>
+                        <span class="k">pass</span>
+
+                <span class="c1"># =====</span>
+                <span class="c1"># WRITE</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">config_data</span> <span class="o">=</span> <span class="n">write_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">serial_conn</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_data</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                    <span class="c1"># No data to write</span>
+                    <span class="k">pass</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in reader process: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">stop_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">serial_conn</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
+                <span class="n">serial_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <div class="viewcode-block" id="VL53L8CHSensor.update">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.update">[docs]</a>
@@ -617,27 +673,12 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown config key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span></div>
+        <span class="c1"># Send the configuration to the sensor</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span>
+        <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to send configuration to sensor&quot;</span><span class="p">)</span></div>
 
-
-    <span class="k">def</span> <span class="nf">_read_serial_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Background process that continuously reads data from the serial port</span>
-<span class="sd">        and places it into a queue for processing.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
-            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Put the line into the queue without blocking</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-            <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
-                <span class="c1"># Queue is full; discard the line to prevent blocking</span>
-                <span class="k">continue</span>
 
 <div class="viewcode-block" id="VL53L8CHSensor.accumulate">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.accumulate">[docs]</a>
@@ -760,9 +801,13 @@
 <span class="sd">        Checks if the sensor is operational.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            bool: Always returns True. Implement actual checks as needed.</span>
+<span class="sd">            bool: True if the sensor is operational, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reader_process</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VL53L8CHSensor.close">
@@ -771,15 +816,12 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Closes the sensor connection and stops background processes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
             <span class="k">return</span>
 
         <span class="c1"># Signal the reader process to stop</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-
-        <span class="c1"># Close the serial connection</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_serial_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reader_process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
 </div>
 
 </pre></div>

@@ -1,0 +1,40 @@
+:orphan:
+
+:py:mod:`utils.serial_utils`
+============================
+
+
+.. py:module:: utils.serial_utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.serial_utils.find_device_by_label
+   utils.serial_utils.find_ports
+
+
+
+.. py:function:: find_device_by_label(label)
+
+   Find a device by its volume label.
+
+   :Parameters: **label** -- The volume label to search for.
+
+
+.. py:function:: find_ports(cls = None, /, **kwargs)
+
+   Check all available ports for a device.
+
+   :Parameters: * **cls** -- The serial class to use. If None, only the port names are returned.
+                * **\*\*kwargs** -- Additional keyword arguments to pass to the serial class.
+
+   :returns: A list of serial ports or port names.
+
+

@@ -35,8 +35,8 @@ Classes
    write operations using a lock. Provides additional utility methods for creating
    instances and handling data writes in different formats.
 
-   :keyword lock_type: The type of lock to use. Defaults to "threading". Can be
-                       "threading" or "multiprocessing".
+   :keyword lock_type: The type of lock to use. Defaults to "multiprocessing". Can be
+                       "threading", "multiprocessing", or "none".
    :kwtype lock_type: str
 
    .. py:method:: create(port = None, *, wait = 1, **kwargs)

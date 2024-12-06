@@ -180,7 +180,7 @@ Classes
 
       Checks if the sensor is operational.
 
-      :returns: *bool* -- Always returns True. Implement actual checks as needed.
+      :returns: *bool* -- True if the sensor is operational, False otherwise.
 
    .. py:method:: update(**kwargs)
 

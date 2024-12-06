@@ -311,7 +311,6 @@
 
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -718,6 +717,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Default value</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="p">)</span>
 
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_y_checkbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">(</span><span class="s2">&quot;Log Y-Axis&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Default value</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_y_checkbox</span><span class="p">)</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;Enter Y-Limit&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
@@ -757,11 +760,12 @@
         <span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_y_limit</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">log_y_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_log_y</span><span class="p">)</span>
 
         <span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">y_limit_slider</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">))</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
@@ -816,6 +820,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">histograms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
+        <span class="c1"># If log scale is enabled, replace 0s with 1s to avoid log(0)</span>
+        <span class="n">ymin</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">log_y_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="n">histograms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">histograms</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">histograms</span><span class="p">)</span>
+            <span class="n">ymin</span> <span class="o">=</span> <span class="mi">1</span>
+
         <span class="n">ylim</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
             <span class="n">ylim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span>
@@ -843,10 +853,12 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bars</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ylim</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">channel_ylim</span> <span class="o">=</span> <span class="n">ylim</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
+                <span class="n">channel_ylim</span> <span class="o">=</span> <span class="n">histogram</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">channel_ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setLimits</span><span class="p">(</span><span class="n">yMin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">yMax</span><span class="o">=</span><span class="n">channel_ylim</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">channel_ylim</span><span class="p">)</span>
 
         <span class="c1"># Call user callback if provided</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -867,9 +879,6 @@
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Autoscale: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
-            <span class="n">plot</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -878,16 +887,10 @@
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shared Y-Axis: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
-            <span class="n">y_link_reference</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">y_link_reference</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">y_link_reference</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span><span class="o">.</span><span class="n">setYLink</span><span class="p">(</span><span class="n">y_link_reference</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
-                <span class="n">plot</span><span class="o">.</span><span class="n">getViewBox</span><span class="p">()</span><span class="o">.</span><span class="n">setYLink</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">toggle_log_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Log Y-Axis: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
+            <span class="n">plot</span><span class="o">.</span><span class="n">setLogMode</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">update_y_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
@@ -950,15 +953,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">num_updates</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_layout</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_dash</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">headless</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
-                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DashDashboard.setup_layout">
@@ -1073,15 +1069,6 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
             <span class="k">return</span> <span class="n">existing_fig</span></div>
-
-
-<div class="viewcode-block" id="DashDashboard.run_dash">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.run_dash">[docs]</a>
-    <span class="k">def</span> <span class="nf">run_dash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Runs the Dash server in a separate thread.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">run_server</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
