@@ -39,10 +39,85 @@ EOF'
 
 sudo systemctl enable dhcpcd
 
-# Update .bashrc
+# Install Miniforge (ARM-compatible Conda)
+CONDA_DIR="$HOME/.conda"
+if [ ! -d "$CONDA_DIR" ]; then
+  curl -fsSL https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh -o ~/miniforge.sh
+  bash ~/miniforge.sh -b -p "$CONDA_DIR"
+  rm ~/miniforge.sh
+  "$CONDA_DIR/bin/conda" init bash
+fi
+
+# Disable base environment activation by default
+"$CONDA_DIR/bin/conda" config --set auto_activate_base false
+
+# Update .bashrc with project management functions
 cat <<'EOF' >> ~/.bashrc
 
-_camera_ssh_keygen() {
+camera_create_proj() {
+    project_name="$1"
+    if [ -z "$project_name" ]; then
+        echo "Project name is required."
+        return 1
+    fi
+
+    project_dir="$HOME/projects/$project_name"
+    mkdir -p "$project_dir"
+
+    # Create alias for the project
+    alias "$project_name"="tmux new -A -s $project_name -c $project_dir"
+
+    # Create Conda environment
+    if ! "$HOME/.conda/bin/conda" env list | grep -q "$project_name"; then
+        "$HOME/.conda/bin/conda" create -y -n "$project_name" python=3.9
+        echo "Conda environment '$project_name' created."
+    fi
+
+    # Add activation logic to .bashrc
+    if ! grep -q "camera_create_proj_logic" ~/.bashrc; then
+        cat <<'BRC' >> ~/.bashrc
+
+# camera_create_proj_logic
+if [ -n "\$TMUX" ]; then
+    session_name=\$(tmux display-message -p '#S')
+    if [ -d "\$HOME/projects/\$session_name" ]; then
+        source \$HOME/.conda/bin/activate \$session_name 2>/dev/null || true
+    fi
+fi
+BRC
+    fi
+
+    echo "Project '$project_name' created at '$project_dir'."
+    echo "To use it, run '$project_name' as a command."
+}
+
+camera_remove_proj() {
+    project_name="$1"
+    if [ -z "$project_name" ]; then
+        echo "Project name is required."
+        return 1
+    fi
+
+    project_dir="$HOME/projects/$project_name"
+
+    # Remove project directory
+    if [ -d "$project_dir" ]; then
+        rm -rf "$project_dir"
+        echo "Removed project directory: $project_dir"
+    else
+        echo "Project directory '$project_dir' does not exist."
+    fi
+
+    # Remove alias if it exists
+    unalias "$project_name" 2>/dev/null || echo "Alias for '$project_name' does not exist."
+
+    # Remove Conda environment
+    if "$HOME/.conda/bin/conda" env list | grep -q "$project_name"; then
+        "$HOME/.conda/bin/conda" env remove -y -n "$project_name"
+        echo "Removed Conda environment: $project_name"
+    fi
+}
+camera_ssh_keygen() {
     read -p "Enter your ID: " id
     [ -z "$id" ] && { echo "ID is required."; return; }
     read -p "Enter name: " name
@@ -56,9 +131,8 @@ _camera_ssh_keygen() {
     echo "Run the following command to show your public key to be added to GitHub:"
     echo "cat ~/.ssh/id_rsa_$id.pub"
 }
-alias camera-ssh-keygen='_camera_ssh_keygen'
 
-_camera_ssh_add() {
+camera_ssh_add() {
     read -p "Enter ID: " id
     [ -z "$id" ] && { echo "ID is required."; return; }
     id_rsa="$HOME/.ssh/id_rsa_$id"
@@ -75,9 +149,12 @@ _camera_ssh_add() {
     export GIT_COMMITTER_NAME="$name"
     export GIT_COMMITTER_EMAIL="$email"
 }
-alias camera-ssh-add="_camera_ssh_add"
 
 alias brc="vi ~/.bashrc"
 alias sb="source ~/.bashrc"
 alias vi="vim"
+
+# Add custom bashrc below
+# ========================
+
 EOF
