@@ -145,7 +145,7 @@ Classes
 
 
 
-.. py:class:: VL53L8CHSensor(*, port = None, **kwargs)
+.. py:class:: VL53L8CHSensor(*, port = None, config = SensorConfig4x4(), **kwargs)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`

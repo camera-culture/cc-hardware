@@ -469,7 +469,7 @@ require a motor as input, we’ll pass it in.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorSystem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.drivers.stepper_motors.StepperMotorSystem</span></code></p>
 <p>This is a wrapper of the Telemetrix library’s interface with multiple
 stepper motors.</p>
@@ -479,11 +479,36 @@ stepper motors.</p>
 the port will be attempted to be auto-detected.</p>
 </dd>
 <dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
+<dd class="field-even"><ul class="simple">
+<li><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
 the motors that are attached to them. The key is the axis name and the
-value is a list of motors attached to that axis.</p>
+value is a list of motors attached to that axis.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to pass to the Telemetrix board.</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorSystem.is_okay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is in a healthy operational state. This could
+involve verifying that the motor is not in an error state, is receiving power,
+and has no detected hardware issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorSystem.home"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home" title="Link to this definition">#</a></dt>
+<dd><p>Homes the stepper motor to its reference or zero position. This method should
+move the motor to a predefined starting point, which could involve moving
+until a limit switch or sensor is triggered to establish a known starting
+position.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorSystem.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close" title="Link to this definition">#</a></dt>
@@ -494,7 +519,7 @@ value is a list of motors attached to that axis.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorX"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorX"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotor</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -520,7 +545,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotor</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -546,7 +571,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorZ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorZ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorZ"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotor</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -572,7 +597,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorXReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorXReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorXReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorXReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -598,7 +623,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorYReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorYReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorYReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorYReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -624,7 +649,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorZReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorZReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelemetrixStepperMotorZReversed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#TelemetrixStepperMotorZReversed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -650,7 +675,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -676,7 +701,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_Y1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_Y1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_Y1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_Y1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -702,7 +727,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_Y2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_Y2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry_Y2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry_Y2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -728,7 +753,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DualDrive2AxisGantry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#DualDrive2AxisGantry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with multiple
 stepper motors.</p>
@@ -738,16 +763,19 @@ stepper motors.</p>
 the port will be attempted to be auto-detected.</p>
 </dd>
 <dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
+<dd class="field-even"><ul class="simple">
+<li><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
 the motors that are attached to them. The key is the axis name and the
-value is a list of motors attached to that axis.</p>
+value is a list of motors attached to that axis.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to pass to the Telemetrix board.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -773,7 +801,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry_Y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">board</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry_Y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry_Y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry_Y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with stepper motors.</p>
 <p>NOTE: Initialization of this class effectively homes the motor. Call
@@ -799,7 +827,7 @@ position</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingleDrive1AxisGantry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/telemetrix_stepper.html#SingleDrive1AxisGantry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem</span></code></a></p>
 <p>This is a wrapper of the Telemetrix library’s interface with multiple
 stepper motors.</p>
@@ -809,9 +837,12 @@ stepper motors.</p>
 the port will be attempted to be auto-detected.</p>
 </dd>
 <dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
+<dd class="field-even"><ul class="simple">
+<li><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor" title="drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor"><em>TelemetrixStepperMotor</em></a><em>]</em><em>]</em>) – A dictionary of axes and
 the motors that are attached to them. The key is the axis name and the
-value is a list of motors attached to that axis.</p>
+value is a list of motors attached to that axis.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to pass to the Telemetrix board.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -895,6 +926,8 @@ value is a list of motors attached to that axis.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.home()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.close()</span></code></a></li>
 </ul>
 </li>

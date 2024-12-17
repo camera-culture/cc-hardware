@@ -61,6 +61,20 @@ Functions
       :raises ValueError: If the class is not found in the registry.
 
 
+   .. py:method:: registry()
+
+      Get the registry of the base class.
+
+      :returns: The registry of the base class.
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
 
 .. py:function:: register(class_type)
 

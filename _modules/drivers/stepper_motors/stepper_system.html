@@ -332,30 +332,34 @@
 <div class="viewcode-block" id="StepperMotorSystem.move_to">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.move_to">[docs]</a>
     <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">positions</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span>
-        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="si">}</span><span class="s2"> positions, expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">move_to</span><span class="p">({</span><span class="n">axis</span><span class="p">:</span> <span class="n">pos</span> <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">,</span> <span class="n">positions</span><span class="p">)})</span></div>
+        <span class="o">...</span></div>
 
 
     <span class="nd">@overload</span>
     <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">positions</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to the specified position.</span>
+        <span class="o">...</span>
 
-<span class="sd">        Grab the current position and subtract the target position to get the relative</span>
-<span class="sd">        position. Then move the motors by the relative position.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span>
-        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="si">}</span><span class="s2"> positions, expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move to the specified position using positional or keyword arguments.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;move_to takes either all positional or all keyword args.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span>
+            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2"> positions, expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="p">:</span> <span class="n">position</span> <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">position</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">,</span> <span class="n">args</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span>
+            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span><span class="si">}</span><span class="s2"> positions, expected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">kwargs</span>
+
         <span class="n">current_positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span>
-        <span class="n">positions</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">axis</span><span class="p">:</span> <span class="n">pos</span> <span class="o">-</span> <span class="n">current_pos</span>
+        <span class="n">relative_positions</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">axis</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="n">pos</span> <span class="o">-</span> <span class="n">current_pos</span>
             <span class="k">for</span> <span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">pos</span><span class="p">),</span> <span class="n">current_pos</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">positions</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">current_positions</span><span class="p">)</span>
         <span class="p">}</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">move_by</span><span class="p">(</span><span class="o">**</span><span class="n">positions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">move_by</span><span class="p">(</span><span class="o">**</span><span class="n">relative_positions</span><span class="p">)</span>
 
     <span class="nd">@overload</span>
 <div class="viewcode-block" id="StepperMotorSystem.move_by">
@@ -388,24 +392,23 @@
 
         <span class="c1"># Set the target position of each motor</span>
         <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">positions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="c1"># This doesn&#39;t actually move the motor to the position, just set&#39;s the</span>
-            <span class="c1"># target position. The motor won&#39;t move until run_speed_to_position or</span>
-            <span class="c1"># run_speed is called.</span>
             <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="p">[</span><span class="n">axis</span><span class="p">]:</span>
-                <span class="n">motor</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving </span><span class="si">{</span><span class="n">axis</span><span class="si">}</span><span class="s2"> by </span><span class="si">{</span><span class="n">position</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+                <span class="n">motor</span><span class="o">.</span><span class="n">move_by</span><span class="p">(</span><span class="n">position</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_move</span><span class="p">()</span>
 
 <div class="viewcode-block" id="StepperMotorSystem.wait_for_move">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.wait_for_move">[docs]</a>
     <span class="k">def</span> <span class="nf">wait_for_move</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># Wait for all motors to complete their motion</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_run_async_gather</span><span class="p">(</span><span class="s2">&quot;wait_for_move&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_async_gather</span><span class="p">(</span><span class="s2">&quot;run_speed_to_position&quot;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
 <div class="viewcode-block" id="StepperMotorSystem.position">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.position">[docs]</a>
     <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[[</span><span class="n">motor</span><span class="o">.</span><span class="n">position</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span> <span class="k">for</span> <span class="n">motors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">motor</span><span class="o">.</span><span class="n">position</span> <span class="k">for</span> <span class="n">motors</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span></div>
 
 
     <span class="k">def</span> <span class="nf">_run_async_gather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">],</span> <span class="n">Any</span><span class="p">]):</span>

@@ -53,7 +53,7 @@ Classes
 
    .. py:method:: get_position(iter)
 
-      Get the current position for all axes.
+      Get the position that the controller should move to for the given iteration.
 
       :Parameters: **iter** (*int*) -- The current iteration index.
 

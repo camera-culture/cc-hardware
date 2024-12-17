@@ -290,7 +290,6 @@
 <span class="c1"># ======================</span>
 
 
-<span class="nd">@register</span>
 <div class="viewcode-block" id="StepperController">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/stepper_controller/index.html#drivers.stepper_motors.stepper_controller.StepperController">[docs]</a>
 <span class="k">class</span> <span class="nc">StepperController</span><span class="p">(</span><span class="n">Registry</span><span class="p">,</span> <span class="n">ABC</span><span class="p">):</span>
@@ -329,11 +328,10 @@
 <span class="sd">                    - &#39;range&#39; (tuple): The range (min, max) for the axis.</span>
 <span class="sd">                    - &#39;samples&#39; (int): Number of samples along this axis.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">total_positions</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axis_configs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">axis_index</span><span class="p">,</span> <span class="n">axis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axis_configs</span><span class="p">):</span>
             <span class="k">assert</span> <span class="s2">&quot;name&quot;</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">,</span> <span class="s2">&quot;Axis name is required.&quot;</span>
             <span class="k">assert</span> <span class="s2">&quot;range&quot;</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">,</span> <span class="s2">&quot;Axis range is required.&quot;</span>
             <span class="k">assert</span> <span class="s2">&quot;samples&quot;</span> <span class="ow">in</span> <span class="n">axis</span><span class="p">,</span> <span class="s2">&quot;Number of samples is required.&quot;</span>
@@ -343,15 +341,16 @@
             <span class="n">num_samples</span> <span class="o">=</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;samples&quot;</span><span class="p">]</span>
 
             <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">axis_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_samples</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">axis_name</span><span class="p">,</span> <span class="n">positions</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">axis_name</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">axis_index</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">positions</span><span class="p">,</span> <span class="n">flipped</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total_positions</span> <span class="o">*=</span> <span class="n">num_samples</span>
 
 <div class="viewcode-block" id="SnakeStepperController.get_position">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/stepper_controller/index.html#drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the current position for all axes.</span>
+<span class="sd">        Get the position that the controller should move to for the given iteration.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            iter (int): The current iteration index.</span>
@@ -361,25 +360,25 @@
 <span class="sd">                  Returns an empty dictionary if the iteration exceeds total positions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">iter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_positions</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{}</span>  <span class="c1"># We&#39;re done</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
         <span class="n">current_position</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">stride</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_positions</span>
 
-        <span class="k">for</span> <span class="n">axis_name</span><span class="p">,</span> <span class="n">axis_positions</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
-            <span class="n">stride</span> <span class="o">//=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_positions</span><span class="p">)</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="nb">iter</span> <span class="o">//</span> <span class="n">stride</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis_positions</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">stride</span> <span class="o">//=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">iter</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;flipped&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;flipped&quot;</span><span class="p">]</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="nb">iter</span> <span class="o">//</span> <span class="n">stride</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span>
+            <span class="n">reverse_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">index</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">index</span><span class="p">((</span><span class="n">axis_name</span><span class="p">,</span> <span class="n">axis_positions</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="c1"># Even index axis: move forward</span>
-                <span class="n">current_position</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_positions</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">current_position</span><span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># Odd index axis: move backward</span>
-                <span class="n">current_position</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">axis_positions</span><span class="p">[</span>
-                    <span class="nb">len</span><span class="p">(</span><span class="n">axis_positions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">index</span>
-                <span class="p">]</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">reverse_index</span> <span class="k">if</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;flipped&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="n">index</span>
+                <span class="n">current_position</span><span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">axis</span><span class="p">[</span><span class="s2">&quot;positions&quot;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
 
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axis </span><span class="si">{</span><span class="n">axis_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">current_position</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Axis </span><span class="si">{</span><span class="n">axis</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">current_position</span><span class="p">[</span><span class="n">axis</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">current_position</span></div>
 </div>

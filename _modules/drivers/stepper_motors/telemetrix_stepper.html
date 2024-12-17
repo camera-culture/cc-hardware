@@ -392,7 +392,7 @@
 <div class="viewcode-block" id="TelemetrixStepperMotor.wait_for_move">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.wait_for_move">[docs]</a>
     <span class="k">def</span> <span class="nf">wait_for_move</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">call_async</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_speed_to_position</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="n">call_async</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_speed_to_position</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span></div>
 
 
     <span class="nd">@property</span>
@@ -428,6 +428,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            relative_cm (float): The relative position to move the motor to.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting target position to </span><span class="si">{</span><span class="n">relative_cm</span><span class="si">}</span><span class="s2"> cm...&quot;</span><span class="p">)</span>
         <span class="n">relative_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_to_revs</span><span class="p">(</span><span class="n">relative_cm</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_direction</span><span class="p">:</span>
             <span class="n">relative_steps</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
@@ -439,6 +440,7 @@
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.set_absolute_target_position_cm">[docs]</a>
     <span class="k">def</span> <span class="nf">set_absolute_target_position_cm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_cm</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the absolute target position in cm.&quot;&quot;&quot;</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Setting absolute target position to </span><span class="si">{</span><span class="n">position_cm</span><span class="si">}</span><span class="s2"> cm...&quot;</span><span class="p">)</span>
         <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cm_to_revs</span><span class="p">(</span><span class="n">position_cm</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_direction</span><span class="p">:</span>
             <span class="n">steps</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
@@ -517,23 +519,41 @@
 <span class="sd">        axes (dict[str, list[TelemetrixStepperMotor]]): A dictionary of axes and</span>
 <span class="sd">            the motors that are attached to them. The key is the axis name and the</span>
 <span class="sd">            value is a list of motors attached to that axis.</span>
+<span class="sd">        kwargs: Additional keyword arguments to pass to the Telemetrix board.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">TelemetrixStepperMotor</span><span class="p">]]</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">axes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">TelemetrixStepperMotor</span><span class="p">]],</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="c1"># This is the arduino object. Initialize it once. If port is None, the library</span>
         <span class="c1"># will attempt to auto-detect the port.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_board</span> <span class="o">=</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_board</span> <span class="o">=</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># Update the axes to include the board</span>
         <span class="n">axes</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">axis</span><span class="p">:</span> <span class="p">[</span><span class="n">partial</span><span class="p">(</span><span class="n">motor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_board</span><span class="p">)</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span>
+            <span class="n">axis</span><span class="p">:</span> <span class="p">[</span><span class="n">motor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_board</span><span class="p">)</span> <span class="k">for</span> <span class="n">motor</span> <span class="ow">in</span> <span class="n">motors</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">motors</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
 
-        <span class="c1"># Initialize the multiaxis stepper system</span>
+        <span class="c1"># Initialize the multi-axis stepper system</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="TelemetrixStepperMotorSystem.is_okay">
+<a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_okay</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="TelemetrixStepperMotorSystem.home">
+<a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home">[docs]</a>
+    <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cannot home </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+
 
 <div class="viewcode-block" id="TelemetrixStepperMotorSystem.close">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close">[docs]</a>
@@ -557,11 +577,11 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorX">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorX</span><span class="p">(</span><span class="n">TelemetrixStepperMotor</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;distance_pin&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;direction_pin&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;enable_pin&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -569,11 +589,11 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorY">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorY</span><span class="p">(</span><span class="n">TelemetrixStepperMotor</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;distance_pin&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;direction_pin&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;enable_pin&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -581,11 +601,11 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorZ">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorZ</span><span class="p">(</span><span class="n">TelemetrixStepperMotor</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;distance_pin&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;direction_pin&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;enable_pin&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -593,9 +613,9 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorXReversed">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorXReversed</span><span class="p">(</span><span class="n">TelemetrixStepperMotorX</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;flip_direction&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -603,9 +623,9 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorYReversed">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorYReversed</span><span class="p">(</span><span class="n">TelemetrixStepperMotorY</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;flip_direction&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -613,9 +633,9 @@
 <div class="viewcode-block" id="TelemetrixStepperMotorZReversed">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed">[docs]</a>
 <span class="k">class</span> <span class="nc">TelemetrixStepperMotorZReversed</span><span class="p">(</span><span class="n">TelemetrixStepperMotorZ</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;flip_direction&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -626,11 +646,11 @@
 <div class="viewcode-block" id="DualDrive2AxisGantry_X">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X">[docs]</a>
 <span class="k">class</span> <span class="nc">DualDrive2AxisGantry_X</span><span class="p">(</span><span class="n">TelemetrixStepperMotorZ</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;cm_per_rev&quot;</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;steps_per_rev&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -638,11 +658,11 @@
 <div class="viewcode-block" id="DualDrive2AxisGantry_Y1">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1">[docs]</a>
 <span class="k">class</span> <span class="nc">DualDrive2AxisGantry_Y1</span><span class="p">(</span><span class="n">TelemetrixStepperMotorY</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;cm_per_rev&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;steps_per_rev&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -650,11 +670,11 @@
 <div class="viewcode-block" id="DualDrive2AxisGantry_Y2">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2">[docs]</a>
 <span class="k">class</span> <span class="nc">DualDrive2AxisGantry_Y2</span><span class="p">(</span><span class="n">TelemetrixStepperMotorXReversed</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;cm_per_rev&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;steps_per_rev&quot;</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -662,7 +682,7 @@
 <div class="viewcode-block" id="DualDrive2AxisGantry">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry">[docs]</a>
 <span class="k">class</span> <span class="nc">DualDrive2AxisGantry</span><span class="p">(</span><span class="n">TelemetrixStepperMotorSystem</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">axes</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">StepperMotorSystemAxis</span><span class="o">.</span><span class="n">X</span><span class="p">:</span> <span class="p">[</span><span class="n">DualDrive2AxisGantry_X</span><span class="p">],</span>
             <span class="n">StepperMotorSystemAxis</span><span class="o">.</span><span class="n">Y</span><span class="p">:</span> <span class="p">[</span>
@@ -670,7 +690,7 @@
                 <span class="n">DualDrive2AxisGantry_Y2</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">}</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -681,11 +701,11 @@
 <div class="viewcode-block" id="SingleDrive1AxisGantry_X">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X">[docs]</a>
 <span class="k">class</span> <span class="nc">SingleDrive1AxisGantry_X</span><span class="p">(</span><span class="n">TelemetrixStepperMotorX</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;cm_per_rev&quot;</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;steps_per_rev&quot;</span><span class="p">,</span> <span class="mi">2850</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">15</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -693,11 +713,11 @@
 <div class="viewcode-block" id="SingleDrive1AxisGantry_Y">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y">[docs]</a>
 <span class="k">class</span> <span class="nc">SingleDrive1AxisGantry_Y</span><span class="p">(</span><span class="n">TelemetrixStepperMotorY</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">:</span> <span class="n">telemetrix</span><span class="o">.</span><span class="n">Telemetrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;cm_per_rev&quot;</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;steps_per_rev&quot;</span><span class="p">,</span> <span class="mi">2850</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;speed&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">15</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">board</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 
@@ -705,12 +725,12 @@
 <div class="viewcode-block" id="SingleDrive1AxisGantry">
 <a class="viewcode-back" href="../../../usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry">[docs]</a>
 <span class="k">class</span> <span class="nc">SingleDrive1AxisGantry</span><span class="p">(</span><span class="n">TelemetrixStepperMotorSystem</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">axes</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">StepperMotorSystemAxis</span><span class="o">.</span><span class="n">X</span><span class="p">:</span> <span class="p">[</span><span class="n">SingleDrive1AxisGantry_X</span><span class="p">],</span>
             <span class="n">StepperMotorSystemAxis</span><span class="o">.</span><span class="n">Y</span><span class="p">:</span> <span class="p">[</span><span class="n">SingleDrive1AxisGantry_Y</span><span class="p">],</span>
         <span class="p">}</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span></div>
 
 </pre></div>
         </article>

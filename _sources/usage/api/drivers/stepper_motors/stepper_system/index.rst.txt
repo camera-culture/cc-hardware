@@ -91,10 +91,7 @@ Classes
    .. py:method:: move_to(*positions)
                   move_to(**positions: float)
 
-      Move to the specified position.
-
-      Grab the current position and subtract the target position to get the relative
-      position. Then move the motors by the relative position.
+      Move to the specified position using positional or keyword arguments.
 
 
    .. py:method:: move_by(*positions)
