@@ -6,6 +6,7 @@
 :maxdepth: 2
 
 Home <self>
+examples/index
 usage/index
 contributing
 ```

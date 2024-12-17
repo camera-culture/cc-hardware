@@ -106,9 +106,7 @@ Classes
 
    .. py:method:: wait_for_move()
 
-      Waits for the motor to complete its current move operation. This method should
-      block the execution until the motor has reached its target position or
-      completed the current motion command.
+      Waits for the motor to complete its current move operation.
 
 
    .. py:method:: set_target_position_cm(relative_cm)

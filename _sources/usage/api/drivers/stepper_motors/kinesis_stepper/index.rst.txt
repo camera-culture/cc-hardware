@@ -38,7 +38,7 @@ Classes
 .. py:class:: KinesisStepperMotor(port, *, channel = 1, is_rack_system = True, scale = 1.0)
 
 
-   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotor`
+   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor`
 
    A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
    This class provides additional features such as homing, movement with limits, and
@@ -209,7 +209,7 @@ Classes
 .. py:class:: KinesisStepperMotorSystem(port, axes)
 
 
-   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.StepperMotorSystem`
+   Bases: :py:obj:`cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem`
 
    A wrapper around multiple Kinesis stepper motors which defines the system as a
    whole.

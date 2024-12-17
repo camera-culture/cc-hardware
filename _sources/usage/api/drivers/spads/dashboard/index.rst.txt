@@ -90,14 +90,34 @@ Classes
       Configures the sensor settings and channel mask.
 
 
-   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
+   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
       :abstractmethod:
 
-      Abstract method to display the dashboard.
+      Abstract method to set up the dashboard. Should be independent of whether the
+      dashboard is run in a loop or not.
 
       :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
                    * **headless** (*bool*) -- Whether to run in headless mode.
                    * **save** (*Path | None*) -- If provided, save the output to this file.
+
+
+   .. py:method:: run()
+      :abstractmethod:
+
+      Abstract method to display the dashboard. Blocks until the dashboard is closed.
+
+
+   .. py:method:: update(frame, histograms = None)
+      :abstractmethod:
+
+      Abstract method to update the histogram data. This should be capable of being
+      used independent of the loop, as in in a main thread and non-blocking.
+
+      :Parameters: **frame** (*int*) -- Current frame number.
+
+      :keyword histograms: The histogram data to update. If not provided, the
+                           sensor will be used to accumulate the histogram data.
+      :kwtype histograms: np.ndarray
 
 
 
@@ -108,25 +128,25 @@ Classes
 
    Dashboard implementation using Matplotlib for visualization.
 
-   .. py:method:: run(*, fullscreen = False, headless = False, save = None)
-
-      Executes the Matplotlib dashboard with real-time updates.
-
-      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
-                   * **headless** (*bool*) -- Whether to run in headless mode (without GUI).
-                   * **save** (*Path | None*) -- If provided, save the output to this file.
-
-
-   .. py:method:: setup_plot()
+   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
 
       Sets up the Matplotlib plot layout and styling.
 
 
-   .. py:method:: update(frame)
+   .. py:method:: run()
+
+      Executes the Matplotlib dashboard with real-time updates.
+
+
+   .. py:method:: update(frame, histograms = None)
 
       Updates the histogram data for each frame.
 
       :Parameters: **frame** (*int*) -- Current frame number.
+
+      :keyword histograms: The histogram data to update. If not provided, the
+                           sensor will be used to accumulate the histogram data.
+      :kwtype histograms: np.ndarray
 
 
    .. py:method:: adjust_ylim(histograms)
@@ -161,14 +181,14 @@ Classes
                    * **save** (*Path | None*) -- If provided, save the output to this file.
 
 
-   .. py:method:: setup_plots(win)
+   .. py:method:: setup(win)
 
       Sets up the plots for each channel in the dashboard.
 
       :Parameters: **win** (*DashboardWindow*) -- The main window for the plots.
 
 
-   .. py:method:: update()
+   .. py:method:: update(*args, **kwargs)
 
       Updates the histogram data in the plots.
 
@@ -190,7 +210,7 @@ Classes
                    * **save** (*Path | None*) -- If provided, save the dashboard to this file.
 
 
-   .. py:method:: setup_layout()
+   .. py:method:: setup()
 
       Sets up the layout and figures for the Dash application.
 

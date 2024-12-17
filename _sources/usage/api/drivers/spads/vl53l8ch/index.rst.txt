@@ -190,7 +190,7 @@ Classes
                    the fields of SensorConfig.
 
 
-   .. py:method:: accumulate(num_samples, *, average = True)
+   .. py:method:: accumulate(num_samples = 1, *, average = True)
 
       Accumulates histogram data from the sensor.
 
