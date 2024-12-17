@@ -49,7 +49,7 @@ class SPADDashboard(ABC, Registry):
     """
     Abstract base class for SPAD sensor dashboards.
 
-    Parameters:
+    Args:
         sensor (SPADSensor): The SPAD sensor instance.
         num_frames (int): Number of frames to process. Default is 1,000,000.
         min_bin (int, optional): Minimum bin value for histogram.
@@ -102,7 +102,7 @@ class SPADDashboard(ABC, Registry):
         self.num_channels = len(self.channel_mask)
 
     @abstractmethod
-    def run(
+    def setup(
         self,
         *,
         fullscreen: bool = False,
@@ -110,14 +110,36 @@ class SPADDashboard(ABC, Registry):
         save: Path | None = None,
     ):
         """
-        Abstract method to display the dashboard.
+        Abstract method to set up the dashboard. Should be independent of whether the
+        dashboard is run in a loop or not.
 
-        Parameters:
+        Args:
             fullscreen (bool): Whether to display in fullscreen mode.
             headless (bool): Whether to run in headless mode.
             save (Path | None): If provided, save the output to this file.
         """
         pass
+
+    @abstractmethod
+    def run(self):
+        """
+        Abstract method to display the dashboard. Blocks until the dashboard is closed.
+        """
+        pass
+
+    def update(self, frame: int, histograms: np.ndarray | None = None):
+        """
+        Abstract method to update the histogram data. This should be capable of being
+        used independent of the loop, as in in a main thread and non-blocking.
+
+        Args:
+            frame (int): Current frame number.
+
+        Keyword Args:
+            histograms (np.ndarray): The histogram data to update. If not provided, the
+                sensor will be used to accumulate the histogram data.
+        """
+        raise NotImplementedError
 
     # ================
 
@@ -153,7 +175,7 @@ class MatplotlibDashboard(SPADDashboard):
     Dashboard implementation using Matplotlib for visualization.
     """
 
-    def run(
+    def setup(
         self,
         *,
         fullscreen: bool = False,
@@ -161,15 +183,9 @@ class MatplotlibDashboard(SPADDashboard):
         save: Path | None = None,
     ):
         """
-        Executes the Matplotlib dashboard with real-time updates.
-
-        Parameters:
-            fullscreen (bool): Whether to display in fullscreen mode.
-            headless (bool): Whether to run in headless mode (without GUI).
-            save (Path | None): If provided, save the output to this file.
+        Sets up the Matplotlib plot layout and styling.
         """
         import matplotlib.pyplot as plt
-        from matplotlib.animation import FuncAnimation
 
         from cc_hardware.utils.plotting import set_matplotlib_style
 
@@ -177,45 +193,11 @@ class MatplotlibDashboard(SPADDashboard):
 
         set_matplotlib_style()
 
-        self.fullscreen_mode = fullscreen
-        self.save_path = save
-        self.headless = headless
-
-        self.setup_plot()
-
-        self.ani = FuncAnimation(
-            self.fig,
-            self.update,
-            frames=range(self.num_frames),
-            interval=1,
-            repeat=False,
-            blit=True,
-        )
-
-        if self.save_path:
-            self.save_animation(self.ani, self.save_path)
-
-        if not self.headless:
-            plt.show()
-
-    def setup_plot(self):
-        """
-        Sets up the Matplotlib plot layout and styling.
-        """
-        import matplotlib.pyplot as plt
-
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
         self.fig = plt.figure(figsize=(6, 6 * rows / cols))
         self.gs = plt.GridSpec(rows, cols, figure=self.fig)
-
-        if self.fullscreen_mode:
-            try:
-                manager = plt.get_current_fig_manager()
-                manager.full_screen_toggle()
-            except Exception as e:
-                get_logger().warning(f"Failed to set fullscreen mode: {e}")
 
         self.bins = np.arange(self.min_bin, self.max_bin)
         colors = plt.cm.viridis(np.linspace(0, 1, self.num_channels))
@@ -240,12 +222,51 @@ class MatplotlibDashboard(SPADDashboard):
 
         plt.tight_layout()
 
-    def update(self, frame):
+        if fullscreen:
+            try:
+                manager = plt.get_current_fig_manager()
+                manager.full_screen_toggle()
+            except Exception as e:
+                get_logger().warning(f"Failed to set fullscreen mode: {e}")
+
+        self.save_path = save
+        self.headless = headless
+
+    def run(self):
+        """
+        Executes the Matplotlib dashboard with real-time updates.
+        """
+        import matplotlib.pyplot as plt
+        from matplotlib.animation import FuncAnimation
+
+        self.ani = FuncAnimation(
+            self.fig,
+            self.update,
+            frames=range(self.num_frames),
+            interval=1,
+            repeat=False,
+            blit=True,
+        )
+
+        if self.save_path:
+            # Prevent saving on each frame
+            save_path = self.save_path
+            self.save_path = None
+            self.save_animation(self.ani, save_path)
+
+        if not self.headless:
+            plt.show()
+
+    def update(self, frame: int, histograms: np.ndarray | None = None):
         """
         Updates the histogram data for each frame.
 
-        Parameters:
+        Args:
             frame (int): Current frame number.
+
+        Keyword Args:
+            histograms (np.ndarray): The histogram data to update. If not provided, the
+                sensor will be used to accumulate the histogram data.
         """
         import matplotlib.pyplot as plt
 
@@ -264,7 +285,8 @@ class MatplotlibDashboard(SPADDashboard):
                 ax.set_xlim(0, self.sensor.num_bins)  # Update x-axis limits
                 ax.set_xticks(np.linspace(0, self.sensor.num_bins, 5))  # Update x-ticks
 
-        histograms = self.sensor.accumulate(1)
+        if histograms is None:
+            histograms = self.sensor.accumulate(1)
         self.adjust_ylim(histograms)
 
         for idx, channel in enumerate(self.channel_mask):
@@ -277,7 +299,10 @@ class MatplotlibDashboard(SPADDashboard):
         if self.user_callback is not None:
             self.user_callback(self)
 
-        # Force a background flush to update the plot
+        if self.save_path:
+            self.fig.savefig(self.save_path / "frame_{frame}.png")
+        elif not self.headless:
+            plt.pause(1e-9)
 
         return list(chain(*self.containers))
 
@@ -285,7 +310,7 @@ class MatplotlibDashboard(SPADDashboard):
         """
         Adjusts the Y-axis limits based on the histogram data.
 
-        Parameters:
+        Args:
             histograms (np.ndarray): Histogram data for all channels.
         """
         if self.ylim is not None:
@@ -309,7 +334,7 @@ class MatplotlibDashboard(SPADDashboard):
         """
         Saves the animation to a file.
 
-        Parameters:
+        Args:
             ani (FuncAnimation): The animation object to save.
             filename (str): The filename to save the output.
         """
@@ -344,7 +369,7 @@ class PyQtGraphDashboard(SPADDashboard):
         """
         Executes the PyQtGraph dashboard application.
 
-        Parameters:
+        Args:
             fullscreen (bool): Whether to display in fullscreen mode.
             headless (bool): Whether to run in headless mode.
             save (Path | None): If provided, save the output to this file.
@@ -437,7 +462,7 @@ class PyQtGraphDashboard(SPADDashboard):
 
         self.shared_y = True
 
-        self.setup_plots(win.graphic_view)
+        self.setup(win.graphic_view)
 
         # Connect settings to functionality
         win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
@@ -459,11 +484,11 @@ class PyQtGraphDashboard(SPADDashboard):
 
         app.exec()
 
-    def setup_plots(self, win):
+    def setup(self, win):
         """
         Sets up the plots for each channel in the dashboard.
 
-        Parameters:
+        Args:
             win (DashboardWindow): The main window for the plots.
         """
 
@@ -491,7 +516,7 @@ class PyQtGraphDashboard(SPADDashboard):
             if not self.autoscale:
                 p.enableAutoRange(axis="y", enable=False)
 
-    def update(self):
+    def update(self, *args, **kwargs):
         """
         Updates the histogram data in the plots.
         """
@@ -598,7 +623,7 @@ class DashDashboard(SPADDashboard):
         """
         Executes the Dash dashboard application.
 
-        Parameters:
+        Args:
             fullscreen (bool): Unused parameter for DashDashboard.
             headless (bool): Whether to run in headless mode.
             save (Path | None): If provided, save the dashboard to this file.
@@ -627,7 +652,7 @@ class DashDashboard(SPADDashboard):
 
         self.app.run(debug=False, use_reloader=False)
 
-    def setup_layout(self):
+    def setup(self):
         """
         Sets up the layout and figures for the Dash application.
         """
@@ -693,7 +718,7 @@ class DashDashboard(SPADDashboard):
             """
             Updates the live graph with new histogram data.
 
-            Parameters:
+            Args:
                 n_intervals (int): The number of intervals that have passed.
                 existing_fig (dict): The existing figure to update.
             """

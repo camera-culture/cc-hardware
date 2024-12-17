@@ -4,7 +4,10 @@ unit. This is useful for controlling a gantry or a multi-axis rotation stage."""
 from enum import Enum
 from typing import Any, Callable, overload
 
-from cc_hardware.drivers.stepper_motors import DummyStepperMotor, StepperMotor
+from cc_hardware.drivers.stepper_motors.stepper_motor import (
+    DummyStepperMotor,
+    StepperMotor,
+)
 from cc_hardware.utils.asyncio_utils import call_async_gather
 from cc_hardware.utils.logger import get_logger
 

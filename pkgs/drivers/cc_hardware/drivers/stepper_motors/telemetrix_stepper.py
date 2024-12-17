@@ -99,6 +99,7 @@ class TelemetrixStepperMotor(StepperMotor):
         self.set_target_position_cm(relative_position)
 
     def wait_for_move(self) -> None:
+        """Waits for the motor to complete its current move operation."""
         call_async(self.run_speed_to_position, lambda *_: None)
 
     @property
@@ -358,4 +359,4 @@ class SingleDrive1AxisGantry(TelemetrixStepperMotorSystem):
             StepperMotorSystemAxis.X: [SingleDrive1AxisGantry_X],
             StepperMotorSystemAxis.Y: [SingleDrive1AxisGantry_Y],
         }
-        super().__init__(*args, axes=axes)
+        super().__init__(*args, axes=axes, **kwargs)

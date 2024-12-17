@@ -19,14 +19,14 @@ class SPADSensor(Sensor):
     """
 
     @abstractmethod
-    def accumulate(self, num_samples: int):
+    def accumulate(self, num_samples: int = 1):
         """
         Accumulates the specified number of histogram samples from the sensor.
 
         Args:
             num_samples (int): The number of samples to accumulate into the histogram.
                 The accumulation method (i.e. summing, averaging) may vary depending on
-                the sensor.
+                the sensor. Defaults to 1.
         """
         pass
 

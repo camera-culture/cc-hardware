@@ -366,7 +366,7 @@ class VL53L8CHSensor(SPADSensor):
 
     def accumulate(
         self,
-        num_samples: int,
+        num_samples: int = 1,
         *,
         average: bool = True,
     ) -> np.ndarray | list[np.ndarray]:

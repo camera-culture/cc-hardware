@@ -12,8 +12,8 @@ simple interface for controlling the motor.
 
 from pylablib.devices.Thorlabs import KinesisMotor
 
-from cc_hardware.drivers.stepper_motors import (
-    StepperMotor,
+from cc_hardware.drivers.stepper_motors.stepper_motor import StepperMotor
+from cc_hardware.drivers.stepper_motors.stepper_system import (
     StepperMotorSystem,
     StepperMotorSystemAxis,
 )
