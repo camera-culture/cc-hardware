@@ -45,29 +45,33 @@ class StepperMotorSystem(StepperMotor):
 
     @overload
     def move_to(self, *positions: float):
-        assert len(positions) == len(
-            self._axes
-        ), f"Got {len(positions)} positions, expected {len(self._axes)}"
-
-        self.move_to({axis: pos for axis, pos in zip(self._axes, positions)})
+        ...
 
     @overload
     def move_to(self, **positions: float):
-        """Move to the specified position.
+        ...
 
-        Grab the current position and subtract the target position to get the relative
-        position. Then move the motors by the relative position.
-        """
-        assert len(positions) == len(
-            self._axes
-        ), f"Got {len(positions)} positions, expected {len(self._axes)}"
+    def move_to(self, *args: float, **kwargs: float):
+        """Move to the specified position using positional or keyword arguments."""
+        if args and kwargs:
+            raise ValueError("move_to takes either all positional or all keyword args.")
+        elif args:
+            assert len(args) == len(
+                self._axes
+            ), f"Got {len(args)} positions, expected {len(self._axes)}"
+            positions = {axis: position for axis, position in zip(self._axes, args)}
+        elif kwargs:
+            assert len(kwargs) == len(
+                self._axes
+            ), f"Got {len(kwargs)} positions, expected {len(self._axes)}"
+            positions = kwargs
+
         current_positions = self.position
-        positions = {
-            axis: pos - current_pos
+        relative_positions = {
+            axis.value: pos - current_pos
             for (axis, pos), current_pos in zip(positions.items(), current_positions)
         }
-
-        self.move_by(**positions)
+        self.move_by(**relative_positions)
 
     @overload
     def move_by(self, *positions: float):
@@ -97,19 +101,18 @@ class StepperMotorSystem(StepperMotor):
 
         # Set the target position of each motor
         for axis, position in positions.items():
-            # This doesn't actually move the motor to the position, just set's the
-            # target position. The motor won't move until run_speed_to_position or
-            # run_speed is called.
             for motor in self._axes[axis]:
-                motor.move_to(position)
+                get_logger().info(f"Moving {axis} by {position}...")
+                motor.move_by(position)
+
+        self.wait_for_move()
 
     def wait_for_move(self) -> None:
-        # Wait for all motors to complete their motion
-        self._run_async_gather("wait_for_move", lambda _: None)
+        self._run_async_gather("run_speed_to_position", lambda _: None)
 
     @property
     def position(self) -> list:
-        return [[motor.position for motor in motors] for motors in self._axes.values()]
+        return [motor.position for motors in self._axes.values() for motor in motors]
 
     def _run_async_gather(self, fn: str, callback: Callable[[list], Any]):
         """Runs the specified function on all motors asynchronously."""

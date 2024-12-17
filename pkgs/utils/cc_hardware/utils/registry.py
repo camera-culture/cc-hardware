@@ -1,6 +1,9 @@
 """Registry base class and decorator for registering classes in the registry."""
 
+from enum import Enum
 from typing import Any, Self
+
+from cc_hardware.utils import classproperty
 
 
 class Registry:
@@ -9,7 +12,7 @@ class Registry:
     to instantiate them.
     """
 
-    registry: dict[str, dict[str, Self]] = {}
+    _registry: dict[str, dict[str, Self]] = {}
 
     @classmethod
     def register(cls: type[Self], class_type: type[Self]) -> type[Self]:
@@ -22,7 +25,7 @@ class Registry:
         Returns:
             The registered class.
         """
-        cls.registry.setdefault(cls.__name__, {})[class_type.__name__] = class_type
+        cls._registry.setdefault(cls.__name__, {})[class_type.__name__] = class_type
         return class_type
 
     @classmethod
@@ -43,18 +46,38 @@ class Registry:
         Raises:
             ValueError: If the class is not found in the registry.
         """
-        if cls.__name__ not in cls.registry:
+        if cls.__name__ not in cls._registry:
             raise ValueError(
                 f"Class '{name}' not found in {cls.__name__}'s registry. "
                 "Ensure the class inherits from Registry."
             )
-        elif name not in cls.registry[cls.__name__]:
+        elif name not in cls._registry[cls.__name__]:
             raise ValueError(
                 f"Class '{name}' not found in {cls.__name__}'s registry. "
-                f"Available classes: {list(cls.registry[cls.__name__].keys())}"
+                f"Available classes: {list(cls._registry[cls.__name__].keys())}"
             )
-        class_type = cls.registry[cls.__name__][name]
+        class_type = cls._registry[cls.__name__][name]
         return class_type(*args, **kwargs)
+
+    @classproperty
+    def registry(cls: type[Self]) -> dict[str, Self]:
+        """
+        Get the registry of the base class.
+
+        Returns:
+            The registry of the base class.
+        """
+        return cls._registry.get(cls.__name__, {})
+
+    @classproperty
+    def registered(cls: type[Self]) -> Enum:
+        """
+        Get an enumeration of the registered classes.
+
+        Returns:
+            An enumeration of the registered classes.
+        """
+        return Enum(cls.__name__, {name: name for name in cls.registry})
 
 
 def register(class_type: type[Registry]) -> type[Registry]:
@@ -67,9 +90,15 @@ def register(class_type: type[Registry]) -> type[Registry]:
     Returns:
         The registered class.
     """
+
+    def register_with_bases(cls: type[Registry]):
+        for base in cls.__bases__:
+            if issubclass(base, Registry):
+                base.register(class_type)
+                register_with_bases(base)
+
     # Register the class in the registry of each of its base classes that are
     # subclasses of RegistryBase
-    for base in class_type.__bases__:
-        if issubclass(base, Registry):
-            base.register(class_type)
+    register_with_bases(class_type)
+
     return class_type

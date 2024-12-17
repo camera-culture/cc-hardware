@@ -95,9 +95,9 @@ class SensorConfigShared(SensorConfig):
 
     ranging_mode: int = 3  # 1 = Continuous, 3 = Autonomous
     ranging_frequency_hz: int = 60
-    integration_time_ms: int = 10
+    integration_time_ms: int = 500
     cnh_start_bin: int = 0
-    cnh_subsample: int = 1
+    cnh_subsample: int = 16
     agg_start_x: int = 0
     agg_start_y: int = 0
     agg_merge_x: int = 1
@@ -113,7 +113,7 @@ class SensorConfig4x4(SensorConfigShared):
     """
 
     resolution: int = 16
-    cnh_num_bins: int = 128
+    cnh_num_bins: int = 8
     agg_cols: int = 4
     agg_rows: int = 4
 
@@ -252,20 +252,19 @@ class VL53L8CHSensor(SPADSensor):
         self,
         *,
         port: str | None = None,
+        config: SensorConfig = SensorConfig4x4(),
         **kwargs,
     ):
         """
         Initializes the VL53L8CHSensor instance.
 
-        Args:
-            port (str | None): Serial port to which the sensor is connected.
-                If None, the default port is used.
-
         Keyword Args:
+            port (str | None): Serial port to which the sensor is connected.
+                If None, a port is automatically detected.
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
-        self._config = SensorConfig4x4()
+        self._config = config
         self._histogram = VL53L8CHHistogram()
 
         # Use Queue for inter-process communication

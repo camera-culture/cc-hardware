@@ -104,6 +104,7 @@ class Manager:
         while self.is_okay:
             try:
                 if not loop(i, manager=self, **self._components):
+                    get_logger().info(f"Exiting loop after {i} iterations.")
                     break
             except Exception:
                 get_logger().exception(f"Failed to run loop {i}.")

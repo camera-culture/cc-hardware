@@ -10,7 +10,6 @@ from cc_hardware.utils.registry import Registry, register
 # ======================
 
 
-@register
 class StepperController(Registry, ABC):
     @abstractmethod
     def get_position(self, iter: int) -> list[float]:
@@ -41,11 +40,10 @@ class SnakeStepperController(StepperController):
                     - 'range' (tuple): The range (min, max) for the axis.
                     - 'samples' (int): Number of samples along this axis.
         """
-        self.axes = []
-        self.positions = []
+        self.axes = {}
         self.total_positions = 1
 
-        for axis in axis_configs:
+        for axis_index, axis in enumerate(axis_configs):
             assert "name" in axis, "Axis name is required."
             assert "range" in axis, "Axis range is required."
             assert "samples" in axis, "Number of samples is required."
@@ -55,13 +53,14 @@ class SnakeStepperController(StepperController):
             num_samples = axis["samples"]
 
             positions = np.linspace(axis_range[0], axis_range[1], num_samples)
-            self.axes.append((axis_name, positions))
-            self.positions.append(positions)
+            self.axes[axis_name] = dict(
+                name=axis_name, index=axis_index, positions=positions, flipped=True
+            )
             self.total_positions *= num_samples
 
-    def get_position(self, iter: int) -> dict:
+    def get_position(self, iter: int) -> dict | None:
         """
-        Get the current position for all axes.
+        Get the position that the controller should move to for the given iteration.
 
         Args:
             iter (int): The current iteration index.
@@ -71,24 +70,24 @@ class SnakeStepperController(StepperController):
                   Returns an empty dictionary if the iteration exceeds total positions.
         """
         if iter >= self.total_positions:
-            return {}  # We're done
+            return None
 
         current_position = {}
         stride = self.total_positions
 
-        for axis_name, axis_positions in self.axes:
-            stride //= len(axis_positions)
-            index = (iter // stride) % len(axis_positions)
+        for axis in self.axes.values():
+            stride //= len(axis["positions"])
+            if iter % len(axis["positions"]) == 0:
+                axis["flipped"] = not axis["flipped"]
+            index = (iter // stride) % len(axis["positions"])
+            reverse_index = len(axis["positions"]) - 1 - index
 
-            if self.axes.index((axis_name, axis_positions)) % 2 == 0:
-                # Even index axis: move forward
-                current_position[axis_name] = axis_positions[index]
+            if axis["index"] % 2 == 0:
+                current_position[axis["name"]] = axis["positions"][index]
             else:
-                # Odd index axis: move backward
-                current_position[axis_name] = axis_positions[
-                    len(axis_positions) - 1 - index
-                ]
+                index = reverse_index if axis["flipped"] else index
+                current_position[axis["name"]] = axis["positions"][index]
 
-            get_logger().info(f"Axis {axis_name}: {current_position[axis_name]}")
+            get_logger().info(f"Axis {axis['name']}: {current_position[axis['name']]}")
 
         return current_position

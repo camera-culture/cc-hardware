@@ -6,9 +6,15 @@ import sys
 from collections import deque
 
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
+from cc_hardware.tools.app import APP, typer
 from cc_hardware.utils.logger import get_logger
 
 get_logger(level=logging.DEBUG)
+
+# ======================
+
+jogger_APP = typer.Typer()
+APP.add_typer(jogger_APP, name="jogger")
 
 # ======================
 
@@ -17,11 +23,11 @@ class OutputCapture:
     """Captures stdout and stderr output and stores it in a buffer."""
 
     def __init__(self, buffer):
-        self.buffer = buffer
+        self.buffer: list[str] = buffer
 
-    def write(self, s):
-        for line in s.rstrip("\n").split("\n"):
-            self.buffer.append(line)
+    def write(self, s: str):
+        for line in s.rstrip().split("\n"):
+            self.buffer.append(line.rstrip())
 
     def flush(self):
         pass
@@ -32,7 +38,7 @@ class LogBufferHandler(logging.Handler):
 
     def __init__(self, buffer):
         super().__init__()
-        self.buffer = buffer
+        self.buffer: list[str] = buffer
 
     def emit(self, record):
         msg = self.format(record)
@@ -44,8 +50,9 @@ class LogBufferHandler(logging.Handler):
 
 class Jogger:
     def __init__(self, system: str, port: str):
-        self._motors = StepperMotorSystem.create_from_registry(system, port)
-        self._motors.initialize()
+        self._system = StepperMotorSystem.create_from_registry(system, port)
+        self._system.initialize()
+        assert len(self._system.position) == 2, "Only 2D systems are supported."
 
         self._scale = 1.0
 
@@ -99,8 +106,7 @@ class Jogger:
             sys.stdout = sys.__stdout__
             sys.stderr = sys.__stderr__
 
-            self._motor_x.close()
-            self._motor_y.close()
+            self._system.close()
 
     def _step(self, stdscr: curses.window, main_ui_lines, main_ui_height) -> bool:
         key = stdscr.getch()
@@ -122,7 +128,7 @@ class Jogger:
             self._scale *= 2
         elif key == ord("d") or key == ord("D"):
             self._scale /= 2
-            self._scale = int(self._scale)
+            self._scale = min(int(self._scale), 1)
 
         # Update the UI
         stdscr.erase()
@@ -162,16 +168,15 @@ class Jogger:
         # Limit screen update rate
         curses.napms(10)
 
-        return self._motor_x.is_okay and self._motor_y.is_okay
+        return self._system.is_okay
 
     def home(self):
-        self._motor_x.home(force=True)
-        self._motor_y.home(force=True)
+        self._system.home()
         self.set_position(0, 0)
 
     @property
     def x(self):
-        return self._motor_x.position
+        return self._system.position[0]
 
     @x.setter
     def x(self, value):
@@ -180,7 +185,7 @@ class Jogger:
 
     @property
     def y(self):
-        return self._motor_y.position
+        return self._system.position[1]
 
     @y.setter
     def y(self, value):
@@ -199,8 +204,22 @@ class Jogger:
 
     def set_position(self, dx, dy):
         get_logger().info(f"Moving by {dx}, {dy}...")
-        self._motor_x.move_by(dx)
-        self._motor_y.move_by(dy)
+        self._system.move_by(dx, dy)
+
+
+# ======================
+
+
+@jogger_APP.command()
+def run(
+    system: StepperMotorSystem.registered,
+    port: str | None = None,
+    exit_immediately: bool = False,
+):
+    jogger = Jogger(system.value, port)
+    if exit_immediately:
+        return
+    jogger.start()
 
 
 # ======================
