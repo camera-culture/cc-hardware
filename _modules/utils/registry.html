@@ -208,7 +208,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -288,9 +287,9 @@
 <span></span><span class="sd">&quot;&quot;&quot;Registry base class and decorator for registering classes in the registry.&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Self</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">overload</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">classproperty</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">classproperty</span><span class="p">,</span> <span class="n">get_object</span>
 
 
 <div class="viewcode-block" id="Registry">
@@ -299,26 +298,78 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A base class that provides a registry for its subclasses and a factory method</span>
 <span class="sd">    to instantiate them.</span>
+
+<span class="sd">    Supports both direct and lazy registration of classes, allowing classes</span>
+<span class="sd">    to be registered by name and module path for deferred loading. An enumeration</span>
+<span class="sd">    of registered classes is also provided.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">_registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Self</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_registry</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="nd">@overload</span>
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Registry.register">
 <a class="viewcode-back" href="../../usage/api/utils/registry/index.html#utils.registry.Registry.register">[docs]</a>
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">],</span> <span class="n">class_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Register the given class in the registry of the base class.</span>
+<span class="sd">        Register the given class in this registry.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            class_type: The class to be registered.</span>
+<span class="sd">            class_type: The class to register.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The registered class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{})[</span><span class="n">class_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_type</span>
-        <span class="k">return</span> <span class="n">class_type</span></div>
+        <span class="o">...</span></div>
 
+
+    <span class="nd">@overload</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">],</span> <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a class lazily by specifying its module path instead of</span>
+<span class="sd">        importing it directly.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            class_name: The name of the class to register.</span>
+<span class="sd">            module_path: The module path where the class can be found</span>
+<span class="sd">                (e.g. &quot;my_module.MyClass&quot;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="o">...</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">],</span> <span class="n">class_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register the given class in this registry.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            class_type: The class to register. Can be a class type or a str defining</span>
+<span class="sd">                 a class name to be lazily loaded. If the class_type is a type, this</span>
+<span class="sd">                 method will return the class itself (useful for decorators).</span>
+<span class="sd">            module_path: The module path where the class can be found</span>
+<span class="sd">                (e.g. &quot;my_module.my_submodule&quot;). Only used if class_type is a str.</span>
+<span class="sd">                This is the full importable path to the class. The final class</span>
+<span class="sd">                path will be ``module_path.class_type``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The registered class if class_type is a class type, otherwise None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">class_type</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{})[</span><span class="n">class_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_type</span>
+            <span class="k">return</span> <span class="n">class_type</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">class_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="n">module_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="p">),</span> <span class="s2">&quot;module_path must be provided for lazy loading.&quot;</span>
+            <span class="n">module_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">module_path</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">class_type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{})[</span><span class="n">class_type</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid class type: </span><span class="si">{</span><span class="n">class_type</span><span class="si">}</span><span class="s2">. Must be a class type or a string.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Registry.create_from_registry">
@@ -327,7 +378,7 @@
         <span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create an instance of the class with the specified name from the registry.</span>
+<span class="sd">        Create an instance of a registered class, performing lazy loading if necessary.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            name: The name of the class to instantiate.</span>
@@ -335,34 +386,38 @@
 <span class="sd">            **kwargs: Keyword arguments to pass to the class constructor.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            An instance of the class.</span>
+<span class="sd">            An instance of the requested class.</span>
 
 <span class="sd">        Raises:</span>
-<span class="sd">            ValueError: If the class is not found in the registry.</span>
+<span class="sd">            ValueError: If the class name is not registered.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Class &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s registry. &quot;</span>
-                <span class="s2">&quot;Ensure the class inherits from Registry.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">elif</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Class &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s registry. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Available classes: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-        <span class="n">class_type</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s registry.&quot;</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not found in </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39;s registry.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Lazy loading logic</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># &#39;val&#39; is a module path like &quot;my_module.MyClass&quot;</span>
+            <span class="n">class_type</span> <span class="o">=</span> <span class="n">get_object</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="c1"># Store the fully loaded class back into the registry for future calls</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_type</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">class_type</span> <span class="o">=</span> <span class="n">val</span>
+
         <span class="k">return</span> <span class="n">class_type</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
     <span class="nd">@classproperty</span>
 <div class="viewcode-block" id="Registry.registry">
 <a class="viewcode-back" href="../../usage/api/utils/registry/index.html#utils.registry.Registry.registry">[docs]</a>
-    <span class="k">def</span> <span class="nf">registry</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Self</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">registry</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Self</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the registry of the base class.</span>
+<span class="sd">        Get the registry for this class.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            The registry of the base class.</span>
+<span class="sd">            A dictionary mapping class names to class objects or lazy load paths.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="p">{})</span></div>
 
@@ -384,9 +439,10 @@
 
 <div class="viewcode-block" id="register">
 <a class="viewcode-back" href="../../usage/api/utils/registry/index.html#utils.registry.register">[docs]</a>
-<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">class_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Registry</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Registry</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">class_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Registry</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">[</span><span class="n">Registry</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Register the given class using the RegistryBase of its base class.</span>
+<span class="sd">    Decorator to register a class with its base Registry class. Uses a recursive</span>
+<span class="sd">    approach to ensure that the class is registered with all Registry-based ancestors.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        class_type: The class to register.</span>
@@ -396,15 +452,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">register_with_bases</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Registry</span><span class="p">]):</span>
+        <span class="c1"># Recursively traverse the class hierarchy, registering the class with each</span>
+        <span class="c1"># ancestor that is a subclass of Registry.</span>
         <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">Registry</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">Registry</span><span class="p">)</span> <span class="ow">and</span> <span class="n">base</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">Registry</span><span class="p">:</span>
                 <span class="n">base</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">class_type</span><span class="p">)</span>
                 <span class="n">register_with_bases</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
 
-    <span class="c1"># Register the class in the registry of each of its base classes that are</span>
-    <span class="c1"># subclasses of RegistryBase</span>
     <span class="n">register_with_bases</span><span class="p">(</span><span class="n">class_type</span><span class="p">)</span>
-
     <span class="k">return</span> <span class="n">class_type</span></div>
 
 </pre></div>

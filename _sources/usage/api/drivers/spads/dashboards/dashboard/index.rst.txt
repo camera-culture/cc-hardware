@@ -1,0 +1,122 @@
+:py:mod:`drivers.spads.dashboards.dashboard`
+============================================
+
+
+.. py:module:: drivers.spads.dashboards.dashboard
+
+.. autoapi-nested-parse::
+
+   Dashboard for SPAD sensors.
+
+   This module provides a dashboard for visualizing SPAD sensor data in real-time. There
+   are three implementations available with different supported features:
+
+   - :class:`~drivers.spads.dashboards.matplotlib.MatplotlibDashboard`: Uses Matplotlib for
+       visualization.
+   - :class:`~drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard`: Uses PyQtGraph for
+       visualization.
+   - :class:`~drivers.spads.dashboards.dash.DashDashboard`: Uses Dash and Plotly for
+       web-based visualization.
+
+   You can specify user-defined callbacks to be executed on each update of the dashboard.
+
+   Example:
+
+   .. code-block:: python
+
+       from cc_hardware.drivers.spads import SPADSensor, SPADDashboard
+
+       sensor = SPADSensor.create_from_registry(...)
+       dashboard = SPADDashboard.create_from_registry(
+           ...,
+           sensor=sensor,
+           user_callback=my_callback,
+       )
+
+       dashboard.run()
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   drivers.spads.dashboards.dashboard.SPADDashboard
+
+
+
+
+.. py:class:: SPADDashboard(sensor, *, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
+
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`cc_hardware.utils.Registry`
+
+   Abstract base class for SPAD sensor dashboards.
+
+   :Parameters: **sensor** (*SPADSensor*) -- The SPAD sensor instance.
+
+   :keyword num_frames: Number of frames to process. Default is 1,000,000.
+   :kwtype num_frames: int
+   :keyword min_bin: Minimum bin value for histogram.
+   :kwtype min_bin: int, optional
+   :keyword max_bin: Maximum bin value for histogram.
+   :kwtype max_bin: int, optional
+   :keyword autoscale: Whether to autoscale the histogram. Default is True.
+   :kwtype autoscale: bool
+   :keyword ylim: Y-axis limit for the histogram.
+   :kwtype ylim: float, optional
+   :keyword channel_mask: List of channels to display.
+   :kwtype channel_mask: list[int], optional
+   :keyword user_callback: User-defined callback
+                           function. It should accept the dashboard instance as an argument.
+   :kwtype user_callback: Callable[[Self], None], optional
+
+   .. py:property:: min_bin
+      :type: int
+
+      Minimum bin value for the histogram.
+
+      Supports variable sized bins based on the sensor configuration.
+
+   .. py:property:: max_bin
+      :type: int
+
+      Maximum bin value for the histogram.
+
+      Supports variable sized bins based on the sensor configuration.
+
+   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
+      :abstractmethod:
+
+      Abstract method to set up the dashboard. Should be independent of whether the
+      dashboard is run in a loop or not.
+
+      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
+                   * **headless** (*bool*) -- Whether to run in headless mode.
+                   * **save** (*Path | None*) -- If provided, save the output to this file.
+
+
+   .. py:method:: run()
+      :abstractmethod:
+
+      Abstract method to display the dashboard. Blocks until the dashboard is closed.
+
+
+   .. py:method:: update(frame, *, histograms = None)
+      :abstractmethod:
+
+      Abstract method to update the histogram data. This should be capable of being
+      used independent of the loop, as in in a main thread and non-blocking.
+
+      :Parameters: **frame** (*int*) -- Current frame number.
+
+      :keyword histograms: The histogram data to update. If not provided, the
+                           sensor will be used to accumulate the histogram data.
+      :kwtype histograms: np.ndarray
+
+
+

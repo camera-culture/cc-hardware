@@ -207,7 +207,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -354,7 +353,7 @@
         </ul></li>
         <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager.add">add() (Manager method)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.adjust_ylim">adjust_ylim() (MatplotlibDashboard method)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.adjust_ylim">adjust_ylim() (MatplotlibDashboard method)</a>
 </li>
         <li><a href="usage/api/algos/algorithm/index.html#algos.algorithm.Algorithm">Algorithm (class in algos.algorithm)</a>
 </li>
@@ -492,7 +491,9 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard">DashDashboard (class in drivers.spads.dashboard)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.DashboardWindow">DashboardWindow (class in drivers.spads.dashboards.pyqtgraph)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard">DashDashboard (class in drivers.spads.dashboards.dash)</a>
 </li>
         <li><a href="usage/api/drivers/cameras/camera/index.html#drivers.cameras.camera.Camera.distortion_coefficients">distortion_coefficients (Camera property)</a>
 
@@ -568,14 +569,42 @@
 </li>
         </ul></li>
         <li>
-    drivers.spads.dashboard
+    drivers.spads.dashboards
 
         <ul>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#module-drivers.spads.dashboard">module</a>
+          <li><a href="usage/api/drivers/spads/dashboards/index.html#module-drivers.spads.dashboards">module</a>
+</li>
+        </ul></li>
+        <li>
+    drivers.spads.dashboards.dash
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#module-drivers.spads.dashboards.dash">module</a>
+</li>
+        </ul></li>
+        <li>
+    drivers.spads.dashboards.dashboard
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#module-drivers.spads.dashboards.dashboard">module</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    drivers.spads.dashboards.matplotlib
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#module-drivers.spads.dashboards.matplotlib">module</a>
+</li>
+        </ul></li>
+        <li>
+    drivers.spads.dashboards.pyqtgraph
+
+        <ul>
+          <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#module-drivers.spads.dashboards.pyqtgraph">module</a>
+</li>
+        </ul></li>
         <li>
     drivers.spads.pkl
 
@@ -708,11 +737,13 @@
           <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.get_data">(VL53L8CHHistogram method)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.SPADID.get_num_channels">get_num_channels() (SPADID method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.SPADID.get_num_pixels">get_num_pixels() (SPADID method)</a>
+</li>
+        <li><a href="usage/api/utils/misc/index.html#utils.misc.get_object">get_object() (in module utils.misc)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/stepper_controller/index.html#drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">get_position() (SnakeStepperController method)</a>
 
@@ -757,6 +788,8 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.id">id (TelemetrixStepperMotor property)</a>
+</li>
+        <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.DashboardWindow.init_ui">init_ui() (DashboardWindow method)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.initialize">initialize() (KinesisRotationStage method)</a>
 
@@ -816,6 +849,8 @@
   <h2>K</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.DashboardWindow.keyPressEvent">keyPressEvent() (DashboardWindow method)</a>
+</li>
         <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisRotationStage">KinesisRotationStage (class in drivers.stepper_motors.kinesis_stepper)</a>
 </li>
     </ul></td>
@@ -852,11 +887,11 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager">Manager (class in utils.manager)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard">MatplotlibDashboard (class in drivers.spads.dashboard)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard">MatplotlibDashboard (class in drivers.spads.dashboards.matplotlib)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.max_bin">max_bin (SPADDashboard property)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard.max_bin">max_bin (SPADDashboard property)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.min_bin">min_bin (SPADDashboard property)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard.min_bin">min_bin (SPADDashboard property)</a>
 </li>
         <li>
     module
@@ -888,7 +923,15 @@
 </li>
           <li><a href="usage/api/drivers/spads/index.html#module-drivers.spads">drivers.spads</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#module-drivers.spads.dashboard">drivers.spads.dashboard</a>
+          <li><a href="usage/api/drivers/spads/dashboards/index.html#module-drivers.spads.dashboards">drivers.spads.dashboards</a>
+</li>
+          <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#module-drivers.spads.dashboards.dash">drivers.spads.dashboards.dash</a>
+</li>
+          <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#module-drivers.spads.dashboards.dashboard">drivers.spads.dashboards.dashboard</a>
+</li>
+          <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#module-drivers.spads.dashboards.matplotlib">drivers.spads.dashboards.matplotlib</a>
+</li>
+          <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#module-drivers.spads.dashboards.pyqtgraph">drivers.spads.dashboards.pyqtgraph</a>
 </li>
           <li><a href="usage/api/drivers/spads/pkl/index.html#module-drivers.spads.pkl">drivers.spads.pkl</a>
 </li>
@@ -1017,7 +1060,7 @@
           <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHHistogram.process">(VL53L8CHHistogram method)</a>
 </li>
         </ul></li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard">PyQtGraphDashboard (class in drivers.spads.dashboard)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard">PyQtGraphDashboard (class in drivers.spads.dashboards.pyqtgraph)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -1082,15 +1125,15 @@
         <ul>
           <li><a href="usage/api/algos/aruco/index.html#algos.aruco.ArucoLocalizationAlgorithm.run">(ArucoLocalizationAlgorithm method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.run">(DashDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard.run">(DashDashboard method)</a>
 </li>
           <li><a href="usage/api/utils/manager/index.html#utils.manager.Manager.run">(Manager method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.run">(MatplotlibDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.run">(MatplotlibDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard.run">(PyQtGraphDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.run">(PyQtGraphDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.run">(SPADDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard.run">(SPADDashboard method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -1103,7 +1146,7 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="usage/api/drivers/safe_serial/index.html#drivers.safe_serial.SafeSerial">SafeSerial (class in drivers.safe_serial)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.save_animation">save_animation() (MatplotlibDashboard method)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.save_animation">save_animation() (MatplotlibDashboard method)</a>
 </li>
         <li><a href="usage/api/drivers/sensor/index.html#drivers.sensor.Sensor">Sensor (class in drivers.sensor)</a>
 </li>
@@ -1125,20 +1168,18 @@
 </li>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.set_target_position_cm">set_target_position_cm() (TelemetrixStepperMotor method)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.setup">setup() (DashDashboard method)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard.setup">setup() (DashDashboard method)</a>
 
         <ul>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.setup">(MatplotlibDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.setup">(MatplotlibDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard.setup">(PyQtGraphDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.setup">(PyQtGraphDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.setup">(SPADDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard.setup">(SPADDashboard method)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.setup_sensor">setup_sensor() (SPADDashboard method)</a>
-</li>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry">SingleDrive1AxisGantry (class in drivers.stepper_motors.telemetrix_stepper)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X">SingleDrive1AxisGantry_X (class in drivers.stepper_motors.telemetrix_stepper)</a>
@@ -1151,7 +1192,7 @@
 </li>
         <li><a href="usage/api/drivers/stepper_motors/stepper_controller/index.html#drivers.stepper_motors.stepper_controller.SnakeStepperController">SnakeStepperController (class in drivers.stepper_motors.stepper_controller)</a>
 </li>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard">SPADDashboard (class in drivers.spads.dashboard)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard">SPADDashboard (class in drivers.spads.dashboards.dashboard)</a>
 </li>
         <li><a href="usage/api/drivers/spads/tmf8828/index.html#drivers.spads.tmf8828.SPADID">SPADID (class in drivers.spads.tmf8828)</a>
 </li>
@@ -1207,14 +1248,14 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.update">update() (DashDashboard method)</a>
+        <li><a href="usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard.update">update() (DashDashboard method)</a>
 
         <ul>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.update">(MatplotlibDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.update">(MatplotlibDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard.update">(PyQtGraphDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.update">(PyQtGraphDashboard method)</a>
 </li>
-          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.update">(SPADDashboard method)</a>
+          <li><a href="usage/api/drivers/spads/dashboards/dashboard/index.html#drivers.spads.dashboards.dashboard.SPADDashboard.update">(SPADDashboard method)</a>
 </li>
           <li><a href="usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.update">(VL53L8CHSensor method)</a>
 </li>

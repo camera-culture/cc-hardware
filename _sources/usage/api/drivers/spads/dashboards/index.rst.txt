@@ -1,0 +1,21 @@
+:orphan:
+
+:py:mod:`drivers.spads.dashboards`
+==================================
+
+
+.. py:module:: drivers.spads.dashboards
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   dash/index.rst
+   dashboard/index.rst
+   matplotlib/index.rst
+   pyqtgraph/index.rst
+
+

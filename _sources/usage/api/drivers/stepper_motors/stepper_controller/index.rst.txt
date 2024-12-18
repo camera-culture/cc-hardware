@@ -32,6 +32,10 @@ Classes
    A base class that provides a registry for its subclasses and a factory method
    to instantiate them.
 
+   Supports both direct and lazy registration of classes, allowing classes
+   to be registered by name and module path for deferred loading. An enumeration
+   of registered classes is also provided.
+
    .. py:method:: get_position(iter)
       :abstractmethod:
 
@@ -50,6 +54,10 @@ Classes
 
    A base class that provides a registry for its subclasses and a factory method
    to instantiate them.
+
+   Supports both direct and lazy registration of classes, allowing classes
+   to be registered by name and module path for deferred loading. An enumeration
+   of registered classes is also provided.
 
    .. py:method:: get_position(iter)
 

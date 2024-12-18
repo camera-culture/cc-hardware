@@ -209,7 +209,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -309,6 +308,7 @@
 <span class="n">LOGDIR</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H-%M-%S&quot;</span><span class="p">)</span>
 
 <span class="n">STEPPER_SYSTEM_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SingleDrive1AxisGantry&quot;</span>
+<span class="n">STEPPER_PORT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">CONTROLLER_CONFIG</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
@@ -325,7 +325,9 @@
     <span class="n">controller</span> <span class="o">=</span> <span class="n">SnakeStepperController</span><span class="p">(</span><span class="n">CONTROLLER_CONFIG</span><span class="p">)</span>
     <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">controller</span><span class="o">=</span><span class="n">controller</span><span class="p">)</span>
 
-    <span class="n">stepper_system</span> <span class="o">=</span> <span class="n">StepperMotorSystem</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span><span class="n">STEPPER_SYSTEM_NAME</span><span class="p">)</span>
+    <span class="n">stepper_system</span> <span class="o">=</span> <span class="n">StepperMotorSystem</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
+        <span class="n">STEPPER_SYSTEM_NAME</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">STEPPER_PORT</span>
+    <span class="p">)</span>
     <span class="n">stepper_system</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
     <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">stepper_system</span><span class="o">=</span><span class="n">stepper_system</span><span class="p">)</span>
 
@@ -373,6 +375,18 @@
 <span class="c1"># ===============</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Demo: Stepper Motor Controller&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--port&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The port to use for the stepper motor system.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">STEPPER_PORT</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
+
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 </div>

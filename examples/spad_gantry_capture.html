@@ -209,7 +209,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -292,8 +291,7 @@
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboard</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADSensor</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors</span> <span class="kn">import</span> <span class="n">StepperMotorSystem</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors.stepper_controller</span> <span class="kn">import</span> <span class="n">SnakeStepperController</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.file_handlers</span> <span class="kn">import</span> <span class="n">PklHandler</span>
@@ -367,7 +365,7 @@
     <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting iter </span><span class="si">{</span><span class="nb">iter</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
     <span class="n">histogram</span> <span class="o">=</span> <span class="n">spad</span><span class="o">.</span><span class="n">accumulate</span><span class="p">()</span>
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+    <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">iter</span><span class="p">,</span> <span class="n">histograms</span><span class="o">=</span><span class="n">histogram</span><span class="p">)</span>
 
     <span class="n">pos</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">get_position</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

@@ -16,7 +16,6 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   dashboard/index.rst
    pkl/index.rst
    spad/index.rst
    tmf8828/index.rst

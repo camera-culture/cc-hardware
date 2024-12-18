@@ -209,7 +209,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../../spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -311,6 +310,9 @@
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.registry.Registry</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>A base class that provides a registry for its subclasses and a factory method
 to instantiate them.</p>
+<p>Supports both direct and lazy registration of classes, allowing classes
+to be registered by name and module path for deferred loading. An enumeration
+of registered classes is also provided.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_controller.StepperController.get_position">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_controller.html#StepperController.get_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_controller.StepperController.get_position" title="Link to this definition">#</a></dt>
@@ -333,6 +335,9 @@ to instantiate them.</p>
 <dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.stepper_controller.StepperController" title="drivers.stepper_motors.stepper_controller.StepperController"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperController</span></code></a></p>
 <p>A base class that provides a registry for its subclasses and a factory method
 to instantiate them.</p>
+<p>Supports both direct and lazy registration of classes, allowing classes
+to be registered by name and module path for deferred loading. An enumeration
+of registered classes is also provided.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">
 <span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_controller.html#SnakeStepperController.get_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position" title="Link to this definition">#</a></dt>

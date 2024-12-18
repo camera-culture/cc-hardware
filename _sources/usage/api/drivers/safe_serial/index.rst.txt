@@ -39,7 +39,7 @@ Classes
                        "threading", "multiprocessing", or "none".
    :kwtype lock_type: str
 
-   .. py:method:: create(port = None, *, wait = 1, **kwargs)
+   .. py:method:: create(port = None, *, wait = 1, one = False, **kwargs)
       :classmethod:
 
       Create an instance of SafeSerial from a serial port. Checks all available ports
@@ -50,6 +50,9 @@ Classes
                      check all available ports.
                    * **wait** (*int*) -- The number of seconds to wait for the device to reset. Default
                      is 2 seconds.
+                   * **one** (*bool*) -- Whether to force the method to return a single instance. If
+                     True and multiple instances are found, an error is raised. Default is
+                     False.
                    * **\*\*kwargs** -- Additional keyword arguments passed to the SafeSerial constructor.
 
       :returns: *SafeSerial | list[SafeSerial]* --

@@ -209,7 +209,6 @@
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../usage/api/drivers/spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboard</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.spad</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../usage/api/drivers/spads/tmf8828/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.tmf8828</span></code></a></li>
@@ -291,13 +290,13 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboard</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADSensor</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 
-<span class="c1"># Shared variable and lock</span>
 <span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 <span class="n">num_bins_to_set</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">SPAD_PORT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <span class="k">def</span> <span class="nf">handle_user_input</span><span class="p">():</span>
@@ -323,7 +322,7 @@
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">sensor_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dashboard_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
     <span class="c1"># Main application setup</span>
-    <span class="n">sensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span><span class="n">sensor_name</span><span class="p">)</span>
+    <span class="n">sensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span><span class="n">sensor_name</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">SPAD_PORT</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor</span><span class="o">.</span><span class="n">is_okay</span><span class="p">:</span>
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Failed to initialize sensor&quot;</span><span class="p">)</span>
         <span class="k">return</span>
@@ -353,11 +352,14 @@
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
         <span class="s2">&quot;--dashboard&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;PyQtGraphDashboard&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The dashboard to use.&quot;</span>
     <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--port&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The port to use for the SPAD sensor.&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="c1"># Set logger level</span>
     <span class="n">get_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">SPAD_PORT</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
 
     <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">spad</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dashboard</span><span class="p">)</span>
 </pre></div>
