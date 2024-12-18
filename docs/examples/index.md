@@ -1,4 +1,7 @@
-# Examples
+```{include} ../../examples/README.md
+```
+
+## Available Examples
 
 ```{toctree}
 :maxdepth: 1
