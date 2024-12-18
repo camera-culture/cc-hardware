@@ -307,11 +307,13 @@ class VL53L8CHSensor(SPADSensor):
         """
         # Open the serial connection
         try:
-            serial_conn = SafeSerial.create(port=port, baudrate=baudrate)
-            initialized_event.set()
+            serial_conn = SafeSerial.create(port=port, baudrate=baudrate, one=True)
         except Exception as e:
             get_logger().error(f"Error opening serial connection: {e}")
+            stop_event.set()
             return
+        finally:
+            initialized_event.set()
 
         try:
             while not stop_event.is_set():

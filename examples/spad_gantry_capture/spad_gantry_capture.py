@@ -2,8 +2,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.drivers.spads.dashboard import SPADDashboard
+from cc_hardware.drivers.spads import SPADDashboard, SPADSensor
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
 from cc_hardware.utils.file_handlers import PklHandler
@@ -77,7 +76,7 @@ def loop(
     get_logger().info(f"Starting iter {iter}...")
 
     histogram = spad.accumulate()
-    dashboard.update(iter)
+    dashboard.update(iter, histograms=histogram)
 
     pos = controller.get_position(iter)
     if pos is None:

@@ -45,7 +45,7 @@ class SafeSerial:
 
     @classmethod
     def create(
-        cls, port: str | None = None, *, wait: int = 1, **kwargs
+        cls, port: str | None = None, *, wait: int = 1, one: bool = False, **kwargs
     ) -> Self | list[Self]:
         """
         Create an instance of SafeSerial from a serial port. Checks all available ports
@@ -57,6 +57,9 @@ class SafeSerial:
                 check all available ports.
             wait (int): The number of seconds to wait for the device to reset. Default
                 is 2 seconds.
+            one (bool): Whether to force the method to return a single instance. If
+                True and multiple instances are found, an error is raised. Default is
+                False.
             **kwargs: Additional keyword arguments passed to the SafeSerial constructor.
 
         Returns:
@@ -69,6 +72,11 @@ class SafeSerial:
             serial_ports = [cls(port, **kwargs)]
 
         assert len(serial_ports) > 0, f"No {cls.__name__} devices found"
+        if one and len(serial_ports) > 1:
+            raise ValueError(
+                f"Multiple {cls.__name__} devices found but only one expected. "
+                "Consider setting the port explicitly."
+            )
 
         get_logger().info(
             f"Waiting {wait} seconds for {cls.__name__} devices to reset..."

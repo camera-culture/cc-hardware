@@ -1,13 +1,13 @@
 import threading
 import time
 
-from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.drivers.spads.dashboard import SPADDashboard
+from cc_hardware.drivers.spads import SPADDashboard, SPADSensor
 from cc_hardware.utils.logger import get_logger
 
-# Shared variable and lock
 lock = threading.Lock()
 num_bins_to_set = None
+
+SPAD_PORT: str | None = None
 
 
 def handle_user_input():
@@ -33,7 +33,7 @@ def my_callback(dashboard: SPADDashboard):
 
 def main(sensor_name: str, dashboard_name: str):
     # Main application setup
-    sensor = SPADSensor.create_from_registry(sensor_name)
+    sensor = SPADSensor.create_from_registry(sensor_name, port=SPAD_PORT)
     if not sensor.is_okay:
         get_logger().fatal("Failed to initialize sensor")
         return
@@ -63,10 +63,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--dashboard", default="PyQtGraphDashboard", help="The dashboard to use."
     )
+    parser.add_argument(
+        "--port", default=None, help="The port to use for the SPAD sensor."
+    )
 
     args = parser.parse_args()
 
-    # Set logger level
     get_logger(level=args.log_level)
+    SPAD_PORT = args.port
 
     main(args.spad, args.dashboard)

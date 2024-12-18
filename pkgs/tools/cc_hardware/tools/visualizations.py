@@ -41,8 +41,7 @@ def spad_dashboard(
     max_bin: int | None = None,
     fullscreen: bool = False,
 ):
-    from cc_hardware.drivers.spads import SPADSensor
-    from cc_hardware.drivers.spads.dashboard import SPADDashboard
+    from cc_hardware.drivers.spads import SPADDashboard, SPADSensor
     from cc_hardware.utils.manager import Manager
 
     spad = partial(SPADSensor.create_from_registry, spad_type, port=port)
@@ -59,7 +58,8 @@ def spad_dashboard(
         )
         manager.add(dashboard=dashboard)
 
-        dashboard.run(save=filename, headless=not show, fullscreen=fullscreen)
+        dashboard.setup(fullscreen=fullscreen, headless=not show, save=filename)
+        dashboard.run()
 
     with Manager(spad=spad) as manager:
         manager.run(setup=setup)

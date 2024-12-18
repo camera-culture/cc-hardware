@@ -9,8 +9,6 @@ from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.tools.app import APP, typer
 from cc_hardware.utils.logger import get_logger
 
-get_logger(level=logging.DEBUG)
-
 # ======================
 
 jogger_APP = typer.Typer()

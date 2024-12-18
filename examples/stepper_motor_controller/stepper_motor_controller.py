@@ -19,6 +19,7 @@ now = datetime.now()
 LOGDIR: Path = Path("logs") / now.strftime("%Y-%m-%d") / now.strftime("%H-%M-%S")
 
 STEPPER_SYSTEM_NAME: str = "SingleDrive1AxisGantry"
+STEPPER_PORT: str | None = None
 CONTROLLER_CONFIG: list[dict] = [
     {"name": "x", "range": (0, 16), "samples": 10},
     {"name": "y", "range": (0, 16), "samples": 10},
@@ -35,7 +36,9 @@ def setup(manager: Manager):
     controller = SnakeStepperController(CONTROLLER_CONFIG)
     manager.add(controller=controller)
 
-    stepper_system = StepperMotorSystem.create_from_registry(STEPPER_SYSTEM_NAME)
+    stepper_system = StepperMotorSystem.create_from_registry(
+        STEPPER_SYSTEM_NAME, port=STEPPER_PORT
+    )
     stepper_system.initialize()
     manager.add(stepper_system=stepper_system)
 
@@ -83,4 +86,16 @@ def main():
 # ===============
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Demo: Stepper Motor Controller")
+
+    parser.add_argument(
+        "--port", default=None, help="The port to use for the stepper motor system."
+    )
+
+    args = parser.parse_args()
+
+    STEPPER_PORT = args.port
+
     main()
