@@ -19,6 +19,7 @@ Submodules
    file_handlers/index.rst
    logger/index.rst
    manager/index.rst
+   misc/index.rst
    plotting/index.rst
    registry/index.rst
    singleton/index.rst

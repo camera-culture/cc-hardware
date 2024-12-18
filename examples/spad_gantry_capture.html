@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Stepper Motor Controller" href="stepper_motor_controller.html" /><link rel="prev" title="SPAD Dashboard" href="spad_dashboard.html" />
 
     <link rel="shortcut icon" href="../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Stepper Gantry Capture - cc-hardware 0.0.0 documentation</title>
+        <title>Stepper Gantry Collab - cc-hardware 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=649a27d8" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -188,7 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="spad_dashboard.html">SPAD Dashboard</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Stepper Gantry Capture</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stepper_motor_controller.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
@@ -235,6 +235,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
@@ -285,14 +286,14 @@
           </label>
         </div>
         <article role="main">
-          <section id="stepper-gantry-capture">
-<h1>Stepper Gantry Capture<a class="headerlink" href="#stepper-gantry-capture" title="Link to this heading">#</a></h1>
+          <section id="stepper-gantry-collab">
+<h1>Stepper Gantry Collab<a class="headerlink" href="#stepper-gantry-collab" title="Link to this heading">#</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboard</span> <span class="kn">import</span> <span class="n">MatplotlibDashboard</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboard</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors</span> <span class="kn">import</span> <span class="n">StepperMotorSystem</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors.stepper_controller</span> <span class="kn">import</span> <span class="n">SnakeStepperController</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.file_handlers</span> <span class="kn">import</span> <span class="n">PklHandler</span>
@@ -319,6 +320,8 @@
     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
 <span class="p">]</span>
 
+<span class="n">DASHBOARD_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PyQtGraphDashboard&quot;</span>
+
 <span class="n">OUTPUT_PKL</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">LOGDIR</span> <span class="o">/</span> <span class="s2">&quot;data.pkl&quot;</span>
 
 <span class="c1"># ===============</span>
@@ -333,7 +336,7 @@
         <span class="k">return</span>
     <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">spad</span><span class="o">=</span><span class="n">spad</span><span class="p">)</span>
 
-    <span class="n">dashboard</span> <span class="o">=</span> <span class="n">MatplotlibDashboard</span><span class="p">(</span><span class="n">spad</span><span class="p">)</span>
+    <span class="n">dashboard</span> <span class="o">=</span> <span class="n">SPADDashboard</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span><span class="n">DASHBOARD_NAME</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">spad</span><span class="p">)</span>
     <span class="n">dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
     <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dashboard</span><span class="o">=</span><span class="n">dashboard</span><span class="p">)</span>
 
@@ -355,7 +358,7 @@
     <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span>
     <span class="n">spad</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span>
-    <span class="n">dashboard</span><span class="p">:</span> <span class="n">MatplotlibDashboard</span><span class="p">,</span>
+    <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">,</span>
     <span class="n">controller</span><span class="p">:</span> <span class="n">SnakeStepperController</span><span class="p">,</span>
     <span class="n">stepper_system</span><span class="p">:</span> <span class="n">StepperMotorSystem</span><span class="p">,</span>
     <span class="n">writer</span><span class="p">:</span> <span class="n">PklHandler</span><span class="p">,</span>

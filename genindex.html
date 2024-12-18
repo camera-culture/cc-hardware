@@ -186,7 +186,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/spad_dashboard.html">SPAD Dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/spad_gantry_capture.html">Stepper Gantry Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
@@ -233,6 +233,7 @@
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
@@ -439,6 +440,8 @@
           <li><a href="usage/api/algos/aruco/index.html#algos.aruco.ArucoLocalizationAlgorithm.close">(ArucoLocalizationAlgorithm method)</a>
 </li>
           <li><a href="usage/api/utils/manager/index.html#utils.manager.Component.close">(Component method)</a>
+</li>
+          <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.DummyStepperSystem.close">(DummyStepperSystem method)</a>
 </li>
           <li><a href="usage/api/drivers/cameras/flir/index.html#drivers.cameras.flir.FlirCamera.close">(FlirCamera method)</a>
 </li>
@@ -652,6 +655,8 @@
         <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2">DualDrive2AxisGantry_Y2 (class in drivers.stepper_motors.telemetrix_stepper)</a>
 </li>
         <li><a href="usage/api/drivers/stepper_motors/stepper_motor/index.html#drivers.stepper_motors.stepper_motor.DummyStepperMotor">DummyStepperMotor (class in drivers.stepper_motors.stepper_motor)</a>
+</li>
+        <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.DummyStepperSystem">DummyStepperSystem (class in drivers.stepper_motors.stepper_system)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -934,9 +939,11 @@
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.move_by">move_by() (KinesisStepperMotor method)</a>
+        <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_by">move_by() (DummyStepperSystem method)</a>
 
         <ul>
+          <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.move_by">(KinesisStepperMotor method)</a>
+</li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_motor/index.html#drivers.stepper_motors.stepper_motor.StepperMotor.move_by">(StepperMotor method)</a>
 </li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.move_by">(StepperMotorSystem method)</a>
@@ -944,9 +951,11 @@
           <li><a href="usage/api/drivers/stepper_motors/telemetrix_stepper/index.html#drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.move_by">(TelemetrixStepperMotor method)</a>
 </li>
         </ul></li>
-        <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.move_to">move_to() (KinesisStepperMotor method)</a>
+        <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_to">move_to() (DummyStepperSystem method)</a>
 
         <ul>
+          <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.move_to">(KinesisStepperMotor method)</a>
+</li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_motor/index.html#drivers.stepper_motors.stepper_motor.StepperMotor.move_to">(StepperMotor method)</a>
 </li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.move_to">(StepperMotorSystem method)</a>
@@ -1198,9 +1207,11 @@
   <h2>U</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.update">update() (MatplotlibDashboard method)</a>
+        <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.DashDashboard.update">update() (DashDashboard method)</a>
 
         <ul>
+          <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.MatplotlibDashboard.update">(MatplotlibDashboard method)</a>
+</li>
           <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.PyQtGraphDashboard.update">(PyQtGraphDashboard method)</a>
 </li>
           <li><a href="usage/api/drivers/spads/dashboard/index.html#drivers.spads.dashboard.SPADDashboard.update">(SPADDashboard method)</a>
@@ -1329,9 +1340,11 @@
   <h2>W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.wait_for_move">wait_for_move() (KinesisStepperMotor method)</a>
+        <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.DummyStepperSystem.wait_for_move">wait_for_move() (DummyStepperSystem method)</a>
 
         <ul>
+          <li><a href="usage/api/drivers/stepper_motors/kinesis_stepper/index.html#drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.wait_for_move">(KinesisStepperMotor method)</a>
+</li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_motor/index.html#drivers.stepper_motors.stepper_motor.StepperMotor.wait_for_move">(StepperMotor method)</a>
 </li>
           <li><a href="usage/api/drivers/stepper_motors/stepper_system/index.html#drivers.stepper_motors.stepper_system.StepperMotorSystem.wait_for_move">(StepperMotorSystem method)</a>

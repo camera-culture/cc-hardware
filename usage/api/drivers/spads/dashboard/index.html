@@ -188,7 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_gantry_capture.html">Stepper Gantry Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
@@ -235,6 +235,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
@@ -489,8 +490,23 @@ sensor will be used to accumulate the histogram data.</p>
 <dd><p>Bases: <a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p>
 <p>Dashboard implementation using PyQtGraph for real-time visualization.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.setup" title="Link to this definition">#</a></dt>
+<dd><p>Sets up the PyQtGraph plot layout and styling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fullscreen</strong> (<em>bool</em>) – Whether to display in fullscreen mode.</p></li>
+<li><p><strong>headless</strong> (<em>bool</em>) – Whether to run in headless mode.</p></li>
+<li><p><strong>save</strong> (<em>Path | None</em>) – If provided, save the output to this file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.run" title="Link to this definition">#</a></dt>
 <dd><p>Executes the PyQtGraph dashboard application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -504,19 +520,8 @@ sensor will be used to accumulate the histogram data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">win</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.setup" title="Link to this definition">#</a></dt>
-<dd><p>Sets up the plots for each channel in the dashboard.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>win</strong> (<em>DashboardWindow</em>) – The main window for the plots.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="drivers.spads.dashboard.PyQtGraphDashboard.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histograms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#PyQtGraphDashboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.PyQtGraphDashboard.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the histogram data in the plots.</p>
 </dd></dl>
 
@@ -528,9 +533,9 @@ sensor will be used to accumulate the histogram data.</p>
 <dd><p>Bases: <a class="reference internal" href="#drivers.spads.dashboard.SPADDashboard" title="drivers.spads.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p>
 <p>Dashboard implementation using Dash and Plotly for web-based visualization.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.run" title="Link to this definition">#</a></dt>
-<dd><p>Executes the Dash dashboard application.</p>
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.setup" title="Link to this definition">#</a></dt>
+<dd><p>Sets up the layout and figures for the Dash application</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -543,9 +548,24 @@ sensor will be used to accumulate the histogram data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.setup">
-<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.setup" title="Link to this definition">#</a></dt>
-<dd><p>Sets up the layout and figures for the Dash application.</p>
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.run" title="Link to this definition">#</a></dt>
+<dd><p>Executes the Dash dashboard application.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.spads.dashboard.DashDashboard.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_intervals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histograms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/spads/dashboard.html#DashDashboard.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboard.DashDashboard.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the histogram data for each frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_intervals</strong> (<em>int</em>) – Current frame number.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>histograms</strong> (<em>np.ndarray</em>) – The histogram data to update. If not provided, the
+sensor will be used to accumulate the histogram data.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -630,14 +650,15 @@ sensor will be used to accumulate the histogram data.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard</span></code></a><ul>
-<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.run"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.run()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.setup"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.setup()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.run"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.run()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboard.PyQtGraphDashboard.update"><code class="docutils literal notranslate"><span class="pre">PyQtGraphDashboard.update()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard"><code class="docutils literal notranslate"><span class="pre">DashDashboard</span></code></a><ul>
-<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.run"><code class="docutils literal notranslate"><span class="pre">DashDashboard.run()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.setup"><code class="docutils literal notranslate"><span class="pre">DashDashboard.setup()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.run"><code class="docutils literal notranslate"><span class="pre">DashDashboard.run()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboard.DashDashboard.update"><code class="docutils literal notranslate"><span class="pre">DashDashboard.update()</span></code></a></li>
 </ul>
 </li>
 </ul>

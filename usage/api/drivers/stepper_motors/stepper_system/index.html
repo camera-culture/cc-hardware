@@ -188,7 +188,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_gantry_capture.html">Stepper Gantry Capture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
@@ -235,6 +235,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.manager</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
@@ -301,6 +302,9 @@ unit. This is useful for controlling a gantry or a multi-axis rotation stage.</p
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#drivers.stepper_motors.stepper_system.StepperMotorSystem" title="drivers.stepper_motors.stepper_system.StepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a></p></td>
 <td><p>This is a wrapper around multiple stepper motors which defines the system</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem" title="drivers.stepper_motors.stepper_system.DummyStepperSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DummyStepperSystem</span></code></a></p></td>
+<td><p>A dummy stepper system that does nothing.</p></td>
 </tr>
 </tbody>
 </table>
@@ -416,6 +420,41 @@ released to avoid damage or memory leaks.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="drivers.stepper_motors.stepper_system.DummyStepperSystem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DummyStepperSystem</span></span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_system.html#DummyStepperSystem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#drivers.stepper_motors.stepper_system.StepperMotorSystem" title="drivers.stepper_motors.stepper_system.StepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a></p>
+<p>A dummy stepper system that does nothing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.stepper_motors.stepper_system.DummyStepperSystem.move_to">
+<span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_system.html#DummyStepperSystem.move_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_to" title="Link to this definition">#</a></dt>
+<dd><p>Move to the specified position using positional or keyword arguments.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.stepper_motors.stepper_system.DummyStepperSystem.move_by">
+<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_system.html#DummyStepperSystem.move_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_by" title="Link to this definition">#</a></dt>
+<dd><p>Moves the steppers to the specified positions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.stepper_motors.stepper_system.DummyStepperSystem.wait_for_move">
+<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_system.html#DummyStepperSystem.wait_for_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.wait_for_move" title="Link to this definition">#</a></dt>
+<dd><p>Waits for the motor to complete its current move operation. This method should
+block the execution until the motor has reached its target position or
+completed the current motion command.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.stepper_motors.stepper_system.DummyStepperSystem.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/drivers/stepper_motors/stepper_system.html#DummyStepperSystem.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the connection or shuts down the stepper motor safely. Implementations
+should ensure that the motor is properly powered down and any resources are
+released to avoid damage or memory leaks.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 </section>
@@ -486,6 +525,13 @@ released to avoid damage or memory leaks.</p>
 <li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.StepperMotorSystem.wait_for_move"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.wait_for_move()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.StepperMotorSystem.__getattr__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.__getattr__()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.StepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.close()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_to"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.move_to()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.move_by"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.move_by()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.wait_for_move"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.wait_for_move()</span></code></a></li>
+<li><a class="reference internal" href="#drivers.stepper_motors.stepper_system.DummyStepperSystem.close"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.close()</span></code></a></li>
 </ul>
 </li>
 </ul>

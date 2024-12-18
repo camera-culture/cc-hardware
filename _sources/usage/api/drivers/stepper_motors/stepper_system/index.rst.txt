@@ -21,6 +21,7 @@ Classes
 
    drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
    drivers.stepper_motors.stepper_system.StepperMotorSystem
+   drivers.stepper_motors.stepper_system.DummyStepperSystem
 
 
 
@@ -110,6 +111,38 @@ Classes
    .. py:method:: __getattr__(name)
 
       This is a passthrough to the underlying motor objects.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+.. py:class:: DummyStepperSystem
+
+
+   Bases: :py:obj:`StepperMotorSystem`
+
+   A dummy stepper system that does nothing.
+
+   .. py:method:: move_to(*positions)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+   .. py:method:: move_by(*positions)
+
+      Moves the steppers to the specified positions.
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
 
 
    .. py:method:: close()

@@ -1,9 +1,12 @@
-:orphan:
-
 :py:mod:`utils.misc`
 ====================
 
 
 .. py:module:: utils.misc
+
+.. autoapi-nested-parse::
+
+   Miscellaneous utility functions/classes.
+
 
 
