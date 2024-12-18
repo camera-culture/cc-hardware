@@ -177,7 +177,7 @@ html_theme_options = {
         </a>
     """,
     "sidebar_hide_name": True,
-    "light_logo": "cc-transparent.png",
+    "light_logo": "cc-white-bg.png",
     "dark_logo": "cc-transparent.png",
 }
 
