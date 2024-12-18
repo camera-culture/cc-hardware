@@ -10,6 +10,7 @@ from cc_hardware.drivers.stepper_motors.stepper_motor import (
 )
 from cc_hardware.utils.asyncio_utils import call_async_gather
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import register
 
 # ======================
 
@@ -177,3 +178,23 @@ class StepperMotorSystem(StepperMotor):
             for motors in self._axes.values():
                 for motor in motors:
                     motor.close()
+
+
+@register
+class DummyStepperSystem(StepperMotorSystem):
+    """A dummy stepper system that does nothing."""
+
+    def __init__(self):
+        super().__init__({})
+
+    def move_to(self, *positions: float):
+        pass
+
+    def move_by(self, *positions: float):
+        pass
+
+    def wait_for_move(self):
+        pass
+
+    def close(self):
+        pass

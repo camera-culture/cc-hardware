@@ -1,3 +1,6 @@
+"""Miscellaneous utility functions/classes."""
+
+
 class classproperty:
     def __init__(self, func):
         self.fget = func

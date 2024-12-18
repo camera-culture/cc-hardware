@@ -32,6 +32,7 @@ Example:
 import signal
 import threading
 from abc import ABC, abstractmethod
+from functools import partial
 from itertools import chain
 from pathlib import Path
 from typing import Callable, Self
@@ -359,7 +360,7 @@ class PyQtGraphDashboard(SPADDashboard):
     Dashboard implementation using PyQtGraph for real-time visualization.
     """
 
-    def run(
+    def setup(
         self,
         *,
         fullscreen: bool = False,
@@ -367,13 +368,14 @@ class PyQtGraphDashboard(SPADDashboard):
         save: Path | None = None,
     ):
         """
-        Executes the PyQtGraph dashboard application.
+        Sets up the PyQtGraph plot layout and styling.
 
         Args:
             fullscreen (bool): Whether to display in fullscreen mode.
             headless (bool): Whether to run in headless mode.
             save (Path | None): If provided, save the output to this file.
         """
+
         if headless:
             raise NotImplementedError(
                 "Headless mode is not supported for PyQtGraphDashboard."
@@ -452,7 +454,7 @@ class PyQtGraphDashboard(SPADDashboard):
                 if event.key() in [QtCore.Qt.Key.Key_Q, QtCore.Qt.Key.Key_Escape]:
                     QtWidgets.QApplication.quit()
 
-        app = QtWidgets.QApplication([])
+        self.app = QtWidgets.QApplication([])
         win = DashboardWindow()
         self.win = win
         if fullscreen:
@@ -461,36 +463,6 @@ class PyQtGraphDashboard(SPADDashboard):
             win.show()
 
         self.shared_y = True
-
-        self.setup(win.graphic_view)
-
-        # Connect settings to functionality
-        win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
-        win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
-        win.y_limit_textbox.textChanged.connect(self.update_y_limit)
-        win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
-
-        win.autoscale_checkbox.setChecked(self.autoscale)
-        win.shared_y_checkbox.setChecked(self.shared_y)
-        if self.ylim is not None:
-            win.y_limit_textbox.setText(str(self.ylim))
-
-        self.toggle_autoscale(self.autoscale)
-        self.toggle_shared_y(self.shared_y)
-
-        self.timer = pg.QtCore.QTimer()
-        self.timer.timeout.connect(self.update)
-        self.timer.start(1)
-
-        app.exec()
-
-    def setup(self, win):
-        """
-        Sets up the plots for each channel in the dashboard.
-
-        Args:
-            win (DashboardWindow): The main window for the plots.
-        """
 
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
@@ -502,8 +474,8 @@ class PyQtGraphDashboard(SPADDashboard):
         for idx, channel in enumerate(self.channel_mask):
             row, col = divmod(idx, cols)
             if col == 0:
-                win.nextRow()
-            p = win.addPlot()
+                win.graphic_view.nextRow()
+            p = win.graphic_view.addPlot()
             self.plots.append(p)
             y = np.zeros_like(bins)
             bg = self._create_bar_graph_item(bins, y)
@@ -516,11 +488,52 @@ class PyQtGraphDashboard(SPADDashboard):
             if not self.autoscale:
                 p.enableAutoRange(axis="y", enable=False)
 
-    def update(self, *args, **kwargs):
+        # Connect settings to functionality
+        self.win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
+        self.win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
+        self.win.y_limit_textbox.textChanged.connect(self.update_y_limit)
+        self.win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
+
+        self.win.autoscale_checkbox.setChecked(self.autoscale)
+        self.win.shared_y_checkbox.setChecked(self.shared_y)
+        if self.ylim is not None:
+            self.win.y_limit_textbox.setText(str(self.ylim))
+
+        self.toggle_autoscale(self.autoscale)
+        self.toggle_shared_y(self.shared_y)
+
+    def run(self):
+        """
+        Executes the PyQtGraph dashboard application.
+
+        Args:
+            fullscreen (bool): Whether to display in fullscreen mode.
+            headless (bool): Whether to run in headless mode.
+            save (Path | None): If provided, save the output to this file.
+        """
+
+        global pg, QtWidgets, QtCore
+        import pyqtgraph as pg
+        from pyqtgraph.Qt import QtCore
+
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(partial(self.update, frame=-1, step=False))
+        self.timer.start(1)
+
+        self.app.exec()
+
+    def update(
+        self,
+        frame: int,
+        histograms: np.ndarray | None = None,
+        *,
+        step: bool = True,
+    ):
         """
         Updates the histogram data in the plots.
         """
-        histograms = np.array(self.sensor.accumulate(1))
+        if histograms is None:
+            histograms = np.array(self.sensor.accumulate(1))
 
         # If log scale is enabled, replace 0s with 1s to avoid log(0)
         ymin = 0
@@ -570,6 +583,9 @@ class PyQtGraphDashboard(SPADDashboard):
             get_logger().info("Closing GUI...")
             QtWidgets.QApplication.quit()
 
+        if step:
+            self.app.processEvents()
+
     def _create_bar_graph_item(self, bins, y=None):
         import pyqtgraph as pg
 
@@ -613,7 +629,7 @@ class DashDashboard(SPADDashboard):
     Dashboard implementation using Dash and Plotly for web-based visualization.
     """
 
-    def run(
+    def setup(
         self,
         *,
         fullscreen: bool = False,
@@ -621,7 +637,7 @@ class DashDashboard(SPADDashboard):
         save: Path | None = None,
     ):
         """
-        Executes the Dash dashboard application.
+        Sets up the layout and figures for the Dash application
 
         Args:
             fullscreen (bool): Unused parameter for DashDashboard.
@@ -631,6 +647,10 @@ class DashDashboard(SPADDashboard):
         if fullscreen:
             get_logger().warning(
                 "Fullscreen functionality is not applicable for DashDashboard."
+            )
+        if headless:
+            get_logger().warning(
+                "Headless mode was set, but Dash is a web-based application."
             )
         if save:
             raise NotImplementedError(
@@ -645,23 +665,14 @@ class DashDashboard(SPADDashboard):
         from plotly.subplots import make_subplots
 
         self.app = dash.Dash(__name__)
-        self.histograms = np.zeros((self.num_channels, self.max_bin - self.min_bin))
-        self.num_updates = 0
-        self.setup_layout()
+
         self.lock = threading.Lock()
-
-        self.app.run(debug=False, use_reloader=False)
-
-    def setup(self):
-        """
-        Sets up the layout and figures for the Dash application.
-        """
-        import dash
-        import plotly.graph_objs as go
-        from dash import dcc, html
-        from plotly.subplots import make_subplots
+        self.num_updates = 0
+        self.blocking = False
+        self.thread: threading.Thread = None
 
         self.bins = np.arange(self.min_bin, self.max_bin)
+        self.histograms = np.zeros((self.num_channels, self.max_bin - self.min_bin))
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
@@ -708,6 +719,7 @@ class DashDashboard(SPADDashboard):
                 ),
             ],
         )
+        self.existing_fig = fig
 
         @self.app.callback(
             Output("live-update-graph", "figure"),
@@ -722,10 +734,42 @@ class DashDashboard(SPADDashboard):
                 n_intervals (int): The number of intervals that have passed.
                 existing_fig (dict): The existing figure to update.
             """
-            self.num_updates += 1
-            if n_intervals is None:
-                return dash.no_update
+            return self.update(n_intervals, existing_fig=existing_fig)
 
+    def run(self):
+        """
+        Executes the Dash dashboard application.
+        """
+        self.blocking = True
+        self.app.run(debug=False, use_reloader=False)
+
+    def update(
+        self,
+        n_intervals: int,
+        histograms: np.ndarray | None = None,
+        existing_fig: dict | None = None,
+    ):
+        """
+        Updates the histogram data for each frame.
+
+        Args:
+            n_intervals (int): Current frame number.
+
+        Keyword Args:
+            histograms (np.ndarray): The histogram data to update. If not provided, the
+                sensor will be used to accumulate the histogram data.
+        """
+        if not self.blocking:
+            if self.thread is None:
+                self.thread = threading.Thread(target=self.run, daemon=True)
+                self.thread.start()
+            return dash.no_update
+
+        self.num_updates += 1
+        if n_intervals is None:
+            return dash.no_update
+
+        if histograms is None:
             acquired = self.lock.acquire(blocking=False)
             if acquired:
                 try:
@@ -734,31 +778,34 @@ class DashDashboard(SPADDashboard):
                     self.lock.release()
             else:
                 histograms = self.histograms
-            self.histograms = histograms
+        self.histograms = histograms
 
-            for idx, channel in enumerate(self.channel_mask):
-                histogram = histograms[channel, self.min_bin : self.max_bin]
-                xaxis_key = f"xaxis{idx + 1}" if idx > 0 else "xaxis"
-                yaxis_key = f"yaxis{idx + 1}" if idx > 0 else "yaxis"
+        if existing_fig is None:
+            existing_fig = self.existing_fig
 
-                bins = np.arange(self.min_bin, self.max_bin)
+        for idx, channel in enumerate(self.channel_mask):
+            histogram = histograms[channel, self.min_bin : self.max_bin]
+            xaxis_key = f"xaxis{idx + 1}" if idx > 0 else "xaxis"
+            yaxis_key = f"yaxis{idx + 1}" if idx > 0 else "yaxis"
 
-                # Update x and y for each channel
-                existing_fig["data"][idx]["y"] = histogram.tolist()
-                if len(existing_fig["data"][idx]["x"]) != len(bins):
-                    existing_fig["data"][idx]["x"] = bins.tolist()
-                    existing_fig["layout"][xaxis_key]["range"] = [
-                        self.min_bin,
-                        self.max_bin,
-                    ]
+            bins = np.arange(self.min_bin, self.max_bin)
 
-                if self.ylim is not None:
-                    existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
-                elif self.autoscale:
-                    existing_fig["layout"][yaxis_key]["autorange"] = True
+            # Update x and y for each channel
+            existing_fig["data"][idx]["y"] = histogram.tolist()
+            if len(existing_fig["data"][idx]["x"]) != len(bins):
+                existing_fig["data"][idx]["x"] = bins.tolist()
+                existing_fig["layout"][xaxis_key]["range"] = [
+                    self.min_bin,
+                    self.max_bin,
+                ]
 
-            # Call user callback if provided
-            if self.user_callback is not None:
-                self.user_callback(self)
+            if self.ylim is not None:
+                existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
+            elif self.autoscale:
+                existing_fig["layout"][yaxis_key]["autorange"] = True
 
-            return existing_fig
+        # Call user callback if provided
+        if self.user_callback is not None:
+            self.user_callback(self)
+
+        return existing_fig

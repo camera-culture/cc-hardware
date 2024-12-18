@@ -3,7 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.drivers.spads.dashboard import MatplotlibDashboard
+from cc_hardware.drivers.spads.dashboard import SPADDashboard
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
 from cc_hardware.utils.file_handlers import PklHandler
@@ -30,6 +30,8 @@ CONTROLLER_CONFIG: list[dict] = [
     {"name": "y", "range": (0, 16), "samples": 10},
 ]
 
+DASHBOARD_NAME: str = "PyQtGraphDashboard"
+
 OUTPUT_PKL: Path = LOGDIR / "data.pkl"
 
 # ===============
@@ -44,7 +46,7 @@ def setup(manager: Manager):
         return
     manager.add(spad=spad)
 
-    dashboard = MatplotlibDashboard(spad)
+    dashboard = SPADDashboard.create_from_registry(DASHBOARD_NAME, sensor=spad)
     dashboard.setup()
     manager.add(dashboard=dashboard)
 
@@ -66,7 +68,7 @@ def loop(
     iter: int,
     manager: Manager,
     spad: SPADSensor,
-    dashboard: MatplotlibDashboard,
+    dashboard: SPADDashboard,
     controller: SnakeStepperController,
     stepper_system: StepperMotorSystem,
     writer: PklHandler,

@@ -45,7 +45,8 @@ def main(sensor_name: str, dashboard_name: str):
     input_thread = threading.Thread(target=handle_user_input, daemon=True)
     input_thread.start()
 
-    dashboard.run(fullscreen=True)
+    dashboard.setup(fullscreen=False)
+    dashboard.run()
 
 
 if __name__ == "__main__":
