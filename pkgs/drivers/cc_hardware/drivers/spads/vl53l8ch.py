@@ -10,7 +10,7 @@ CC Hardware framework.
 import multiprocessing
 import multiprocessing.synchronize
 import struct
-from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 
 import numpy as np
@@ -18,21 +18,32 @@ import pkg_resources
 
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
-from cc_hardware.drivers.spads.spad import SPADSensor
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
+from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.utils import get_logger, register
+from cc_hardware.utils.config import II, config_wrapper
+from cc_hardware.utils.setting import OptionSetting, RangeSetting, Setting
 
 # ===============
 
 
-@dataclass(kw_only=True)
-class SensorConfig:
+class RangingMode(Enum):
+    """
+    Enumeration for the ranging mode of the VL53L8CH sensor.
+    """
+
+    CONTINUOUS = 1
+    AUTONOMOUS = 3
+
+
+@register
+@config_wrapper
+class VL53L8CHConfig(SPADSensorConfig):
     """
     Configuration parameters for the VL53L8CH sensor.
 
     Attributes:
         resolution (int): Sensor resolution (uint16_t).
-        ranging_mode (int): Ranging mode (uint16_t).
+        ranging_mode (RangingMode): Ranging mode (uint16_t).
         ranging_frequency_hz (int): Ranging frequency in Hz (uint16_t).
         integration_time_ms (int): Integration time in milliseconds (uint16_t).
         cnh_start_bin (int): CNH start bin (uint16_t).
@@ -46,8 +57,10 @@ class SensorConfig:
         agg_rows (int): Number of aggregation rows (uint16_t).
     """
 
+    instance: str = "VL53L8CHSensor"
+
     resolution: int  # uint16_t
-    ranging_mode: int  # uint16_t
+    ranging_mode: RangingMode  # uint16_t
     ranging_frequency_hz: int  # uint16_t
     integration_time_ms: int  # uint16_t
     cnh_start_bin: int  # uint16_t
@@ -60,6 +73,28 @@ class SensorConfig:
     agg_cols: int  # uint16_t
     agg_rows: int  # uint16_t
 
+    resolution_setting: OptionSetting = OptionSetting.default_factory(
+        value=II("..resolution"), options=[16, 64], title="Resolution"
+    )
+    ranging_mode_setting: OptionSetting = OptionSetting.from_enum(
+        enum=RangingMode, default=II("..ranging_mode"), title="Ranging Mode"
+    )
+    ranging_frequency_hz_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..ranging_frequency_hz"),
+        min=1,
+        max=60,
+        title="Ranging Frequency (Hz)",
+    )
+    integration_time_ms_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..integration_time_ms"),
+        min=10,
+        max=1000,
+        title="Integration Time (ms)",
+    )
+    cnh_num_bins_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..cnh_num_bins"), min=1, max=32, title="Number of Bins"
+    )
+
     def pack(self) -> bytes:
         """
         Packs the sensor configuration into a byte structure.
@@ -70,7 +105,7 @@ class SensorConfig:
         return struct.pack(
             "<13H",
             self.resolution,
-            self.ranging_mode,
+            self.ranging_mode.value,
             self.ranging_frequency_hz,
             self.integration_time_ms,
             self.cnh_start_bin,
@@ -84,18 +119,34 @@ class SensorConfig:
             self.agg_rows,
         )
 
+    @property
+    def settings(self) -> dict[str, Setting]:
+        """
+        Retrieves the configuration settings for the sensor.
 
-@dataclass(kw_only=True)
-class SensorConfigShared(SensorConfig):
+        Returns:
+            dict[str, Setting]: Configuration settings.
+        """
+        return {
+            "resolution": self.resolution_setting,
+            "ranging_mode": self.ranging_mode_setting,
+            "ranging_frequency_hz": self.ranging_frequency_hz_setting,
+            "integration_time_ms": self.integration_time_ms_setting,
+            "cnh_num_bins": self.cnh_num_bins_setting,
+        }
+
+
+@config_wrapper
+class VL53L8CHSharedConfig(VL53L8CHConfig):
     """
     Shared sensor configuration with default settings.
 
     Inherits from SensorConfig and provides default values for common parameters.
     """
 
-    ranging_mode: int = 3  # 1 = Continuous, 3 = Autonomous
+    ranging_mode: RangingMode = RangingMode.AUTONOMOUS
     ranging_frequency_hz: int = 60
-    integration_time_ms: int = 500
+    integration_time_ms: int = 10
     cnh_start_bin: int = 0
     cnh_subsample: int = 16
     agg_start_x: int = 0
@@ -104,12 +155,10 @@ class SensorConfigShared(SensorConfig):
     agg_merge_y: int = 1
 
 
-@dataclass(kw_only=True)
-class SensorConfig4x4(SensorConfigShared):
+@config_wrapper
+class VL53L8CHConfig4x4(VL53L8CHSharedConfig):
     """
     Sensor configuration for a 4x4 resolution.
-
-    Inherits from SensorConfigShared and sets resolution and aggregation grid size.
     """
 
     resolution: int = 16
@@ -118,12 +167,10 @@ class SensorConfig4x4(SensorConfigShared):
     agg_rows: int = 4
 
 
-@dataclass(kw_only=True)
-class SensorConfig8x8(SensorConfigShared):
+@config_wrapper
+class VL53L8CHConfig8x8(VL53L8CHSharedConfig):
     """
     Sensor configuration for an 8x8 resolution.
-
-    Inherits from SensorConfigShared and sets resolution and aggregation grid size.
     """
 
     resolution: int = 64
@@ -236,6 +283,13 @@ class VL53L8CHSensor(SPADSensor):
     This class handles communication with the sensor, configuration,
     data acquisition, and data processing.
 
+    Args:
+        config (VL53L8CHConfig): Configuration parameters for the sensor.
+
+    Keyword Args:
+        port (str | None): Serial port to which the sensor is connected.
+        **kwargs: Additional configuration parameters to update.
+
     Attributes:
         SCRIPT (Path): Path to the sensor's makefile script.
         BAUDRATE (int): Serial communication baud rate.
@@ -250,9 +304,9 @@ class VL53L8CHSensor(SPADSensor):
 
     def __init__(
         self,
+        config: VL53L8CHConfig,
         *,
         port: str | None = None,
-        config: SensorConfig = SensorConfig4x4(),
         **kwargs,
     ):
         """
@@ -264,11 +318,12 @@ class VL53L8CHSensor(SPADSensor):
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
-        self._config = config
+        super().__init__(config)
+
         self._histogram = VL53L8CHHistogram()
 
         # Use Queue for inter-process communication
-        self._queue = multiprocessing.Queue(maxsize=self._config.resolution * 4)
+        self._queue = multiprocessing.Queue(maxsize=self.config.resolution * 4)
         self._write_queue = multiprocessing.Queue(maxsize=10)
         self._initialized_event = multiprocessing.Event()
         self._stop_event = multiprocessing.Event()
@@ -346,25 +401,46 @@ class VL53L8CHSensor(SPADSensor):
             if serial_conn.is_open:
                 serial_conn.close()
 
+    @property
+    def config(self) -> VL53L8CHConfig:
+        """
+        Retrieves the VL53L8CH sensor configuration.
+        """
+        return self._config
+
     def update(self, **kwargs) -> None:
         """
-        Updates the sensor configuration with provided keyword arguments.
+        Updates the sensor configuration with provided keyword arguments. If there are
+        any changes given via the kwargs or in the settings, the configuration is sent
+        to the sensor.
 
         Args:
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
+        dirty = False
         for key, value in kwargs.items():
-            if hasattr(self._config, key):
-                setattr(self._config, key, value)
+            if hasattr(self.config, key):
+                setattr(self.config, key, value)
+                dirty = True
             else:
                 get_logger().warning(f"Unknown config key: {key}")
 
-        # Send the configuration to the sensor
-        try:
-            self._write_queue.put(self._config.pack())
-        except multiprocessing.queues.Full:
-            get_logger().error("Failed to send configuration to sensor")
+        for name, setting in self.settings.items():
+            if setting.dirty:
+                dirty = True
+                setattr(self.config, name, setting.value)
+                setting.dirty = False
+
+        if dirty:
+            # Update the agg_cols and agg_rows explicitly
+            self.config.agg_cols, self.config.agg_rows = self.resolution
+
+            # Send the configuration to the sensor
+            try:
+                self._write_queue.put(self.config.pack())
+            except multiprocessing.queues.Full:
+                get_logger().error("Failed to send configuration to sensor")
 
     def accumulate(
         self,
@@ -387,7 +463,7 @@ class VL53L8CHSensor(SPADSensor):
         histograms = []
         for _ in range(num_samples):
             began_read = False
-            self._histogram.reset(self._config.resolution)
+            self._histogram.reset(self.config.resolution)
             while not self._histogram.has_data:
                 try:
                     # Retrieve the next line from the queue
@@ -437,7 +513,7 @@ class VL53L8CHSensor(SPADSensor):
         Returns:
             int: Number of CNH bins.
         """
-        return self._config.cnh_num_bins
+        return self.config.cnh_num_bins
 
     @num_bins.setter
     def num_bins(self, value: int):
@@ -458,7 +534,8 @@ class VL53L8CHSensor(SPADSensor):
         Returns:
             tuple[int, int]: Number of aggregation columns and rows.
         """
-        return self._config.agg_cols, self._config.agg_rows
+        num = int(np.sqrt(self.config.resolution))
+        return num, num
 
     @resolution.setter
     def resolution(self, value: tuple[int, int]):

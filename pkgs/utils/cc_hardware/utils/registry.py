@@ -3,7 +3,7 @@
 from enum import Enum
 from typing import Any, Self, overload
 
-from cc_hardware.utils import classproperty, get_object
+from cc_hardware.utils.misc import classproperty, get_object
 
 
 class Registry:

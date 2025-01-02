@@ -8,9 +8,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
 
-from cc_hardware.drivers.spads import SPADDashboard
-from cc_hardware.utils import get_logger
+from cc_hardware.drivers.spads.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.plotting import set_matplotlib_style
+
+
+@config_wrapper
+class MatplotlibDashboardConfig(SPADDashboardConfig):
+    """
+    Configuration for the Matplotlib dashboard.
+    """
+
+    instance: str = "MatplotlibDashboard"
+
+    fullscreen: bool = False
+    headless: bool = False
+    save_path: Path | None = None
 
 
 class MatplotlibDashboard(SPADDashboard):
@@ -18,13 +31,11 @@ class MatplotlibDashboard(SPADDashboard):
     Dashboard implementation using Matplotlib for visualization.
     """
 
-    def setup(
-        self,
-        *,
-        fullscreen: bool = False,
-        headless: bool = False,
-        save: Path | None = None,
-    ):
+    @property
+    def config(self) -> MatplotlibDashboardConfig:
+        return self._config
+
+    def setup(self):
         """
         Sets up the Matplotlib plot layout and styling.
         """
@@ -62,15 +73,15 @@ class MatplotlibDashboard(SPADDashboard):
 
         plt.tight_layout()
 
-        if fullscreen:
+        if self.config.fullscreen:
             try:
                 manager = plt.get_current_fig_manager()
                 manager.full_screen_toggle()
             except Exception as e:
                 get_logger().warning(f"Failed to set fullscreen mode: {e}")
 
-        self.save_path = save
-        self.headless = headless
+        self.save_path = self.config.save_path
+        self.headless = self.config.headless
 
     def run(self):
         """
@@ -79,7 +90,7 @@ class MatplotlibDashboard(SPADDashboard):
         self.ani = FuncAnimation(
             self.fig,
             self.update,
-            frames=range(self.num_frames),
+            frames=range(self.config.num_frames),
             interval=1,
             repeat=False,
             blit=True,
@@ -112,18 +123,20 @@ class MatplotlibDashboard(SPADDashboard):
             return
 
         # Check if the user has updated the number of bins
-        if self.sensor.num_bins != self.bins.size:
+        if self._sensor.num_bins != self.bins.size:
             # Update x-axis
-            self.bins = np.arange(self.sensor.num_bins + 1)  # Adjust bin range
+            self.bins = np.arange(self._sensor.num_bins + 1)  # Adjust bin range
             for container in self.containers:
                 for rect, x in zip(container, self.bins[:-1]):
                     rect.set_x(x)  # Update x-coordinates of histogram bars
             for ax in self.axes:
-                ax.set_xlim(0, self.sensor.num_bins)  # Update x-axis limits
-                ax.set_xticks(np.linspace(0, self.sensor.num_bins, 5))  # Update x-ticks
+                ax.set_xlim(0, self._sensor.num_bins)  # Update x-axis limits
+                ax.set_xticks(
+                    np.linspace(0, self._sensor.num_bins, 5)
+                )  # Update x-ticks
 
         if histograms is None:
-            histograms = self.sensor.accumulate(1)
+            histograms = self._sensor.accumulate(1)
         self.adjust_ylim(histograms)
 
         for idx, channel in enumerate(self.channel_mask):
@@ -133,8 +146,8 @@ class MatplotlibDashboard(SPADDashboard):
                 rect.set_height(h)
 
         # Call user callback if provided
-        if self.user_callback is not None:
-            self.user_callback(self)
+        if self.config.user_callback is not None:
+            self.config.user_callback(self)
 
         if self.save_path:
             self.fig.savefig(self.save_path / "frame_{frame}.png")
@@ -150,10 +163,10 @@ class MatplotlibDashboard(SPADDashboard):
         Args:
             histograms (np.ndarray): Histogram data for all channels.
         """
-        if self.ylim is not None:
+        if self.config.ylim is not None:
             for ax in self.axes:
-                ax.set_ylim(0, self.ylim)
-        elif self.autoscale:
+                ax.set_ylim(0, self.config.ylim)
+        elif self.config.autoscale:
             for ax, idx in zip(self.axes, self.channel_mask):
                 histogram = histograms[idx, self.min_bin : self.max_bin]
                 ax.set_ylim(0, histogram.max())

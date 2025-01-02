@@ -1,3 +1,6 @@
+"""Utilities for working with serial devices."""
+
+import os
 from pathlib import Path
 from typing import Type
 
@@ -60,3 +63,25 @@ def find_ports(cls: Type[Serial] | None = None, /, **kwargs) -> list[Serial | st
         get_logger().info(f"\t{port.device}")
 
     return serial_ports
+
+
+def arduino_upload(port: str | None, script: Path):
+    """Upload an Arduino sketch to the given port."""
+
+    # Check arduino-cli is installed
+    if os.system("arduino-cli version") != 0:
+        raise RuntimeError("arduino-cli is not installed")
+
+    # Check the port exists
+    if port is None:
+        serial_ports = find_ports()
+        assert len(serial_ports) == 1, "Multiple serial ports found, please specify one"
+        port = serial_ports[0]
+    if not os.path.exists(port):
+        raise FileNotFoundError(f"Port {port} does not exist")
+
+    # Run the upload command
+    assert script.exists(), f"Script {script} does not exist"
+    cmd = f"arduino-cli compile --upload --port {port} --fqbn arduino:avr:uno {script}"
+    if os.system(cmd) != 0:
+        raise RuntimeError("Failed to upload the sketch")

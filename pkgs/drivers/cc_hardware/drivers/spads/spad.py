@@ -2,10 +2,17 @@
 
 from abc import abstractmethod
 
-from cc_hardware.drivers.sensor import Sensor
-from cc_hardware.utils.logger import get_logger
+from cc_hardware.drivers.sensor import Sensor, SensorConfig
+from cc_hardware.utils import config_wrapper, get_logger
 
 # ================
+
+
+@config_wrapper
+class SPADSensorConfig(SensorConfig):
+    """Configuration for SPAD sensors."""
+
+    instance: str = "SPADSensor"
 
 
 class SPADSensor(Sensor):

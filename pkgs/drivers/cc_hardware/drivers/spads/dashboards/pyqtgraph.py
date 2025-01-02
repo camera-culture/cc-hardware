@@ -2,14 +2,25 @@
 
 import signal
 from functools import partial
-from pathlib import Path
 
 import numpy as np
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtWidgets
 
-from cc_hardware.drivers.spads import SPADDashboard
-from cc_hardware.utils import get_logger
+from cc_hardware.drivers.spads import SPADDashboard, SPADDashboardConfig
+from cc_hardware.utils import config_wrapper, get_logger
+from cc_hardware.utils.setting import OptionSetting, RangeSetting, Setting
+
+
+@config_wrapper
+class PyQtGraphDashboardConfig(SPADDashboardConfig):
+    """
+    Configuration for the PyQtGraph dashboard.
+    """
+
+    instance: str = "PyQtGraphDashboard"
+
+    fullscreen: bool = False
 
 
 class DashboardWindow(QtWidgets.QWidget):
@@ -19,9 +30,8 @@ class DashboardWindow(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.init_ui()
 
-    def init_ui(self):
+    def init_ui(self, settings: dict[str, Setting]):
         """
         Initializes the user interface with a settings panel and plots.
         """
@@ -56,6 +66,35 @@ class DashboardWindow(QtWidgets.QWidget):
         self.settings_layout.addWidget(QtWidgets.QLabel("Y-Limit"))
         self.settings_layout.addWidget(self.y_limit_textbox)
 
+        for name, setting in settings.items():
+            title = setting.title or name.replace("_", " ").title()
+            if isinstance(setting, RangeSetting):
+                setting_layout = QtWidgets.QHBoxLayout()
+                title_label = QtWidgets.QLabel(title)
+                setting_layout.addWidget(title_label)
+                widget = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
+                widget.setRange(setting.min, setting.max)
+                widget.setValue(setting.value)
+                widget.setTickInterval(max((setting.max - setting.min) // 100, 1))
+                widget.setTickPosition(QtWidgets.QSlider.TickPosition.TicksBelow)
+                widget.valueChanged.connect(lambda v, s=setting: s.update(v))
+                setting_layout.addWidget(widget)
+                value_label = QtWidgets.QLabel(str(setting.value))
+                widget.valueChanged.connect(
+                    lambda v, label=value_label: label.setText(str(v))
+                )
+                setting_layout.addWidget(value_label)
+                self.settings_layout.addLayout(setting_layout)
+            elif isinstance(setting, OptionSetting):
+                widget = QtWidgets.QComboBox()
+                widget.addItems([str(o) for o in setting.options])
+                widget.setCurrentIndex(setting.options.index(setting.value))
+                widget.currentIndexChanged.connect(
+                    lambda v, s=setting: s.update(s.options[v])
+                )
+                self.settings_layout.addWidget(QtWidgets.QLabel(title))
+                self.settings_layout.addWidget(widget)
+
         self.settings_layout.addStretch()  # Add spacer to align widgets at top
 
         # Set proportions
@@ -79,41 +118,36 @@ class PyQtGraphDashboard(SPADDashboard):
     Dashboard implementation using PyQtGraph for real-time visualization.
     """
 
-    def setup(
-        self,
-        *,
-        fullscreen: bool = False,
-        headless: bool = False,
-        save: Path | None = None,
-    ):
+    @property
+    def config(self) -> PyQtGraphDashboardConfig:
+        return self._config
+
+    def setup(self):
         """
         Sets up the PyQtGraph plot layout and styling.
 
         Args:
             fullscreen (bool): Whether to display in fullscreen mode.
-            headless (bool): Whether to run in headless mode.
-            save (Path | None): If provided, save the output to this file.
         """
-
-        if headless:
-            raise NotImplementedError(
-                "Headless mode is not supported for PyQtGraphDashboard."
-            )
-        if save:
-            raise NotImplementedError(
-                "Save functionality is not implemented for PyQtGraphDashboard."
-            )
 
         # Reset signal handler to default to allow closing the application
         signal.signal(signal.SIGINT, signal.SIG_DFL)
 
         self.app = QtWidgets.QApplication([])
-        win = DashboardWindow()
-        self.win = win
-        if fullscreen:
-            win.showFullScreen()
+
+        self._create_plots()
+
+    def _create_plots(self):
+        if hasattr(self, "win"):
+            self.win.close()
+
+        self.win = DashboardWindow()
+        self.win.init_ui(self.sensor.settings)
+
+        if self.config.fullscreen:
+            self.win.showFullScreen()
         else:
-            win.show()
+            self.win.show()
 
         self.shared_y = True
 
@@ -127,8 +161,8 @@ class PyQtGraphDashboard(SPADDashboard):
         for idx in range(len(self.channel_mask)):
             _, col = divmod(idx, cols)
             if col == 0:
-                win.graphic_view.nextRow()
-            p: pg.PlotItem = win.graphic_view.addPlot()
+                self.win.graphic_view.nextRow()
+            p: pg.PlotItem = self.win.graphic_view.addPlot()
             self.plots.append(p)
             y = np.zeros_like(bins)
             bg = self._create_bar_graph_item(bins, y)
@@ -138,7 +172,7 @@ class PyQtGraphDashboard(SPADDashboard):
             p.setLabel("left", "Photon Counts")
             p.setXRange(self.min_bin, self.max_bin, padding=0)
 
-            if not self.autoscale:
+            if not self.config.autoscale:
                 p.enableAutoRange(axis="y", enable=False)
 
         # Connect settings to functionality
@@ -147,12 +181,12 @@ class PyQtGraphDashboard(SPADDashboard):
         self.win.y_limit_textbox.textChanged.connect(self.update_y_limit)
         self.win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
 
-        self.win.autoscale_checkbox.setChecked(self.autoscale)
+        self.win.autoscale_checkbox.setChecked(self.config.autoscale)
         self.win.shared_y_checkbox.setChecked(self.shared_y)
-        if self.ylim is not None:
-            self.win.y_limit_textbox.setText(str(self.ylim))
+        if self.config.ylim is not None:
+            self.win.y_limit_textbox.setText(str(self.config.ylim))
 
-        self.toggle_autoscale(self.autoscale)
+        self.toggle_autoscale(self.config.autoscale)
         self.toggle_shared_y(self.shared_y)
 
     def run(self):
@@ -185,8 +219,20 @@ class PyQtGraphDashboard(SPADDashboard):
         """
         Updates the histogram data in the plots.
         """
+        # Update any settings
+        self.sensor.update()
+
         if histograms is None:
             histograms = np.array(self.sensor.accumulate(1))
+
+        # Check if the number of channels has changed
+        if histograms.shape[0] != len(self.plots):
+            get_logger().warning(
+                "The number of channels has changed. Updating window..."
+            )
+            self._setup_sensor()
+            self._create_plots()
+            return
 
         # If log scale is enabled, replace 0s with 1s to avoid log(0)
         ymin = 0
@@ -196,8 +242,8 @@ class PyQtGraphDashboard(SPADDashboard):
 
         ylim = None
         if self.win.y_limit_textbox.isEnabled():
-            ylim = self.ylim
-        if self.autoscale and self.shared_y:
+            ylim = self.config.ylim
+        if self.config.autoscale and self.shared_y:
             # Set ylim to be max of _all_ channels
             ylim = int(histograms[:, self.min_bin : self.max_bin].max()) + 1
 
@@ -222,15 +268,15 @@ class PyQtGraphDashboard(SPADDashboard):
                 self.plots[idx].setXRange(self.min_bin, self.max_bin)
 
             channel_ylim = ylim
-            if self.autoscale and not self.shared_y:
+            if self.config.autoscale and not self.shared_y:
                 channel_ylim = histogram.max() + 1
             if channel_ylim is not None:
                 self.plots[idx].setLimits(yMin=ymin, yMax=channel_ylim)
                 self.plots[idx].setYRange(ymin, channel_ylim)
 
         # Call user callback if provided
-        if self.user_callback is not None:
-            self.user_callback(self)
+        if self.config.user_callback is not None:
+            self.config.user_callback(self)
 
         if not any([plot.isVisible() for plot in self.plots]):
             get_logger().info("Closing GUI...")
@@ -247,10 +293,10 @@ class PyQtGraphDashboard(SPADDashboard):
 
     def toggle_autoscale(self, state: int):
         get_logger().debug(f"Autoscale: {bool(state)}")
-        self.autoscale = bool(state)
+        self.config.autoscale = bool(state)
 
         self.win.y_limit_textbox.setEnabled(not self.win.autoscale_checkbox.isChecked())
-        if self.autoscale:
+        if self.config.autoscale:
             self.win.y_limit_textbox.clear()
 
     def toggle_shared_y(self, state: int):
@@ -265,9 +311,9 @@ class PyQtGraphDashboard(SPADDashboard):
     def update_y_limit(self):
         text = self.win.y_limit_textbox.text()
         if text.isdigit():
-            self.ylim = int(text)
-            get_logger().debug(f"Y-Limit set to: {self.ylim}")
+            self.config.ylim = int(text)
+            get_logger().debug(f"Y-Limit set to: {self.config.ylim}")
             for plot in self.plots:
-                plot.setYRange(0, self.ylim)
+                plot.setYRange(0, self.config.ylim)
         else:
             get_logger().debug("Invalid Y-Limit input")

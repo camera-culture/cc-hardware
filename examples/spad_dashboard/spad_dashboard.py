@@ -1,75 +1,71 @@
-import threading
-import time
+from cc_hardware.drivers.spads import (
+    SPADDashboard,
+    SPADDashboardConfig,
+    SPADSensor,
+    SPADSensorConfig,
+)
+from cc_hardware.tools.cli import register_cli, run_cli
+from cc_hardware.utils import get_logger
+from cc_hardware.utils.manager import Manager
 
-from cc_hardware.drivers.spads import SPADDashboard, SPADSensor
-from cc_hardware.utils.logger import get_logger
-
-lock = threading.Lock()
-num_bins_to_set = None
-
-SPAD_PORT: str | None = None
-
-
-def handle_user_input():
-    time.sleep(1)
-    global num_bins_to_set
-    while True:
-        try:
-            user_input = int(input("Enter the number of bins: "))
-            with lock:
-                num_bins_to_set = user_input
-            print(f"Queued num_bins update to {user_input}")
-        except ValueError:
-            print("Invalid input. Please enter an integer.")
+i = 0
 
 
 def my_callback(dashboard: SPADDashboard):
-    global num_bins_to_set
-    with lock:
-        if num_bins_to_set is not None:
-            dashboard.sensor.num_bins = num_bins_to_set
-            num_bins_to_set = None
+    """Calls logger at intervals.
+
+    Args:
+        dashboard (SPADDashboard): The dashboard instance to use in the callback.
+    """
+    global i
+    i += 1
+    if i % 10 == 0:
+        get_logger().info("Callback called")
 
 
-def main(sensor_name: str, dashboard_name: str):
-    # Main application setup
-    sensor = SPADSensor.create_from_registry(sensor_name, port=SPAD_PORT)
-    if not sensor.is_okay:
-        get_logger().fatal("Failed to initialize sensor")
-        return
-    dashboard = SPADDashboard.create_from_registry(
-        dashboard_name, sensor=sensor, user_callback=my_callback
-    )
+@register_cli
+def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+    """Sets up and runs the SPAD dashboard.
 
-    # Start user input thread
-    input_thread = threading.Thread(target=handle_user_input, daemon=True)
-    input_thread.start()
+    Args:
+        sensor (SPADSensorConfig): Configuration object for the sensor.
+        dashboard (SPADDashboardConfig): Configuration object for the dashboard.
+    """
 
-    dashboard.setup(fullscreen=False)
-    dashboard.run()
+    def setup(manager: Manager):
+        """Configures the manager with sensor and dashboard instances.
+
+        Args:
+            manager (Manager): Manager to add sensor and dashboard to.
+        """
+        _sensor = sensor.create_instance()
+        manager.add(sensor=_sensor)
+
+        dashboard.user_callback = my_callback
+        _dashboard: SPADDashboard = dashboard.create_instance(sensor=_sensor)
+        _dashboard.setup()
+        manager.add(dashboard=_dashboard)
+
+    def loop(
+        frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashboard
+    ) -> bool:
+        """Updates dashboard each frame.
+
+        Args:
+            frame (int): Current frame number.
+            manager (Manager): Manager controlling the loop.
+            sensor (SPADSensor): Sensor instance (unused here).
+            dashboard (SPADDashboard): Dashboard instance to update.
+
+        Returns:
+            bool: Whether to continue running.
+        """
+        dashboard.update(frame)
+        return True
+
+    with Manager() as manager:
+        manager.run(setup=setup, loop=loop)
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Run the SPAD sensor dashboard.")
-
-    parser.add_argument(
-        "--log-level", default="FATAL", help="The logging level to use."
-    )
-    parser.add_argument(
-        "--spad", default="VL53L8CHSensor", help="The SPAD sensor to use."
-    )
-    parser.add_argument(
-        "--dashboard", default="PyQtGraphDashboard", help="The dashboard to use."
-    )
-    parser.add_argument(
-        "--port", default=None, help="The port to use for the SPAD sensor."
-    )
-
-    args = parser.parse_args()
-
-    get_logger(level=args.log_level)
-    SPAD_PORT = args.port
-
-    main(args.spad, args.dashboard)
+    run_cli(spad_dashboard)

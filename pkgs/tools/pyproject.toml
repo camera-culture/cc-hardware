@@ -15,8 +15,9 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12"
 typer = "^0.13.1"
+hydra-config = "^0.0.2"
 utils = {path = "../utils", develop = true}
 drivers = {path = "../drivers", develop = true}
 
 [tool.poetry.scripts]
-cc_hardware = "cc_hardware.tools:APP"
+cc_hardware = "cc_hardware.tools.app:main"

@@ -29,23 +29,24 @@ Example:
 """
 
 from abc import ABC, abstractmethod
-from pathlib import Path
 from typing import Callable, Self
 
 import numpy as np
 
 from cc_hardware.drivers.spads.spad import SPADSensor
 from cc_hardware.utils import Registry, get_logger
+from cc_hardware.utils.config import CCHardwareConfig, config_wrapper
 
 
-class SPADDashboard(ABC, Registry):
+@config_wrapper
+class SPADDashboardConfig(CCHardwareConfig):
     """
-    Abstract base class for SPAD sensor dashboards.
+    Configuration for SPAD sensor dashboards.
 
-    Args:
-        sensor (SPADSensor): The SPAD sensor instance.
+    When defining a new dashboard, create a subclass of this configuration class and add
+    any necessary parameters.
 
-    Keyword Args:
+    Attributes:
         num_frames (int): Number of frames to process. Default is 1,000,000.
         min_bin (int, optional): Minimum bin value for histogram.
         max_bin (int, optional): Maximum bin value for histogram.
@@ -56,32 +57,42 @@ class SPADDashboard(ABC, Registry):
             function. It should accept the dashboard instance as an argument.
     """
 
+    instance: str = "SPADDashboard"
+
+    num_frames: int = 1_000_000
+    min_bin: int | None = None
+    max_bin: int | None = None
+    autoscale: bool = True
+    ylim: float | None = None
+    channel_mask: list[int] | None = None
+    user_callback: Callable[[Self], None] | None = None
+
+
+class SPADDashboard(ABC, Registry):
+    """
+    Abstract base class for SPAD sensor dashboards.
+
+    Args:
+        config (SPADDashboardConfig): The dashboard configuration
+        sensor (SPADSensor): The SPAD sensor instance.
+    """
+
     def __init__(
         self,
+        config: SPADDashboardConfig,
         sensor: SPADSensor,
-        *,
-        num_frames: int = 1_000_000,
-        min_bin: int | None = None,
-        max_bin: int | None = None,
-        autoscale: bool = True,
-        ylim: float | None = None,
-        channel_mask: list[int] | None = None,
-        user_callback: Callable[[Self], None] | None = None,
     ):
-        self.sensor = sensor
-        self.num_frames = num_frames
-        self._min_bin = min_bin
-        self._max_bin = max_bin
-        self.autoscale = autoscale
-        self.ylim = ylim
-        self.channel_mask = channel_mask
-        self.user_callback = user_callback
+        self._config = config
+        self._sensor = sensor
 
-        if self.autoscale and self.ylim is not None:
+        self.num_channels: int
+        self.channel_mask: np.ndarray
+
+        if self.config.autoscale and self.config.ylim is not None:
             get_logger().warning(
                 "Autoscale is enabled, but ylim is set. Disabling autoscale."
             )
-            self.autoscale = False
+            self.config.autoscale = False
 
         self._setup_sensor()
         get_logger().info("Starting histogram GUI...")
@@ -90,29 +101,29 @@ class SPADDashboard(ABC, Registry):
         """
         Configures the sensor settings and channel mask.
         """
-        h, w = self.sensor.resolution
+        h, w = self._sensor.resolution
         total_channels = h * w
-        if self.channel_mask is None:
-            self.channel_mask = np.arange(total_channels)
-        self.channel_mask = np.array(self.channel_mask)
+        self.channel_mask = np.arange(total_channels)
+        if self.config.channel_mask is not None:
+            self.channel_mask = np.array(self.config.channel_mask)
         self.num_channels = len(self.channel_mask)
+        get_logger().debug(f"Setup sensor with {self.num_channels} channels.")
+
+    @property
+    def config(self) -> SPADDashboardConfig:
+        """Retrieves the dashboard configuration."""
+        return self._config
+
+    @property
+    def sensor(self) -> SPADSensor:
+        """Retrieves the SPAD sensor instance."""
+        return self._sensor
 
     @abstractmethod
-    def setup(
-        self,
-        *,
-        fullscreen: bool = False,
-        headless: bool = False,
-        save: Path | None = None,
-    ):
+    def setup(self):
         """
         Abstract method to set up the dashboard. Should be independent of whether the
         dashboard is run in a loop or not.
-
-        Args:
-            fullscreen (bool): Whether to display in fullscreen mode.
-            headless (bool): Whether to run in headless mode.
-            save (Path | None): If provided, save the output to this file.
         """
         pass
 
@@ -146,9 +157,9 @@ class SPADDashboard(ABC, Registry):
 
         Supports variable sized bins based on the sensor configuration.
         """
-        if self._min_bin is None:
+        if self.config.min_bin is None:
             return 0
-        return self._min_bin
+        return self.config.min_bin
 
     @property
     def max_bin(self) -> int:
@@ -157,6 +168,6 @@ class SPADDashboard(ABC, Registry):
 
         Supports variable sized bins based on the sensor configuration.
         """
-        if self._max_bin is None:
-            return self.sensor.num_bins
-        return self._max_bin
+        if self.config.max_bin is None:
+            return self._sensor.num_bins
+        return self.config.max_bin

@@ -46,7 +46,7 @@ class SafeSerial:
     @classmethod
     def create(
         cls, port: str | None = None, *, wait: int = 1, one: bool = False, **kwargs
-    ) -> Self | list[Self]:
+    ) -> Self | list[Self] | serial.Serial:
         """
         Create an instance of SafeSerial from a serial port. Checks all available ports
         if no port is specified and waits for the serial device to reset before

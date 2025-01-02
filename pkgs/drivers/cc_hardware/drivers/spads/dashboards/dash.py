@@ -1,7 +1,6 @@
 """SPAD dashboard based on Dash for visualization in a browser."""
 
 import threading
-from pathlib import Path
 
 import dash
 import numpy as np
@@ -10,8 +9,17 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from plotly.subplots import make_subplots
 
-from cc_hardware.drivers.spads import SPADDashboard
-from cc_hardware.utils import get_logger
+from cc_hardware.drivers.spads.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.utils import config_wrapper
+
+
+@config_wrapper
+class DashDashboardConfig(SPADDashboardConfig):
+    """
+    Configuration for the Dash dashboard.
+    """
+
+    instance: str = "DashDashboard"
 
 
 class DashDashboard(SPADDashboard):
@@ -19,34 +27,14 @@ class DashDashboard(SPADDashboard):
     Dashboard implementation using Dash and Plotly for web-based visualization.
     """
 
-    def setup(
-        self,
-        *,
-        fullscreen: bool = False,
-        headless: bool = False,
-        save: Path | None = None,
-    ):
+    @property
+    def config(self) -> DashDashboardConfig:
+        return self._config
+
+    def setup(self):
         """
         Sets up the layout and figures for the Dash application
-
-        Args:
-            fullscreen (bool): Unused parameter for DashDashboard.
-            headless (bool): Whether to run in headless mode.
-            save (Path | None): If provided, save the dashboard to this file.
         """
-        if fullscreen:
-            get_logger().warning(
-                "Fullscreen functionality is not applicable for DashDashboard."
-            )
-        if headless:
-            get_logger().warning(
-                "Headless mode was set, but Dash is a web-based application."
-            )
-        if save:
-            raise NotImplementedError(
-                "Save functionality is not implemented for DashDashboard."
-            )
-
         self.app = dash.Dash(__name__)
 
         self.lock = threading.Lock()
@@ -82,8 +70,8 @@ class DashDashboard(SPADDashboard):
                 title_text="Photon Counts", row=row, col=col, showticklabels=True
             )
             fig.update_xaxes(range=[self.min_bin, self.max_bin], row=row, col=col)
-            if self.ylim is not None:
-                fig.update_yaxes(range=[0, self.ylim], row=row, col=col)
+            if self.config.ylim is not None:
+                fig.update_yaxes(range=[0, self.config.ylim], row=row, col=col)
 
         fig.update_layout(autosize=True, showlegend=False)
 
@@ -98,7 +86,7 @@ class DashDashboard(SPADDashboard):
                     id="interval-component",
                     interval=1,
                     n_intervals=0,
-                    max_intervals=self.num_frames,
+                    max_intervals=self.config.num_frames,
                 ),
             ],
         )
@@ -182,13 +170,13 @@ class DashDashboard(SPADDashboard):
                     self.max_bin,
                 ]
 
-            if self.ylim is not None:
-                existing_fig["layout"][yaxis_key]["range"] = [0, self.ylim]
-            elif self.autoscale:
+            if self.config.ylim is not None:
+                existing_fig["layout"][yaxis_key]["range"] = [0, self.config.ylim]
+            elif self.config.autoscale:
                 existing_fig["layout"][yaxis_key]["autorange"] = True
 
         # Call user callback if provided
-        if self.user_callback is not None:
-            self.user_callback(self)
+        if self.config.user_callback is not None:
+            self.config.user_callback(self)
 
         return existing_fig
