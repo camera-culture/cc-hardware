@@ -18,19 +18,33 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.dashboards.matplotlib.MatplotlibDashboardConfig
    drivers.spads.dashboards.matplotlib.MatplotlibDashboard
 
 
 
 
-.. py:class:: MatplotlibDashboard(sensor, *, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
+.. py:class:: MatplotlibDashboardConfig
 
 
-   Bases: :py:obj:`cc_hardware.drivers.spads.SPADDashboard`
+   Bases: :py:obj:`cc_hardware.drivers.spads.dashboards.SPADDashboardConfig`
+
+   Configuration for the Matplotlib dashboard.
+
+
+.. py:class:: MatplotlibDashboard(config, sensor)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.dashboards.SPADDashboard`
 
    Dashboard implementation using Matplotlib for visualization.
 
-   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
+   .. py:property:: config
+      :type: MatplotlibDashboardConfig
+
+      Retrieves the dashboard configuration.
+
+   .. py:method:: setup()
 
       Sets up the Matplotlib plot layout and styling.
 

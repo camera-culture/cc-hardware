@@ -18,12 +18,21 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.spad.SPADSensorConfig
    drivers.spads.spad.SPADSensor
 
 
 
 
-.. py:class:: SPADSensor
+.. py:class:: SPADSensorConfig
+
+
+   Bases: :py:obj:`cc_hardware.drivers.sensor.SensorConfig`
+
+   Configuration for SPAD sensors.
+
+
+.. py:class:: SPADSensor(config)
 
 
    Bases: :py:obj:`cc_hardware.drivers.sensor.Sensor`

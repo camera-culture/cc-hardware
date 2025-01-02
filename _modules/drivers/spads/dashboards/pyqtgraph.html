@@ -229,6 +229,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -236,6 +237,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -288,14 +291,28 @@
 
 <span class="kn">import</span> <span class="nn">signal</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pyqtgraph</span> <span class="k">as</span> <span class="nn">pg</span>
 <span class="kn">from</span> <span class="nn">pyqtgraph.Qt</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtWidgets</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADDashboardConfig</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">config_wrapper</span><span class="p">,</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.setting</span> <span class="kn">import</span> <span class="n">OptionSetting</span><span class="p">,</span> <span class="n">RangeSetting</span><span class="p">,</span> <span class="n">Setting</span>
+
+
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="PyQtGraphDashboardConfig">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboardConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">PyQtGraphDashboardConfig</span><span class="p">(</span><span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configuration for the PyQtGraph dashboard.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PyQtGraphDashboard&quot;</span>
+
+    <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
 
 
 <div class="viewcode-block" id="DashboardWindow">
@@ -307,11 +324,10 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_ui</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DashboardWindow.init_ui">
 <a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.DashboardWindow.init_ui">[docs]</a>
-    <span class="k">def</span> <span class="nf">init_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Setting</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the user interface with a settings panel and plots.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -346,6 +362,35 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Y-Limit&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="p">)</span>
 
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">settings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">setting</span><span class="o">.</span><span class="n">title</span> <span class="ow">or</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">setting</span><span class="p">,</span> <span class="n">RangeSetting</span><span class="p">):</span>
+                <span class="n">setting_layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+                <span class="n">title_label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+                <span class="n">setting_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">title_label</span><span class="p">)</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSlider</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">Qt</span><span class="o">.</span><span class="n">Orientation</span><span class="o">.</span><span class="n">Horizontal</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">setting</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setTickInterval</span><span class="p">(</span><span class="nb">max</span><span class="p">((</span><span class="n">setting</span><span class="o">.</span><span class="n">max</span> <span class="o">-</span> <span class="n">setting</span><span class="o">.</span><span class="n">min</span><span class="p">)</span> <span class="o">//</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setTickPosition</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSlider</span><span class="o">.</span><span class="n">TickPosition</span><span class="o">.</span><span class="n">TicksBelow</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">setting</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="n">setting_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+                <span class="n">value_label</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">value_label</span><span class="p">:</span> <span class="n">label</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="n">setting_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">value_label</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addLayout</span><span class="p">(</span><span class="n">setting_layout</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">setting</span><span class="p">,</span> <span class="n">OptionSetting</span><span class="p">):</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QComboBox</span><span class="p">()</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">addItems</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">setting</span><span class="o">.</span><span class="n">options</span><span class="p">])</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">setCurrentIndex</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">setting</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">currentIndexChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">setting</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="n">title</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">settings_layout</span><span class="o">.</span><span class="n">addStretch</span><span class="p">()</span>  <span class="c1"># Add spacer to align widgets at top</span>
 
         <span class="c1"># Set proportions</span>
@@ -376,43 +421,42 @@
 <span class="sd">    Dashboard implementation using PyQtGraph for real-time visualization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="PyQtGraphDashboard.config">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.config">[docs]</a>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyQtGraphDashboardConfig</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span></div>
+
+
 <div class="viewcode-block" id="PyQtGraphDashboard.setup">
 <a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.setup">[docs]</a>
-    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the PyQtGraph plot layout and styling.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            fullscreen (bool): Whether to display in fullscreen mode.</span>
-<span class="sd">            headless (bool): Whether to run in headless mode.</span>
-<span class="sd">            save (Path | None): If provided, save the output to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;Headless mode is not supported for PyQtGraphDashboard.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;Save functionality is not implemented for PyQtGraphDashboard.&quot;</span>
-            <span class="p">)</span>
 
         <span class="c1"># Reset signal handler to default to allow closing the application</span>
         <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIG_DFL</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">([])</span>
-        <span class="n">win</span> <span class="o">=</span> <span class="n">DashboardWindow</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">win</span>
-        <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_plots</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_create_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;win&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">DashboardWindow</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">init_ui</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fullscreen</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">showFullScreen</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span> <span class="o">=</span> <span class="kc">True</span>
 
@@ -426,8 +470,8 @@
         <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">)):</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">win</span><span class="o">.</span><span class="n">graphic_view</span><span class="o">.</span><span class="n">nextRow</span><span class="p">()</span>
-            <span class="n">p</span><span class="p">:</span> <span class="n">pg</span><span class="o">.</span><span class="n">PlotItem</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">graphic_view</span><span class="o">.</span><span class="n">addPlot</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">graphic_view</span><span class="o">.</span><span class="n">nextRow</span><span class="p">()</span>
+            <span class="n">p</span><span class="p">:</span> <span class="n">pg</span><span class="o">.</span><span class="n">PlotItem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">graphic_view</span><span class="o">.</span><span class="n">addPlot</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
             <span class="n">bg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_bar_graph_item</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -437,7 +481,7 @@
             <span class="n">p</span><span class="o">.</span><span class="n">setLabel</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;Photon Counts&quot;</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
                 <span class="n">p</span><span class="o">.</span><span class="n">enableAutoRange</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># Connect settings to functionality</span>
@@ -446,14 +490,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_y_limit</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">log_y_checkbox</span><span class="o">.</span><span class="n">stateChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_log_y</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">shared_y_checkbox</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="p">))</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PyQtGraphDashboard.run">
 <a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/pyqtgraph/index.html#drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard.run">[docs]</a>
@@ -490,8 +533,20 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the histogram data in the plots.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Update any settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="n">histograms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">histograms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="c1"># Check if the number of channels has changed</span>
+        <span class="k">if</span> <span class="n">histograms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">):</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;The number of channels has changed. Updating window...&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setup_sensor</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_plots</span><span class="p">()</span>
+            <span class="k">return</span>
 
         <span class="c1"># If log scale is enabled, replace 0s with 1s to avoid log(0)</span>
         <span class="n">ymin</span> <span class="o">=</span> <span class="mi">0</span>
@@ -501,8 +556,8 @@
 
         <span class="n">ylim</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
-            <span class="n">ylim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
+            <span class="n">ylim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
             <span class="c1"># Set ylim to be max of _all_ channels</span>
             <span class="n">ylim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">histograms</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
 
@@ -527,15 +582,15 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setXRange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">)</span>
 
             <span class="n">channel_ylim</span> <span class="o">=</span> <span class="n">ylim</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared_y</span><span class="p">:</span>
                 <span class="n">channel_ylim</span> <span class="o">=</span> <span class="n">histogram</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">channel_ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setLimits</span><span class="p">(</span><span class="n">yMin</span><span class="o">=</span><span class="n">ymin</span><span class="p">,</span> <span class="n">yMax</span><span class="o">=</span><span class="n">channel_ylim</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">channel_ylim</span><span class="p">)</span>
 
         <span class="c1"># Call user callback if provided</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">plot</span><span class="o">.</span><span class="n">isVisible</span><span class="p">()</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">]):</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Closing GUI...&quot;</span><span class="p">)</span>
@@ -553,10 +608,10 @@
 
     <span class="k">def</span> <span class="nf">toggle_autoscale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Autoscale: </span><span class="si">{</span><span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">autoscale_checkbox</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">toggle_shared_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
@@ -571,10 +626,10 @@
     <span class="k">def</span> <span class="nf">update_y_limit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">y_limit_textbox</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y-Limit set to: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Y-Limit set to: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plots</span><span class="p">:</span>
-                <span class="n">plot</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
+                <span class="n">plot</span><span class="o">.</span><span class="n">setYRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Invalid Y-Limit input&quot;</span><span class="p">)</span></div>
 
@@ -590,7 +645,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

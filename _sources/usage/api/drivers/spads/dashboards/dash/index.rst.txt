@@ -18,25 +18,35 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.dashboards.dash.DashDashboardConfig
    drivers.spads.dashboards.dash.DashDashboard
 
 
 
 
-.. py:class:: DashDashboard(sensor, *, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
+.. py:class:: DashDashboardConfig
 
 
-   Bases: :py:obj:`cc_hardware.drivers.spads.SPADDashboard`
+   Bases: :py:obj:`cc_hardware.drivers.spads.dashboards.SPADDashboardConfig`
+
+   Configuration for the Dash dashboard.
+
+
+.. py:class:: DashDashboard(config, sensor)
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.dashboards.SPADDashboard`
 
    Dashboard implementation using Dash and Plotly for web-based visualization.
 
-   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
+   .. py:property:: config
+      :type: DashDashboardConfig
+
+      Retrieves the dashboard configuration.
+
+   .. py:method:: setup()
 
       Sets up the layout and figures for the Dash application
-
-      :Parameters: * **fullscreen** (*bool*) -- Unused parameter for DashDashboard.
-                   * **headless** (*bool*) -- Whether to run in headless mode.
-                   * **save** (*Path | None*) -- If provided, save the dashboard to this file.
 
 
    .. py:method:: run()

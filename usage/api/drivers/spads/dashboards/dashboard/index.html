@@ -230,6 +230,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -237,6 +238,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -328,23 +331,25 @@ are three implementations available with different supported features:</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard" title="drivers.spads.dashboards.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboardConfig" title="drivers.spads.dashboards.dashboard.SPADDashboardConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboardConfig</span></code></a></p></td>
+<td><p>Configuration for SPAD sensor dashboards.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard" title="drivers.spads.dashboards.dashboard.SPADDashboard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a></p></td>
 <td><p>Abstract base class for SPAD sensor dashboards.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_frames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_bin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_bin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">autoscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.Registry</span></code></p>
-<p>Abstract base class for SPAD sensor dashboards.</p>
+<dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboardConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboardConfig</span></span><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboardConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboardConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.config.CCHardwareConfig</span></code></p>
+<p>Configuration for SPAD sensor dashboards.</p>
+<p>When defining a new dashboard, create a subclass of this configuration class and add
+any necessary parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sensor</strong> (<em>SPADSensor</em>) – The SPAD sensor instance.</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>num_frames</strong> (<em>int</em>) – Number of frames to process. Default is 1,000,000.</p></li>
 <li><p><strong>min_bin</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum bin value for histogram.</p></li>
 <li><p><strong>max_bin</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum bin value for histogram.</p></li>
@@ -356,6 +361,33 @@ function. It should accept the dashboard instance as an argument.</p></li>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.Registry</span></code></p>
+<p>Abstract base class for SPAD sensor dashboards.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>SPADDashboardConfig</em>) – The dashboard configuration</p></li>
+<li><p><strong>sensor</strong> (<em>SPADSensor</em>) – The SPAD sensor instance.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboardConfig" title="drivers.spads.dashboards.dashboard.SPADDashboardConfig"><span class="pre">SPADDashboardConfig</span></a></em><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the dashboard configuration.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard.sensor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">cc_hardware.drivers.spads.spad.SPADSensor</span></em><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard.sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard.sensor" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the SPAD sensor instance.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard.min_bin">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_bin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard.min_bin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard.min_bin" title="Link to this definition">#</a></dt>
@@ -372,18 +404,9 @@ function. It should accept the dashboard instance as an argument.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="drivers.spads.dashboards.dashboard.SPADDashboard.setup">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fullscreen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard.setup" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/drivers/spads/dashboards/dashboard.html#SPADDashboard.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.spads.dashboards.dashboard.SPADDashboard.setup" title="Link to this definition">#</a></dt>
 <dd><p>Abstract method to set up the dashboard. Should be independent of whether the
 dashboard is run in a loop or not.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fullscreen</strong> (<em>bool</em>) – Whether to display in fullscreen mode.</p></li>
-<li><p><strong>headless</strong> (<em>bool</em>) – Whether to run in headless mode.</p></li>
-<li><p><strong>save</strong> (<em>Path | None</em>) – If provided, save the output to this file.</p></li>
-</ul>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -425,7 +448,7 @@ sensor will be used to accumulate the histogram data.</p>
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -454,7 +477,10 @@ sensor will be used to accumulate the histogram data.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.spads.dashboards.dashboard</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboardConfig"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard"><code class="docutils literal notranslate"><span class="pre">SPADDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard.config"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.config</span></code></a></li>
+<li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard.sensor"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.sensor</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard.min_bin"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.min_bin</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard.max_bin"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.max_bin</span></code></a></li>
 <li><a class="reference internal" href="#drivers.spads.dashboards.dashboard.SPADDashboard.setup"><code class="docutils literal notranslate"><span class="pre">SPADDashboard.setup()</span></code></a></li>

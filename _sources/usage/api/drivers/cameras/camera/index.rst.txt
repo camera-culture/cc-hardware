@@ -23,7 +23,7 @@ Classes
 
 
 
-.. py:class:: Camera
+.. py:class:: Camera(config)
 
 
    Bases: :py:obj:`cc_hardware.drivers.sensor.Sensor`

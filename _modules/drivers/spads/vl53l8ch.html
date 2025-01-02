@@ -229,6 +229,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -236,6 +237,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -296,7 +299,7 @@
 <span class="kn">import</span> <span class="nn">multiprocessing</span>
 <span class="kn">import</span> <span class="nn">multiprocessing.synchronize</span>
 <span class="kn">import</span> <span class="nn">struct</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -304,23 +307,37 @@
 
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.safe_serial</span> <span class="kn">import</span> <span class="n">SafeSerial</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.drivers.sensor</span> <span class="kn">import</span> <span class="n">SensorData</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.spad</span> <span class="kn">import</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.registry</span> <span class="kn">import</span> <span class="n">register</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.spad</span> <span class="kn">import</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">SPADSensorConfig</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">register</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.config</span> <span class="kn">import</span> <span class="n">II</span><span class="p">,</span> <span class="n">config_wrapper</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.setting</span> <span class="kn">import</span> <span class="n">OptionSetting</span><span class="p">,</span> <span class="n">RangeSetting</span><span class="p">,</span> <span class="n">Setting</span>
 
 <span class="c1"># ===============</span>
 
 
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<div class="viewcode-block" id="SensorConfig">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig">[docs]</a>
-<span class="k">class</span> <span class="nc">SensorConfig</span><span class="p">:</span>
+<div class="viewcode-block" id="RangingMode">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.RangingMode">[docs]</a>
+<span class="k">class</span> <span class="nc">RangingMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration for the ranging mode of the VL53L8CH sensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">CONTINUOUS</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">AUTONOMOUS</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+
+<span class="nd">@register</span>
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="VL53L8CHConfig">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">VL53L8CHConfig</span><span class="p">(</span><span class="n">SPADSensorConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configuration parameters for the VL53L8CH sensor.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        resolution (int): Sensor resolution (uint16_t).</span>
-<span class="sd">        ranging_mode (int): Ranging mode (uint16_t).</span>
+<span class="sd">        ranging_mode (RangingMode): Ranging mode (uint16_t).</span>
 <span class="sd">        ranging_frequency_hz (int): Ranging frequency in Hz (uint16_t).</span>
 <span class="sd">        integration_time_ms (int): Integration time in milliseconds (uint16_t).</span>
 <span class="sd">        cnh_start_bin (int): CNH start bin (uint16_t).</span>
@@ -334,8 +351,10 @@
 <span class="sd">        agg_rows (int): Number of aggregation rows (uint16_t).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;VL53L8CHSensor&quot;</span>
+
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
-    <span class="n">ranging_mode</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
+    <span class="n">ranging_mode</span><span class="p">:</span> <span class="n">RangingMode</span>  <span class="c1"># uint16_t</span>
     <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
     <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
     <span class="n">cnh_start_bin</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
@@ -348,8 +367,30 @@
     <span class="n">agg_cols</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
     <span class="n">agg_rows</span><span class="p">:</span> <span class="nb">int</span>  <span class="c1"># uint16_t</span>
 
-<div class="viewcode-block" id="SensorConfig.pack">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig.pack">[docs]</a>
+    <span class="n">resolution_setting</span><span class="p">:</span> <span class="n">OptionSetting</span> <span class="o">=</span> <span class="n">OptionSetting</span><span class="o">.</span><span class="n">default_factory</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">II</span><span class="p">(</span><span class="s2">&quot;..resolution&quot;</span><span class="p">),</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Resolution&quot;</span>
+    <span class="p">)</span>
+    <span class="n">ranging_mode_setting</span><span class="p">:</span> <span class="n">OptionSetting</span> <span class="o">=</span> <span class="n">OptionSetting</span><span class="o">.</span><span class="n">from_enum</span><span class="p">(</span>
+        <span class="n">enum</span><span class="o">=</span><span class="n">RangingMode</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">II</span><span class="p">(</span><span class="s2">&quot;..ranging_mode&quot;</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ranging Mode&quot;</span>
+    <span class="p">)</span>
+    <span class="n">ranging_frequency_hz_setting</span><span class="p">:</span> <span class="n">RangeSetting</span> <span class="o">=</span> <span class="n">RangeSetting</span><span class="o">.</span><span class="n">default_factory</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">II</span><span class="p">(</span><span class="s2">&quot;..ranging_frequency_hz&quot;</span><span class="p">),</span>
+        <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="nb">max</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ranging Frequency (Hz)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">integration_time_ms_setting</span><span class="p">:</span> <span class="n">RangeSetting</span> <span class="o">=</span> <span class="n">RangeSetting</span><span class="o">.</span><span class="n">default_factory</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">II</span><span class="p">(</span><span class="s2">&quot;..integration_time_ms&quot;</span><span class="p">),</span>
+        <span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="nb">max</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Integration Time (ms)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cnh_num_bins_setting</span><span class="p">:</span> <span class="n">RangeSetting</span> <span class="o">=</span> <span class="n">RangeSetting</span><span class="o">.</span><span class="n">default_factory</span><span class="p">(</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">II</span><span class="p">(</span><span class="s2">&quot;..cnh_num_bins&quot;</span><span class="p">),</span> <span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Number of Bins&quot;</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="VL53L8CHConfig.pack">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHConfig.pack">[docs]</a>
     <span class="k">def</span> <span class="nf">pack</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Packs the sensor configuration into a byte structure.</span>
@@ -360,7 +401,7 @@
         <span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span>
             <span class="s2">&quot;&lt;13H&quot;</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ranging_mode</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ranging_mode</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ranging_frequency_hz</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">integration_time_ms</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cnh_start_bin</span><span class="p">,</span>
@@ -373,23 +414,42 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">agg_cols</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">agg_rows</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="VL53L8CHConfig.settings">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHConfig.settings">[docs]</a>
+    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Setting</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the configuration settings for the sensor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict[str, Setting]: Configuration settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution_setting</span><span class="p">,</span>
+            <span class="s2">&quot;ranging_mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranging_mode_setting</span><span class="p">,</span>
+            <span class="s2">&quot;ranging_frequency_hz&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranging_frequency_hz_setting</span><span class="p">,</span>
+            <span class="s2">&quot;integration_time_ms&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">integration_time_ms_setting</span><span class="p">,</span>
+            <span class="s2">&quot;cnh_num_bins&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cnh_num_bins_setting</span><span class="p">,</span>
+        <span class="p">}</span></div>
 </div>
 
 
 
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<div class="viewcode-block" id="SensorConfigShared">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfigShared">[docs]</a>
-<span class="k">class</span> <span class="nc">SensorConfigShared</span><span class="p">(</span><span class="n">SensorConfig</span><span class="p">):</span>
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="VL53L8CHSharedConfig">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSharedConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">VL53L8CHSharedConfig</span><span class="p">(</span><span class="n">VL53L8CHConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Shared sensor configuration with default settings.</span>
 
 <span class="sd">    Inherits from SensorConfig and provides default values for common parameters.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">ranging_mode</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 1 = Continuous, 3 = Autonomous</span>
+    <span class="n">ranging_mode</span><span class="p">:</span> <span class="n">RangingMode</span> <span class="o">=</span> <span class="n">RangingMode</span><span class="o">.</span><span class="n">AUTONOMOUS</span>
     <span class="n">ranging_frequency_hz</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">60</span>
-    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">integration_time_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">cnh_start_bin</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">cnh_subsample</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span>
     <span class="n">agg_start_x</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
@@ -399,14 +459,12 @@
 
 
 
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<div class="viewcode-block" id="SensorConfig4x4">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig4x4">[docs]</a>
-<span class="k">class</span> <span class="nc">SensorConfig4x4</span><span class="p">(</span><span class="n">SensorConfigShared</span><span class="p">):</span>
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="VL53L8CHConfig4x4">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHConfig4x4">[docs]</a>
+<span class="k">class</span> <span class="nc">VL53L8CHConfig4x4</span><span class="p">(</span><span class="n">VL53L8CHSharedConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sensor configuration for a 4x4 resolution.</span>
-
-<span class="sd">    Inherits from SensorConfigShared and sets resolution and aggregation grid size.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span>
@@ -416,14 +474,12 @@
 
 
 
-<span class="nd">@dataclass</span><span class="p">(</span><span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<div class="viewcode-block" id="SensorConfig8x8">
-<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.SensorConfig8x8">[docs]</a>
-<span class="k">class</span> <span class="nc">SensorConfig8x8</span><span class="p">(</span><span class="n">SensorConfigShared</span><span class="p">):</span>
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="VL53L8CHConfig8x8">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHConfig8x8">[docs]</a>
+<span class="k">class</span> <span class="nc">VL53L8CHConfig8x8</span><span class="p">(</span><span class="n">VL53L8CHSharedConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sensor configuration for an 8x8 resolution.</span>
-
-<span class="sd">    Inherits from SensorConfigShared and sets resolution and aggregation grid size.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">resolution</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
@@ -554,6 +610,13 @@
 <span class="sd">    This class handles communication with the sensor, configuration,</span>
 <span class="sd">    data acquisition, and data processing.</span>
 
+<span class="sd">    Args:</span>
+<span class="sd">        config (VL53L8CHConfig): Configuration parameters for the sensor.</span>
+
+<span class="sd">    Keyword Args:</span>
+<span class="sd">        port (str | None): Serial port to which the sensor is connected.</span>
+<span class="sd">        **kwargs: Additional configuration parameters to update.</span>
+
 <span class="sd">    Attributes:</span>
 <span class="sd">        SCRIPT (Path): Path to the sensor&#39;s makefile script.</span>
 <span class="sd">        BAUDRATE (int): Serial communication baud rate.</span>
@@ -568,9 +631,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">VL53L8CHConfig</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">port</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">config</span><span class="p">:</span> <span class="n">SensorConfig</span> <span class="o">=</span> <span class="n">SensorConfig4x4</span><span class="p">(),</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -582,11 +645,12 @@
 <span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
 <span class="sd">                the fields of SensorConfig.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span> <span class="o">=</span> <span class="n">VL53L8CHHistogram</span><span class="p">()</span>
 
         <span class="c1"># Use Queue for inter-process communication</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">resolution</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_initialized_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
@@ -664,27 +728,51 @@
             <span class="k">if</span> <span class="n">serial_conn</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
                 <span class="n">serial_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="VL53L8CHSensor.config">
+<a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.config">[docs]</a>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VL53L8CHConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the VL53L8CH sensor configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span></div>
+
+
 <div class="viewcode-block" id="VL53L8CHSensor.update">
 <a class="viewcode-back" href="../../../usage/api/drivers/spads/vl53l8ch/index.html#drivers.spads.vl53l8ch.VL53L8CHSensor.update">[docs]</a>
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the sensor configuration with provided keyword arguments.</span>
+<span class="sd">        Updates the sensor configuration with provided keyword arguments. If there are</span>
+<span class="sd">        any changes given via the kwargs or in the settings, the configuration is sent</span>
+<span class="sd">        to the sensor.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
 <span class="sd">                the fields of SensorConfig.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dirty</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="n">dirty</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown config key: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Send the configuration to the sensor</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span>
-        <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to send configuration to sensor&quot;</span><span class="p">)</span></div>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">setting</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">setting</span><span class="o">.</span><span class="n">dirty</span><span class="p">:</span>
+                <span class="n">dirty</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">setting</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">setting</span><span class="o">.</span><span class="n">dirty</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">dirty</span><span class="p">:</span>
+            <span class="c1"># Update the agg_cols and agg_rows explicitly</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">agg_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">agg_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolution</span>
+
+            <span class="c1"># Send the configuration to the sensor</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pack</span><span class="p">())</span>
+            <span class="k">except</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">queues</span><span class="o">.</span><span class="n">Full</span><span class="p">:</span>
+                <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Failed to send configuration to sensor&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VL53L8CHSensor.accumulate">
@@ -710,7 +798,7 @@
         <span class="n">histograms</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
             <span class="n">began_read</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">)</span>
             <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_histogram</span><span class="o">.</span><span class="n">has_data</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="c1"># Retrieve the next line from the queue</span>
@@ -763,7 +851,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            int: Number of CNH bins.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">cnh_num_bins</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">cnh_num_bins</span></div>
 
 
     <span class="nd">@num_bins</span><span class="o">.</span><span class="n">setter</span>
@@ -787,7 +875,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            tuple[int, int]: Number of aggregation columns and rows.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">agg_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="o">.</span><span class="n">agg_rows</span></div>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">num</span><span class="p">,</span> <span class="n">num</span></div>
 
 
     <span class="nd">@resolution</span><span class="o">.</span><span class="n">setter</span>
@@ -843,7 +932,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

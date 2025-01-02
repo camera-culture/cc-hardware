@@ -18,10 +18,19 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboardConfig
    drivers.spads.dashboards.pyqtgraph.DashboardWindow
    drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard
 
 
+
+
+.. py:class:: PyQtGraphDashboardConfig
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.SPADDashboardConfig`
+
+   Configuration for the PyQtGraph dashboard.
 
 
 .. py:class:: DashboardWindow(parent=None)
@@ -31,7 +40,7 @@ Classes
 
    Custom window class with a fixed settings panel on the right.
 
-   .. py:method:: init_ui()
+   .. py:method:: init_ui(settings)
 
       Initializes the user interface with a settings panel and plots.
 
@@ -42,20 +51,23 @@ Classes
 
 
 
-.. py:class:: PyQtGraphDashboard(sensor, *, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
+.. py:class:: PyQtGraphDashboard(config, sensor)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.SPADDashboard`
 
    Dashboard implementation using PyQtGraph for real-time visualization.
 
-   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
+   .. py:property:: config
+      :type: PyQtGraphDashboardConfig
+
+      Retrieves the dashboard configuration.
+
+   .. py:method:: setup()
 
       Sets up the PyQtGraph plot layout and styling.
 
-      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
-                   * **headless** (*bool*) -- Whether to run in headless mode.
-                   * **save** (*Path | None*) -- If provided, save the output to this file.
+      :Parameters: **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
 
 
    .. py:method:: run()

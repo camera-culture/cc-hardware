@@ -230,6 +230,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -237,6 +238,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -295,27 +298,76 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.sensor.Sensor" title="drivers.sensor.Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.sensor.SensorConfig" title="drivers.sensor.SensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorConfig</span></code></a></p></td>
+<td><p>Configuration for sensors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#drivers.sensor.Sensor" title="drivers.sensor.Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></td>
 <td><p>Abstract base class for sensors.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#drivers.sensor.SensorData" title="drivers.sensor.SensorData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorData</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.sensor.SensorData" title="drivers.sensor.SensorData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorData</span></code></a></p></td>
 <td><p>Abstract base class for handling sensor data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#drivers.sensor.SensorDataThreaded" title="drivers.sensor.SensorDataThreaded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorDataThreaded</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#drivers.sensor.SensorDataThreaded" title="drivers.sensor.SensorDataThreaded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorDataThreaded</span></code></a></p></td>
 <td><p>Handles sensor data processing with threading support.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
+<dt class="sig sig-object py" id="drivers.sensor.SensorConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SensorConfig</span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.config.CCHardwareConfig</span></code></p>
+<p>Configuration for sensors.</p>
+<p>When defining a new sensor, create a subclass of this configuration class
+and add any necessary parameters.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.sensor.SensorConfig.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">cc_hardware.utils.setting.Setting</span><span class="p"><span class="pre">]</span></span></em><a class="reference internal" href="../../../../_modules/drivers/sensor.html#SensorConfig.settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.SensorConfig.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="drivers.sensor.Sensor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sensor</span></span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">cc_hardware.utils.registry.Registry</span></code></p>
 <p>Abstract base class for sensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>SensorConfig</em>) – The sensor configuration.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.sensor.Sensor.config">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#drivers.sensor.SensorConfig" title="drivers.sensor.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor configuration.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="drivers.sensor.Sensor.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">cc_hardware.utils.setting.Setting</span><span class="p"><span class="pre">]</span></span></em><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="drivers.sensor.Sensor.is_okay">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.is_okay"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="drivers.sensor.Sensor.update">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/drivers/sensor.html#Sensor.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#drivers.sensor.Sensor.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
+any changes given via the kwargs or in the settings, the configuration is sent
+to the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
+the fields of SensorConfig.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -430,7 +482,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -459,8 +511,15 @@
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">drivers.sensor</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#drivers.sensor.SensorConfig"><code class="docutils literal notranslate"><span class="pre">SensorConfig</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.sensor.SensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SensorConfig.settings</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#drivers.sensor.Sensor"><code class="docutils literal notranslate"><span class="pre">Sensor</span></code></a><ul>
+<li><a class="reference internal" href="#drivers.sensor.Sensor.config"><code class="docutils literal notranslate"><span class="pre">Sensor.config</span></code></a></li>
+<li><a class="reference internal" href="#drivers.sensor.Sensor.settings"><code class="docutils literal notranslate"><span class="pre">Sensor.settings</span></code></a></li>
 <li><a class="reference internal" href="#drivers.sensor.Sensor.is_okay"><code class="docutils literal notranslate"><span class="pre">Sensor.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#drivers.sensor.Sensor.update"><code class="docutils literal notranslate"><span class="pre">Sensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.sensor.Sensor.close"><code class="docutils literal notranslate"><span class="pre">Sensor.close()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.sensor.Sensor.calibrate"><code class="docutils literal notranslate"><span class="pre">Sensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#drivers.sensor.Sensor.__del__"><code class="docutils literal notranslate"><span class="pre">Sensor.__del__()</span></code></a></li>

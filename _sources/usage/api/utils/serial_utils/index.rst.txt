@@ -1,10 +1,13 @@
-:orphan:
-
 :py:mod:`utils.serial_utils`
 ============================
 
 
 .. py:module:: utils.serial_utils
+
+.. autoapi-nested-parse::
+
+   Utilities for working with serial devices.
+
 
 
 Module Contents
@@ -18,6 +21,7 @@ Functions
 
    utils.serial_utils.find_device_by_label
    utils.serial_utils.find_ports
+   utils.serial_utils.arduino_upload
 
 
 
@@ -36,5 +40,10 @@ Functions
                 * **\*\*kwargs** -- Additional keyword arguments to pass to the serial class.
 
    :returns: A list of serial ports or port names.
+
+
+.. py:function:: arduino_upload(port, script)
+
+   Upload an Arduino sketch to the given port.
 
 

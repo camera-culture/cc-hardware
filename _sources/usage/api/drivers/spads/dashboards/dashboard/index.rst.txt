@@ -45,35 +45,59 @@ Classes
 
 .. autoapisummary::
 
+   drivers.spads.dashboards.dashboard.SPADDashboardConfig
    drivers.spads.dashboards.dashboard.SPADDashboard
 
 
 
 
-.. py:class:: SPADDashboard(sensor, *, num_frames = 1000000, min_bin = None, max_bin = None, autoscale = True, ylim = None, channel_mask = None, user_callback = None)
+.. py:class:: SPADDashboardConfig
+
+
+   Bases: :py:obj:`cc_hardware.utils.config.CCHardwareConfig`
+
+   Configuration for SPAD sensor dashboards.
+
+   When defining a new dashboard, create a subclass of this configuration class and add
+   any necessary parameters.
+
+   :ivar num_frames: Number of frames to process. Default is 1,000,000.
+   :vartype num_frames: int
+   :ivar min_bin: Minimum bin value for histogram.
+   :vartype min_bin: int, optional
+   :ivar max_bin: Maximum bin value for histogram.
+   :vartype max_bin: int, optional
+   :ivar autoscale: Whether to autoscale the histogram. Default is True.
+   :vartype autoscale: bool
+   :ivar ylim: Y-axis limit for the histogram.
+   :vartype ylim: float, optional
+   :ivar channel_mask: List of channels to display.
+   :vartype channel_mask: list[int], optional
+   :ivar user_callback: User-defined callback
+                        function. It should accept the dashboard instance as an argument.
+
+   :vartype user_callback: Callable[[Self], None], optional
+
+
+.. py:class:: SPADDashboard(config, sensor)
 
 
    Bases: :py:obj:`abc.ABC`, :py:obj:`cc_hardware.utils.Registry`
 
    Abstract base class for SPAD sensor dashboards.
 
-   :Parameters: **sensor** (*SPADSensor*) -- The SPAD sensor instance.
+   :Parameters: * **config** (*SPADDashboardConfig*) -- The dashboard configuration
+                * **sensor** (*SPADSensor*) -- The SPAD sensor instance.
 
-   :keyword num_frames: Number of frames to process. Default is 1,000,000.
-   :kwtype num_frames: int
-   :keyword min_bin: Minimum bin value for histogram.
-   :kwtype min_bin: int, optional
-   :keyword max_bin: Maximum bin value for histogram.
-   :kwtype max_bin: int, optional
-   :keyword autoscale: Whether to autoscale the histogram. Default is True.
-   :kwtype autoscale: bool
-   :keyword ylim: Y-axis limit for the histogram.
-   :kwtype ylim: float, optional
-   :keyword channel_mask: List of channels to display.
-   :kwtype channel_mask: list[int], optional
-   :keyword user_callback: User-defined callback
-                           function. It should accept the dashboard instance as an argument.
-   :kwtype user_callback: Callable[[Self], None], optional
+   .. py:property:: config
+      :type: SPADDashboardConfig
+
+      Retrieves the dashboard configuration.
+
+   .. py:property:: sensor
+      :type: cc_hardware.drivers.spads.spad.SPADSensor
+
+      Retrieves the SPAD sensor instance.
 
    .. py:property:: min_bin
       :type: int
@@ -89,15 +113,11 @@ Classes
 
       Supports variable sized bins based on the sensor configuration.
 
-   .. py:method:: setup(*, fullscreen = False, headless = False, save = None)
+   .. py:method:: setup()
       :abstractmethod:
 
       Abstract method to set up the dashboard. Should be independent of whether the
       dashboard is run in a loop or not.
-
-      :Parameters: * **fullscreen** (*bool*) -- Whether to display in fullscreen mode.
-                   * **headless** (*bool*) -- Whether to run in headless mode.
-                   * **save** (*Path | None*) -- If provided, save the output to this file.
 
 
    .. py:method:: run()

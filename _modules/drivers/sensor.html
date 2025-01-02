@@ -229,6 +229,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -236,6 +237,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -292,14 +295,77 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.config</span> <span class="kn">import</span> <span class="n">CCHardwareConfig</span><span class="p">,</span> <span class="n">config_wrapper</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.registry</span> <span class="kn">import</span> <span class="n">Registry</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.setting</span> <span class="kn">import</span> <span class="n">Setting</span>
+
+
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="SensorConfig">
+<a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.SensorConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">SensorConfig</span><span class="p">(</span><span class="n">CCHardwareConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration for sensors.</span>
+
+<span class="sd">    When defining a new sensor, create a subclass of this configuration class</span>
+<span class="sd">    and add any necessary parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="SensorConfig.settings">
+<a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.SensorConfig.settings">[docs]</a>
+    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Setting</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the sensor settings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{}</span></div>
+</div>
+
 
 
 <div class="viewcode-block" id="Sensor">
 <a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.Sensor">[docs]</a>
 <span class="k">class</span> <span class="nc">Sensor</span><span class="p">(</span><span class="n">ABC</span><span class="p">,</span> <span class="n">Registry</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for sensors.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract base class for sensors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (SensorConfig): The sensor configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">SensorConfig</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+<div class="viewcode-block" id="Sensor.config">
+<a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.Sensor.config">[docs]</a>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SensorConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the sensor configuration.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Sensor.settings">
+<a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.Sensor.settings">[docs]</a>
+    <span class="k">def</span> <span class="nf">settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Setting</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the sensor settings.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">settings</span></div>
+
+
+<div class="viewcode-block" id="Sensor.update">
+<a class="viewcode-back" href="../../usage/api/drivers/sensor/index.html#drivers.sensor.Sensor.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the sensor configuration with provided keyword arguments. If there are</span>
+<span class="sd">        any changes given via the kwargs or in the settings, the configuration is sent</span>
+<span class="sd">        to the sensor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **kwargs: Configuration parameters to update. Keys must match</span>
+<span class="sd">                the fields of SensorConfig.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Updating sensor settings is not supported for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="nd">@abstractmethod</span>
@@ -420,7 +486,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

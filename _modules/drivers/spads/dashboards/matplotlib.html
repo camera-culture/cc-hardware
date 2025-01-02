@@ -229,6 +229,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -236,6 +237,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -294,9 +297,25 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboards</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADDashboardConfig</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">config_wrapper</span><span class="p">,</span> <span class="n">get_logger</span>
 <span class="kn">from</span> <span class="nn">cc_hardware.utils.plotting</span> <span class="kn">import</span> <span class="n">set_matplotlib_style</span>
+
+
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="MatplotlibDashboardConfig">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboardConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">MatplotlibDashboardConfig</span><span class="p">(</span><span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configuration for the Matplotlib dashboard.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MatplotlibDashboard&quot;</span>
+
+    <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">save_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
 
 
 <div class="viewcode-block" id="MatplotlibDashboard">
@@ -306,15 +325,16 @@
 <span class="sd">    Dashboard implementation using Matplotlib for visualization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="MatplotlibDashboard.config">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.config">[docs]</a>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MatplotlibDashboardConfig</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span></div>
+
+
 <div class="viewcode-block" id="MatplotlibDashboard.setup">
 <a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/matplotlib/index.html#drivers.spads.dashboards.matplotlib.MatplotlibDashboard.setup">[docs]</a>
-    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the Matplotlib plot layout and styling.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -352,15 +372,15 @@
 
         <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">fullscreen</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">manager</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_current_fig_manager</span><span class="p">()</span>
                 <span class="n">manager</span><span class="o">.</span><span class="n">full_screen_toggle</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to set fullscreen mode: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">save</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headless</span> <span class="o">=</span> <span class="n">headless</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">headless</span></div>
 
 
 <div class="viewcode-block" id="MatplotlibDashboard.run">
@@ -372,7 +392,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ani</span> <span class="o">=</span> <span class="n">FuncAnimation</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">,</span>
-            <span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">),</span>
+            <span class="n">frames</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_frames</span><span class="p">),</span>
             <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
             <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -408,18 +428,20 @@
             <span class="k">return</span>
 
         <span class="c1"># Check if the user has updated the number of bins</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
             <span class="c1"># Update x-axis</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Adjust bin range</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Adjust bin range</span>
             <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">rect</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
                     <span class="n">rect</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># Update x-coordinates of histogram bars</span>
             <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">)</span>  <span class="c1"># Update x-axis limits</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>  <span class="c1"># Update x-ticks</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">)</span>  <span class="c1"># Update x-axis limits</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">num_bins</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+                <span class="p">)</span>  <span class="c1"># Update x-ticks</span>
 
         <span class="k">if</span> <span class="n">histograms</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">histograms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adjust_ylim</span><span class="p">(</span><span class="n">histograms</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
@@ -429,8 +451,8 @@
                 <span class="n">rect</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
 
         <span class="c1"># Call user callback if provided</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">/</span> <span class="s2">&quot;frame_</span><span class="si">{frame}</span><span class="s2">.png&quot;</span><span class="p">)</span>
@@ -449,10 +471,10 @@
 <span class="sd">        Args:</span>
 <span class="sd">            histograms (np.ndarray): Histogram data for all channels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
-                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channel_mask</span><span class="p">):</span>
                 <span class="n">histogram</span> <span class="o">=</span> <span class="n">histograms</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">]</span>
                 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">histogram</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
@@ -501,7 +523,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

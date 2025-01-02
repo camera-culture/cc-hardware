@@ -1,0 +1,113 @@
+:py:mod:`utils.setting`
+=======================
+
+
+.. py:module:: utils.setting
+
+.. autoapi-nested-parse::
+
+   This module defines the base classes for sensor settings and provides
+   utilities for defining and managing sensor settings.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   utils.setting.Setting
+   utils.setting.RangeSetting
+   utils.setting.OptionSetting
+
+
+
+
+.. py:class:: Setting
+
+
+   Bases: :py:obj:`cc_hardware.utils.config.CCHardwareConfig`
+
+   Defines an individual setting attribute for a sensor. Should be overridden
+   to define different logic for different setting types.
+
+   :ivar title: The title of the setting, used in the UI. If None,
+                the dictionary key will be used.
+   :vartype title: str | None
+   :ivar dirty: Whether the setting has been modified since the last
+                time it was read.
+
+   :vartype dirty: bool
+
+   .. note::
+
+      Ideally, this would be generics, but OmegaConf does not support them:
+      `731 <https://github.com/omry/omegaconf/issues/731>`_.
+
+   .. py:method:: default_factory(**kwargs)
+      :classmethod:
+
+      Factory method to create a new SensorSetting instance in a way that
+      is compatible with dataclasses.
+
+
+
+.. py:class:: RangeSetting
+
+
+   Bases: :py:obj:`Setting`
+
+   Defines a setting that has a range of valid values.
+
+   :ivar value: The current value of the setting.
+   :vartype value: Number
+   :ivar min: The minimum valid value.
+   :vartype min: Number
+   :ivar max: The maximum valid value.
+
+   :vartype max: Number
+
+   .. py:method:: update(value)
+
+      Updates the setting with a new value.
+
+      :Parameters: **value** (*Number*) -- The new value to set.
+
+
+
+.. py:class:: OptionSetting
+
+
+   Bases: :py:obj:`Setting`
+
+   Defines a setting that has a set of valid options.
+
+   :ivar value: The current value of the setting.
+   :vartype value: Any
+   :ivar options: The valid options for the setting.
+
+   :vartype options: list[Any]
+
+   .. note::
+
+      Ideally, this would be generics, but OmegaConf does not support them:
+      `731 <https://github.com/omry/omegaconf/issues/731>`_.
+
+   .. py:method:: update(value)
+
+      Updates the setting with a new value.
+
+      :Parameters: **value** (*Any*) -- The new value to set.
+
+
+   .. py:method:: from_enum(enum, default = None, **kwargs)
+      :classmethod:
+
+      Helper to create an OptionSetting instance in a way that is compatible
+      with dataclasses.
+
+
+

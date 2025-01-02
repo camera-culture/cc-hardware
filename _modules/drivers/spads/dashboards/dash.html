@@ -229,6 +229,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -236,6 +237,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -287,7 +290,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;SPAD dashboard based on Dash for visualization in a browser.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">dash</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -296,8 +298,20 @@
 <span class="kn">from</span> <span class="nn">dash.dependencies</span> <span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
 <span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads.dashboards</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADDashboardConfig</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">config_wrapper</span>
+
+
+<span class="nd">@config_wrapper</span>
+<div class="viewcode-block" id="DashDashboardConfig">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboardConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">DashDashboardConfig</span><span class="p">(</span><span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configuration for the Dash dashboard.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;DashDashboard&quot;</span></div>
+
 
 
 <div class="viewcode-block" id="DashDashboard">
@@ -307,36 +321,19 @@
 <span class="sd">    Dashboard implementation using Dash and Plotly for web-based visualization.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DashDashboard.config">
+<a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard.config">[docs]</a>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DashDashboardConfig</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span></div>
+
+
 <div class="viewcode-block" id="DashDashboard.setup">
 <a class="viewcode-back" href="../../../../usage/api/drivers/spads/dashboards/dash/index.html#drivers.spads.dashboards.dash.DashDashboard.setup">[docs]</a>
-    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">fullscreen</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">save</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets up the layout and figures for the Dash application</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            fullscreen (bool): Unused parameter for DashDashboard.</span>
-<span class="sd">            headless (bool): Whether to run in headless mode.</span>
-<span class="sd">            save (Path | None): If provided, save the dashboard to this file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">fullscreen</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Fullscreen functionality is not applicable for DashDashboard.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">headless</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s2">&quot;Headless mode was set, but Dash is a web-based application.&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-                <span class="s2">&quot;Save functionality is not implemented for DashDashboard.&quot;</span>
-            <span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
@@ -372,8 +369,8 @@
                 <span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Photon Counts&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">showticklabels</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">min_bin</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">],</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">],</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="p">],</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
 
         <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">autosize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
@@ -388,7 +385,7 @@
                     <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;interval-component&quot;</span><span class="p">,</span>
                     <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                     <span class="n">n_intervals</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                    <span class="n">max_intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">,</span>
+                    <span class="n">max_intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_frames</span><span class="p">,</span>
                 <span class="p">),</span>
             <span class="p">],</span>
         <span class="p">)</span>
@@ -478,14 +475,14 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">max_bin</span><span class="p">,</span>
                 <span class="p">]</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ylim</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;range&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ylim</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">autoscale</span><span class="p">:</span>
                 <span class="n">existing_fig</span><span class="p">[</span><span class="s2">&quot;layout&quot;</span><span class="p">][</span><span class="n">yaxis_key</span><span class="p">][</span><span class="s2">&quot;autorange&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="c1"># Call user callback if provided</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">existing_fig</span></div>
 </div>
@@ -502,7 +499,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

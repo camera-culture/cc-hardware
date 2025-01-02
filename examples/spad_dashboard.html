@@ -230,6 +230,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../usage/api/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.asyncio_utils</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.blocking_deque</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.config</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.constants</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.file_handlers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.logger</span></code></a></li>
@@ -237,6 +238,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.misc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.plotting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.registry</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.serial_utils</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.setting</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.singleton</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../usage/api/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utils.transformations</span></code></a></li>
 </ul>
@@ -287,81 +290,77 @@
         <article role="main">
           <section id="spad-dashboard">
 <h1>SPAD Dashboard<a class="headerlink" href="#spad-dashboard" title="Link to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SPADDashboard</span><span class="p">,</span>
+    <span class="n">SPADDashboardConfig</span><span class="p">,</span>
+    <span class="n">SPADSensor</span><span class="p">,</span>
+    <span class="n">SPADSensorConfig</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.tools.cli</span> <span class="kn">import</span> <span class="n">register_cli</span><span class="p">,</span> <span class="n">run_cli</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils</span> <span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">cc_hardware.utils.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.spads</span> <span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADSensor</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
-
-<span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
-<span class="n">num_bins_to_set</span> <span class="o">=</span> <span class="kc">None</span>
-
-<span class="n">SPAD_PORT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
-
-<span class="k">def</span> <span class="nf">handle_user_input</span><span class="p">():</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">global</span> <span class="n">num_bins_to_set</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">user_input</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter the number of bins: &quot;</span><span class="p">))</span>
-            <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
-                <span class="n">num_bins_to_set</span> <span class="o">=</span> <span class="n">user_input</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Queued num_bins update to </span><span class="si">{</span><span class="n">user_input</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input. Please enter an integer.&quot;</span><span class="p">)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">):</span>
-    <span class="k">global</span> <span class="n">num_bins_to_set</span>
-    <span class="k">with</span> <span class="n">lock</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">num_bins_to_set</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">dashboard</span><span class="o">.</span><span class="n">sensor</span><span class="o">.</span><span class="n">num_bins</span> <span class="o">=</span> <span class="n">num_bins_to_set</span>
-            <span class="n">num_bins_to_set</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calls logger at intervals.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dashboard (SPADDashboard): The dashboard instance to use in the callback.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">i</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Callback called&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">sensor_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dashboard_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="c1"># Main application setup</span>
-    <span class="n">sensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span><span class="n">sensor_name</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">SPAD_PORT</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">sensor</span><span class="o">.</span><span class="n">is_okay</span><span class="p">:</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">fatal</span><span class="p">(</span><span class="s2">&quot;Failed to initialize sensor&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-    <span class="n">dashboard</span> <span class="o">=</span> <span class="n">SPADDashboard</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
-        <span class="n">dashboard_name</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">,</span> <span class="n">user_callback</span><span class="o">=</span><span class="n">my_callback</span>
-    <span class="p">)</span>
+<span class="nd">@register_cli</span>
+<span class="k">def</span> <span class="nf">spad_dashboard</span><span class="p">(</span><span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets up and runs the SPAD dashboard.</span>
 
-    <span class="c1"># Start user input thread</span>
-    <span class="n">input_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">handle_user_input</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">input_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="sd">    Args:</span>
+<span class="sd">        sensor (SPADSensorConfig): Configuration object for the sensor.</span>
+<span class="sd">        dashboard (SPADDashboardConfig): Configuration object for the dashboard.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">fullscreen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configures the manager with sensor and dashboard instances.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            manager (Manager): Manager to add sensor and dashboard to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_sensor</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">create_instance</span><span class="p">()</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">_sensor</span><span class="p">)</span>
+
+        <span class="n">dashboard</span><span class="o">.</span><span class="n">user_callback</span> <span class="o">=</span> <span class="n">my_callback</span>
+        <span class="n">_dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span> <span class="o">=</span> <span class="n">dashboard</span><span class="o">.</span><span class="n">create_instance</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">_sensor</span><span class="p">)</span>
+        <span class="n">_dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dashboard</span><span class="o">=</span><span class="n">_dashboard</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span>
+        <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates dashboard each frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame (int): Current frame number.</span>
+<span class="sd">            manager (Manager): Manager controlling the loop.</span>
+<span class="sd">            sensor (SPADSensor): Sensor instance (unused here).</span>
+<span class="sd">            dashboard (SPADDashboard): Dashboard instance to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Whether to continue running.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">argparse</span>
-
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Run the SPAD sensor dashboard.&quot;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--log-level&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;FATAL&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The logging level to use.&quot;</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--spad&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;VL53L8CHSensor&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The SPAD sensor to use.&quot;</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--dashboard&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;PyQtGraphDashboard&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The dashboard to use.&quot;</span>
-    <span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--port&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The port to use for the SPAD sensor.&quot;</span>
-    <span class="p">)</span>
-
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="n">get_logger</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">log_level</span><span class="p">)</span>
-    <span class="n">SPAD_PORT</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
-
-    <span class="n">main</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">spad</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">dashboard</span><span class="p">)</span>
+    <span class="n">run_cli</span><span class="p">(</span><span class="n">spad_dashboard</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -395,7 +394,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, Camera Culture, MIT Media Lab
+                Copyright &#169; 2025, Camera Culture, MIT Media Lab
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             

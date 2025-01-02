@@ -23,25 +23,36 @@ Classes
 
 .. autoapisummary::
 
-   drivers.spads.vl53l8ch.SensorConfig
-   drivers.spads.vl53l8ch.SensorConfigShared
-   drivers.spads.vl53l8ch.SensorConfig4x4
-   drivers.spads.vl53l8ch.SensorConfig8x8
+   drivers.spads.vl53l8ch.RangingMode
+   drivers.spads.vl53l8ch.VL53L8CHConfig
+   drivers.spads.vl53l8ch.VL53L8CHSharedConfig
+   drivers.spads.vl53l8ch.VL53L8CHConfig4x4
+   drivers.spads.vl53l8ch.VL53L8CHConfig8x8
    drivers.spads.vl53l8ch.VL53L8CHHistogram
    drivers.spads.vl53l8ch.VL53L8CHSensor
 
 
 
 
-.. py:class:: SensorConfig
+.. py:class:: RangingMode(*args, **kwds)
 
+
+   Bases: :py:obj:`enum.Enum`
+
+   Enumeration for the ranging mode of the VL53L8CH sensor.
+
+
+.. py:class:: VL53L8CHConfig
+
+
+   Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensorConfig`
 
    Configuration parameters for the VL53L8CH sensor.
 
    :ivar resolution: Sensor resolution (uint16_t).
    :vartype resolution: int
    :ivar ranging_mode: Ranging mode (uint16_t).
-   :vartype ranging_mode: int
+   :vartype ranging_mode: RangingMode
    :ivar ranging_frequency_hz: Ranging frequency in Hz (uint16_t).
    :vartype ranging_frequency_hz: int
    :ivar integration_time_ms: Integration time in milliseconds (uint16_t).
@@ -66,6 +77,13 @@ Classes
 
    :vartype agg_rows: int
 
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the configuration settings for the sensor.
+
+      :returns: *dict[str, Setting]* -- Configuration settings.
+
    .. py:method:: pack()
 
       Packs the sensor configuration into a byte structure.
@@ -74,34 +92,30 @@ Classes
 
 
 
-.. py:class:: SensorConfigShared
+.. py:class:: VL53L8CHSharedConfig
 
 
-   Bases: :py:obj:`SensorConfig`
+   Bases: :py:obj:`VL53L8CHConfig`
 
    Shared sensor configuration with default settings.
 
    Inherits from SensorConfig and provides default values for common parameters.
 
 
-.. py:class:: SensorConfig4x4
+.. py:class:: VL53L8CHConfig4x4
 
 
-   Bases: :py:obj:`SensorConfigShared`
+   Bases: :py:obj:`VL53L8CHSharedConfig`
 
    Sensor configuration for a 4x4 resolution.
 
-   Inherits from SensorConfigShared and sets resolution and aggregation grid size.
+
+.. py:class:: VL53L8CHConfig8x8
 
 
-.. py:class:: SensorConfig8x8
-
-
-   Bases: :py:obj:`SensorConfigShared`
+   Bases: :py:obj:`VL53L8CHSharedConfig`
 
    Sensor configuration for an 8x8 resolution.
-
-   Inherits from SensorConfigShared and sets resolution and aggregation grid size.
 
 
 .. py:class:: VL53L8CHHistogram
@@ -145,7 +159,7 @@ Classes
 
 
 
-.. py:class:: VL53L8CHSensor(*, port = None, config = SensorConfig4x4(), **kwargs)
+.. py:class:: VL53L8CHSensor(config, *, port = None, **kwargs)
 
 
    Bases: :py:obj:`cc_hardware.drivers.spads.spad.SPADSensor`
@@ -155,11 +169,22 @@ Classes
    This class handles communication with the sensor, configuration,
    data acquisition, and data processing.
 
+   :Parameters: **config** (*VL53L8CHConfig*) -- Configuration parameters for the sensor.
+
+   :keyword port: Serial port to which the sensor is connected.
+   :kwtype port: str | None
+   :keyword \*\*kwargs: Additional configuration parameters to update.
+
    :ivar SCRIPT: Path to the sensor's makefile script.
    :vartype SCRIPT: Path
    :ivar BAUDRATE: Serial communication baud rate.
 
    :vartype BAUDRATE: int
+
+   .. py:property:: config
+      :type: VL53L8CHConfig
+
+      Retrieves the VL53L8CH sensor configuration.
 
    .. py:property:: num_bins
       :type: int
@@ -184,7 +209,9 @@ Classes
 
    .. py:method:: update(**kwargs)
 
-      Updates the sensor configuration with provided keyword arguments.
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
 
       :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
                    the fields of SensorConfig.
