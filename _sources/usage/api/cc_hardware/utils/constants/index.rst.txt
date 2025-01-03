@@ -1,0 +1,21 @@
+
+:py:mod:`cc_hardware.utils.constants`
+=====================================
+
+
+.. py:module:: cc_hardware.utils.constants
+
+.. autoapi-nested-parse::
+
+   Constants.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: C
+   :value: 300000000.0
+
+   Speed of light in m/s
+

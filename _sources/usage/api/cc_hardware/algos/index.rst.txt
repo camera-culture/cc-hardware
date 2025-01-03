@@ -1,0 +1,20 @@
+:orphan:
+
+
+:py:mod:`cc_hardware.algos`
+===========================
+
+
+.. py:module:: cc_hardware.algos
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   algorithm/index.rst
+   aruco/index.rst
+
+

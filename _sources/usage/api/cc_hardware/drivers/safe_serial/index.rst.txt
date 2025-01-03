@@ -1,0 +1,176 @@
+
+:py:mod:`cc_hardware.drivers.safe_serial`
+=========================================
+
+
+.. py:module:: cc_hardware.drivers.safe_serial
+
+.. autoapi-nested-parse::
+
+   SafeSerial class for thread-safe serial communication.
+
+   The :class:`~cc_hardware.drivers.safe_serial.SafeSerial` class is a wrapper around the
+   `serial.Serial     <https://pyserial.readthedocs.io/en/latest/pyserial_api.html#serial.Serial>`_
+   class that provides a thread-safe interface for reading and writing to a serial device.
+   It also provides a few convenience methods for reading and writing data.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.safe_serial.SafeSerial
+
+
+
+
+.. py:class:: SafeSerial(*args, lock_type = 'multiprocessing', **kwargs)
+
+   A thread-safe implementation of the serial.Serial class that synchronizes read and
+   write operations using a lock. Provides additional utility methods for creating
+   instances and handling data writes in different formats.
+
+   :keyword lock_type: The type of lock to use. Defaults to "multiprocessing". Can be
+                       "threading", "multiprocessing", or "none".
+   :kwtype lock_type: str
+
+
+   .. py:method:: create(port = None, *, wait = 1, one = False, **kwargs)
+      :classmethod:
+
+
+      Create an instance of SafeSerial from a serial port. Checks all available ports
+      if no port is specified and waits for the serial device to reset before
+      establishing the connection.
+
+      :Parameters: * **port** (*str | None*) -- The specific serial port to connect to, or None to
+                     check all available ports.
+                   * **wait** (*int*) -- The number of seconds to wait for the device to reset. Default
+                     is 2 seconds.
+                   * **one** (*bool*) -- Whether to force the method to return a single instance. If
+                     True and multiple instances are found, an error is raised. Default is
+                     False.
+                   * **\*\*kwargs** -- Additional keyword arguments passed to the SafeSerial constructor.
+
+      :returns: *SafeSerial | list[SafeSerial]* --
+
+                A single instance if a port is specified
+                    or multiple instances if no port is specified.
+
+
+
+   .. py:method:: write(data)
+
+      Write data to the serial port. If the data type is invalid, a warning is logged.
+
+      :Parameters: **data** (*Any*) -- The data to write to the serial port.
+
+      :returns: None
+
+
+
+   .. py:method:: read(size = 1)
+
+      Read a specified number of bytes from the serial port.
+
+      :Parameters: **size** (*int*) -- The number of bytes to read. Default is 1.
+
+      :returns: *bytes* -- The bytes read from the serial port.
+
+
+
+   .. py:method:: wait_for_start_talk(timeout = None)
+
+      Wait until SafeSerial starts talking. Returns data if successful,
+      None if timeout.
+
+      :Parameters: **timeout** (*float | None*) -- Maximum time to wait before giving up. Defaults to
+                   None.
+
+      :returns: *bytes | None* --
+
+                The received data if SafeSerial starts talking, otherwise
+                    None.
+
+
+
+   .. py:method:: wait_for_stop_talk(timeout = None)
+
+      Wait until SafeSerial stops talking. Returns accumulated data if stopped before
+          timeout.
+
+      :Parameters: **timeout** (*float | None*) -- Maximum time to wait before giving up. Defaults to
+                   None.
+
+      :returns: *bytes | None* --
+
+                The accumulated data if SafeSerial stops talking, otherwise
+                    None.
+
+
+
+   .. py:method:: write_and_wait_for_start_talk(data, timeout = None, tries = 10)
+
+      Write data to SafeSerial and wait for it to start talking with timeout.
+      If timeout happens before something is received, resend data.
+
+      :Parameters: * **data** (*str*) -- The data to be written.
+                   * **timeout** (*float | None*) -- The maximum wait time for each attempt. Defaults to
+                     instance timeout.
+                   * **tries** (*int*) -- The number of attempts to perform. Defaults to 10.
+
+      :returns: *bool* -- True if successful, False otherwise.
+
+
+
+   .. py:method:: write_and_wait_for_stop_talk(data, timeout = None, tries = 10, return_data = False)
+
+      Write data to SafeSerial and wait for it to stop talking with timeout.
+      If timeout happens before something is received, resend data.
+
+      :Parameters: * **data** (*str*) -- The data to be written.
+                   * **timeout** (*float | None*) -- The maximum wait time for each attempt. Defaults to
+                     instance timeout.
+                   * **tries** (*int*) -- The number of attempts to perform. Defaults to 10.
+                   * **return_data** (*bool*) -- Whether to return the accumulated data upon success.
+                     Defaults to False.
+
+      :returns: *bool | tuple[bool, bytes | None]* --
+
+                True if successful, otherwise False.
+                    If return_data is True, returns a tuple of success status and
+                    accumulated data.
+
+
+
+   .. py:method:: write_and_wait_for_start_and_stop_talk(data, timeout = None, tries = 10)
+
+      Write data to SafeSerial and wait for it to start and stop talking with timeout.
+      If timeout happens before either event, resend data.
+
+      :Parameters: * **data** (*str*) -- The data to be written.
+                   * **timeout** (*float | None*) -- The maximum wait time for each attempt. Defaults to
+                     instance timeout.
+                   * **tries** (*int*) -- The number of attempts to perform. Defaults to 10.
+
+      :returns: *bool* -- True if successful, False otherwise.
+
+
+
+   .. py:method:: __getattr__(name)
+
+      Forward attribute access to the parent serial.Serial class.
+
+      Applies the lock to prevent concurrent access to the serial port.
+
+      :Parameters: **name** (*str*) -- The attribute name to access.
+
+      :returns: *Any* -- The attribute value.
+
+
+

@@ -7,9 +7,9 @@ Packages
 :maxdepth: 1
 :titlesonly:
 
-api/algos/index
-api/drivers/index
-api/utils/index
+api/cc_hardware/algos/index
+api/cc_hardware/drivers/index
+api/cc_hardware/utils/index
 ```
 
 [myst-markdown]: https://myst-parser.readthedocs.io/en/latest/

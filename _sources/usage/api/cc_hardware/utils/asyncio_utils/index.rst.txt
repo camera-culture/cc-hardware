@@ -1,0 +1,46 @@
+
+:py:mod:`cc_hardware.utils.asyncio_utils`
+=========================================
+
+
+.. py:module:: cc_hardware.utils.asyncio_utils
+
+.. autoapi-nested-parse::
+
+   This module provides a wrapper to make asynchronous methods synchronous.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.utils.asyncio_utils.call_async
+   cc_hardware.utils.asyncio_utils.call_async_gather
+   cc_hardware.utils.asyncio_utils.call_async_value
+
+
+
+.. py:function:: call_async(fn, callback)
+
+   Wraps an asynchronous method and returns the result of the callback
+   synchronously.
+
+
+.. py:function:: call_async_gather(fns, callback)
+
+   Wraps multiple asynchronous methods and returns a list of all the
+   callback values.
+
+
+.. py:function:: call_async_value(fn, idx = 2)
+
+   Wraps an asynchronous method and returns a specific index in the callback
+   list.
+
+

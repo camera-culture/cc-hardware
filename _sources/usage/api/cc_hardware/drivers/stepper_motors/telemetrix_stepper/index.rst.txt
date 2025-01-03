@@ -1,0 +1,2527 @@
+
+:py:mod:`cc_hardware.drivers.stepper_motors.telemetrix_stepper`
+===============================================================
+
+
+.. py:module:: cc_hardware.drivers.stepper_motors.telemetrix_stepper
+
+.. autoapi-nested-parse::
+
+   This module contains the TelemetrixStepperMotor and TelemetrixStepperMotorSystem
+   classes which are wrappers around the Telemetrix library's interface with stepper
+   motors. These classes provide a unified interface for controlling stepper motors
+   connected to a CNCShield using the Telemetrix library.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry
+
+
+
+
+.. py:class:: TelemetrixStepperMotor(board, *, distance_pin, direction_pin, enable_pin, cm_per_rev, steps_per_rev, speed, flip_direction = False)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorSystem(port = None, *, axes, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with multiple
+   stepper motors.
+
+   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
+                the port will be attempted to be auto-detected.
+
+   :keyword axes: A dictionary of axes and
+                  the motors that are attached to them. The key is the axis name and the
+                  value is a list of motors attached to that axis.
+   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
+   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorX(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorY(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorZ(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorXReversed(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorYReversed(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: TelemetrixStepperMotorZReversed(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: DualDrive2AxisGantry_X(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: DualDrive2AxisGantry_Y1(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: DualDrive2AxisGantry_Y2(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: DualDrive2AxisGantry(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with multiple
+   stepper motors.
+
+   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
+                the port will be attempted to be auto-detected.
+
+   :keyword axes: A dictionary of axes and
+                  the motors that are attached to them. The key is the axis name and the
+                  value is a list of motors attached to that axis.
+   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
+   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: SingleDrive1AxisGantry_X(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: SingleDrive1AxisGantry_Y(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with stepper motors.
+
+   NOTE: Initialization of this class effectively homes the motor. Call
+   `set_current_position` to explicitly set the current position.
+
+   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+
+   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
+   :kwtype distance_pin: int
+   :keyword direction_pin: The pin on the CNCShield that controls this motor's
+                           position
+   :kwtype direction_pin: int
+   :keyword enable_pin: The pin that controls this motor's enable pin..
+   :kwtype enable_pin: int
+   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
+   :kwtype cm_per_rev: float
+   :keyword steps_per_rev: The number of steps per revolution of the motor.
+   :kwtype steps_per_rev: int
+   :keyword speed: The speed of the motor in cm/s.
+   :kwtype speed: float
+   :keyword flip_direction: If True, the motor will move in the opposite direction.
+   :kwtype flip_direction: bool
+
+
+   .. py:method:: home()
+
+      Homes the stepper motor to its reference or zero position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the stepper motor to a specific absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the stepper motor by a specified relative amount from its current
+      position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
+                   current position.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Returns the current position of the stepper motor.
+
+
+   .. py:property:: id
+      :type: int
+
+      Returns the motor's id.
+
+
+   .. py:method:: set_target_position_cm(relative_cm)
+
+      Sets the target position of the motor relative to current position.
+
+      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
+
+
+
+   .. py:method:: set_absolute_target_position_cm(position_cm)
+
+      Sets the absolute target position in cm.
+
+
+
+   .. py:method:: cm_to_revs(cm)
+
+      Converts cm to steps.
+
+
+
+   .. py:method:: revs_to_cm(revs)
+
+      Converts steps to cm.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state.
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: __getattr__(key)
+
+      This is a passthrough to the underlying stepper object.
+
+      Usually, stepper methods are accessed through the board with stepper_*. You
+      can access these methods directly here using motorX.target_position(...) which
+      equates to motorX._board.stepper_target_position(...). Also, if these methods
+      require a motor as input, we'll pass it in.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: SingleDrive1AxisGantry(*args, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry
+      :parts: 1
+
+
+   This is a wrapper of the Telemetrix library's interface with multiple
+   stepper motors.
+
+   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
+                the port will be attempted to be auto-detected.
+
+   :keyword axes: A dictionary of axes and
+                  the motors that are attached to them. The key is the axis name and the
+                  value is a list of motors attached to that axis.
+   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
+   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely.
+
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+

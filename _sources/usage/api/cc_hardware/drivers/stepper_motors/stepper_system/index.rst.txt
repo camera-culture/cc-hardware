@@ -1,0 +1,384 @@
+
+:py:mod:`cc_hardware.drivers.stepper_motors.stepper_system`
+===========================================================
+
+
+.. py:module:: cc_hardware.drivers.stepper_motors.stepper_system
+
+.. autoapi-nested-parse::
+
+   This module defines a system of stepper motors that can be controlled as a single
+   unit. This is useful for controlling a gantry or a multi-axis rotation stage.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
+   cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem
+   cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem
+
+
+
+
+.. py:class:: StepperMotorSystemAxis(*args, **kwds)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
+      :parts: 1
+
+
+   Create a collection of name/value pairs.
+
+   Example enumeration:
+
+   >>> class Color(Enum):
+   ...     RED = 1
+   ...     BLUE = 2
+   ...     GREEN = 3
+
+   Access them by:
+
+   - attribute access:
+
+     >>> Color.RED
+     <Color.RED: 1>
+
+   - value lookup:
+
+     >>> Color(1)
+     <Color.RED: 1>
+
+   - name lookup:
+
+     >>> Color['RED']
+     <Color.RED: 1>
+
+   Enumerations can be iterated over, and know how many members they have:
+
+   >>> len(Color)
+   3
+
+   >>> list(Color)
+   [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+
+   Methods can be added to enumerations, and members can have their own
+   attributes -- see the documentation for details.
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: __dir__()
+
+      Returns public methods and other interesting attributes.
+
+
+
+   .. py:method:: __format__(format_spec)
+
+      Default object formatter.
+
+      Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+
+
+   .. py:method:: __hash__()
+
+      Return hash(self).
+
+
+
+   .. py:method:: __reduce_ex__(proto)
+
+      Helper for pickle.
+
+
+
+   .. py:method:: name()
+
+      The name of the Enum member.
+
+
+
+   .. py:method:: value()
+
+      The value of the Enum member.
+
+
+
+.. py:class:: StepperMotorSystem(axes)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem
+      :parts: 1
+
+
+   This is a wrapper around multiple stepper motors which defines the system
+   as a whole (i.e. a gantry or multi-axis rotation stage).
+
+   :Parameters: **axes** (*dict[StepperMotorSystemAxis, list[StepperMotor]]*) -- A dictionary of axes
+                and the motors that are attached to them.
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: DummyStepperSystem
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem
+      :parts: 1
+
+
+   A dummy stepper system that does nothing.
+
+
+   .. py:method:: move_to(*positions)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+

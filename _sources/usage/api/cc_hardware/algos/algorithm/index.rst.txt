@@ -1,0 +1,64 @@
+
+:py:mod:`cc_hardware.algos.algorithm`
+=====================================
+
+
+.. py:module:: cc_hardware.algos.algorithm
+
+.. autoapi-nested-parse::
+
+   This module contains the Algorithm interface that all algorithms should implement.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.algos.algorithm.Algorithm
+
+
+
+
+.. py:class:: Algorithm
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.algos.algorithm.Algorithm
+      :parts: 1
+
+
+   This is an algorithm interface that all algorithms should implement.
+
+
+   .. py:method:: run()
+      :abstractmethod:
+
+
+      Runs the algorithm and returns the result.
+
+      Each subclass can add additional parameters to this method and specify it's
+      return type.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Returns True if the algorithm is okay to run, False otherwise.
+      An algorithm may not be okay if it either has not been initialized properly or
+      if it has encountered an error.
+
+
+   .. py:method:: close()
+
+      Closes the algorithm and releases any resources. A default implementation
+      is provided here, but subclasses can override this method to provide their own
+      implementation.
+
+
+

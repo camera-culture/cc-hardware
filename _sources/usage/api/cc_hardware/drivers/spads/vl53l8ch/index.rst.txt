@@ -1,0 +1,1292 @@
+
+:py:mod:`cc_hardware.drivers.spads.vl53l8ch`
+============================================
+
+
+.. py:module:: cc_hardware.drivers.spads.vl53l8ch
+
+.. autoapi-nested-parse::
+
+   Module for VL53L8CH Sensor Driver.
+
+   This module provides classes and functions to interface with the VL53L8CH
+   time-of-flight sensor. It includes configurations, data processing, and sensor
+   management functionalities necessary for operating the sensor within the
+   CC Hardware framework.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.spads.vl53l8ch.RangingMode
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHHistogram
+   cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor
+
+
+
+
+.. py:class:: RangingMode(*args, **kwds)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.RangingMode
+      :parts: 1
+
+
+   Enumeration for the ranging mode of the VL53L8CH sensor.
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+
+   .. py:method:: __dir__()
+
+      Returns public methods and other interesting attributes.
+
+
+
+   .. py:method:: __format__(format_spec)
+
+      Default object formatter.
+
+      Return str(self) if format_spec is empty. Raise TypeError otherwise.
+
+
+
+   .. py:method:: __hash__()
+
+      Return hash(self).
+
+
+
+   .. py:method:: __reduce_ex__(proto)
+
+      Helper for pickle.
+
+
+
+   .. py:method:: name()
+
+      The name of the Enum member.
+
+
+
+   .. py:method:: value()
+
+      The value of the Enum member.
+
+
+
+.. py:class:: VL53L8CHConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig
+      :parts: 1
+
+
+   Configuration parameters for the VL53L8CH sensor.
+
+   :ivar resolution: Sensor resolution (uint16_t).
+   :vartype resolution: int
+   :ivar ranging_mode: Ranging mode (uint16_t).
+   :vartype ranging_mode: RangingMode
+   :ivar ranging_frequency_hz: Ranging frequency in Hz (uint16_t).
+   :vartype ranging_frequency_hz: int
+   :ivar integration_time_ms: Integration time in milliseconds (uint16_t).
+   :vartype integration_time_ms: int
+   :ivar cnh_start_bin: CNH start bin (uint16_t).
+   :vartype cnh_start_bin: int
+   :ivar cnh_num_bins: Number of CNH bins (uint16_t).
+   :vartype cnh_num_bins: int
+   :ivar cnh_subsample: CNH subsample rate (uint16_t).
+   :vartype cnh_subsample: int
+   :ivar agg_start_x: Aggregation start X coordinate (uint16_t).
+   :vartype agg_start_x: int
+   :ivar agg_start_y: Aggregation start Y coordinate (uint16_t).
+   :vartype agg_start_y: int
+   :ivar agg_merge_x: Aggregation merge X parameter (uint16_t).
+   :vartype agg_merge_x: int
+   :ivar agg_merge_y: Aggregation merge Y parameter (uint16_t).
+   :vartype agg_merge_y: int
+   :ivar agg_cols: Number of aggregation columns (uint16_t).
+   :vartype agg_cols: int
+   :ivar agg_rows: Number of aggregation rows (uint16_t).
+
+   :vartype agg_rows: int
+
+
+   .. py:method:: pack()
+
+      Packs the sensor configuration into a byte structure.
+
+      :returns: *bytes* -- Packed configuration data.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the configuration settings for the sensor.
+
+      :returns: *dict[str, Setting]* -- Configuration settings.
+
+
+   .. py:method:: get_instance()
+
+      Get the class instance specified in the configuration.
+
+      :returns: The class instance.
+
+
+
+   .. py:method:: create_instance(*args, auto_create = True, **kwargs)
+
+      Create an instance of the class specified in the configuration.
+
+      :attr:`instance` must be set to the fully qualified class name of the class to
+      instantiate. If no arguments are provided, the configuration instance will be
+      passed as the first argument to the class constructor.
+
+      :Parameters: **\*args** -- Positional arguments to pass to the class constructor
+
+      :keyword auto_create: Whether to automatically create the instance if no arguments
+                            are provided
+      :keyword \*\*kwargs: Keyword arguments to pass to the class constructor
+
+      :returns: An instance of the specified class.
+
+
+
+   .. py:attribute:: config
+      :type: Optional[omegaconf.DictConfig]
+
+      The original, uninstantiated config. This is maintained within each nested
+      instantiated config to allow for proper serialization and deserialization, as well
+      as printing the config as a yaml string.
+
+
+   .. py:attribute:: custom
+      :type: Optional[Dict[str, Any]]
+
+      Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+      files) where you want to store data that is not necessarily defined in the config.
+
+
+   .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
+      :classmethod:
+
+
+      Instantiate the config into an object.
+
+      :Parameters: **config** (*DictConfig | ListConfig*) -- The config to instantiate.
+
+      :keyword _convert_: The conversion method to use. Defaults to "object", meaning
+                          all structured configs will be converted to their dataclass equivalent.
+      :kwtype _convert_: str
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: compose(config_dir, config_name, *, overrides = [], return_hydra_config = False, **kwargs)
+      :classmethod:
+
+
+      Compose a config using the Hydra compose API. This will return the config as
+      a HydraContainerConfig instance.
+
+      :Parameters: * **config_dir** (*Path | str*) -- The path to the config directory.
+                   * **config_name** (*str*) -- The name of the config file.
+
+      :keyword overrides: The overrides to use when composing the config.
+      :kwtype overrides: List[str]
+      :keyword return_hydra_config: Whether to return the HydraConfig object.
+      :kwtype return_hydra_config: bool
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: load(*args, instantiate = True, pattern = None, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.load to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword pattern: The specific pattern to select from the loaded
+                        config.
+      :kwtype pattern: Optional[str]
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: create(*args, instantiate = True, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.create to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: merge_with(*others)
+
+      Wrapper around OmegaConf.merge to merge the config with another config.
+
+      :Parameters: **others** (*DictConfig | ListConfig | Dict | List*) -- The other config(s) to
+                   merge with.
+
+
+
+   .. py:method:: copy()
+
+      Wrapper around the copy method to return a new instance of this class.
+
+      .. note::
+
+         This method will perform a deepcopy, meaning the :meth:`__getstate__` and
+         :meth:`__setstate__` methods will be called. This is fairly slow since
+         the object is pickled and unpickled.
+
+
+
+   .. py:method:: save(path, *, header = None)
+
+      Saves the config to a yaml file.
+
+      :Parameters: **path** (*Path | str*) -- The path to save the config to.
+
+      :keyword header: The header to add to the top of the yaml file.
+      :kwtype header: str
+
+
+
+   .. py:method:: to_yaml()
+
+      Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+      Adds some custom representers.
+
+      This uses the stored config attribute to convert to yaml. If the config is None,
+      this will return the default string representation of the object.
+
+
+
+   .. py:method:: __getstate__()
+
+      This is used to pickle the object. We'll return the config as the state.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      This is used to unpickle the object. We'll set the config from the state.
+
+
+
+   .. py:method:: __str__()
+
+      Convert the config to a yaml string.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: VL53L8CHSharedConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig
+      :parts: 1
+
+
+   Shared sensor configuration with default settings.
+
+   Inherits from SensorConfig and provides default values for common parameters.
+
+
+   .. py:method:: pack()
+
+      Packs the sensor configuration into a byte structure.
+
+      :returns: *bytes* -- Packed configuration data.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the configuration settings for the sensor.
+
+      :returns: *dict[str, Setting]* -- Configuration settings.
+
+
+   .. py:method:: get_instance()
+
+      Get the class instance specified in the configuration.
+
+      :returns: The class instance.
+
+
+
+   .. py:method:: create_instance(*args, auto_create = True, **kwargs)
+
+      Create an instance of the class specified in the configuration.
+
+      :attr:`instance` must be set to the fully qualified class name of the class to
+      instantiate. If no arguments are provided, the configuration instance will be
+      passed as the first argument to the class constructor.
+
+      :Parameters: **\*args** -- Positional arguments to pass to the class constructor
+
+      :keyword auto_create: Whether to automatically create the instance if no arguments
+                            are provided
+      :keyword \*\*kwargs: Keyword arguments to pass to the class constructor
+
+      :returns: An instance of the specified class.
+
+
+
+   .. py:attribute:: config
+      :type: Optional[omegaconf.DictConfig]
+
+      The original, uninstantiated config. This is maintained within each nested
+      instantiated config to allow for proper serialization and deserialization, as well
+      as printing the config as a yaml string.
+
+
+   .. py:attribute:: custom
+      :type: Optional[Dict[str, Any]]
+
+      Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+      files) where you want to store data that is not necessarily defined in the config.
+
+
+   .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
+      :classmethod:
+
+
+      Instantiate the config into an object.
+
+      :Parameters: **config** (*DictConfig | ListConfig*) -- The config to instantiate.
+
+      :keyword _convert_: The conversion method to use. Defaults to "object", meaning
+                          all structured configs will be converted to their dataclass equivalent.
+      :kwtype _convert_: str
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: compose(config_dir, config_name, *, overrides = [], return_hydra_config = False, **kwargs)
+      :classmethod:
+
+
+      Compose a config using the Hydra compose API. This will return the config as
+      a HydraContainerConfig instance.
+
+      :Parameters: * **config_dir** (*Path | str*) -- The path to the config directory.
+                   * **config_name** (*str*) -- The name of the config file.
+
+      :keyword overrides: The overrides to use when composing the config.
+      :kwtype overrides: List[str]
+      :keyword return_hydra_config: Whether to return the HydraConfig object.
+      :kwtype return_hydra_config: bool
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: load(*args, instantiate = True, pattern = None, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.load to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword pattern: The specific pattern to select from the loaded
+                        config.
+      :kwtype pattern: Optional[str]
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: create(*args, instantiate = True, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.create to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: merge_with(*others)
+
+      Wrapper around OmegaConf.merge to merge the config with another config.
+
+      :Parameters: **others** (*DictConfig | ListConfig | Dict | List*) -- The other config(s) to
+                   merge with.
+
+
+
+   .. py:method:: copy()
+
+      Wrapper around the copy method to return a new instance of this class.
+
+      .. note::
+
+         This method will perform a deepcopy, meaning the :meth:`__getstate__` and
+         :meth:`__setstate__` methods will be called. This is fairly slow since
+         the object is pickled and unpickled.
+
+
+
+   .. py:method:: save(path, *, header = None)
+
+      Saves the config to a yaml file.
+
+      :Parameters: **path** (*Path | str*) -- The path to save the config to.
+
+      :keyword header: The header to add to the top of the yaml file.
+      :kwtype header: str
+
+
+
+   .. py:method:: to_yaml()
+
+      Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+      Adds some custom representers.
+
+      This uses the stored config attribute to convert to yaml. If the config is None,
+      this will return the default string representation of the object.
+
+
+
+   .. py:method:: __getstate__()
+
+      This is used to pickle the object. We'll return the config as the state.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      This is used to unpickle the object. We'll set the config from the state.
+
+
+
+   .. py:method:: __str__()
+
+      Convert the config to a yaml string.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: VL53L8CHConfig4x4
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4
+      :parts: 1
+
+
+   Sensor configuration for a 4x4 resolution.
+
+
+   .. py:method:: pack()
+
+      Packs the sensor configuration into a byte structure.
+
+      :returns: *bytes* -- Packed configuration data.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the configuration settings for the sensor.
+
+      :returns: *dict[str, Setting]* -- Configuration settings.
+
+
+   .. py:method:: get_instance()
+
+      Get the class instance specified in the configuration.
+
+      :returns: The class instance.
+
+
+
+   .. py:method:: create_instance(*args, auto_create = True, **kwargs)
+
+      Create an instance of the class specified in the configuration.
+
+      :attr:`instance` must be set to the fully qualified class name of the class to
+      instantiate. If no arguments are provided, the configuration instance will be
+      passed as the first argument to the class constructor.
+
+      :Parameters: **\*args** -- Positional arguments to pass to the class constructor
+
+      :keyword auto_create: Whether to automatically create the instance if no arguments
+                            are provided
+      :keyword \*\*kwargs: Keyword arguments to pass to the class constructor
+
+      :returns: An instance of the specified class.
+
+
+
+   .. py:attribute:: config
+      :type: Optional[omegaconf.DictConfig]
+
+      The original, uninstantiated config. This is maintained within each nested
+      instantiated config to allow for proper serialization and deserialization, as well
+      as printing the config as a yaml string.
+
+
+   .. py:attribute:: custom
+      :type: Optional[Dict[str, Any]]
+
+      Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+      files) where you want to store data that is not necessarily defined in the config.
+
+
+   .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
+      :classmethod:
+
+
+      Instantiate the config into an object.
+
+      :Parameters: **config** (*DictConfig | ListConfig*) -- The config to instantiate.
+
+      :keyword _convert_: The conversion method to use. Defaults to "object", meaning
+                          all structured configs will be converted to their dataclass equivalent.
+      :kwtype _convert_: str
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: compose(config_dir, config_name, *, overrides = [], return_hydra_config = False, **kwargs)
+      :classmethod:
+
+
+      Compose a config using the Hydra compose API. This will return the config as
+      a HydraContainerConfig instance.
+
+      :Parameters: * **config_dir** (*Path | str*) -- The path to the config directory.
+                   * **config_name** (*str*) -- The name of the config file.
+
+      :keyword overrides: The overrides to use when composing the config.
+      :kwtype overrides: List[str]
+      :keyword return_hydra_config: Whether to return the HydraConfig object.
+      :kwtype return_hydra_config: bool
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: load(*args, instantiate = True, pattern = None, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.load to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword pattern: The specific pattern to select from the loaded
+                        config.
+      :kwtype pattern: Optional[str]
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: create(*args, instantiate = True, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.create to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: merge_with(*others)
+
+      Wrapper around OmegaConf.merge to merge the config with another config.
+
+      :Parameters: **others** (*DictConfig | ListConfig | Dict | List*) -- The other config(s) to
+                   merge with.
+
+
+
+   .. py:method:: copy()
+
+      Wrapper around the copy method to return a new instance of this class.
+
+      .. note::
+
+         This method will perform a deepcopy, meaning the :meth:`__getstate__` and
+         :meth:`__setstate__` methods will be called. This is fairly slow since
+         the object is pickled and unpickled.
+
+
+
+   .. py:method:: save(path, *, header = None)
+
+      Saves the config to a yaml file.
+
+      :Parameters: **path** (*Path | str*) -- The path to save the config to.
+
+      :keyword header: The header to add to the top of the yaml file.
+      :kwtype header: str
+
+
+
+   .. py:method:: to_yaml()
+
+      Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+      Adds some custom representers.
+
+      This uses the stored config attribute to convert to yaml. If the config is None,
+      this will return the default string representation of the object.
+
+
+
+   .. py:method:: __getstate__()
+
+      This is used to pickle the object. We'll return the config as the state.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      This is used to unpickle the object. We'll set the config from the state.
+
+
+
+   .. py:method:: __str__()
+
+      Convert the config to a yaml string.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: VL53L8CHConfig8x8
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8
+      :parts: 1
+
+
+   Sensor configuration for an 8x8 resolution.
+
+
+   .. py:method:: pack()
+
+      Packs the sensor configuration into a byte structure.
+
+      :returns: *bytes* -- Packed configuration data.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the configuration settings for the sensor.
+
+      :returns: *dict[str, Setting]* -- Configuration settings.
+
+
+   .. py:method:: get_instance()
+
+      Get the class instance specified in the configuration.
+
+      :returns: The class instance.
+
+
+
+   .. py:method:: create_instance(*args, auto_create = True, **kwargs)
+
+      Create an instance of the class specified in the configuration.
+
+      :attr:`instance` must be set to the fully qualified class name of the class to
+      instantiate. If no arguments are provided, the configuration instance will be
+      passed as the first argument to the class constructor.
+
+      :Parameters: **\*args** -- Positional arguments to pass to the class constructor
+
+      :keyword auto_create: Whether to automatically create the instance if no arguments
+                            are provided
+      :keyword \*\*kwargs: Keyword arguments to pass to the class constructor
+
+      :returns: An instance of the specified class.
+
+
+
+   .. py:attribute:: config
+      :type: Optional[omegaconf.DictConfig]
+
+      The original, uninstantiated config. This is maintained within each nested
+      instantiated config to allow for proper serialization and deserialization, as well
+      as printing the config as a yaml string.
+
+
+   .. py:attribute:: custom
+      :type: Optional[Dict[str, Any]]
+
+      Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+      files) where you want to store data that is not necessarily defined in the config.
+
+
+   .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
+      :classmethod:
+
+
+      Instantiate the config into an object.
+
+      :Parameters: **config** (*DictConfig | ListConfig*) -- The config to instantiate.
+
+      :keyword _convert_: The conversion method to use. Defaults to "object", meaning
+                          all structured configs will be converted to their dataclass equivalent.
+      :kwtype _convert_: str
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: compose(config_dir, config_name, *, overrides = [], return_hydra_config = False, **kwargs)
+      :classmethod:
+
+
+      Compose a config using the Hydra compose API. This will return the config as
+      a HydraContainerConfig instance.
+
+      :Parameters: * **config_dir** (*Path | str*) -- The path to the config directory.
+                   * **config_name** (*str*) -- The name of the config file.
+
+      :keyword overrides: The overrides to use when composing the config.
+      :kwtype overrides: List[str]
+      :keyword return_hydra_config: Whether to return the HydraConfig object.
+      :kwtype return_hydra_config: bool
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: load(*args, instantiate = True, pattern = None, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.load to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword pattern: The specific pattern to select from the loaded
+                        config.
+      :kwtype pattern: Optional[str]
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: create(*args, instantiate = True, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.create to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: merge_with(*others)
+
+      Wrapper around OmegaConf.merge to merge the config with another config.
+
+      :Parameters: **others** (*DictConfig | ListConfig | Dict | List*) -- The other config(s) to
+                   merge with.
+
+
+
+   .. py:method:: copy()
+
+      Wrapper around the copy method to return a new instance of this class.
+
+      .. note::
+
+         This method will perform a deepcopy, meaning the :meth:`__getstate__` and
+         :meth:`__setstate__` methods will be called. This is fairly slow since
+         the object is pickled and unpickled.
+
+
+
+   .. py:method:: save(path, *, header = None)
+
+      Saves the config to a yaml file.
+
+      :Parameters: **path** (*Path | str*) -- The path to save the config to.
+
+      :keyword header: The header to add to the top of the yaml file.
+      :kwtype header: str
+
+
+
+   .. py:method:: to_yaml()
+
+      Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+      Adds some custom representers.
+
+      This uses the stored config attribute to convert to yaml. If the config is None,
+      this will return the default string representation of the object.
+
+
+
+   .. py:method:: __getstate__()
+
+      This is used to pickle the object. We'll return the config as the state.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      This is used to unpickle the object. We'll set the config from the state.
+
+
+
+   .. py:method:: __str__()
+
+      Convert the config to a yaml string.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: VL53L8CHHistogram
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHHistogram
+      :parts: 1
+
+
+   Processes and stores histogram data from the VL53L8CH sensor.
+
+   This class handles the accumulation and processing of histogram data
+   received from the sensor, managing multiple pixel histograms.
+
+
+   .. py:method:: reset(num_pixels = None)
+
+      Resets the histogram data.
+
+      :Parameters: **num_pixels** (*int*) -- Number of pixels expected in the histogram data.
+
+
+
+   .. py:method:: process(row)
+
+      Processes a row of histogram data.
+
+      :Parameters: **row** (*list[str]*) -- A list of string values representing a row of data.
+
+      :returns: *bool* -- True if processing is successful, False otherwise.
+
+
+
+   .. py:method:: get_data()
+
+      Retrieves the processed histogram data.
+
+      :returns: *np.ndarray* -- A copy of the histogram data.
+
+
+
+   .. py:property:: has_data
+      :type: bool
+
+      Checks if histogram data is available.
+
+      :returns: *bool* -- True if data is available, False otherwise.
+
+
+.. py:class:: VL53L8CHSensor(config, *, port = None, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor
+      :parts: 1
+
+
+   Main sensor class for the VL53L8CH time-of-flight sensor.
+
+   This class handles communication with the sensor, configuration,
+   data acquisition, and data processing.
+
+   :Parameters: **config** (*VL53L8CHConfig*) -- Configuration parameters for the sensor.
+
+   :keyword port: Serial port to which the sensor is connected.
+   :kwtype port: str | None
+   :keyword \*\*kwargs: Additional configuration parameters to update.
+
+   :ivar SCRIPT: Path to the sensor's makefile script.
+   :vartype SCRIPT: Path
+   :ivar BAUDRATE: Serial communication baud rate.
+
+   :vartype BAUDRATE: int
+
+
+   .. py:property:: config
+      :type: VL53L8CHConfig
+
+      Retrieves the VL53L8CH sensor configuration.
+
+
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+
+
+   .. py:method:: accumulate(num_samples = 1, *, average = True)
+
+      Accumulates histogram data from the sensor.
+
+      :Parameters: * **num_samples** (*int*) -- Number of samples to accumulate.
+                   * **average** (*bool, optional*) -- If True, returns the average of the samples.
+                     If False, returns a list of individual samples. Defaults to True.
+
+      :returns: *np.ndarray | list[np.ndarray]* --
+
+                The accumulated histogram data,
+                    either averaged or as a list of samples.
+
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Gets the number of CNH bins in the sensor configuration.
+
+      :returns: *int* -- Number of CNH bins.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Gets the aggregation grid resolution.
+
+      :returns: *tuple[int, int]* -- Number of aggregation columns and rows.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operational.
+
+      :returns: *bool* -- True if the sensor is operational, False otherwise.
+
+
+   .. py:method:: close()
+
+      Closes the sensor connection and stops background processes.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: calibrate()
+      :abstractmethod:
+
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+

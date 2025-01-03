@@ -1,0 +1,666 @@
+
+:py:mod:`cc_hardware.drivers.stepper_motors.kinesis_stepper`
+============================================================
+
+
+.. py:module:: cc_hardware.drivers.stepper_motors.kinesis_stepper
+
+.. autoapi-nested-parse::
+
+   StepperMotor driver for Kinesis motors.
+
+   The :class:`~cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor`
+   class is a wrapper around the Thorlabs Kinesis C API
+   (accessed via the ``pylablib.devices.Throlabs.KinesisMotor`` class). It provides a
+   simple interface for controlling the motor.
+
+   .. note::
+
+       The Kinesis motor library is only supported on Windows and Linux.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor
+   cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage
+   cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem
+   cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem
+
+
+
+
+.. py:class:: KinesisStepperMotor(port, *, channel = 1, is_rack_system = True, scale = 1.0)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor
+      :parts: 1
+
+
+   A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
+   This class provides additional features such as homing, movement with limits, and
+   scaling of motor positions.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor.
+
+   :keyword channel: The channel of the motor. Defaults to 1.
+   :kwtype channel: int
+   :keyword is_rack_system: Whether the motor is part of a rack system. Defaults to
+                            True.
+   :kwtype is_rack_system: bool
+   :keyword scale: The scaling factor for motor positions. Defaults to 1.0.
+   :kwtype scale: float
+
+
+   .. py:method:: initialize(*, max_velocity = None, acceleration = None, lower_limit = None, upper_limit = None, clip_at_limits = False, initial_position = None, reference_position = None, home = False, check_homed = None)
+
+      Initialize the Kinesis motor, with options to home and set a reference position.
+
+      :keyword max_velocity: The maximum velocity of the motor. Defaults
+                             to None.
+      :kwtype max_velocity: float, optional
+      :keyword acceleration: The acceleration of the motor. Defaults to
+      :kwtype acceleration: float, optional
+      :keyword lower_limit: The lower limit of the motor. Defaults to
+                            None.
+      :kwtype lower_limit: float, optional
+      :keyword upper_limit: The upper limit of the motor. Defaults to
+                            None.
+      :kwtype upper_limit: float, optional
+      :keyword clip_at_limits: Whether to clip the motor position at the
+                               limits. Defaults to False.
+      :kwtype clip_at_limits: bool, optional
+      :keyword initial_position: The initial position to move the motor
+                                 to. Defaults to None.
+      :kwtype initial_position: float, optional
+      :keyword reference_position: The reference position to set.
+                                   Defaults to None.
+      :kwtype reference_position: float, optional
+      :keyword home: Whether to home the motor during initialization. Defaults to
+                     False.
+      :kwtype home: bool
+      :keyword check_homed: Whether to check if the motor is homed.
+                            Defaults to the opposite of `home`.
+      :kwtype check_homed: bool, optional
+
+      :returns: *bool* -- True if the motor is successfully initialized, False otherwise.
+
+
+
+   .. py:method:: close(home = False)
+
+      Closes the Kinesis motor connection, with an optional homing operation.
+
+      :Parameters: **home** (*bool*) -- Whether to home the motor before closing. Defaults to False.
+
+
+
+   .. py:method:: home(**kwargs)
+
+      Homes the Kinesis motor to its reference or zero position.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the motor by a specified relative position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to
+                   its current position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the motor to a specified absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Get the current absolute position of the motor.
+
+      :returns: *float* --
+
+                The current position of the motor, or 0.0 if the motor is not
+                    operational.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the motor is in a healthy operational state.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:property:: lower_limit
+      :type: float | None
+
+      Get or set the lower movement limit of the motor.
+
+      :returns: *float | None* -- The current lower limit, or None if not set.
+
+
+   .. py:property:: upper_limit
+      :type: float | None
+
+      Get or set the upper movement limit of the motor.
+
+      :returns: *float | None* -- The current upper limit, or None if not set.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: KinesisRotationStage(*args, is_rack_system = None, scale = None, **kwargs)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage
+      :parts: 1
+
+
+   A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
+   This class provides additional features such as homing, movement with limits, and
+   scaling of motor positions.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor.
+
+   :keyword channel: The channel of the motor. Defaults to 1.
+   :kwtype channel: int
+   :keyword is_rack_system: Whether the motor is part of a rack system. Defaults to
+                            True.
+   :kwtype is_rack_system: bool
+   :keyword scale: The scaling factor for motor positions. Defaults to 1.0.
+   :kwtype scale: float
+
+
+   .. py:method:: initialize(**kwargs)
+
+      Initialize the Kinesis motor, with options to home and set a reference position.
+
+      :keyword max_velocity: The maximum velocity of the motor. Defaults
+                             to None.
+      :kwtype max_velocity: float, optional
+      :keyword acceleration: The acceleration of the motor. Defaults to
+      :kwtype acceleration: float, optional
+      :keyword lower_limit: The lower limit of the motor. Defaults to
+                            None.
+      :kwtype lower_limit: float, optional
+      :keyword upper_limit: The upper limit of the motor. Defaults to
+                            None.
+      :kwtype upper_limit: float, optional
+      :keyword clip_at_limits: Whether to clip the motor position at the
+                               limits. Defaults to False.
+      :kwtype clip_at_limits: bool, optional
+      :keyword initial_position: The initial position to move the motor
+                                 to. Defaults to None.
+      :kwtype initial_position: float, optional
+      :keyword reference_position: The reference position to set.
+                                   Defaults to None.
+      :kwtype reference_position: float, optional
+      :keyword home: Whether to home the motor during initialization. Defaults to
+                     False.
+      :kwtype home: bool
+      :keyword check_homed: Whether to check if the motor is homed.
+                            Defaults to the opposite of `home`.
+      :kwtype check_homed: bool, optional
+
+      :returns: *bool* -- True if the motor is successfully initialized, False otherwise.
+
+
+
+   .. py:method:: close(home = False)
+
+      Closes the Kinesis motor connection, with an optional homing operation.
+
+      :Parameters: **home** (*bool*) -- Whether to home the motor before closing. Defaults to False.
+
+
+
+   .. py:method:: home(**kwargs)
+
+      Homes the Kinesis motor to its reference or zero position.
+
+
+
+   .. py:method:: move_by(relative_position)
+
+      Moves the motor by a specified relative position.
+
+      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to
+                   its current position.
+
+
+
+   .. py:method:: move_to(position)
+
+      Moves the motor to a specified absolute position.
+
+      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation.
+
+
+
+   .. py:property:: position
+      :type: float
+
+      Get the current absolute position of the motor.
+
+      :returns: *float* --
+
+                The current position of the motor, or 0.0 if the motor is not
+                    operational.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the motor is in a healthy operational state.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:property:: lower_limit
+      :type: float | None
+
+      Get or set the lower movement limit of the motor.
+
+      :returns: *float | None* -- The current lower limit, or None if not set.
+
+
+   .. py:property:: upper_limit
+      :type: float | None
+
+      Get or set the upper movement limit of the motor.
+
+      :returns: *float | None* -- The current upper limit, or None if not set.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: KinesisStepperMotorSystem(port, axes)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem
+      :parts: 1
+
+
+   A wrapper around multiple Kinesis stepper motors which defines the system as a
+   whole.
+
+   :Parameters: * **port** (*str*) -- The port of the Kinesis motor device (has different channels for
+                  different axes).
+                * **axes** (*dict[StepperMotorSystemAxis, list[type[KinesisStepperMotor]]]*) -- A
+                  dictionary of axes and the motors that are attached to them. The motors are
+                  specified as classes, which will be instantiated with the port and any
+                  additional keyword arguments.
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: AzimuthElevationSystem(port)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem
+      :parts: 1
+
+
+   A predefined multi-axis system for an azimuth-elevation setup.
+
+   :Parameters: **port** (*str*) -- The port of the Kinesis motor device.
+
+
+   .. py:method:: move_to(*positions)
+                  move_to(**positions: float)
+
+      Move to the specified position using positional or keyword arguments.
+
+
+
+   .. py:method:: move_by(*positions)
+                  move_by(**positions: float)
+
+      Moves the steppers to the specified positions.
+
+
+
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
+   .. py:method:: __getattr__(name)
+
+      This is a passthrough to the underlying motor objects.
+
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+      :classmethod:
+
+
+      Register the given class in this registry.
+
+      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
+                     a class name to be lazily loaded. If the class_type is a type, this
+                     method will return the class itself (useful for decorators).
+                   * **module_path** -- The module path where the class can be found
+                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
+                     This is the full importable path to the class. The final class
+                     path will be ``module_path.class_type``.
+
+      :returns: The registered class if class_type is a class type, otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name, *args, **kwargs)
+      :classmethod:
+
+
+      Create an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** -- The name of the class to instantiate.
+                   * **\*args** -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+
+      :returns: An instance of the requested class.
+
+      :raises ValueError: If the class name is not registered.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+

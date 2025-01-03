@@ -7,7 +7,7 @@
 
 Home <self>
 examples/index
-usage/index
+usage/api
 contributing
 ```
 
