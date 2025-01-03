@@ -74,7 +74,7 @@ const uint16_t configPeriod[2][2] = {
 };
 
 // for each configuration specify the number of Kilo Iterations (Kilo = 1024)
-const uint16_t configKiloIter[2][2] = {{5000, 2500}, {10, 2500}};
+const uint16_t configKiloIter[2][2] = {{10000, 2500}, {10, 2500}};
 
 // for each configuration select a SPAD map through the id
 const uint8_t configSpadId[2][2] = {

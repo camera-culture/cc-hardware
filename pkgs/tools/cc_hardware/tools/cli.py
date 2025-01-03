@@ -68,4 +68,6 @@ def run_cli(func: Callable):
     Todo:
         Document this function.
     """
-    zen.zen(func).hydra_main(config_path=None, config_name="main", version_base="1.3")
+    zen.zen(func, unpack_kwargs=True).hydra_main(
+        config_path=None, config_name="main", version_base="1.3"
+    )

@@ -4,31 +4,25 @@ This is a monorepo for all hardware scripts used in Camera Culture.
 
 ## Getting Started
 
-To install the `cc_hardware` package, you will need the `poetry` package.
-To install, run the following command:
-
-```bash
-pip install poetry
-```
-
 You can then install the `cc_hardware` package by running the following commands:
 
 ```bash
 # Clone the repository
-git clone git@github.com:camera-culture/cc_hardware.git
+git clone git@github.com:camera-culture/cc-hardware.git
 cd cc_hardware
 
 # Install the package
-poetry install
+pip install -e .
 ```
 
-`poetry install` will install the package and it's dependencies in develop mode.
-This allows you to make changes to the code and have them reflected in the package
-without having to reinstall the package (i.e. a symlink is created to the package).
-You can also install `cc_hardware` with `pip install .` if you don't need this
-behavior.
+## Documentation Website
 
-## Repo Structure
+We have published the documentation for this package at
+[camera-culture.github.io/cc-hardware](https://camera-culture.github.io/cc-hardware/).
+
+## Other Details
+
+### Repo Structure
 
 `cc_hardware` is a monorepo that contains multiple packages. Each package is a
 subdirectory within the `pkgs` directory and should be installed as a separate package
@@ -37,13 +31,13 @@ subdirectory within the `pkgs` directory and should be installed as a separate p
 
 The current supported packages are as follows:
 
-- [`algos`](https://camera-culture.github.io/cc-hardware/usage/api/algos):
+- [`algos`](https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/algos):
     Contains algorithms for processing data.
-- [`drivers`](https://camera-culture.github.io/cc-hardware/usage/api/drivers):
+- [`drivers`](https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/drivers):
     Contains drivers for interfacing with hardware.
-- [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/utils):
+- [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/utils):
     Contains utility functions and classes.
-- [`tools`](https://camera-culture.github.io/cc-hardware/usage/cli):
+<!-- - [`tools`](https://camera-culture.github.io/cc-hardware/usage/cc_hardware/cli): -->
     Contains tools for working with hardware, such as calibration or visualization
     scripts.
 

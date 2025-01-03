@@ -1,3 +1,7 @@
+import pickle
+
+import numpy as np
+
 from cc_hardware.drivers.spads import (
     SPADDashboard,
     SPADDashboardConfig,
@@ -24,13 +28,19 @@ def my_callback(dashboard: SPADDashboard):
 
 
 @register_cli
-def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+def spad_dashboard(
+    sensor: SPADSensorConfig,
+    dashboard: SPADDashboardConfig,
+    *,
+    capture_ambient: bool = False,
+):
     """Sets up and runs the SPAD dashboard.
 
     Args:
         sensor (SPADSensorConfig): Configuration object for the sensor.
         dashboard (SPADDashboardConfig): Configuration object for the dashboard.
     """
+    ambient: np.ndarray | None = None
 
     def setup(manager: Manager):
         """Configures the manager with sensor and dashboard instances.
@@ -40,6 +50,25 @@ def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
         """
         _sensor = sensor.create_instance()
         manager.add(sensor=_sensor)
+
+        nonlocal ambient
+        if capture_ambient:
+            get_logger().info("Capturing ambient light...")
+            histograms = _sensor.accumulate(20, average=False)
+            ambient = np.max(histograms, axis=0)
+            get_logger().info("Ambient light captured")
+            pickle.dump(ambient, open("ambient.pkl", "wb"))
+        else:
+            try:
+                ambient = pickle.load(open("ambient.pkl", "rb"))
+                if ambient.shape[0] != np.prod(_sensor.resolution):
+                    get_logger().warning(
+                        f"Ambient light data shape {ambient.shape} does not match "
+                        f"sensor resolution {np.prod(_sensor.resolution)}"
+                    )
+                    ambient = None
+            except FileNotFoundError:
+                ambient = None
 
         dashboard.user_callback = my_callback
         _dashboard: SPADDashboard = dashboard.create_instance(sensor=_sensor)
@@ -60,7 +89,14 @@ def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
         Returns:
             bool: Whether to continue running.
         """
-        dashboard.update(frame)
+        histograms = sensor.accumulate()
+        if ambient is not None:
+            assert (
+                ambient.shape == histograms.shape
+            ), f"{ambient.shape} != {histograms.shape}"
+            histograms -= ambient
+            histograms = np.clip(histograms, 0, None)
+        dashboard.update(frame, histograms=histograms)
         return True
 
     with Manager() as manager:
@@ -68,4 +104,20 @@ def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
 
 
 if __name__ == "__main__":
-    run_cli(spad_dashboard)
+    import argparse
+    import sys
+    from functools import partial
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--capture-ambient",
+        action="store_true",
+        help="Capture ambient light for calibration",
+    )
+
+    parsed_args, unparsed_args = parser.parse_known_args()
+
+    sys.argv[1:] = unparsed_args
+
+    run_cli(partial(spad_dashboard, capture_ambient=parsed_args.capture_ambient))

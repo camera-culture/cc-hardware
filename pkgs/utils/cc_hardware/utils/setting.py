@@ -108,3 +108,27 @@ class OptionSetting(Setting):
             # Get the first value in the enum
             default = enum.__members__[list(enum.__members__)[0]]
         return cls.default_factory(value=default, options=list(enum), **kwargs)
+
+
+@config_wrapper
+class BoolSetting(Setting):
+    """
+    Defines a setting that has a boolean value.
+
+    Attributes:
+        value (bool): The current value of the setting.
+    """
+
+    value: bool
+
+    def update(self, value: bool) -> None:
+        """
+        Updates the setting with a new value.
+
+        Args:
+            value (bool): The new value to set.
+        """
+        if not isinstance(value, bool):
+            raise ValueError("Value must be a boolean.")
+        self.value = value
+        self.dirty = True

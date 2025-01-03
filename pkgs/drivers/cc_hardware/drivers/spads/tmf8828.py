@@ -20,10 +20,12 @@ from pathlib import Path
 
 import numpy as np
 import pkg_resources
+from tqdm import tqdm
 
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
-from cc_hardware.drivers.spads.spad import SPADSensor
+from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.utils.config import config_wrapper
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
 
@@ -108,6 +110,26 @@ class RangeMode(Enum):
     SHORT = 1
 
 
+@register
+@config_wrapper
+class TMF8828Config(SPADSensorConfig):
+    """Configuration for the TMF8828 sensor.
+
+    Attributes:
+        port (str | None): The port to use for communication with the sensor.
+
+        spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
+        range_mode (RangeMode): The range mode for the sensor (LONG or SHORT).
+    """
+
+    instance: str = "TMF8828Sensor"
+
+    port: str | None = None
+
+    spad_id: SPADID = SPADID.ID6
+    range_mode: RangeMode = RangeMode.LONG
+
+
 # ================
 
 
@@ -121,10 +143,7 @@ class TMF8828Histogram(SensorData):
         spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
     """
 
-    def __init__(
-        self,
-        spad_id: SPADID,
-    ):
+    def __init__(self, spad_id: SPADID):
         super().__init__()
         self.spad_id = spad_id
         self.active_channels_per_subcapture = (
@@ -225,6 +244,11 @@ class TMF8828Histogram(SensorData):
             combined_data.append(data)
         combined_data = np.vstack(combined_data)
 
+        # Remove ambient data; ambient light is in first 7 bins
+        combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(
+            int
+        )
+
         if self.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
             # fmt: off
@@ -306,32 +330,17 @@ class TMF8828Sensor(SPADSensor):
     BAUDRATE: int = 2_000_000
     TIMEOUT: float = 1.0
 
-    def __init__(
-        self,
-        port: str | None = None,
-        *,
-        spad_id: SPADID | int = SPADID.ID15,
-        setup: bool = True,
-        range_mode: RangeMode = RangeMode.LONG,
-    ):
+    def __init__(self, config: TMF8828Config):
         """
-        Initializes the TMF8828 sensor with the specified SPAD ID, port, and setup
-        parameters.
+        Initializes the TMF8828 sensor with the specified configuration.
 
         Args:
-            port (str | None): The port to use for communication with the sensor. If not
-                provided, the port will be automatically detected.
-
-        Keyword Args:
-            spad_id (SPADID | int): The SPAD ID indicating the resolution of the sensor.
-                Defaults to SPADID.ID6.
-            setup (bool): Whether to perform a sensor setup after initialization.
-                Defaults to True.
-            range_mode (RangeMode): The range mode for the sensor (LONG or SHORT).
-                Defaults to LONG.
+            config (TMF8828Config): The configuration for the sensor.
         """
-        self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
-        self.range_mode = range_mode
+        super().__init__(config)
+
+        self.spad_id = config.spad_id
+        self.range_mode = config.range_mode
 
         self._queue = multiprocessing.Queue(maxsize=64)
         self._write_queue = multiprocessing.Queue(maxsize=10)
@@ -344,7 +353,7 @@ class TMF8828Sensor(SPADSensor):
         self._reader_process = multiprocessing.Process(
             target=self._read_serial_background,
             args=(
-                dict(port=port, baudrate=self.BAUDRATE, timeout=self.TIMEOUT),
+                dict(port=config.port, baudrate=self.BAUDRATE, timeout=self.TIMEOUT),
                 self.spad_id,
                 self.range_mode,
                 self._stop_event,
@@ -356,6 +365,16 @@ class TMF8828Sensor(SPADSensor):
         )
         self._reader_process.start()
         self._initialized_event.wait()
+
+    @property
+    def config(self) -> TMF8828Config:
+        """
+        Returns the configuration for the sensor.
+
+        Returns:
+            TMF8828Config: The configuration for the sensor.
+        """
+        return self._config
 
     @staticmethod
     def _read_serial_background(
@@ -452,7 +471,7 @@ class TMF8828Sensor(SPADSensor):
 
     def accumulate(
         self,
-        num_samples: int,
+        num_samples: int = 1,
         *,
         average: bool = True,
     ) -> np.ndarray | list[np.ndarray]:
@@ -470,8 +489,13 @@ class TMF8828Sensor(SPADSensor):
         """
 
         histograms = []
-        for _ in range(num_samples):
-            get_logger().info(f"Sample {len(histograms) + 1}/{num_samples}")
+        for _ in tqdm(
+            range(num_samples),
+            disable=(num_samples == 1),
+            leave=False,
+            desc="Accumulating...",
+        ):
+            get_logger().debug(f"Sample {len(histograms) + 1}/{num_samples}")
 
             self._histogram.reset()
             while not self._histogram.has_data:
@@ -574,6 +598,9 @@ class TMF8828Sensor(SPADSensor):
         """
         Closes the sensor connection and stops background processes.
         """
+        if not hasattr(self, "_initialized_event"):
+            return
+
         if not self._initialized_event.is_set():
             return
 

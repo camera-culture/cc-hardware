@@ -18,7 +18,13 @@ class SensorConfig(CCHardwareConfig):
 
     When defining a new sensor, create a subclass of this configuration class
     and add any necessary parameters.
+
+    Attributes:
+        instance (str): The sensor instance name. Used to instantiate the sensor from
+            the configuration.
     """
+
+    instance: str = "Sensor"
 
     @property
     def settings(self) -> dict[str, Setting]:
@@ -57,9 +63,7 @@ class Sensor(ABC, Registry):
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
-        raise NotImplementedError(
-            f"Updating sensor settings is not supported for {self}."
-        )
+        pass
 
     @property
     @abstractmethod

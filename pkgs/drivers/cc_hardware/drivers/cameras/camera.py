@@ -4,7 +4,15 @@ from abc import abstractmethod
 
 import numpy as np
 
-from cc_hardware.drivers.sensor import Sensor
+from cc_hardware.drivers.sensor import Sensor, SensorConfig
+
+
+class CameraConfig(SensorConfig):
+    """
+    Configuration for Camera sensors.
+    """
+
+    instance: str = "Camera"
 
 
 class Camera(Sensor):
@@ -14,7 +22,7 @@ class Camera(Sensor):
     """
 
     @abstractmethod
-    def accumulate(self, num_samples: int, *, average: bool) -> np.ndarray:
+    def accumulate(self, num_samples: int = 1, *, average: bool) -> np.ndarray:
         """
         Accumulate a specified number of samples from the camera.
 

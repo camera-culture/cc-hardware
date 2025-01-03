@@ -9,7 +9,7 @@ from pyqtgraph.Qt import QtCore, QtWidgets
 
 from cc_hardware.drivers.spads import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper, get_logger
-from cc_hardware.utils.setting import OptionSetting, RangeSetting, Setting
+from cc_hardware.utils.setting import BoolSetting, OptionSetting, RangeSetting, Setting
 
 
 @config_wrapper
@@ -75,7 +75,7 @@ class DashboardWindow(QtWidgets.QWidget):
                 widget = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
                 widget.setRange(setting.min, setting.max)
                 widget.setValue(setting.value)
-                widget.setTickInterval(max((setting.max - setting.min) // 100, 1))
+                widget.setTickInterval(max((setting.max - setting.min) // 20, 1))
                 widget.setTickPosition(QtWidgets.QSlider.TickPosition.TicksBelow)
                 widget.valueChanged.connect(lambda v, s=setting: s.update(v))
                 setting_layout.addWidget(widget)
@@ -93,6 +93,11 @@ class DashboardWindow(QtWidgets.QWidget):
                     lambda v, s=setting: s.update(s.options[v])
                 )
                 self.settings_layout.addWidget(QtWidgets.QLabel(title))
+                self.settings_layout.addWidget(widget)
+            elif isinstance(setting, BoolSetting):
+                widget = QtWidgets.QCheckBox(title)
+                widget.setChecked(setting.value)
+                widget.stateChanged.connect(lambda v, s=setting: s.update(bool(v)))
                 self.settings_layout.addWidget(widget)
 
         self.settings_layout.addStretch()  # Add spacer to align widgets at top
@@ -317,3 +322,7 @@ class PyQtGraphDashboard(SPADDashboard):
                 plot.setYRange(0, self.config.ylim)
         else:
             get_logger().debug("Invalid Y-Limit input")
+
+    @property
+    def is_okay(self) -> bool:
+        return not self.win.isHidden()

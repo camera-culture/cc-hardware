@@ -16,11 +16,24 @@ from typing import override
 import numpy as np
 import pyrealsense2 as rs
 
-from cc_hardware.drivers.cameras.camera import Camera
+from cc_hardware.drivers.cameras.camera import Camera, CameraConfig
 from cc_hardware.utils.blocking_deque import BlockingDeque
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.registry import register
 from cc_hardware.utils.singleton import SingletonABCMeta
+
+
+class RealsenseConfig(CameraConfig):
+    """
+    Configuration for Camera sensors.
+    """
+
+    instance: str = "RealsenseCamera"
+
+    camera_index: int = 0
+    start_pipeline_once: bool = True
+    force_autoexposure: bool = False
+    exposure: int | list[int] | None = None
 
 
 @register
@@ -30,13 +43,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
     in a background thread and stores them in a queue.
     """
 
-    def __init__(
-        self,
-        camera_index: int = 0,
-        start_pipeline_once: bool = True,
-        force_autoexposure: bool = False,
-        exposure: int | list[int] | None = None,
-    ):
+    def __init__(self, config: RealsenseConfig):
         """
         Initialize a RealsenseCamera instance.
 
@@ -47,9 +54,11 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
           force_autoexposure (bool): Whether to force autoexposure initialization.
             Defaults to False.
         """
-        self.camera_index = camera_index
-        self.start_pipeline_once = start_pipeline_once
-        self.force_autoexposure = force_autoexposure
+        super().__init__(config)
+
+        self.camera_index = config.camera_index
+        self.start_pipeline_once = config.start_pipeline_once
+        self.force_autoexposure = config.force_autoexposure
 
         self.queue = BlockingDeque(maxlen=10)
         self.stop_thread = threading.Event()
@@ -63,6 +72,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         self.config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 6)
 
         # Store exposure settings
+        exposure = config.exposure
         self.exposure_settings = exposure if exposure is not None else []
         # Flag to check if exposure has been initialized
         self.exposure_initialized = exposure is not None

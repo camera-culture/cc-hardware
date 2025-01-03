@@ -21,7 +21,7 @@ from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
 from cc_hardware.utils import get_logger, register
 from cc_hardware.utils.config import II, config_wrapper
-from cc_hardware.utils.setting import OptionSetting, RangeSetting, Setting
+from cc_hardware.utils.setting import BoolSetting, OptionSetting, RangeSetting, Setting
 
 # ===============
 
@@ -42,6 +42,8 @@ class VL53L8CHConfig(SPADSensorConfig):
     Configuration parameters for the VL53L8CH sensor.
 
     Attributes:
+        port (str): Serial port for the sensor.
+
         resolution (int): Sensor resolution (uint16_t).
         ranging_mode (RangingMode): Ranging mode (uint16_t).
         ranging_frequency_hz (int): Ranging frequency in Hz (uint16_t).
@@ -55,9 +57,13 @@ class VL53L8CHConfig(SPADSensorConfig):
         agg_merge_y (int): Aggregation merge Y parameter (uint16_t).
         agg_cols (int): Number of aggregation columns (uint16_t).
         agg_rows (int): Number of aggregation rows (uint16_t).
+
+        subtract_ambient (bool): Flag to subtract ambient light from histogram data.
     """
 
     instance: str = "VL53L8CHSensor"
+
+    port: str | None = None
 
     resolution: int  # uint16_t
     ranging_mode: RangingMode  # uint16_t
@@ -72,6 +78,8 @@ class VL53L8CHConfig(SPADSensorConfig):
     agg_merge_y: int  # uint16_t
     agg_cols: int  # uint16_t
     agg_rows: int  # uint16_t
+
+    subtract_ambient: bool
 
     resolution_setting: OptionSetting = OptionSetting.default_factory(
         value=II("..resolution"), options=[16, 64], title="Resolution"
@@ -93,6 +101,10 @@ class VL53L8CHConfig(SPADSensorConfig):
     )
     cnh_num_bins_setting: RangeSetting = RangeSetting.default_factory(
         value=II("..cnh_num_bins"), min=1, max=32, title="Number of Bins"
+    )
+    subtract_ambient_setting: BoolSetting = BoolSetting.default_factory(
+        value=II("..subtract_ambient"),
+        title="Subtract Ambient Light",
     )
 
     def pack(self) -> bytes:
@@ -133,6 +145,7 @@ class VL53L8CHConfig(SPADSensorConfig):
             "ranging_frequency_hz": self.ranging_frequency_hz_setting,
             "integration_time_ms": self.integration_time_ms_setting,
             "cnh_num_bins": self.cnh_num_bins_setting,
+            "subtract_ambient": self.subtract_ambient_setting,
         }
 
 
@@ -153,6 +166,8 @@ class VL53L8CHSharedConfig(VL53L8CHConfig):
     agg_start_y: int = 0
     agg_merge_x: int = 1
     agg_merge_y: int = 1
+
+    subtract_ambient: bool = True
 
 
 @config_wrapper
@@ -190,12 +205,13 @@ class VL53L8CHHistogram(SensorData):
     received from the sensor, managing multiple pixel histograms.
     """
 
-    def __init__(self):
+    def __init__(self, config: VL53L8CHConfig):
         """
         Initializes the VL53L8CHHistogram instance.
         """
         super().__init__()
 
+        self._config = config
         self._pixel_histograms = {}
         self._has_data = False
         self._num_pixels = None
@@ -234,7 +250,7 @@ class VL53L8CHHistogram(SensorData):
             return False
 
         try:
-            ambient = float(row[3])
+            ambient = abs(float(row[3])) if self._config.subtract_ambient else 0
             bin_vals = [float(val) - ambient for val in row[5:]]
             self._pixel_histograms[agg_num] = np.clip(bin_vals, 0, None)
         except (ValueError, IndexError):
@@ -287,7 +303,6 @@ class VL53L8CHSensor(SPADSensor):
         config (VL53L8CHConfig): Configuration parameters for the sensor.
 
     Keyword Args:
-        port (str | None): Serial port to which the sensor is connected.
         **kwargs: Additional configuration parameters to update.
 
     Attributes:
@@ -305,22 +320,21 @@ class VL53L8CHSensor(SPADSensor):
     def __init__(
         self,
         config: VL53L8CHConfig,
-        *,
-        port: str | None = None,
         **kwargs,
     ):
         """
         Initializes the VL53L8CHSensor instance.
 
+        Args:
+            config (VL53L8CHConfig): Configuration parameters for the sensor.
+
         Keyword Args:
-            port (str | None): Serial port to which the sensor is connected.
-                If None, a port is automatically detected.
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
         super().__init__(config)
 
-        self._histogram = VL53L8CHHistogram()
+        self._histogram = VL53L8CHHistogram(config)
 
         # Use Queue for inter-process communication
         self._queue = multiprocessing.Queue(maxsize=self.config.resolution * 4)
@@ -335,7 +349,7 @@ class VL53L8CHSensor(SPADSensor):
         self._reader_process = multiprocessing.Process(
             target=self._read_serial_background,
             args=(
-                port,
+                config.port,
                 self.BAUDRATE,
                 self._stop_event,
                 self._initialized_event,
