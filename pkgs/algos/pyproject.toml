@@ -3,13 +3,13 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "algos"
+name = "cc_hardware_algos"
 version = "0.0"
 authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CC Hardware Algos"
 readme = "README.md"
 packages = [
-  { include = "cc_hardware" }
+    { include = "cc_hardware" }
 ]
 
 [tool.poetry.dependencies]
@@ -17,5 +17,5 @@ python = ">=3.12"
 opencv-python = "^4.10.0.84"
 opencv-contrib-python = "^4.10.0.84"
 numpy = ">=1.26.4"
-drivers = {path = "../drivers", develop = true}
-utils = {path = "../utils", develop = true}
+cc_hardware_drivers = {path = "../drivers", develop = true}
+cc_hardware_utils = {path = "../utils", develop = true}

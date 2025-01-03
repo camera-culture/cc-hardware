@@ -13,10 +13,10 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.14"
-drivers = { path = "pkgs/drivers", develop = true }
-tools = { path = "pkgs/tools", develop = true }
-utils = { path = "pkgs/utils", develop = true }
-algos = { path = "pkgs/algos", develop = true }
+cc_hardware_drivers = { path = "pkgs/drivers", develop = true }
+cc_hardware_tools = { path = "pkgs/tools", develop = true }
+cc_hardware_utils = { path = "pkgs/utils", develop = true }
+cc_hardware_algos = { path = "pkgs/algos", develop = true }
 
 [tool.poetry.dev-dependencies]
 pip = "^24.2"

@@ -2,18 +2,18 @@
 :orphan:
 
 {% endif %}
+
 :py:mod:`{{ obj.name }}`
 =========={{ "=" * obj.name|length }}
 
-{% if 'loc_file' in obj.jinja_env.tests %}
-   {% set readme = obj.url_root + '/' + obj.pathname + '/README.md' %}
-   {% if readme is loc_file %}
+{% set readme = obj.url_root + '/' + obj.pathname + '/README.md' %}
+{% if 'loc_file' in obj.jinja_env.tests and readme is loc_file %}
 
 .. include:: README.md
    :start-line: 1
    :parser: myst_parser.docutils_
 
-   {% endif %}
+
 {% endif %}
 
 .. py:module:: {{ obj.name }}

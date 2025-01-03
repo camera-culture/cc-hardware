@@ -12,6 +12,7 @@
 
 import sys
 from datetime import date
+from functools import partial
 
 # The full version, including alpha/beta/rc tags
 from importlib.metadata import version as get_version
@@ -23,7 +24,7 @@ sys.setrecursionlimit(1500)
 
 # -- Project information -----------------------------------------------------
 
-project = "cc-hardware"
+project = "cc_hardware"
 copyright = f"{date.today().year}, Camera Culture, MIT Media Lab"
 author = "Camera Culture, MIT Media Lab"
 release = get_version(project)
@@ -34,16 +35,15 @@ release = get_version(project)
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # "rinoh.frontend.sphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
-    "sphinx.ext.viewcode",
+    # "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "autoapi.extension",
     "myst_parser",
     "sphinxarg.ext",
-    "sphinxcontrib.typer",
     "sphinxcontrib.googleanalytics",
+    "sphinx.ext.inheritance_diagram",
 ]
 
 source_suffix = {
@@ -52,15 +52,8 @@ source_suffix = {
 }
 
 
-def local_file(name):
-    import os
-
-    name = "../pkgs" + name.split(autoapi_root)[1]
-    return os.path.exists(name)
-
-
 def _prep_jinja_env(jinja_env):
-    jinja_env.tests["loc_file"] = local_file
+    jinja_env.tests["loc_file"] = lambda name: Path(name.strip("/")).exists()
 
 
 autoapi_prepare_jinja_env = _prep_jinja_env
@@ -73,45 +66,67 @@ def copy_readmes_to_autoapi(app, exception):
     """
     from shutil import copyfile
 
-    if exception is None:  # Only execute if the build succeeds
-        pkgs_dir = Path(root_path) / "pkgs"
-        destination_root = Path(root_path) / "docs" / autoapi_root
+    if exception is not None:
+        return
 
-        # Ensure the destination root exists
-        destination_root.mkdir(parents=True, exist_ok=True)
+    pkgs_dir = Path(root_path) / "pkgs"
+    destination_root = Path(root_path) / "docs" / autoapi_root
 
-        for package_dir in pkgs_dir.iterdir():
-            if package_dir.is_dir():  # Only process directories (packages)
-                source_readme = package_dir / "README.md"
-                destination_dir = destination_root / package_dir.name
-                destination_readme = destination_dir / "README.md"
+    # Ensure the destination root exists
+    destination_root.mkdir(parents=True, exist_ok=True)
 
-                if source_readme.exists():
-                    destination_dir.mkdir(parents=True, exist_ok=True)
-                    copyfile(source_readme, destination_readme)
-                    print(f"Copied {source_readme} to {destination_readme}")
-                else:
-                    print(f"WARNING: README.md not found in {package_dir}")
+    for package_dir in pkgs_dir.iterdir():
+        if package_dir.is_dir():  # Only process directories (packages)
+            source_readme = package_dir / "README.md"
+            destination_dir = destination_root / project / package_dir.name
+            destination_readme = destination_dir / "README.md"
+
+            if source_readme.exists():
+                destination_dir.mkdir(parents=True, exist_ok=True)
+                copyfile(source_readme, destination_readme)
+                print(f"Copied {source_readme} to {destination_readme}")
+            else:
+                print(f"WARNING: README.md not found in {package_dir}")
+
+
+def update_inits(*args, create=False, remove=False):
+    # This method will recursively find package dirs and create an init file under
+    # package_dir / project. If create is False, it will remove the init files.
+    assert create != remove, "Cannot create and remove inits at the same time"
+
+    pkgs_dir = Path(root_path) / "pkgs"
+    for package_dir in pkgs_dir.iterdir():
+        if package_dir.is_dir():
+            init_file = package_dir / project / "__init__.py"
+            if create:
+                init_file.touch()
+                print(f"Created {init_file}")
+            if remove:
+                assert init_file.exists(), f"{init_file} does not exist"
+                init_file.unlink()
+                print(f"Removed {init_file}")
 
 
 def setup(app):
+    update_inits(create=True)
     app.connect("build-finished", copy_readmes_to_autoapi)
+    app.connect("build-finished", partial(update_inits, remove=True))
 
 
 # autoapi config
 autoapi_type = "python"
-autoapi_dirs = ["../pkgs"]
+autoapi_dirs = ["../pkgs/"]
 autoapi_options = [
     "members",
-    "show-inheritance",
+    "show-inheritance-diagram",
     "show-module-summary",
     "special-members",
     "imported-members",
     # "inherited-members"  # Doesn't work with viewcode extension
 ]
 autoapi_ignore = ["*/pkgs/tools/*", "*/_templates/*", "*/usage/api/*"]
-autoapi_keep_files = False
-# autoapi_keep_files = True
+autoapi_keep_files = True
+# autoapi_keep_files = False
 autoapi_generate_api_docs = True
 autoapi_add_toctree_entry = False
 autoapi_root = "usage/api/"
@@ -142,7 +157,7 @@ viewcode_enable_epub = True
 todo_include_todos = True
 
 # Add any paths that contain templates here, relative to this directory.
-# templates_path = ["_templates"]
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -151,6 +166,8 @@ exclude_patterns = ["env"]
 
 # Google Analytics
 googleanalytics_id = "G-WK44DH2ZCM"
+
+inheritance_edge_attrs = dict(color="gray")
 
 # -- Options for HTML output -------------------------------------------------
 

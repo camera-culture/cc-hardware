@@ -1,10 +1,10 @@
-"""The :class:`~drivers.cameras.flir.FlirCamera` class is a wrapper around the
-PySpin library for interfacing with FLIR cameras.
+"""The :class:`~cc_hardware.drivers.cameras.flir.FlirCamera` class is a wrapper around
+the PySpin library for interfacing with FLIR cameras.
 
 It provides a simple interface for capturing images and setting camera
 parameters. It is implemented as a singleton to ensure that only one instance of the
 camera is created. To create a new instance of the camera, one has to override the base
-:class:`~drivers.cameras.flir.FlirCamera` class and implement the
+:class:`~cc_hardware.drivers.cameras.flir.FlirCamera` class and implement the
 :func:`~drivers.cameras.flir.FlirCamera.distortion_coefficients` and
 :func:`~drivers.cameras.flir.FlirCamera.intrinsic_matrix` methods.
 

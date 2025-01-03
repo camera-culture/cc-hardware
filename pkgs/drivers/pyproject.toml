@@ -3,13 +3,17 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "drivers"
+name = "cc_hardware_drivers"
 version = "0.0"
 authors = ["Camera Culture <a2cc@media.mit.edu>"]
 description = "CC Hardware Drivers"
 readme = "README.md"
-packages = [{ include = "cc_hardware" }]
-include = [{ path = "./cc_hardware/drivers/data" }]
+packages = [
+    { include = "cc_hardware" }
+]
+include = [
+    { path = "./cc_hardware/drivers/data" }
+]
 
 [tool.poetry.dependencies]
 python = ">=3.12"
@@ -21,4 +25,4 @@ dash = "^2.18.2"
 pylablib = "^1.4.3"
 hydra-config = "^0.0.2"
 telemetrix = { git = "https://github.com/AaronYoung5/telemetrix.git", rev = "4f9377cd1d58fa07075407583791610968cabc83" }
-utils = { path = "../utils", develop = true }
+cc_hardware_utils = { path = "../utils", develop = true }

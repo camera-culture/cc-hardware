@@ -3,12 +3,12 @@
 This module provides a dashboard for visualizing SPAD sensor data in real-time. There
 are three implementations available with different supported features:
 
-- :class:`~drivers.spads.dashboards.matplotlib.MatplotlibDashboard`: Uses Matplotlib for
-    visualization.
-- :class:`~drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard`: Uses PyQtGraph for
-    visualization.
-- :class:`~drivers.spads.dashboards.dash.DashDashboard`: Uses Dash and Plotly for
-    web-based visualization.
+- :class:`~cc_hardware.drivers.spads.dashboards.matplotlib.MatplotlibDashboard`:
+    Uses Matplotlib for visualization.
+- :class:`~cc_hardware.drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard`:
+    Uses PyQtGraph for visualization.
+- :class:`~cc_hardware.drivers.spads.dashboards.dash.DashDashboard`:
+    Uses Dash and Plotly for web-based visualization.
 
 You can specify user-defined callbacks to be executed on each update of the dashboard.
 
