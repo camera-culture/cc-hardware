@@ -1,10 +1,11 @@
 import cv2
 
 from cc_hardware.drivers import Camera, CameraConfig
-from cc_hardware.tools.cli import run_cli
+from cc_hardware.tools.cli import register_cli, run_cli
 from cc_hardware.utils import get_logger
 
 
+@register_cli
 def camera_viewer(
     camera: CameraConfig,
     num_frames: int = -1,
@@ -14,7 +15,7 @@ def camera_viewer(
 
     def setup(manager: Manager):
         _camera = camera.create_instance()
-        manager.add(_camera)
+        manager.add(camera=_camera)
 
     def loop(iter: int, manager: Manager, camera: Camera) -> bool:
         if num_frames != -1 and iter >= num_frames:

@@ -17,12 +17,13 @@ import numpy as np
 import pyrealsense2 as rs
 
 from cc_hardware.drivers.cameras.camera import Camera, CameraConfig
+from cc_hardware.utils import config_wrapper, get_logger, register
 from cc_hardware.utils.blocking_deque import BlockingDeque
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
 from cc_hardware.utils.singleton import SingletonABCMeta
 
 
+@register
+@config_wrapper
 class RealsenseConfig(CameraConfig):
     """
     Configuration for Camera sensors.
