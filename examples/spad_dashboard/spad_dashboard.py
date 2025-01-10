@@ -1,4 +1,5 @@
 import pickle
+import time
 
 import numpy as np
 
@@ -33,6 +34,7 @@ def spad_dashboard(
     dashboard: SPADDashboardConfig,
     *,
     capture_ambient: bool = False,
+    merge: bool = False,
 ):
     """Sets up and runs the SPAD dashboard.
 
@@ -70,8 +72,11 @@ def spad_dashboard(
             except FileNotFoundError:
                 ambient = None
 
+        resolution = _sensor.resolution
+        if merge:
+            resolution = (1, 1)
         dashboard.user_callback = my_callback
-        _dashboard: SPADDashboard = dashboard.create_instance(sensor=_sensor)
+        _dashboard: SPADDashboard = dashboard.create_instance(sensor=_sensor, resolution=resolution)
         _dashboard.setup()
         manager.add(dashboard=_dashboard)
 
@@ -90,6 +95,8 @@ def spad_dashboard(
             bool: Whether to continue running.
         """
         histograms = sensor.accumulate()
+        if len(histograms.shape) == 3:
+            histograms = histograms.reshape(-1, histograms.shape[-1])
         if ambient is not None:
             assert (
                 ambient.shape == histograms.shape
@@ -97,6 +104,7 @@ def spad_dashboard(
             histograms -= ambient
             histograms = np.clip(histograms, 0, None)
         dashboard.update(frame, histograms=histograms)
+
         return True
 
     with Manager() as manager:
@@ -108,16 +116,17 @@ if __name__ == "__main__":
     import sys
     from functools import partial
 
-    parser = argparse.ArgumentParser()
+    # parser = argparse.ArgumentParser()
 
-    parser.add_argument(
-        "--capture-ambient",
-        action="store_true",
-        help="Capture ambient light for calibration",
-    )
+    # parser.add_argument(
+    #     "--capture-ambient",
+    #     action="store_true",
+    #     help="Capture ambient light for calibration",
+    # )
 
-    parsed_args, unparsed_args = parser.parse_known_args()
+    # parsed_args, unparsed_args = parser.parse_known_args()
 
-    sys.argv[1:] = unparsed_args
+    # sys.argv[1:] = unparsed_args
 
-    run_cli(partial(spad_dashboard, capture_ambient=parsed_args.capture_ambient))
+    run_cli(spad_dashboard)
+    # run_cli(partial(spad_dashboard, capture_ambient=parsed_args.capture_ambient))

@@ -4,6 +4,7 @@ from abc import abstractmethod
 
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.utils import config_wrapper, get_logger
+from cc_hardware.utils.setting import Setting
 
 # ================
 
@@ -13,6 +14,10 @@ class SPADSensorConfig(SensorConfig):
     """Configuration for SPAD sensors."""
 
     instance: str = "SPADSensor"
+
+    @property
+    def settings(self) -> dict[str, Setting]:
+        return {}
 
 
 class SPADSensor(Sensor):
@@ -24,6 +29,9 @@ class SPADSensor(Sensor):
     Inherits:
         Sensor: The base class for all sensors in the system.
     """
+
+    def reset(self, index: int = 0):
+        pass
 
     @abstractmethod
     def accumulate(self, num_samples: int = 1):

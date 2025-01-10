@@ -5,8 +5,9 @@ from abc import abstractmethod
 import numpy as np
 
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
+from cc_hardware.utils import config_wrapper
 
-
+@config_wrapper
 class CameraConfig(SensorConfig):
     """
     Configuration for Camera sensors.

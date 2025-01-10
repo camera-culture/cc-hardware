@@ -128,6 +128,7 @@ class TMF8828Config(SPADSensorConfig):
 
     spad_id: SPADID = SPADID.ID6
     range_mode: RangeMode = RangeMode.LONG
+    merge: bool = False
 
 
 # ================
@@ -245,9 +246,9 @@ class TMF8828Histogram(SensorData):
         combined_data = np.vstack(combined_data)
 
         # Remove ambient data; ambient light is in first 7 bins
-        combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(
-            int
-        )
+        # combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(
+        #     int
+        # )
 
         if self.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
@@ -524,6 +525,8 @@ class TMF8828Sensor(SPADSensor):
         elif average:
             histograms = np.mean(histograms, axis=0)
 
+        if self.config.merge:
+            histograms = np.expand_dims(np.sum(histograms, axis=0), axis=0)
         return histograms
 
     def calibrate(self, configurations: int = 2) -> list[str]:
@@ -592,6 +595,8 @@ class TMF8828Sensor(SPADSensor):
         Returns:
             tuple[int, int]: The resolution (width, height) based on the SPAD ID.
         """
+        if self.config.merge:
+            return 1, 1
         return self.spad_id.get_resolution()
 
     def close(self) -> None:

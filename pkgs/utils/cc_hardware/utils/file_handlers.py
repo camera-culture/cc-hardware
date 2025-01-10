@@ -6,6 +6,8 @@ import pickle
 from pathlib import Path
 from typing import Any, Callable
 
+import cloudpickle as pickle
+
 import imageio
 import numpy as np
 
@@ -151,6 +153,11 @@ class PklHandler:
             int: The number of records.
         """
         return len(self._index)
+
+
+class PklReader(PklHandler):
+    def __init__(self, path: Path | str):
+        super().__init__(path, overwrite=False)
 
 
 # ==================

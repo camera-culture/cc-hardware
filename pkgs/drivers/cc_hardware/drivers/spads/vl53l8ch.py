@@ -65,6 +65,8 @@ class VL53L8CHConfig(SPADSensorConfig):
 
     port: str | None = None
 
+    merge: bool = False
+
     resolution: int  # uint16_t
     ranging_mode: RangingMode  # uint16_t
     ranging_frequency_hz: int  # uint16_t
@@ -333,6 +335,7 @@ class VL53L8CHSensor(SPADSensor):
                 the fields of SensorConfig.
         """
         super().__init__(config)
+        self._config = config
 
         self._histogram = VL53L8CHHistogram(config)
 
@@ -448,7 +451,8 @@ class VL53L8CHSensor(SPADSensor):
 
         if dirty:
             # Update the agg_cols and agg_rows explicitly
-            self.config.agg_cols, self.config.agg_rows = self.resolution
+            num = int(np.sqrt(self.config.resolution))
+            self.config.agg_cols, self.config.agg_rows = num, num
 
             # Send the configuration to the sensor
             try:
@@ -517,6 +521,8 @@ class VL53L8CHSensor(SPADSensor):
             histograms = histograms[0] if histograms else None
         elif average:
             histograms = np.mean(histograms, axis=0)
+        if self.config.merge:
+            histograms = np.expand_dims(np.sum(histograms, axis=0), axis=0)
         return histograms
 
     @property
@@ -548,6 +554,8 @@ class VL53L8CHSensor(SPADSensor):
         Returns:
             tuple[int, int]: Number of aggregation columns and rows.
         """
+        if self.config.merge:
+            return 1, 1
         num = int(np.sqrt(self.config.resolution))
         return num, num
 

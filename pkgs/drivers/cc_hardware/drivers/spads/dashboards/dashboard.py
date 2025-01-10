@@ -30,6 +30,7 @@ Example:
 
 from abc import ABC, abstractmethod
 from typing import Callable, Self
+from functools import cached_property
 
 import numpy as np
 
@@ -81,6 +82,7 @@ class SPADDashboard(ABC, Registry):
         self,
         config: SPADDashboardConfig,
         sensor: SPADSensor,
+        resolution: tuple[int, int] | None = None,
     ):
         self._config = config
         self._sensor = sensor
@@ -94,14 +96,14 @@ class SPADDashboard(ABC, Registry):
             )
             self.config.autoscale = False
 
-        self._setup_sensor()
+        self._setup_sensor(resolution)
         get_logger().info("Starting histogram GUI...")
 
-    def _setup_sensor(self):
+    def _setup_sensor(self, resolution: tuple[int, int] | None = None):
         """
         Configures the sensor settings and channel mask.
         """
-        h, w = self._sensor.resolution
+        h, w = resolution or self._sensor.resolution
         total_channels = h * w
         self.channel_mask = np.arange(total_channels)
         if self.config.channel_mask is not None:

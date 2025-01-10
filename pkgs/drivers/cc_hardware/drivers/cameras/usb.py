@@ -81,7 +81,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
 
     def _start_background_capture(self):
         """
-        Starts the background thread that opens the camera and reads frames
+        Starts the background thread that opens the camera and reads frames 
         continuously.
         """
         self._thread = threading.Thread(target=self._background_capture, daemon=True)
@@ -110,19 +110,19 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
                 self.start_capture_event.clear()
                 continue
 
-            # Set exposure settings if requested (this may not work on all
+            # Set exposure settings if requested (this may not work on all 
             # platforms/cameras)
             if self._capture.isOpened():
                 if self.exposure is not None:
-                    # Some cameras might require a negative or different value for
+                    # Some cameras might require a negative or different value for 
                     # manual exposure
                     # or might simply ignore this if autoexposure is forced.
                     self._capture.set(cv2.CAP_PROP_EXPOSURE, float(self.exposure))
 
                 if self.force_autoexposure:
-                    # On some systems, enabling autoexposure might require setting
+                    # On some systems, enabling autoexposure might require setting 
                     # exposure to -1
-                    # and enabling an autoexposure property or similar. This will vary
+                    # and enabling an autoexposure property or similar. This will vary 
                     # by camera.
                     self._capture.set(cv2.CAP_PROP_EXPOSURE, -1)
 
@@ -176,7 +176,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
 
         Returns:
             List[np.ndarray] or np.ndarray:
-                A list of frames if num_samples > 1, or a single frame if
+                A list of frames if num_samples > 1, or a single frame if 
                 num_samples == 1.
         """
         # If we're not meant to continuously capture, we start capturing now
@@ -248,7 +248,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
             np.ndarray: The intrinsic matrix of the camera.
 
         Raises:
-            NotImplementedError: This method is not yet implemented for a generic USB
+            NotImplementedError: This method is not yet implemented for a generic USB 
                 camera.
         """
         raise NotImplementedError(
@@ -265,7 +265,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
             np.ndarray: The distortion coefficients of the camera.
 
         Raises:
-            NotImplementedError: This method is not yet implemented for a generic USB
+            NotImplementedError: This method is not yet implemented for a generic USB 
                 camera.
         """
         raise NotImplementedError(

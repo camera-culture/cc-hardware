@@ -55,6 +55,7 @@ class MatplotlibDashboard(SPADDashboard):
 
         self.axes = []
         self.containers = []
+        min_bin, max_bin = self.min_bin, self.max_bin
         for idx, _ in enumerate(self.channel_mask):
             row, col = divmod(idx, cols)
             ax = self.fig.add_subplot(self.gs[row, col])
@@ -67,7 +68,7 @@ class MatplotlibDashboard(SPADDashboard):
                 color=colors[idx],
             )[2]
             self.containers.append(container)
-            ax.set_xlim(self.min_bin, self.max_bin)
+            ax.set_xlim(min_bin, max_bin)
             ax.set_xlabel("Bin")
             ax.set_ylabel("Photon Counts")
 
@@ -136,7 +137,7 @@ class MatplotlibDashboard(SPADDashboard):
                 )  # Update x-ticks
 
         if histograms is None:
-            histograms = self._sensor.accumulate(1)
+            histograms = self._sensor.accumulate()
         self.adjust_ylim(histograms)
 
         for idx, channel in enumerate(self.channel_mask):

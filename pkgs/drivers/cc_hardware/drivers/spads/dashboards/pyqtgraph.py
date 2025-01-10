@@ -233,7 +233,8 @@ class PyQtGraphDashboard(SPADDashboard):
         # Check if the number of channels has changed
         if histograms.shape[0] != len(self.plots):
             get_logger().warning(
-                "The number of channels has changed. Updating window..."
+                "The number of channels has changed from "
+                f"{len(self.plots)} to {histograms.shape[0]}."
             )
             self._setup_sensor()
             self._create_plots()

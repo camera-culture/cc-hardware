@@ -76,7 +76,7 @@ def _locate(path: str) -> Any:
     return obj
 
 
-def get_object(path: str) -> Any:
+def get_object(path: str, *, verbose: bool = True) -> Any | None:
     """
     Look up an entity based on the dotpath.
     Does not perform any type checks on the entity.
@@ -87,5 +87,6 @@ def get_object(path: str) -> Any:
     try:
         return _locate(path)
     except Exception as e:
-        get_logger().error(f"Error getting object at {path} : {e}")
+        if verbose:
+            get_logger().error(f"Error getting object at {path} : {e}")
         raise e

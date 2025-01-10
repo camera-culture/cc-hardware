@@ -43,6 +43,24 @@ class Component(Protocol):
         ...
 
 
+class PrimitiveComponent(Component):
+    """Wrapper for primitive components which do not need to be closed."""
+
+    def __init__(self, value):
+        self._value = value
+
+    def close(self) -> None:
+        pass
+
+    @property
+    def is_okay(self) -> bool:
+        return True
+
+    @property
+    def value(self):
+        return self._value
+
+
 class Manager:
     """This is a manager for handling components which must be closed. It is
     essentially just a context manager which calls close on all components when
@@ -54,12 +72,17 @@ class Manager:
 
         self._closed = False
 
-    def add(self, **components: Component):
+    def add(self, *, primitive: bool = False, **components: Component):
         """Adds additional components to the manager."""
         # Check each component has a close method
+        _components = {}
         for name, component in components.items():
             if component is None:
+                _components[name] = component
                 continue
+
+            if primitive:
+                component = PrimitiveComponent(component)
 
             if not hasattr(component, "close"):
                 get_logger().warning(f"Component {name} does not have a close method.")
@@ -68,23 +91,31 @@ class Manager:
                 get_logger().warning(f"Component {name} does not have an is_okay prop.")
                 component.is_okay = True
 
-        self._components.update(components)
+            _components[name] = component
+
+        self._components.update(_components)
 
     def run(
         self,
+        iter: int = 0,
         *,
-        setup: Callable[..., None] | None = None,
-        loop: Callable[..., bool] | None = None,
+        setup: Callable[..., bool | None] | None = None,
+        loop: Callable[..., bool | None] | None = None,
         cleanup: Callable[..., None] | None = None,
     ) -> None:
         """Runs a setup and loop function until all components are okay.
 
         Args:
-            setup (Callable[..., None] | None, optional): Setup function to run before
-                the loop. Accepts keyword arguments, returns None. Defaults to None.
-            loop (Callable[..., bool] | None, optional): Loop function to run until all
-                components are okay. Accepts keyword arguments, returns bool. When
-                False, the loop will stop and cleanup will begin. Defaults to None.
+            iter (int, optional): Iteration counter. Defaults to 0.
+
+        Keyword Args:
+            setup (Callable[..., bool | None] | None, optional): Setup function to run
+                before the loop. Accepts keyword arguments, returns None. Defaults to
+                None. A return value of False will stop the run.
+            loop (Callable[..., bool | None] | None, optional): Loop function to run
+                until all components are okay. Accepts keyword arguments, returns bool.
+                When False, the loop will stop and cleanup will begin. Defaults to None.
+                A return value of None will continue the loop.
             cleanup (Callable[..., None] | None, optional): Cleanup function to run
                 after the loop. Accepts keyword arguments, returns None. Defaults to
                 None.
@@ -93,34 +124,46 @@ class Manager:
         loop = loop or (lambda *_, **__: None)
         cleanup = cleanup or (lambda **_: None)
 
-        try:
-            setup(manager=self, **self._components)
-        except Exception:
-            get_logger().exception("Failed to setup components.")
-            self.close()
-            return
+        def get_components():
+            return {
+                name: (
+                    component.value
+                    if isinstance(component, PrimitiveComponent)
+                    else component
+                )
+                for name, component in self._components.items()
+            }
 
-        i = 0
-        while self.is_okay:
+        try:
+            # SETUP
             try:
-                if not loop(i, manager=self, **self._components):
-                    get_logger().info(f"Exiting loop after {i} iterations.")
-                    break
+                if setup(manager=self, **get_components()) == False:
+                    get_logger().info("Exiting setup.")
+                    return
             except Exception:
-                get_logger().exception(f"Failed to run loop {i}.")
-                self.close()
-                break
+                get_logger().exception("Failed to setup components.")
+                return
 
-            i += 1
+            # LOOP
+            while self.is_okay:
+                try:
+                    if loop(iter, manager=self, **get_components()) == False:
+                        get_logger().info(f"Exiting loop after {iter} iterations.")
+                        break
+                except Exception:
+                    get_logger().exception(f"Failed to run loop {iter}.")
+                    break
 
-        try:
-            cleanup(manager=self, **self._components)
-        except Exception:
-            get_logger().exception("Failed to cleanup components.")
+                iter += 1
+
+            # CLEANUP
+            try:
+                cleanup(manager=self, **get_components())
+            except Exception:
+                get_logger().exception("Failed to cleanup components.")
+                return
+        finally:
             self.close()
-            return
-
-        self.close()
 
     def __enter__(self):
         """Allows this class to be used as a context manager."""
@@ -137,23 +180,22 @@ class Manager:
                 self.close()
                 raise
 
-        # Check each component has a close method
-        for name, component in self._components.items():
-            if component is None:
-                continue
-
-            if not hasattr(component, "close"):
-                get_logger().warning(f"Component {name} does not have a close method.")
-                component.close = lambda: None
-            if not hasattr(component, "is_okay"):
-                get_logger().warning(f"Component {name} does not have an is_okay prop.")
-                component.is_okay = True
-
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Ensures each component is properly closed when used as a context manager."""
         self.close()
+
+    def get(self, name: str) -> Component | None:
+        """Returns a component by name. Alias to :meth:`get_component`."""
+        return self.get_component(name)
+
+    def get_component(self, name: str) -> Component | None:
+        """Returns a component by name."""
+        if name not in self._components:
+            get_logger().error(f"Component {name} not found.")
+            return None
+        return self._components[name]
 
     @property
     def components(self) -> dict[str, Component]:

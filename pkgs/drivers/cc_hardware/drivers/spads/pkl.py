@@ -1,13 +1,27 @@
 """SPAD sensor driver that loads pre-recorded data from a PKL file."""
 
 from pathlib import Path
+from copy import deepcopy
 
 import numpy as np
 
-from cc_hardware.drivers.spads.spad import SPADSensor
-from cc_hardware.utils.file_handlers import PklHandler
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
+from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.utils.file_handlers import PklReader
+from cc_hardware.utils import get_logger, register
+from cc_hardware.utils.config import config_wrapper
+
+# ==================
+
+
+@register
+@config_wrapper
+class PklSPADSensorConfig(SPADSensorConfig):
+    instance: str = "PklSPADSensor"
+
+    pkl_path: Path | str
+    key: str = "histogram"
+    resolution: tuple[int, int] | None = None
+    merge: bool = True
 
 
 @register
@@ -21,82 +35,106 @@ class PklSPADSensor(SPADSensor):
         SPADSensor: Base class for SPAD sensors that defines common methods and
             properties.
 
-    Attributes:
-        _pkl_path (Path): Path to the PKL file containing pre-recorded data.
-        _data (list[dict]): A list of entries loaded from the PKL file, each entry
-            containing a histogram.
-        _data_iterator (iterator): An iterator over the loaded data entries.
-        _resolution (tuple[int, int]): The spatial resolution of the sensor.
+    Args:
+        config (PklSPADSensorConfig): The configuration object for the fake sensor.
     """
 
-    def __init__(self, pkl_path: Path | str, *, resolution: tuple[int, int]):
+    def __init__(self, config: PklSPADSensorConfig, index: int = 0):
+        super().__init__(config)
+
+        config.pkl_path = Path(config.pkl_path)
+        assert config.pkl_path.exists(), f"PKL file {config.pkl_path} does not exist."
+        self._handler = PklReader(config.pkl_path)
+        assert len(self._handler) > 0, "No data found in PKL file."
+        self._index = 0
+
+        entry = self._handler.load(index)
+        assert config.key in entry, f"Key '{config.key}' not found in data."
+        if config.resolution is None:
+            config.resolution = entry[config.key].shape[:-1]
+            if config.merge:
+                config.resolution = [1, 1]
+            else:
+                config.resolution = [3, 3]
+            # assert len(config.resolution) == 2, "Invalid resolution shape."
+        self._first_entry = deepcopy(entry)
+
+    def reset(self, index: int = 0):
         """
-        Initializes the PklSPADSensor with the path to the PKL file, bin width, and
-        resolution.
-
-        Args:
-            pkl_path (Path | str): Path to the PKL file containing the pre-recorded
-                data.
-            resolution (tuple[int, int]): The spatial resolution of the sensor
-                (width, height).
+        Resets the sensor state. This method is a no-op for this fake sensor.
         """
-        self._pkl_path = Path(pkl_path)
-        self._data = PklHandler.load_all(self._pkl_path)
-        self._data_iterator = iter(self._data)
-        get_logger().info(f"Loaded {len(self._data)} entries from {self._pkl_path}.")
+        self._index = index
 
-        self._resolution = resolution
-
-        self._check_data()
-
-    def _check_data(self):
+    @property
+    def config(self) -> PklSPADSensorConfig:
         """
-        Checks the loaded data for consistency and validity, ensuring that the entries
-        contain histograms with the correct resolution.
+        Returns the configuration object for the sensor.
+
+        Returns:
+            PklSPADSensorConfig: The sensor's configuration object.
         """
-        assert len(self._data) > 0, f"No data found in {self._pkl_path}"
+        return self._config
 
-        entry = self._data[0]
-        assert "histogram" in entry, f"Entry does not contain histogram: {entry}"
+    @property
+    def handler(self) -> PklReader:
+        return self._handler
 
-        histogram = entry["histogram"]
-        assert histogram[..., 0].size == np.prod(
-            self._resolution
-        ), f"Invalid resolution: {histogram.shape[:2]} != {self._resolution}"
-
-    def accumulate(self, num_samples: int, *, average: bool = True) -> np.ndarray:
+    def accumulate(
+        self,
+        num_samples: int = 1,
+        *,
+        average: bool = True,
+        return_entry: bool = False,
+        index: int | None = None,
+    ) -> np.ndarray | tuple[np.ndarray, dict] | None:
         """
         Accumulates the specified number of histogram samples from the pre-recorded
         data.
 
         Args:
             num_samples (int): The number of samples to accumulate.
+
+        Keyword Args:
             average (bool): Whether to average the accumulated samples. Defaults to
                 True.
+            return_entry (bool): Whether to return the loaded entry. Defaults to
+                False.
+            index (int): The index of the entry to load. If None, the next entry will
+                be loaded. Defaults to None. Will set the index within the handler.
 
         Returns:
-            np.ndarray: The accumulated histogram data, averaged if requested.
+            np.ndarray | tuple[np.ndarray, dict] | None: The accumulated histogram
+                data, or a tuple of the data and the loaded
         """
-        if self._data_iterator is None:
-            get_logger().error("No data available.")
+        if index is not None:
+            self._index = index
+
+        if self._index >= len(self._handler):
+            get_logger().error("No more data available.")
             return None
 
         histograms = []
         for _ in range(num_samples):
             try:
-                entry = next(self._data_iterator)
+                entry = self._handler.load(self._index)
+                self._index += 1
             except StopIteration:
                 get_logger().error("No more data available.")
-                self._data_iterator = None
                 break
 
-            histograms.append(entry["histogram"])
+            histogram = entry[self.config.key]
+            if self.config.merge:
+                histogram = np.expand_dims(np.mean(histogram, axis=0), axis=0)
+            histograms.append(histogram)
         else:
             histograms = np.array(histograms)
             if average and len(histograms) > 1:
                 histograms = np.mean(histograms, axis=0)
 
-            histograms = np.squeeze(histograms)
+            if not self.config.merge:
+                histograms = np.squeeze(histograms)
+            if return_entry:
+                return histograms, entry
             return histograms
 
         return None
@@ -109,7 +147,7 @@ class PklSPADSensor(SPADSensor):
         Returns:
             int: The number of bins in the histogram.
         """
-        return self._data[0]["histogram"].shape[-1]
+        return self._first_entry[self._config.key].shape[-1]
 
     @property
     def resolution(self) -> tuple[int, int]:
@@ -119,17 +157,11 @@ class PklSPADSensor(SPADSensor):
         Returns:
             tuple[int, int]: The resolution (width, height) of the sensor.
         """
-        return self._resolution
+        return self.config.resolution
 
     @property
     def is_okay(self) -> bool:
-        """
-        Checks if the data iterator is still active and not exhausted.
-
-        Returns:
-            bool: True if the iterator is active, False if exhausted.
-        """
-        return self._data_iterator is not None
+        return len(self._handler) > self._index
 
     def close(self) -> None:
         """

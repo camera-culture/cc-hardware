@@ -15,7 +15,7 @@ SPADSensor.register("TMF8828Sensor", f"{__name__}.tmf8828")
 SPADSensorConfig.register("TMF8828Config", f"{__name__}.tmf8828")
 
 SPADSensor.register("PklSPADSensor", f"{__name__}.pkl")
-SPADSensorConfig.register("PklSPADConfig", f"{__name__}.pkl")
+SPADSensorConfig.register("PklSPADSensorConfig", f"{__name__}.pkl")
 
 # =============================================================================
 
