@@ -177,7 +177,7 @@ class VL53L8CHConfig4x4(VL53L8CHSharedConfig):
     """
 
     resolution: int = 16
-    cnh_num_bins: int = 8
+    cnh_num_bins: int = 24
     agg_cols: int = 4
     agg_rows: int = 4
 

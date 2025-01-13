@@ -136,7 +136,7 @@ class Registry:
         return Enum(cls.__name__, {name: name for name in cls.registry})
 
 
-def register(class_type: type[Registry] | str) -> type[Registry]:
+def register(class_type):
     """
     Decorator to register a class with its base Registry class. Uses a recursive
     approach to ensure that the class is registered with all Registry-based ancestors.

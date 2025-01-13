@@ -159,6 +159,7 @@ class TMF8828Histogram(SensorData):
         self.current_subcapture = 0
         self._has_data = False
         self._has_bad_data = False
+        self._last_idx = -1
 
     def reset(self) -> None:
         """
@@ -169,6 +170,7 @@ class TMF8828Histogram(SensorData):
         self._has_data = False
         self._has_bad_data = False
         self.current_subcapture = 0
+        self._last_idx = -1
 
     def process(self, row: list[str]) -> None:
         """
@@ -185,6 +187,12 @@ class TMF8828Histogram(SensorData):
             get_logger().error("Invalid index received.")
             self._has_bad_data = True
             return
+
+        if idx != self._last_idx + 1 and not self._has_bad_data:
+            self._has_bad_data = True
+            return
+        self._last_idx = idx
+
         try:
             data = np.array(row[TMF882X_SKIP_FIELDS:], dtype=np.int32)
         except ValueError:
@@ -214,7 +222,6 @@ class TMF8828Histogram(SensorData):
                 self._temp_data[self.current_subcapture, channel] += data * 256
             elif base_idx == 2:
                 self._temp_data[self.current_subcapture, channel] += data * 256 * 256
-
                 if channel == active_channels:
                     self.current_subcapture += 1
                     if self.current_subcapture == self.num_subcaptures:
@@ -224,9 +231,6 @@ class TMF8828Histogram(SensorData):
                             self.reset()
                         else:
                             self._has_data = True
-        else:
-            # Ignore idx values for channels that don't have measurements
-            pass
 
     def _assemble_data(self) -> np.ndarray:
         """
@@ -243,11 +247,8 @@ class TMF8828Histogram(SensorData):
             data = self._temp_data[subcapture_index, 1 : active_channels + 1, :]
             combined_data.append(data)
         combined_data = np.vstack(combined_data)
-
         # Remove ambient data; ambient light is in first 7 bins
-        combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(
-            int
-        )
+        # combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(int)
 
         if self.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
@@ -342,7 +343,7 @@ class TMF8828Sensor(SPADSensor):
         self.spad_id = config.spad_id
         self.range_mode = config.range_mode
 
-        self._queue = multiprocessing.Queue(maxsize=64)
+        self._queue = multiprocessing.Queue(maxsize=self.config.spad_id.get_num_pixels())
         self._write_queue = multiprocessing.Queue(maxsize=10)
         self._initialized_event = multiprocessing.Event()
         self._stop_event = multiprocessing.Event()

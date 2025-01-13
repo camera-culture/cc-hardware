@@ -35,30 +35,59 @@ class MatplotlibDashboard(SPADDashboard):
     def config(self) -> MatplotlibDashboardConfig:
         return self._config
 
-    def setup(self):
+    def setup(self, fig: plt.Figure | None = None):
         """
         Sets up the Matplotlib plot layout and styling.
         """
-
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        get_logger().info("Setting up Matplotlib dashboard...")
 
         set_matplotlib_style()
 
         rows = int(np.ceil(np.sqrt(self.num_channels)))
         cols = int(np.ceil(self.num_channels / rows))
 
-        self.fig = plt.figure(figsize=(6, 6 * rows / cols))
-        self.gs = plt.GridSpec(rows, cols, figure=self.fig)
-
+        # Precompute your bin edges.
         self.bins = np.arange(self.min_bin, self.max_bin)
         colors = plt.cm.viridis(np.linspace(0, 1, self.num_channels))
 
+        if fig is None or not fig.get_axes():
+            self.fig = plt.figure(figsize=(6, 6 * rows / cols))
+            self.gs = plt.GridSpec(rows, cols, figure=self.fig)
+            start_row, start_col = 0, 0
+        else:
+            self.fig = fig
+            
+            # 1) Rescale all existing Axes to the left 50% of the figure
+            existing_axes = self.fig.get_axes()
+            for ax in existing_axes:
+                pos = ax.get_position()  # returns a Bbox in figure coords
+                x0, y0, x1, y1 = pos.x0, pos.y0, pos.x1, pos.y1
+                # Compress them to [0, 0.5] horizontally
+                ax.set_position([
+                    1.0,
+                    y0,
+                    0.5 * (x1 - x0),  # width
+                    y1 - y0           # height (unchanged)
+                ])
+
+            # 2) Create a GridSpec in the right 50% for the histograms
+            self.gs = self.fig.add_gridspec(
+                nrows=rows,
+                ncols=cols,
+                left=0.5,
+                right=1.0,
+                wspace=0.4,
+                hspace=0.4
+            )
+
+        # Create histogram subplots
         self.axes = []
         self.containers = []
         for idx, _ in enumerate(self.channel_mask):
             row, col = divmod(idx, cols)
             ax = self.fig.add_subplot(self.gs[row, col])
             self.axes.append(ax)
+
             container = ax.hist(
                 self.bins,
                 bins=self.bins.size,
@@ -67,6 +96,7 @@ class MatplotlibDashboard(SPADDashboard):
                 color=colors[idx],
             )[2]
             self.containers.append(container)
+            
             ax.set_xlim(self.min_bin, self.max_bin)
             ax.set_xlabel("Bin")
             ax.set_ylabel("Photon Counts")
@@ -82,6 +112,8 @@ class MatplotlibDashboard(SPADDashboard):
 
         self.save_path = self.config.save_path
         self.headless = self.config.headless
+
+        get_logger().info("Matplotlib dashboard setup complete.")
 
     def run(self):
         """

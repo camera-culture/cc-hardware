@@ -29,6 +29,8 @@ from typing import Callable, Protocol, Type
 
 from cc_hardware.utils.logger import get_logger
 
+def is_primitive(value):
+    return isinstance(value, (int, float, str, bool))
 
 class Component(Protocol):
     """Protocol for components which can be closed."""
@@ -41,6 +43,24 @@ class Component(Protocol):
     def is_okay(self) -> bool:
         """Checks if the component is operational."""
         ...
+
+
+class PrimitiveComponent(Component):
+    """Wrapper for primitive components which do not need to be closed."""
+    
+    def __init__(self, value):
+        self._value = value
+
+    def close(self) -> None:
+        pass
+
+    @property
+    def is_okay(self) -> bool:
+        return True
+
+    @property
+    def value(self):
+        return self._value
 
 
 class Manager:

@@ -5,10 +5,10 @@ from typing import Callable
 
 import hydra_zen as zen
 
-from cc_hardware.utils import Registry
+from cc_hardware.utils import Registry, get_object
 
 
-def register_cli(func: Callable) -> Callable:
+def register_cli(func=None, /, simple=False) -> Callable:
     """Register a CLI command.
 
     Todo:
@@ -16,6 +16,8 @@ def register_cli(func: Callable) -> Callable:
     """
 
     def wrapper(func: Callable) -> Callable:
+        if simple:
+            return
         # Inspect the function's signature
         sig = signature(func)
 
@@ -29,12 +31,23 @@ def register_cli(func: Callable) -> Callable:
                     continue
 
                 if issubclass(type_hint, Registry):
-                    defaults[param.name] = "???"
+                    if param.default is not param.empty:
+                        defaults[param.name] = param.default.config
+                    else:
+                        defaults[param.name] = "???"
 
                     # Add each item in the registry to the Zen store
                     for name, target in type_hint.registry.items():
+                        try:
+                            if isinstance(target, type):
+                                object = target
+                            else:
+                                object = get_object(target)
+                        except Exception as e:
+                            continue
+
                         zen.store(
-                            {"_target_": f"{target}.create"},
+                            object,
                             name=name,
                             group=param.name,
                         )

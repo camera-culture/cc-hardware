@@ -1,6 +1,7 @@
 """Base classes for sensors and sensor data processing."""
 
 import threading
+import multiprocessing
 from abc import ABC, abstractmethod
 from typing import Any
 
@@ -124,6 +125,26 @@ class SensorDataThreaded(SensorData):
 
     def __init__(self):
         self._ready_event = threading.Event()
+
+    def reset(self) -> None:
+        """Resets the threading event and clears any existing data."""
+        self._ready_event.clear()
+
+    def get_data(self) -> np.ndarray:
+        """Waits until data is ready and retrieves it.
+
+        Returns:
+          np.ndarray: The processed data.
+        """
+        self._ready_event.wait()
+        self._ready_event.clear()
+        return self._data
+
+class SensorDataMultiprocessing(SensorData):
+    """Handles sensor data processing with multiprocessing support."""
+
+    def __init__(self):
+        self._ready_event = multiprocessing.Event()
 
     def reset(self) -> None:
         """Resets the threading event and clears any existing data."""
