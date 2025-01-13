@@ -6,11 +6,11 @@ from enum import Enum
 from numbers import Number
 from typing import Any, Type
 
-from cc_hardware.utils.config import CCHardwareConfig, config_wrapper
+from cc_hardware.utils import Config, config_wrapper
 
 
 @config_wrapper
-class Setting(CCHardwareConfig):
+class Setting(Config):
     """
     Defines an individual setting attribute for a sensor. Should be overridden
     to define different logic for different setting types.

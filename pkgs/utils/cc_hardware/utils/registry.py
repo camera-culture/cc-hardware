@@ -1,117 +1,155 @@
-"""Registry base class and decorator for registering classes in the registry."""
+"""
+A module that provides a base Registry class to register and instantiate classes.
+
+Example:
+    from my_registry import Registry, register
+
+    @register
+    class MyClass(Registry):
+        def __init__(self, value):
+            self.value = value
+
+    # Create instance
+    instance = MyClass.create_from_registry('MyClass', 'hello')
+    print(instance.value)  # 'hello'
+
+    # Register lazily
+    MyClass.register("MyOtherClass", "path.to.my_module")
+
+    # Create instance lazily
+    other_instance = MyClass.create_from_registry('MyOtherClass', some_arg='value')
+    print(other_instance)
+"""
 
 from enum import Enum
-from typing import Any, Self, overload
+from typing import Any, Self, Type, overload
 
+from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.misc import classproperty, get_object
 
 
 class Registry:
-    """
-    A base class that provides a registry for its subclasses and a factory method
-    to instantiate them.
+    """Base class providing a registry for its subclasses, plus a factory method.
 
-    Supports both direct and lazy registration of classes, allowing classes
-    to be registered by name and module path for deferred loading. An enumeration
-    of registered classes is also provided.
+    This class supports both direct and lazy registration of subclasses and
+    can also associate a registered class with a 'friend' (another class not
+    necessarily inheriting from Registry).
+
+    Examples:
+        Register directly:
+            @MyRegistry.register
+            class Foo(MyRegistry):
+                pass
+
+        Register by name (lazy):
+            MyRegistry.register("Bar", "my_module.submodule")
+
+        Create instance:
+            instance = MyRegistry.create_from_registry("Foo")
+
+        Create instance from one of many registries:
+            instance = MyRegistry.create_from_registry("Bar")
     """
 
-    _registry: dict[str, dict[str, Any]] = {}
+    _registry: dict[str, dict[str, Type[Any]]] = {}
 
     @overload
     @classmethod
     def register(cls: type[Self], class_type: type[Self]) -> type[Self]:
-        """
-        Register the given class in this registry.
-
-        Args:
-            class_type: The class to register.
-
-        Returns:
-            The registered class.
-        """
+        """Registers a class, returning the class itself."""
         ...
 
     @overload
     @classmethod
     def register(cls: type[Self], class_name: str, module_path: str) -> None:
-        """
-        Register a class lazily by specifying its module path instead of
-        importing it directly.
+        """Registers a class by name, loading from its module path."""
+        ...
 
-        Args:
-            class_name: The name of the class to register.
-            module_path: The module path where the class can be found
-                (e.g. "my_module.MyClass").
-        """
+    @overload
+    @classmethod
+    def register(
+        cls: type[Self], class_name: str, module_path: str, friend: str
+    ) -> None:
+        """Associates a class with another 'friend' class in the registry."""
         ...
 
     @classmethod
     def register(
-        cls: type[Self], class_type: type[Self] | str, module_path: str | None = None
-    ) -> type[Self] | None:
+        cls: type[Self],
+        class_type: type[Self] | str,
+        module_path: str | None = None,
+        friend: str | None = None,
+    ) -> type[Self] | type[Any] | None:
         """
-        Register the given class in this registry.
+        Registers a class in this registry.
 
         Args:
-            class_type: The class to register. Can be a class type or a str defining
-                 a class name to be lazily loaded. If the class_type is a type, this
-                 method will return the class itself (useful for decorators).
-            module_path: The module path where the class can be found
-                (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                This is the full importable path to the class. The final class
-                path will be ``module_path.class_type``.
+            class_type (type[Self] | str): A class object or a class name for lazy
+                loading.
+            module_path (str | None): Path to the module if `class_type` is a string.
+            friend (str | None): Name of another class to associate with this class.
 
         Returns:
-            The registered class if class_type is a class type, otherwise None.
+            type[Self] | None: The registered class if `class_type` is a type,
+                otherwise None.
         """
-        if isinstance(class_type, type):
-            cls._registry.setdefault(cls.__name__, {})[class_type.__name__] = class_type
-            return class_type
-        elif isinstance(class_type, str):
+        if isinstance(class_type, str):
             assert (
                 module_path is not None
             ), "module_path must be provided for lazy loading."
-            module_path = f"{module_path}.{class_type}"
-            cls._registry.setdefault(cls.__name__, {})[class_type] = module_path
-        else:
-            raise ValueError(
-                f"Invalid class type: {class_type}. Must be a class type or a string."
+            class_module_path = f"{module_path}.{class_type}"
+            try:
+                class_type = get_object(class_module_path, verbose=False)
+            except ImportError as e:
+                get_logger().debug(f"Failed to import {class_type}: {e}")
+                return None
+
+        name = class_type.__name__
+        if friend is not None:
+            assert name in cls.registry, (
+                f"Class '{name}' must be registered before associating with "
+                f"friend '{friend}'."
             )
-        return None
+            assert issubclass(cls.registry[name], Registry), (
+                f"Class '{name}' must be a subclass of Registry to be associated "
+                f"with friend '{friend}'."
+            )
+            cls.registry[name].register(friend, module_path)
+        else:
+            cls.registry[name] = class_type
+        return class_type
 
     @classmethod
     def create_from_registry(
-        cls: type[Self], name: str, *args: Any, **kwargs: Any
-    ) -> Self:
+        cls: type[Self], name: str | None = None, *args: Any, **kwargs: Any
+    ) -> Self | Any:
         """
-        Create an instance of a registered class, performing lazy loading if necessary.
+        Creates an instance of a registered class, performing lazy loading if necessary.
 
         Args:
-            name: The name of the class to instantiate.
-            *args: Positional arguments to pass to the class constructor.
-            **kwargs: Keyword arguments to pass to the class constructor.
+            name (str | None): The name of the class to instantiate. If None,
+                and only one class is registered, it will instantiate that class.
+            *args (Any): Positional arguments to pass to the class constructor.
+            **kwargs (Any): Keyword arguments to pass to the class constructor.
 
         Returns:
-            An instance of the requested class.
-
-        Raises:
-            ValueError: If the class name is not registered.
+            Self | Any: An instance of the requested class, or an associated
+                'friend' class.
         """
-        if cls.__name__ not in cls._registry:
-            raise ValueError(f"Class '{name}' not found in {cls.__name__}'s registry.")
-        val = cls._registry[cls.__name__].get(name, None)
-        if val is None:
-            raise ValueError(f"Class '{name}' not found in {cls.__name__}'s registry.")
+        if len(cls.registry) == 0:
+            raise ValueError(f"No class registered with {cls.__name__}.")
 
-        # Lazy loading logic
-        if isinstance(val, str):
-            # 'val' is a module path like "my_module.MyClass"
-            class_type = get_object(val)
-            # Store the fully loaded class back into the registry for future calls
-            cls._registry[cls.__name__][name] = class_type
-        else:
-            class_type = val
+        if name is None:
+            if len(cls.registry) > 1:
+                raise ValueError(
+                    f"Multiple classes registered with {cls.__name__}. "
+                    "Must specify a name."
+                )
+            name = next(iter(cls.registry.keys()))
+
+        class_type = cls._registry[cls.__name__].get(name, None)
+        if class_type is None:
+            raise ValueError(f"Class '{name}' not found in {cls.__name__}'s registry.")
 
         return class_type(*args, **kwargs)
 
@@ -123,7 +161,9 @@ class Registry:
         Returns:
             A dictionary mapping class names to class objects or lazy load paths.
         """
-        return cls._registry.get(cls.__name__, {})
+        if cls.__name__ not in cls._registry:
+            cls._registry[cls.__name__] = {}
+        return cls._registry[cls.__name__]
 
     @classproperty
     def registered(cls: type[Self]) -> Enum:

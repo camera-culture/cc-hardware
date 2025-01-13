@@ -1,3 +1,5 @@
+"""Tool to view the camera feed."""
+
 import cv2
 
 from cc_hardware.drivers import Camera, CameraConfig

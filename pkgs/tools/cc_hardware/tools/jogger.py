@@ -223,7 +223,7 @@ def run(
 # ======================
 
 
-def main():
+def jogger():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -253,4 +253,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    jogger()

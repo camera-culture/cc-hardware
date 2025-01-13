@@ -9,7 +9,7 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from plotly.subplots import make_subplots
 
-from cc_hardware.drivers.spads.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper
 
 
@@ -19,17 +19,13 @@ class DashDashboardConfig(SPADDashboardConfig):
     Configuration for the Dash dashboard.
     """
 
-    instance: str = "DashDashboard"
+    pass
 
 
-class DashDashboard(SPADDashboard):
+class DashDashboard(SPADDashboard[DashDashboardConfig]):
     """
     Dashboard implementation using Dash and Plotly for web-based visualization.
     """
-
-    @property
-    def config(self) -> DashDashboardConfig:
-        return self._config
 
     def setup(self):
         """
@@ -180,3 +176,16 @@ class DashDashboard(SPADDashboard):
             self.config.user_callback(self)
 
         return existing_fig
+
+    @property
+    def is_okay(self) -> bool:
+        # TODO: is there a way to check if the server is running?
+        return True
+
+    def close(self):
+        if not hasattr(self, "app") or self.app is None:
+            return
+
+        self.blocking = False
+        self.thread.join()
+        self.app = None

@@ -10,15 +10,20 @@ from cc_hardware.drivers.stepper_motors import (
 )
 
 __all__ = [
+    # camera
     "Camera",
     "CameraConfig",
+    # stepper_motors
     "DummyStepperMotor",
-    "SafeSerial",
     "StepperMotor",
     "StepperMotorSystem",
     "StepperMotorSystemAxis",
+    # safe_serial
+    "SafeSerial",
+    # sensor
     "Sensor",
     "SensorConfig",
+    # spads
     "SPADSensor",
     "SPADSensorConfig",
 ]

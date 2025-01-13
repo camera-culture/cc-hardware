@@ -7,16 +7,17 @@ import numpy as np
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.utils import config_wrapper
 
+
 @config_wrapper
 class CameraConfig(SensorConfig):
     """
     Configuration for Camera sensors.
     """
 
-    instance: str = "Camera"
+    pass
 
 
-class Camera(Sensor):
+class Camera[T: CameraConfig](Sensor[T]):
     """
     Abstract base class for a Camera sensor, extending the Sensor class.
     Defines methods and properties for specific for cameras.

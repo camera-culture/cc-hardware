@@ -1,16 +1,34 @@
 """SPAD dashboard based on Matplotlib for real-time visualization."""
 
-import signal
 from itertools import chain
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
+from matplotlib.widgets import Button, RangeSlider, Slider
 
-from cc_hardware.drivers.spads.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper, get_logger
-from cc_hardware.utils.plotting import set_matplotlib_style
+from cc_hardware.utils.matplotlib import set_matplotlib_style
+
+
+def save_animation(ani: FuncAnimation, filename: str):
+    """
+    Saves the animation to a file.
+
+    Args:
+        ani (FuncAnimation): The animation object to save.
+        filename (str): The filename to save the output.
+    """
+
+    get_logger().info("Saving animation...")
+    if not filename.endswith(".mp4"):
+        filename += ".mp4"
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
+    get_logger().info(f"Saving animation to {filename}...")
+    ani.save(filename, writer="ffmpeg", dpi=400, fps=10)
+    get_logger().info("Saved animation.")
 
 
 @config_wrapper
@@ -19,28 +37,20 @@ class MatplotlibDashboardConfig(SPADDashboardConfig):
     Configuration for the Matplotlib dashboard.
     """
 
-    instance: str = "MatplotlibDashboard"
-
     fullscreen: bool = False
     headless: bool = False
     save_path: Path | None = None
 
 
-class MatplotlibDashboard(SPADDashboard):
+class MatplotlibDashboard(SPADDashboard[MatplotlibDashboardConfig]):
     """
     Dashboard implementation using Matplotlib for visualization.
     """
-
-    @property
-    def config(self) -> MatplotlibDashboardConfig:
-        return self._config
 
     def setup(self):
         """
         Sets up the Matplotlib plot layout and styling.
         """
-
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
 
         set_matplotlib_style()
 
@@ -101,7 +111,7 @@ class MatplotlibDashboard(SPADDashboard):
             # Prevent saving on each frame
             save_path = self.save_path
             self.save_path = None
-            self.save_animation(self.ani, save_path)
+            save_animation(self.ani, save_path)
 
         if not self.headless:
             plt.show()
@@ -181,21 +191,127 @@ class MatplotlibDashboard(SPADDashboard):
             for ax in self.axes:
                 ax.set_ylim(0, max_count)
 
-    def save_animation(self, ani: FuncAnimation, filename: str):
-        """
-        Saves the animation to a file.
+    @property
+    def is_okay(self) -> bool:
+        return hasattr(self, "fig") and plt.fignum_exists(self.fig.number)
 
-        Args:
-            ani (FuncAnimation): The animation object to save.
-            filename (str): The filename to save the output.
-        """
-        import matplotlib.pyplot as plt
+    def close(self) -> None:
+        if self.is_okay:
+            plt.close(self.fig)
 
-        get_logger().info("Saving animation...")
-        if not filename.endswith(".mp4"):
-            filename += ".mp4"
-        Path(filename).parent.mkdir(parents=True, exist_ok=True)
-        get_logger().info(f"Saving animation to {filename}...")
-        ani.save(filename, writer="ffmpeg", dpi=400, fps=10)
-        get_logger().info("Saved animation.")
-        plt.close(self.fig)
+
+class MatplotlibTransientViewerConfig(SPADDashboardConfig):
+    fullscreen: bool = False
+    headless: bool = False
+    save_path: Path | None = None
+
+    normalize_per_pixel: bool = False
+
+
+class MatplotlibTransientViewer(SPADDashboard[MatplotlibTransientViewerConfig]):
+    def setup(self):
+        set_matplotlib_style()
+
+        # Setup the figure and axes
+        self.fig, self.ax = plt.subplots()
+        plt.subplots_adjust(bottom=0.35)  # Make room for buttons and sliders
+
+        # Initialize the image plot
+        h, w = self._sensor.resolution
+        self.image_plot = self.ax.imshow(
+            np.zeros((h, w)),
+            cmap="gray",
+            vmin=0,
+            vmax=1,
+            interpolation="nearest",
+            aspect="auto",
+        )
+        self.ax.axis("off")
+
+        # Add axes for the sliders
+        self.ax_slider_bin = plt.axes([0.25, 0.15, 0.65, 0.03])
+        self.bin_range_slider = RangeSlider(
+            self.ax_slider_bin,
+            "Bin Range",
+            valmin=0,
+            valmax=self.sensor.num_bins - 1,
+            valinit=(0, self.sensor.num_bins - 1),
+            valstep=1,
+        )
+
+        def on_bin_range_change(val):
+            self.min_bin, self.max_bin = map(int, self.bin_range_slider.val)
+
+        self.bin_range_slider.on_changed(on_bin_range_change)
+
+        self.ax_slider_fps = plt.axes([0.25, 0.1, 0.65, 0.03])
+        self.fps_slider = Slider(
+            self.ax_slider_fps,
+            "FPS",
+            valmin=1,
+            valmax=50,
+            valinit=10,
+            valstep=1,
+        )
+
+        def on_fps_change(val):
+            self.ani.event_source.interval = 1000 / self.fps_slider.val
+
+        self.fps_slider.on_changed(on_fps_change)
+
+        # Add the "Capture Transient" button
+        self.ax_button = plt.axes([0.4, 0.02, 0.2, 0.05])  # Adjusted position
+        self.btn_capture = Button(self.ax_button, "Capture Transient")
+
+        def on_button_clicked(event):
+            self.update(-1, histograms=self.sensor.accumulate())
+
+        self.btn_capture.on_clicked(on_button_clicked)
+
+        if self.config.fullscreen:
+            try:
+                manager = plt.get_current_fig_manager()
+                manager.full_screen_toggle()
+            except Exception as e:
+                get_logger().warning(f"Failed to set fullscreen mode: {e}")
+
+    def run(self):
+        self.ani = FuncAnimation(
+            self.fig,
+            self.update,
+            interval=1000 / self.fps_slider.val,
+            blit=True,
+        )
+
+        if self.save_path:
+            # Prevent saving on each frame
+            save_path = self.save_path
+            self.save_path = None
+            save_animation(self.ani, save_path)
+
+        if not self.config.headless:
+            plt.show()
+
+    def update(self, frame_index: int, *, histograms: np.ndarray | None = None):
+        if not plt.fignum_exists(self.fig.number):
+            get_logger().info("Closing GUI...")
+            return
+
+        if histograms is None:
+            histograms = self._sensor.accumulate()
+        transient = histograms.T
+
+        if not self.config.normalize_per_pixel:
+            norm_transient = transient / np.max(transient)
+        else:
+            norm_transient = transient / np.max(transient, axis=0, keepdims=True)
+
+        self.image_plot.set_data(norm_transient[frame_index % norm_transient.shape[0]])
+
+        # Update the bin range slider
+        self.bin_range_slider.valmin = 0
+        self.bin_range_slider.valmax = self.sensor.num_bins - 1
+        self.bin_range_slider.ax.set_xlim(
+            self.bin_range_slider.valmin, self.bin_range_slider.valmax
+        )
+        self.bin_range_slider.set_val((0, self.sensor.num_bins - 1))

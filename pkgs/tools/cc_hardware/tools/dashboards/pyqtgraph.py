@@ -1,13 +1,12 @@
 """SPAD dashboard based on PyQtGraph for real-time visualization."""
 
-import signal
 from functools import partial
 
 import numpy as np
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtWidgets
 
-from cc_hardware.drivers.spads import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.setting import BoolSetting, OptionSetting, RangeSetting, Setting
 
@@ -17,8 +16,6 @@ class PyQtGraphDashboardConfig(SPADDashboardConfig):
     """
     Configuration for the PyQtGraph dashboard.
     """
-
-    instance: str = "PyQtGraphDashboard"
 
     fullscreen: bool = False
 
@@ -118,14 +115,10 @@ class DashboardWindow(QtWidgets.QWidget):
             QtWidgets.QApplication.quit()
 
 
-class PyQtGraphDashboard(SPADDashboard):
+class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
     """
     Dashboard implementation using PyQtGraph for real-time visualization.
     """
-
-    @property
-    def config(self) -> PyQtGraphDashboardConfig:
-        return self._config
 
     def setup(self):
         """
@@ -134,9 +127,6 @@ class PyQtGraphDashboard(SPADDashboard):
         Args:
             fullscreen (bool): Whether to display in fullscreen mode.
         """
-
-        # Reset signal handler to default to allow closing the application
-        signal.signal(signal.SIGINT, signal.SIG_DFL)
 
         self.app = QtWidgets.QApplication([])
 
@@ -327,3 +317,14 @@ class PyQtGraphDashboard(SPADDashboard):
     @property
     def is_okay(self) -> bool:
         return not self.win.isHidden()
+
+    def close(self):
+        QtWidgets.QApplication.quit()
+        if hasattr(self, "win") and self.win is not None:
+            self.win.close()
+        if hasattr(self, "app") and self.app is not None:
+            self.app.quit()
+            self.app = None
+        if hasattr(self, "timer") and self.timer is not None:
+            self.timer.stop()
+            self.timer = None

@@ -5,9 +5,7 @@ import cv2
 import numpy as np
 
 from cc_hardware.drivers.cameras.camera import Camera, CameraConfig
-from cc_hardware.utils import config_wrapper, get_logger, register
-from cc_hardware.utils.blocking_deque import BlockingDeque
-from cc_hardware.utils.singleton import SingletonABCMeta
+from cc_hardware.utils import BlockingDeque, config_wrapper, get_logger, register
 
 
 @register
@@ -28,8 +26,6 @@ class USBCameraConfig(CameraConfig):
             cameras support this.
     """
 
-    instance: str = "USBCamera"
-
     camera_index: int = 0
     start_capture_once: bool = True
     exposure: int | None = None
@@ -37,7 +33,7 @@ class USBCameraConfig(CameraConfig):
 
 
 @register
-class USBCamera(Camera, metaclass=SingletonABCMeta):
+class USBCamera(Camera):
     """
     Camera class for a generic USB camera. Captures RGB frames in a background thread
     and stores them in a queue.
@@ -81,7 +77,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
 
     def _start_background_capture(self):
         """
-        Starts the background thread that opens the camera and reads frames 
+        Starts the background thread that opens the camera and reads frames
         continuously.
         """
         self._thread = threading.Thread(target=self._background_capture, daemon=True)
@@ -110,19 +106,19 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
                 self.start_capture_event.clear()
                 continue
 
-            # Set exposure settings if requested (this may not work on all 
+            # Set exposure settings if requested (this may not work on all
             # platforms/cameras)
             if self._capture.isOpened():
                 if self.exposure is not None:
-                    # Some cameras might require a negative or different value for 
+                    # Some cameras might require a negative or different value for
                     # manual exposure
                     # or might simply ignore this if autoexposure is forced.
                     self._capture.set(cv2.CAP_PROP_EXPOSURE, float(self.exposure))
 
                 if self.force_autoexposure:
-                    # On some systems, enabling autoexposure might require setting 
+                    # On some systems, enabling autoexposure might require setting
                     # exposure to -1
-                    # and enabling an autoexposure property or similar. This will vary 
+                    # and enabling an autoexposure property or similar. This will vary
                     # by camera.
                     self._capture.set(cv2.CAP_PROP_EXPOSURE, -1)
 
@@ -155,13 +151,6 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
             f"Background capture thread ending for camera index {self.camera_index}"
         )
 
-    @property
-    def config(self) -> USBCameraConfig:
-        """
-        USBCameraConfig: The configuration object for the USBCamera instance.
-        """
-        return self._config
-
     def accumulate(self, num_samples: int = 1) -> list[np.ndarray] | np.ndarray:
         """
         Accumulates RGB frames from the camera queue.
@@ -176,7 +165,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
 
         Returns:
             List[np.ndarray] or np.ndarray:
-                A list of frames if num_samples > 1, or a single frame if 
+                A list of frames if num_samples > 1, or a single frame if
                 num_samples == 1.
         """
         # If we're not meant to continuously capture, we start capturing now
@@ -248,7 +237,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
             np.ndarray: The intrinsic matrix of the camera.
 
         Raises:
-            NotImplementedError: This method is not yet implemented for a generic USB 
+            NotImplementedError: This method is not yet implemented for a generic USB
                 camera.
         """
         raise NotImplementedError(
@@ -265,7 +254,7 @@ class USBCamera(Camera, metaclass=SingletonABCMeta):
             np.ndarray: The distortion coefficients of the camera.
 
         Raises:
-            NotImplementedError: This method is not yet implemented for a generic USB 
+            NotImplementedError: This method is not yet implemented for a generic USB
                 camera.
         """
         raise NotImplementedError(

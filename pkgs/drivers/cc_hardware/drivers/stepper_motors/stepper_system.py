@@ -8,9 +8,7 @@ from cc_hardware.drivers.stepper_motors.stepper_motor import (
     DummyStepperMotor,
     StepperMotor,
 )
-from cc_hardware.utils.asyncio_utils import call_async_gather
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import register
+from cc_hardware.utils import call_async_gather, get_logger
 
 # ======================
 
@@ -180,7 +178,6 @@ class StepperMotorSystem(StepperMotor):
                     motor.close()
 
 
-@register
 class DummyStepperSystem(StepperMotorSystem):
     """A dummy stepper system that does nothing."""
 

@@ -13,14 +13,12 @@ from cc_hardware.utils.setting import Setting
 class SPADSensorConfig(SensorConfig):
     """Configuration for SPAD sensors."""
 
-    instance: str = "SPADSensor"
-
     @property
     def settings(self) -> dict[str, Setting]:
         return {}
 
 
-class SPADSensor(Sensor):
+class SPADSensor[T: SPADSensorConfig](Sensor[T]):
     """
     An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
     to manage histogram-based measurements. This class defines methods and properties
@@ -29,9 +27,6 @@ class SPADSensor(Sensor):
     Inherits:
         Sensor: The base class for all sensors in the system.
     """
-
-    def reset(self, index: int = 0):
-        pass
 
     @abstractmethod
     def accumulate(self, num_samples: int = 1):

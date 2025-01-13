@@ -19,8 +19,7 @@ import pkg_resources
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
-from cc_hardware.utils import get_logger, register
-from cc_hardware.utils.config import II, config_wrapper
+from cc_hardware.utils import II, config_wrapper, get_logger
 from cc_hardware.utils.setting import BoolSetting, OptionSetting, RangeSetting, Setting
 
 # ===============
@@ -35,7 +34,6 @@ class RangingMode(Enum):
     AUTONOMOUS = 3
 
 
-@register
 @config_wrapper
 class VL53L8CHConfig(SPADSensorConfig):
     """
@@ -60,8 +58,6 @@ class VL53L8CHConfig(SPADSensorConfig):
 
         subtract_ambient (bool): Flag to subtract ambient light from histogram data.
     """
-
-    instance: str = "VL53L8CHSensor"
 
     port: str | None = None
 
@@ -293,8 +289,7 @@ class VL53L8CHHistogram(SensorData):
 # ===============
 
 
-@register
-class VL53L8CHSensor(SPADSensor):
+class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
     """
     Main sensor class for the VL53L8CH time-of-flight sensor.
 
@@ -417,13 +412,6 @@ class VL53L8CHSensor(SPADSensor):
         finally:
             if serial_conn.is_open:
                 serial_conn.close()
-
-    @property
-    def config(self) -> VL53L8CHConfig:
-        """
-        Retrieves the VL53L8CH sensor configuration.
-        """
-        return self._config
 
     def update(self, **kwargs) -> None:
         """
@@ -587,9 +575,9 @@ class VL53L8CHSensor(SPADSensor):
         """
         Closes the sensor connection and stops background processes.
         """
+        self._stop_event.set()
         if not self._initialized_event.is_set():
             return
 
         # Signal the reader process to stop
-        self._stop_event.set()
         self._reader_process.join()

@@ -1,19 +1,17 @@
 """Base classes for sensors and sensor data processing."""
 
-import threading
 from abc import ABC, abstractmethod
 from typing import Any
 
 import numpy as np
 
-from cc_hardware.utils.config import CCHardwareConfig, config_wrapper
+from cc_hardware.utils import Component, Config, config_wrapper
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import Registry
 from cc_hardware.utils.setting import Setting
 
 
 @config_wrapper
-class SensorConfig(CCHardwareConfig):
+class SensorConfig(Config):
     """Configuration for sensors.
 
     When defining a new sensor, create a subclass of this configuration class
@@ -24,29 +22,21 @@ class SensorConfig(CCHardwareConfig):
             the configuration.
     """
 
-    instance: str = "Sensor"
-
     @property
     def settings(self) -> dict[str, Setting]:
         """Retrieves the sensor settings."""
         return {}
 
 
-class Sensor(ABC, Registry):
+class Sensor[T: SensorConfig](Component[T]):
     """Abstract base class for sensors.
 
     Args:
         config (SensorConfig): The sensor configuration.
     """
 
-    def __init__(self, config: SensorConfig):
-        self._config = config
-
-    @property
-    @abstractmethod
-    def config(self) -> SensorConfig:
-        """Retrieves the sensor configuration."""
-        pass
+    def __init__(self, config: T):
+        super().__init__(config)
 
     @property
     def settings(self) -> dict[str, Setting]:
@@ -117,24 +107,3 @@ class SensorData(ABC):
           np.ndarray: The processed data.
         """
         pass
-
-
-class SensorDataThreaded(SensorData):
-    """Handles sensor data processing with threading support."""
-
-    def __init__(self):
-        self._ready_event = threading.Event()
-
-    def reset(self) -> None:
-        """Resets the threading event and clears any existing data."""
-        self._ready_event.clear()
-
-    def get_data(self) -> np.ndarray:
-        """Waits until data is ready and retrieves it.
-
-        Returns:
-          np.ndarray: The processed data.
-        """
-        self._ready_event.wait()
-        self._ready_event.clear()
-        return self._data

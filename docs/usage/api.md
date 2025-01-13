@@ -9,6 +9,7 @@ Packages
 
 api/cc_hardware/algos/index
 api/cc_hardware/drivers/index
+api/cc_hardware/tools/index
 api/cc_hardware/utils/index
 ```
 

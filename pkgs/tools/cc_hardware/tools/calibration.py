@@ -1,11 +1,11 @@
+"""Tools for calibrating hardware devices."""
+
 from functools import partial
 from typing import Any
 
 from cc_hardware.drivers.sensor import Sensor
 from cc_hardware.drivers.spads.tmf8828 import SPADID, RangeMode, TMF8828Sensor
-from cc_hardware.tools.cli import run_cli
-from cc_hardware.utils import get_logger
-from cc_hardware.utils.manager import Manager
+from cc_hardware.utils import Manager, get_logger, register_cli
 
 
 def calibrate(sensor: type[Sensor] | Sensor, **kwargs) -> Any:
@@ -33,9 +33,10 @@ def calibrate(sensor: type[Sensor] | Sensor, **kwargs) -> Any:
     return calibration_data
 
 
+@register_cli
 def tmf8828_calibrate(
-    port: str,
     filename: str,
+    port: str | None = None,
     spad_ids: list[SPADID] = [SPADID.ID6, SPADID.ID15],
     range_modes: list[RangeMode] = [RangeMode.SHORT, RangeMode.LONG],
 ):
@@ -59,7 +60,3 @@ def tmf8828_calibrate(
     # Write the calibration data to a file
     with open(filename, "w") as f:
         f.write("\n".join(data))
-
-
-if __name__ == "__main__":
-    run_cli(tmf8828_calibrate)

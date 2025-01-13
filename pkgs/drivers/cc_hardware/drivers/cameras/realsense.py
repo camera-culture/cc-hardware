@@ -10,35 +10,30 @@ only return the color image by default (set ``return_depth=True`` to return the 
 image, as well).
 """
 
-import threading
+import multiprocessing
 from typing import override
 
 import numpy as np
 import pyrealsense2 as rs
 
 from cc_hardware.drivers.cameras.camera import Camera, CameraConfig
-from cc_hardware.utils import config_wrapper, get_logger, register
-from cc_hardware.utils.blocking_deque import BlockingDeque
-from cc_hardware.utils.singleton import SingletonABCMeta
+from cc_hardware.utils import config_wrapper, get_logger
 
 
-@register
 @config_wrapper
 class RealsenseConfig(CameraConfig):
     """
     Configuration for Camera sensors.
     """
 
-    instance: str = "RealsenseCamera"
-
     camera_index: int = 0
     start_pipeline_once: bool = True
-    force_autoexposure: bool = False
+    force_autoexposure: bool = True
     exposure: int | list[int] | None = None
+    align: bool = True
 
 
-@register
-class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
+class RealsenseCamera(Camera[RealsenseConfig]):
     """
     Camera class for Intel RealSense devices. Captures RGB and depth images
     in a background thread and stores them in a queue.
@@ -49,28 +44,21 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         Initialize a RealsenseCamera instance.
 
         Args:
-          camera_index (int): Index of the camera to initialize. Defaults to 0.
-          start_pipeline_once (bool): Whether to start the pipeline only once.
-            Defaults to True.
-          force_autoexposure (bool): Whether to force autoexposure initialization.
-            Defaults to False.
+            config (RealsenseConfig): The configuration for the RealSense camera.
         """
         super().__init__(config)
 
         self.camera_index = config.camera_index
         self.start_pipeline_once = config.start_pipeline_once
         self.force_autoexposure = config.force_autoexposure
+        self.align = config.align
 
-        self.queue = BlockingDeque(maxlen=10)
-        self.stop_thread = threading.Event()
-        self.has_started = threading.Event()
-        self.start_capture_event = threading.Event()
-        self.pipeline = rs.pipeline()
-        self.config = rs.config()
-
-        # Enable both color and depth streams
-        self.config.enable_stream(rs.stream.color, 1920, 1080, rs.format.bgr8, 6)
-        self.config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 6)
+        context = multiprocessing.get_context("spawn")
+        self.queue = context.Queue(maxsize=1)
+        self.stop_thread = context.Event()
+        self.start_thread = context.Event()
+        self.has_started = context.Event()
+        self.start_capture_event = context.Event()
 
         # Store exposure settings
         exposure = config.exposure
@@ -78,7 +66,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         # Flag to check if exposure has been initialized
         self.exposure_initialized = exposure is not None
 
-        self._start_background_capture()
+        self._start_background_capture(context)
 
         if self.start_pipeline_once:
             self.start_capture_event.set()
@@ -86,11 +74,11 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
 
         self._initialized = True
 
-    def _start_background_capture(self):
+    def _start_background_capture(self, context):
         """
         Starts the background thread to initialize the camera and capture images.
         """
-        self.thread = threading.Thread(target=self._background_capture)
+        self.thread = context.Process(target=self._background_capture, daemon=True)
         self.thread.start()
 
     def _background_capture(self):
@@ -99,6 +87,17 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         get_logger().info(
             f"Starting background capture for camera index {self.camera_index}"
         )
+
+        self.pipeline = rs.pipeline()
+        self.rs_config = rs.config()
+
+        # Enable color, depth, and IR streams
+        self.rs_config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
+        self.rs_config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
+        # self.rs_config.enable_stream(rs.stream.infrared, 1, 1280, 720, rs.format.y8, 6)
+
+        align = rs.align(rs.stream.color)
+
         while not self.stop_thread.is_set():
             # Wait until capture is started
             self.start_capture_event.wait()
@@ -106,7 +105,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
                 get_logger().info(
                     f"Starting pipeline for camera index {self.camera_index}"
                 )
-                self.pipeline.start(self.config)
+                self.pipeline.start(self.rs_config)
                 get_logger().info(
                     f"Pipeline started for camera index {self.camera_index}"
                 )
@@ -138,19 +137,28 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
                     not self.stop_thread.is_set() and self.start_capture_event.is_set()
                 ):
                     frames = self.pipeline.wait_for_frames()
+                    if self.align:
+                        frames = align.process(frames)
+
                     color_frame = frames.get_color_frame()
                     depth_frame = frames.get_depth_frame()
+                    # ir_frame = frames.get_infrared_frame()
 
                     if not color_frame or not depth_frame:
                         continue
 
                     color_image = np.asanyarray(color_frame.get_data())
                     depth_image = np.asanyarray(depth_frame.get_data())
+                    # ir_image = np.asanyarray(ir_frame.get_data())
 
-                    # Store tuple (color_image, depth_image) in queue
-                    self.queue.append((color_image, depth_image))
+                    # Store tuple (color_image, depth_image, ir_image) in the queue
+                    try:
+                        self.queue.put((color_image, depth_image, None), block=False)
+                    except multiprocessing.queues.Full:
+                        continue
             except Exception as ex:
                 get_logger().error(f"Camera error: {ex}")
+                self.stop_thread.set()
             finally:
                 # Stop the pipeline and reset events
                 get_logger().info(
@@ -199,11 +207,23 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
 
         self.exposure_initialized = True
 
+    @property
+    def config(self) -> RealsenseConfig:
+        """
+        Get the RealSense configuration object.
+
+        Returns:
+          rs.config: The RealSense configuration object.
+        """
+        return self._config
+
     def accumulate(
         self,
-        num_samples: int,
+        num_samples: int = 1,
+        *,
         return_rgb: bool = True,
         return_depth: bool = False,
+        return_ir: bool = False,
     ) -> list[np.ndarray] | tuple[list[np.ndarray] | list[np.ndarray]]:
         """
         Accumulates RGB and depth images from the queue.
@@ -222,31 +242,39 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         if not self.start_pipeline_once:
             self.start_capture_event.set()
             self.has_started.wait()
-            self.queue.clear()
+
+            # Clear the queue
+            while not self.queue.empty():
+                self.queue.get()
 
         try:
             color_images = []
             depth_images = []
+            ir_images = []
 
             while len(color_images) < num_samples:
                 try:
-                    item = self.queue.popleft()
+                    item = self.queue.get()
 
-                    color_image, depth_image = item
+                    color_image, depth_image, ir_image = item
                     color_images.append(color_image)
                     depth_images.append(depth_image)
+                    ir_images.append(ir_image)
                 except IndexError:
                     continue  # Wait for more data if queue is empty
 
             if num_samples == 1:
                 color_images = color_images[0]
                 depth_images = depth_images[0]
+                ir_images = ir_images[0]
 
             result = []
             if return_rgb:
                 result.append(np.array(color_images))
             if return_depth:
                 result.append(np.array(depth_images))
+            if return_ir:
+                result.append(np.array(ir_images))
             return tuple(result) if len(result) > 1 else result[0]
         finally:
             if not self.start_pipeline_once:
@@ -313,8 +341,7 @@ class RealsenseCamera(Camera, metaclass=SingletonABCMeta):
         self.stop_thread.set()  # Signal the background thread to stop
         self.start_capture_event.set()  # Unblock the thread if waiting
         if self.thread is not None:
+            while not self.queue.empty():
+                self.queue.get()
             self.thread.join()  # Wait for the thread to finish
             self.thread = None
-
-        if self.has_started.is_set():
-            self.pipeline.stop()

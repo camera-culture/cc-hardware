@@ -28,19 +28,17 @@ Example:
     dashboard.run()
 """
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from typing import Callable, Self
-from functools import cached_property
 
 import numpy as np
 
-from cc_hardware.drivers.spads.spad import SPADSensor
-from cc_hardware.utils import Registry, get_logger
-from cc_hardware.utils.config import CCHardwareConfig, config_wrapper
+from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.utils import Component, Config, config_wrapper, get_logger
 
 
 @config_wrapper
-class SPADDashboardConfig(CCHardwareConfig):
+class SPADDashboardConfig(Config):
     """
     Configuration for SPAD sensor dashboards.
 
@@ -58,8 +56,6 @@ class SPADDashboardConfig(CCHardwareConfig):
             function. It should accept the dashboard instance as an argument.
     """
 
-    instance: str = "SPADDashboard"
-
     num_frames: int = 1_000_000
     min_bin: int | None = None
     max_bin: int | None = None
@@ -69,7 +65,7 @@ class SPADDashboardConfig(CCHardwareConfig):
     user_callback: Callable[[Self], None] | None = None
 
 
-class SPADDashboard(ABC, Registry):
+class SPADDashboard[T: SPADDashboardConfig](Component[T]):
     """
     Abstract base class for SPAD sensor dashboards.
 
@@ -80,9 +76,8 @@ class SPADDashboard(ABC, Registry):
 
     def __init__(
         self,
-        config: SPADDashboardConfig,
+        config: T,
         sensor: SPADSensor,
-        resolution: tuple[int, int] | None = None,
     ):
         self._config = config
         self._sensor = sensor
@@ -96,25 +91,20 @@ class SPADDashboard(ABC, Registry):
             )
             self.config.autoscale = False
 
-        self._setup_sensor(resolution)
+        self._setup_sensor()
         get_logger().info("Starting histogram GUI...")
 
-    def _setup_sensor(self, resolution: tuple[int, int] | None = None):
+    def _setup_sensor(self):
         """
         Configures the sensor settings and channel mask.
         """
-        h, w = resolution or self._sensor.resolution
+        h, w = self._sensor.resolution
         total_channels = h * w
         self.channel_mask = np.arange(total_channels)
         if self.config.channel_mask is not None:
             self.channel_mask = np.array(self.config.channel_mask)
         self.num_channels = len(self.channel_mask)
         get_logger().debug(f"Setup sensor with {self.num_channels} channels.")
-
-    @property
-    def config(self) -> SPADDashboardConfig:
-        """Retrieves the dashboard configuration."""
-        return self._config
 
     @property
     def sensor(self) -> SPADSensor:

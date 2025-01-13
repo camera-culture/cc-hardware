@@ -9,7 +9,7 @@ Camera.register("FlirCamera", f"{__name__}.flir")
 Camera.register("GrasshopperFlirCamera", f"{__name__}.flir")
 Camera.register("PklCamera", f"{__name__}.pkl")
 Camera.register("RealsenseCamera", f"{__name__}.realsense")
-CameraConfig.register("RealsenseCameraConfig", f"{__name__}.realsense")
+CameraConfig.register("RealsenseConfig", f"{__name__}.realsense")
 
 __all__ = [
     "Camera",

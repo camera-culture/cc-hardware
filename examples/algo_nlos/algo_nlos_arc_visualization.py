@@ -1,32 +1,27 @@
 import multiprocessing as mp
-from pathlib import Path
-import sys
 import time
+from pathlib import Path
 
-import torch
 import numpy as np
-from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QFont
 import pyqtgraph.opengl as gl
+import torch
+from model import RegressionModel, RegressionModelSeparate
+from PyQt5 import QtCore
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
+from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.tools.cli import register_cli, run_cli
-from cc_hardware.utils.file_handlers import PklReader
 from cc_hardware.utils import get_logger
-from cc_hardware.drivers.spads import SPADSensorConfig, SPADSensor
-from cc_hardware.drivers.spads.pkl import PklSPADSensor
-from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor, TMF8828Config, SPADID
 from cc_hardware.utils.manager import Manager
 
-from model import RegressionModel, RegressionModelSeparate
 
-
-class TeslaViz3D(QMainWindow):
+class Viz3D(QMainWindow):
     def __init__(self, radius_only: bool):
         super().__init__()
         self.radius_only = radius_only
 
-        self.setWindowTitle("3D Tesla-like Arc Visualization")
+        self.setWindowTitle("3D -like Arc Visualization")
         self.resize(800, 800)
 
         self.view = gl.GLViewWidget()
@@ -213,7 +208,7 @@ class TeslaViz3D(QMainWindow):
 
 def run_visualizer(pipe, radius_only: bool):
     app = QApplication([])
-    win = TeslaViz3D(radius_only)
+    win = Viz3D(radius_only)
     win.showFullScreen()
     while True:
         if pipe.poll():
@@ -251,7 +246,9 @@ def algo_nlos_trainer(
             h = w = 1
         num_bins = sensor.num_bins
         output_size = 1 if radius_only else 2
-        model = RegressionModelSeparate(num_bins, (h, w), output_size, min_bin=min_bin, max_bin=max_bin)
+        model = RegressionModelSeparate(
+            num_bins, (h, w), output_size, min_bin=min_bin, max_bin=max_bin
+        )
         if model_path is None:
             model_path = pkl.with_name(pkl.stem + "_model.pth")
         model.load_state_dict(torch.load(model_path, weights_only=True))
@@ -259,7 +256,9 @@ def algo_nlos_trainer(
         manager.add(model=model)
 
         parent_conn, child_conn = mp.Pipe()
-        p = mp.Process(target=run_visualizer, args=(child_conn,radius_only), daemon=True)
+        p = mp.Process(
+            target=run_visualizer, args=(child_conn, radius_only), daemon=True
+        )
         p.start()
         manager.add(mp_process=p, mp_conn=parent_conn)
 

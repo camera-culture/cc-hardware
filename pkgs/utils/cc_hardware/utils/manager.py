@@ -24,41 +24,58 @@ Example:
         manager.run(setup=setup, loop=loop, cleanup=cleanup)
 """
 
+from abc import ABC, abstractmethod
 from functools import partial
-from typing import Callable, Protocol, Type
+from typing import Any, Callable, Self
+
+from hydra_config import HydraContainerConfig, config_wrapper
 
 from cc_hardware.utils.logger import get_logger
+from cc_hardware.utils.registry import Registry
 
 
-class Component(Protocol):
-    """Protocol for components which can be closed."""
+@config_wrapper
+class Config(HydraContainerConfig, Registry):
+    """Base configuration class for cc-hardware components."""
 
+    pass
+
+
+class Component[T: Config](ABC, Registry):
+    """Base class for components which must be closed."""
+
+    def __init__(self, config: T):
+        self._config = config
+
+    @property
+    def config(self) -> T:
+        """Retrieves the component configuration."""
+        return self._config
+
+    @classmethod
+    def create_from_config(cls, config: T, **kwargs) -> Self:
+        """Create an instance of the class from a configuration object.
+
+        Args:
+            config (T): The configuration object.
+
+        Returns:
+            Self: An instance of the class.
+        """
+        return config.create_from_registry(config=config, **kwargs)
+
+    # ==================
+
+    @abstractmethod
     def close(self) -> None:
         """Closes the component and releases any resources."""
         ...
 
     @property
+    @abstractmethod
     def is_okay(self) -> bool:
         """Checks if the component is operational."""
         ...
-
-
-class PrimitiveComponent(Component):
-    """Wrapper for primitive components which do not need to be closed."""
-
-    def __init__(self, value):
-        self._value = value
-
-    def close(self) -> None:
-        pass
-
-    @property
-    def is_okay(self) -> bool:
-        return True
-
-    @property
-    def value(self):
-        return self._value
 
 
 class Manager:
@@ -67,33 +84,15 @@ class Manager:
     it is closed.
     """
 
-    def __init__(self, **components: Type[Component] | Component):
-        self._components = components
+    def __init__(self, **components: type[Component] | Component | Any):
+        self._components: dict[type[Component] | Component | Any] = components
 
         self._closed = False
 
-    def add(self, *, primitive: bool = False, **components: Component):
+    def add(self, **components: Component | Any):
         """Adds additional components to the manager."""
         # Check each component has a close method
-        _components = {}
-        for name, component in components.items():
-            if component is None:
-                _components[name] = component
-                continue
-
-            if primitive:
-                component = PrimitiveComponent(component)
-
-            if not hasattr(component, "close"):
-                get_logger().warning(f"Component {name} does not have a close method.")
-                component.close = lambda: None
-            if not hasattr(component, "is_okay"):
-                get_logger().warning(f"Component {name} does not have an is_okay prop.")
-                component.is_okay = True
-
-            _components[name] = component
-
-        self._components.update(_components)
+        self._components.update(components)
 
     def run(
         self,
@@ -124,20 +123,10 @@ class Manager:
         loop = loop or (lambda *_, **__: None)
         cleanup = cleanup or (lambda **_: None)
 
-        def get_components():
-            return {
-                name: (
-                    component.value
-                    if isinstance(component, PrimitiveComponent)
-                    else component
-                )
-                for name, component in self._components.items()
-            }
-
         try:
             # SETUP
             try:
-                if setup(manager=self, **get_components()) == False:
+                if setup(manager=self, **self._components) is False:
                     get_logger().info("Exiting setup.")
                     return
             except Exception:
@@ -147,7 +136,7 @@ class Manager:
             # LOOP
             while self.is_okay:
                 try:
-                    if loop(iter, manager=self, **get_components()) == False:
+                    if loop(iter, manager=self, **self._components) is False:
                         get_logger().info(f"Exiting loop after {iter} iterations.")
                         break
                 except Exception:
@@ -158,7 +147,7 @@ class Manager:
 
             # CLEANUP
             try:
-                cleanup(manager=self, **get_components())
+                cleanup(manager=self, **self._components)
             except Exception:
                 get_logger().exception("Failed to cleanup components.")
                 return
@@ -169,7 +158,7 @@ class Manager:
         """Allows this class to be used as a context manager."""
         # Create each component if it is a type
         for name, component in self._components.items():
-            if component is None:
+            if not isinstance(component, (type, partial)):
                 continue
 
             try:
@@ -182,23 +171,12 @@ class Manager:
 
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, *_, **__):
         """Ensures each component is properly closed when used as a context manager."""
         self.close()
 
-    def get(self, name: str) -> Component | None:
-        """Returns a component by name. Alias to :meth:`get_component`."""
-        return self.get_component(name)
-
-    def get_component(self, name: str) -> Component | None:
-        """Returns a component by name."""
-        if name not in self._components:
-            get_logger().error(f"Component {name} not found.")
-            return None
-        return self._components[name]
-
     @property
-    def components(self) -> dict[str, Component]:
+    def components(self) -> dict[str, type[Component] | Component | Any]:
         """Returns a dictionary of components."""
         return self._components
 
@@ -206,7 +184,7 @@ class Manager:
     def is_okay(self) -> bool:
         """Checks if all components are okay."""
         for name, component in self._components.items():
-            if component is None:
+            if not isinstance(component, Component):
                 continue
 
             if not component.is_okay:
@@ -220,9 +198,7 @@ class Manager:
             return
 
         for name, component in self._components.items():
-            if isinstance(component, (type, partial)):
-                continue
-            elif component is None:
+            if not isinstance(component, Component):
                 continue
 
             get_logger().info(f"Closing {name}...")

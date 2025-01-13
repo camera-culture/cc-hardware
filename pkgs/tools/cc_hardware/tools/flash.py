@@ -1,19 +1,21 @@
+"""Tools for flashing the firmware to hardware devices."""
+
 import os
 from pathlib import Path
 
-from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
-from cc_hardware.tools.cli import register_cli, run_cli
-from cc_hardware.utils import get_logger
-from cc_hardware.utils.serial_utils import find_device_by_label
+from cc_hardware.utils import get_logger, register_cli
 
 
 @register_cli
-def spad_upload(
+def vl53l8ch_flash(
     port: str | None = None,
     script: Path | None = None,
     build: bool = True,
     verbose: bool = False,
 ):
+    from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHSensor
+    from cc_hardware.utils import find_device_by_label
+
     if port is None:
         # Attempt to find the port
         # Will be something like "NOD_F401RE"
@@ -36,5 +38,11 @@ def spad_upload(
         raise RuntimeError("Failed to upload the sketch")
 
 
-if __name__ == "__main__":
-    run_cli(spad_upload)
+@register_cli
+def tmf8828_flash(port: str | None = None, script: Path | None = None):
+    from cc_hardware.drivers.spads.tmf8828 import TMF8828Sensor
+    from cc_hardware.utils import arduino_upload
+
+    script = script or TMF8828Sensor.SCRIPT
+    get_logger().info(f"Uploading TMF8828 sensor sketch from {script} to port {port}")
+    arduino_upload(port=port, script=script)

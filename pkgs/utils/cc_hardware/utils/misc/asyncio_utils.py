@@ -38,3 +38,6 @@ def call_async_value(fn: Callable, idx: int = 2) -> Any:
     """Wraps an asynchronous method and returns a specific index in the callback
     list."""
     return call_async(fn, lambda data: data[idx])
+
+
+__all__ = ["call_async", "call_async_gather", "call_async_value"]

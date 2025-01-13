@@ -1,31 +1,26 @@
 """SPAD sensor driver that loads pre-recorded data from a PKL file."""
 
-from pathlib import Path
 from copy import deepcopy
+from pathlib import Path
 
 import numpy as np
 
 from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.file_handlers import PklReader
-from cc_hardware.utils import get_logger, register
-from cc_hardware.utils.config import config_wrapper
 
 # ==================
 
 
-@register
 @config_wrapper
 class PklSPADSensorConfig(SPADSensorConfig):
-    instance: str = "PklSPADSensor"
-
     pkl_path: Path | str
     key: str = "histogram"
     resolution: tuple[int, int] | None = None
     merge: bool = True
 
 
-@register
-class PklSPADSensor(SPADSensor):
+class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
     """
     A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded
     histogram data from a PKL file. This class inherits from SPADSensor and is used
@@ -58,22 +53,6 @@ class PklSPADSensor(SPADSensor):
                 config.resolution = [3, 3]
             # assert len(config.resolution) == 2, "Invalid resolution shape."
         self._first_entry = deepcopy(entry)
-
-    def reset(self, index: int = 0):
-        """
-        Resets the sensor state. This method is a no-op for this fake sensor.
-        """
-        self._index = index
-
-    @property
-    def config(self) -> PklSPADSensorConfig:
-        """
-        Returns the configuration object for the sensor.
-
-        Returns:
-            PklSPADSensorConfig: The sensor's configuration object.
-        """
-        return self._config
 
     @property
     def handler(self) -> PklReader:

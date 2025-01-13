@@ -16,8 +16,7 @@ from typing import Any, Self
 
 import serial
 
-from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.serial_utils import find_ports
+from cc_hardware.utils import find_ports, get_logger
 
 
 class SafeSerial:
