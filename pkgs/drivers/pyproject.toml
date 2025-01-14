@@ -20,7 +20,9 @@ python = ">=3.12"
 numpy = ">=1.26.4, <2.0.0"
 setuptools = "^75.5.0"
 pyqtgraph = "^0.13.7"
+PyQt6 = "=6.7.1"
 dash = "^2.18.2"
+cloudpickle = "^3.1.0"
 pylablib-lightweight = "^1.4.3"
 telemetrix = { git = "https://github.com/AaronYoung5/telemetrix.git", rev = "4f9377cd1d58fa07075407583791610968cabc83" }
 cc_hardware_utils = { path = "../utils", develop = true }
