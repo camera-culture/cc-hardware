@@ -41,7 +41,6 @@ extensions = [
     "sphinx.ext.githubpages",
     "autoapi.extension",
     "myst_parser",
-    "sphinxarg.ext",
     "sphinxcontrib.googleanalytics",
     "sphinx.ext.inheritance_diagram",
 ]

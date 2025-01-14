@@ -1,24 +1,11 @@
-from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.drivers.spads.spad_wrappers import SPADWrapperConfig
 from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
-from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
-
-i = 0
-
-
-def my_callback(dashboard: SPADDashboard):
-    """Calls logger at intervals.
-
-    Args:
-        dashboard (SPADDashboard): The dashboard instance to use in the callback.
-    """
-    global i
-    i += 1
-    if i % 10 == 0:
-        get_logger().info("Callback called")
+from cc_hardware.utils import Manager, register_cli, run_cli
 
 
 @register_cli
-def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+def spad_dashboard(sensor: SPADWrapperConfig, dashboard: SPADDashboardConfig):
     """Sets up and runs the SPAD dashboard.
 
     Args:
@@ -35,7 +22,6 @@ def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
         _sensor: SPADSensor = SPADSensor.create_from_config(sensor)
         manager.add(sensor=_sensor)
 
-        dashboard.user_callback = my_callback
         _dashboard: SPADDashboard = dashboard.create_from_registry(
             config=dashboard, sensor=_sensor
         )

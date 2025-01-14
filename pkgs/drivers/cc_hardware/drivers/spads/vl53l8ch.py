@@ -56,12 +56,15 @@ class VL53L8CHConfig(SPADSensorConfig):
         agg_cols (int): Number of aggregation columns (uint16_t).
         agg_rows (int): Number of aggregation rows (uint16_t).
 
-        subtract_ambient (bool): Flag to subtract ambient light from histogram data.
+        add_back_ambient (bool): Flag to add back ambient light. The VL53L8CH sensor
+            will do some preprocessing on the device and remove a pre-calculated ambient
+            light value from the histogram data. In the histogram returned to the user,
+            the ambient value removed from the histogram is provided. This flag enables
+            the user to add this value back to the histogram data (as if it was never
+            removed).
     """
 
     port: str | None = None
-
-    merge: bool = False
 
     resolution: int  # uint16_t
     ranging_mode: RangingMode  # uint16_t
@@ -77,7 +80,7 @@ class VL53L8CHConfig(SPADSensorConfig):
     agg_cols: int  # uint16_t
     agg_rows: int  # uint16_t
 
-    subtract_ambient: bool
+    add_back_ambient: bool
 
     resolution_setting: OptionSetting = OptionSetting.default_factory(
         value=II("..resolution"), options=[16, 64], title="Resolution"
@@ -100,9 +103,9 @@ class VL53L8CHConfig(SPADSensorConfig):
     cnh_num_bins_setting: RangeSetting = RangeSetting.default_factory(
         value=II("..cnh_num_bins"), min=1, max=32, title="Number of Bins"
     )
-    subtract_ambient_setting: BoolSetting = BoolSetting.default_factory(
-        value=II("..subtract_ambient"),
-        title="Subtract Ambient Light",
+    add_back_ambient_setting: BoolSetting = BoolSetting.default_factory(
+        value=II("..add_back_ambient"),
+        title="Add Back Ambient Light",
     )
 
     def pack(self) -> bytes:
@@ -143,7 +146,7 @@ class VL53L8CHConfig(SPADSensorConfig):
             "ranging_frequency_hz": self.ranging_frequency_hz_setting,
             "integration_time_ms": self.integration_time_ms_setting,
             "cnh_num_bins": self.cnh_num_bins_setting,
-            "subtract_ambient": self.subtract_ambient_setting,
+            "add_back_ambient": self.add_back_ambient_setting,
         }
 
 
@@ -165,7 +168,7 @@ class VL53L8CHSharedConfig(VL53L8CHConfig):
     agg_merge_x: int = 1
     agg_merge_y: int = 1
 
-    subtract_ambient: bool = True
+    add_back_ambient: bool = False
 
 
 @config_wrapper
@@ -243,13 +246,13 @@ class VL53L8CHHistogram(SensorData):
             if agg_num in self._pixel_histograms:
                 get_logger().error(f"Duplicate aggregation number received: {agg_num}")
                 return False
-        except ValueError:
+        except (ValueError, IndexError):
             get_logger().error("Invalid data formatting received.")
             return False
 
         try:
-            ambient = abs(float(row[3])) if self._config.subtract_ambient else 0
-            bin_vals = [float(val) - ambient for val in row[5:]]
+            ambient = abs(float(row[3])) if self._config.add_back_ambient else 0
+            bin_vals = [float(val) + ambient for val in row[5:]]
             self._pixel_histograms[agg_num] = np.clip(bin_vals, 0, None)
         except (ValueError, IndexError):
             get_logger().error("Invalid data formatting received.")
@@ -423,30 +426,18 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
         """
-        dirty = False
-        for key, value in kwargs.items():
-            if hasattr(self.config, key):
-                setattr(self.config, key, value)
-                dirty = True
-            else:
-                get_logger().warning(f"Unknown config key: {key}")
+        if not super().update(**kwargs):
+            return
 
-        for name, setting in self.settings.items():
-            if setting.dirty:
-                dirty = True
-                setattr(self.config, name, setting.value)
-                setting.dirty = False
+        # Update the agg_cols and agg_rows explicitly
+        num = int(np.sqrt(self.config.resolution))
+        self.config.agg_cols, self.config.agg_rows = num, num
 
-        if dirty:
-            # Update the agg_cols and agg_rows explicitly
-            num = int(np.sqrt(self.config.resolution))
-            self.config.agg_cols, self.config.agg_rows = num, num
-
-            # Send the configuration to the sensor
-            try:
-                self._write_queue.put(self.config.pack())
-            except multiprocessing.queues.Full:
-                get_logger().error("Failed to send configuration to sensor")
+        # Send the configuration to the sensor
+        try:
+            self._write_queue.put(self.config.pack())
+        except multiprocessing.queues.Full:
+            get_logger().error("Failed to send configuration to sensor")
 
     def accumulate(
         self,
@@ -509,8 +500,6 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             histograms = histograms[0] if histograms else None
         elif average:
             histograms = np.mean(histograms, axis=0)
-        if self.config.merge:
-            histograms = np.expand_dims(np.sum(histograms, axis=0), axis=0)
         return histograms
 
     @property
@@ -542,8 +531,6 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         Returns:
             tuple[int, int]: Number of aggregation columns and rows.
         """
-        if self.config.merge:
-            return 1, 1
         num = int(np.sqrt(self.config.resolution))
         return num, num
 

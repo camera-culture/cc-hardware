@@ -200,6 +200,7 @@ class MatplotlibDashboard(SPADDashboard[MatplotlibDashboardConfig]):
             plt.close(self.fig)
 
 
+@config_wrapper
 class MatplotlibTransientViewerConfig(SPADDashboardConfig):
     fullscreen: bool = False
     headless: bool = False

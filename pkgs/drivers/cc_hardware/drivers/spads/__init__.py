@@ -19,6 +19,24 @@ SPADSensor.register("PklSPADSensor", f"{__name__}.pkl")
 SPADSensorConfig.register("PklSPADSensorConfig", f"{__name__}.pkl")
 SPADSensorConfig.register("PklSPADSensorConfig", f"{__name__}.pkl", "PklSPADSensor")
 
+SPADSensor.register("SPADWrapper", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register("SPADWrapperConfig", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register(
+    "SPADWrapperConfig", f"{__name__}.spad_wrappers", "SPADWrapper"
+)
+SPADSensor.register("SPADMergeWrapper", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register("SPADMergeWrapperConfig", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register(
+    "SPADMergeWrapperConfig", f"{__name__}.spad_wrappers", "SPADMergeWrapper"
+)
+SPADSensor.register("SPADMovingAverageWrapper", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register("SPADMovingAverageWrapperConfig", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register(
+    "SPADMovingAverageWrapperConfig",
+    f"{__name__}.spad_wrappers",
+    "SPADMovingAverageWrapper",
+)
+
 # =============================================================================
 
 __all__ = [

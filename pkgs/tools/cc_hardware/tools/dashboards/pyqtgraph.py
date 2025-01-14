@@ -146,8 +146,7 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
 
         self.shared_y = True
 
-        rows = int(np.ceil(np.sqrt(self.num_channels)))
-        cols = int(np.ceil(self.num_channels / rows))
+        cols, rows = self.sensor.resolution
 
         self.plots = []
         self.bars = []
@@ -285,7 +284,7 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
         import pyqtgraph as pg
 
         y = np.zeros_like(bins) if y is None else y
-        return pg.BarGraphItem(x=bins, height=y, width=1.0, brush="b")
+        return pg.BarGraphItem(x=bins + 0.5, height=y, width=1.0, brush="b")
 
     def toggle_autoscale(self, state: int):
         get_logger().debug(f"Autoscale: {bool(state)}")

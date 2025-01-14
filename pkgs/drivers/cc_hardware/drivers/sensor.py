@@ -43,7 +43,7 @@ class Sensor[T: SensorConfig](Component[T]):
         """Retrieves the sensor settings."""
         return self.config.settings
 
-    def update(self, **kwargs) -> None:
+    def update(self, **kwargs) -> bool:
         """
         Updates the sensor configuration with provided keyword arguments. If there are
         any changes given via the kwargs or in the settings, the configuration is sent
@@ -52,8 +52,25 @@ class Sensor[T: SensorConfig](Component[T]):
         Args:
             **kwargs: Configuration parameters to update. Keys must match
                 the fields of SensorConfig.
+
+        Returns:
+            bool: True if the configuration was updated. False if no changes were made.
         """
-        pass
+        dirty = False
+        for key, value in kwargs.items():
+            if hasattr(self.config, key):
+                setattr(self.config, key, value)
+                dirty = True
+            else:
+                get_logger().warning(f"Unknown config key: {key}")
+
+        for name, setting in self.settings.items():
+            if setting.dirty:
+                dirty = True
+                setattr(self.config, name, setting.value)
+                setting.dirty = False
+
+        return dirty
 
     @property
     @abstractmethod

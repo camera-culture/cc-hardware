@@ -101,7 +101,7 @@ class Registry:
             try:
                 class_type = get_object(class_module_path, verbose=False)
             except ImportError as e:
-                get_logger().debug(f"Failed to import {class_type}: {e}")
+                get_logger().warning(f"Failed to import {class_type}: {e}")
                 return None
 
         name = class_type.__name__
