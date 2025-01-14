@@ -189,8 +189,11 @@ develop = true
 
 [package.dependencies]
 cc_hardware_utils = {path = "../utils", develop = true}
+cloudpickle = "^3.1.0"
 dash = "^2.18.2"
 numpy = ">=1.26.4, <2.0.0"
+pylablib-lightweight = "^1.4.3"
+PyQt6 = "=6.7.1"
 pyqtgraph = "^0.13.7"
 setuptools = "^75.5.0"
 telemetrix = {git = "https://github.com/AaronYoung5/telemetrix.git", rev = "4f9377cd1d58fa07075407583791610968cabc83"}
@@ -376,6 +379,17 @@ files = [
 
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
+name = "cloudpickle"
+version = "3.1.0"
+description = "Pickler class to extend the standard pickle.Pickler functionality"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "cloudpickle-3.1.0-py3-none-any.whl", hash = "sha256:fe11acda67f61aaaec473e3afe030feb131d78a43461b718185363384f1ba12e"},
+    {file = "cloudpickle-3.1.0.tar.gz", hash = "sha256:81a929b6e3c7335c863c771d673d105f02efdb89dfaba0c90495d1c64796601b"},
+]
 
 [[package]]
 name = "colorama"
@@ -1752,6 +1766,93 @@ files = [
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pylablib-lightweight"
+version = "1.4.3"
+description = "Code for use in lab environment: experiment automation, data acquisition, device communication"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pylablib-lightweight-1.4.3.tar.gz", hash = "sha256:c64046af041712edca43c718798e9feaec6202a626e12940ea0ea41071b60575"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:2c6d39a3bd3b00a9634b910bca00f7fe85d377117f9682b334920a780a411638"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4e7e61b3373381551ddcdb31efcb70d3ef337b38522e40acb2a310a598144cfa"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:faf91fb3b7b3ab0c7438d60a8e0648596f8846795a74042e3961401b1fad6388"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-musllinux_1_1_i686.whl", hash = "sha256:099edf7c469caca4b4d75518e9e28de3f03a8d2964d079523e9e9b78e9aad8e5"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:475131be827475ae2f1937f0ee0401500b41ed927cc408dc430b4170912b9140"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-win32.whl", hash = "sha256:e23318cfca11b69a77d7e429af5d21a982e8cb56b2dd61829c0f035bcdf47811"},
+    {file = "pylablib_lightweight-1.4.3-cp310-cp310-win_amd64.whl", hash = "sha256:7ea3a47384494e434926f609d2cfc57ac2642353ffde6231ddf810569b6f28d9"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:51b57b7c3c237f8e4208544f13050c702bb29d3ec42d5be817d4ea096b910ef8"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5552f24aba5c07485b331cf80f82af42f279d0093bea9bceb51a6e2761bcc2e9"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:71f1c59b3f7ada7ae0f466e0478c48d5ac90f82949f8c172df993c4d130a0564"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-musllinux_1_1_i686.whl", hash = "sha256:6252619c845c7655060ed8d43ffd6435f919754248e5753c8dff2510274a1ea7"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:be7f854a89e0163255c19b1ce9b44f5e5b1911ffe22b43c8f1225cf7d4609152"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-win32.whl", hash = "sha256:733be2d3719d39ab2a478fb54d828030f458ef64c028e69cb331cec3f000896f"},
+    {file = "pylablib_lightweight-1.4.3-cp311-cp311-win_amd64.whl", hash = "sha256:bc21fb1f4e1d3412d06429da6618120b2116f027110abbbb748e749fc26dbfd9"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:4e09d4a9b9bbde1d462d051dcbbd4b0440823a16e1a5788eaaf5457e7bc58aa8"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a1fecdc2c0fda01ea73157acc0f833b2138207e5dfbff9d74d0c4aa24268e53f"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:df0968b4ae96be5779b9135394a949147c6a61545dfef9db559eaa9fecdbb873"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-musllinux_1_1_i686.whl", hash = "sha256:b8247c3fe09d852def5ebbd1171087af65749d04ca16acab1617982ad966267b"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:76938c543c51051feb85d024bfe8795a285eb104900af83ec3542a6a8af3edaf"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-win32.whl", hash = "sha256:274d67fe212f9491b8d6a77033943ae03eafa664619d79337551b12f3cd80a81"},
+    {file = "pylablib_lightweight-1.4.3-cp312-cp312-win_amd64.whl", hash = "sha256:5fea72f478943adafc61d62f613d48f4a411040cb518a8b671a731aac522515d"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:b4159e029f782509081eb905e2bd2b50e899cda4e6cd0ed7efa5b17ba17228b5"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ef9464a72d00fa011bae158dd648246b6bc152006ab72f077eb2b8e4ad8555dc"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:f94d038e185caeaaf628ccd43581122e91c5b90af63aabc18c9a5e8c6d55dfc6"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:e2590d022df18e18c0c7680617d5e81e4a8a67d41ab251127c0b5e9488d7a572"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:4f2e2f40c34540d37dad719ada0027b6a515b8cf0b229df71ed20558c9e69f6b"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-win32.whl", hash = "sha256:0f7e1234688f263bcd52a82e9a29441a3f22eb80048c1debef7f7b0cc5fb2f39"},
+    {file = "pylablib_lightweight-1.4.3-cp36-cp36m-win_amd64.whl", hash = "sha256:d209a67c6cc292d3eb6401c8c7fce101e0e9e5f27e72d5a217d9e709fa1e74f6"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:ce6778edeb4777cc8c49056aa21e81bf5e977f7b38b33e0bf7a51b0512b3eb1f"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4c689f8fd063b3907e79cce245c8bdda62b0ba5e1ddc7ee67e753298d6841cfd"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:5be370fb986711848785023be3a22ca65996ede82114acb253379383b6dfd3a6"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-musllinux_1_1_i686.whl", hash = "sha256:d1d21f28681b5da50c06d5e9d08654f6af6f44c08958631a3e47f28507033912"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:3ee5a0d7b157a35d33b8fd4fd5ea8cc27e7339a50ae3edafe7b07b4c4ecc07ae"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-win32.whl", hash = "sha256:7c7ca9d824bf13f632f3302b967aa34bc29a0db79a0899b08a0158840294dcf7"},
+    {file = "pylablib_lightweight-1.4.3-cp37-cp37m-win_amd64.whl", hash = "sha256:6989cfc7a1f6a21305352dd5fa88f63755f64c00698ecbc7af8d8b7180fd91b9"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:2b0b931f7b2d4a0049719cbd826dbb5ee0495444e8b9a700dc0ea31fbfbdfcf2"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:70b755da1a24a3714f6d12a5132efc7119d1cd7a6b9ce0b4287303548c79876b"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:74102d06eb871a598b97ca2638e40fb6fe93c92f559d34046d769af97a662748"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-musllinux_1_1_i686.whl", hash = "sha256:a761883c2a3efa6d42879b0409f8f13ad4c4dbc763eceb1b8da338a8af698078"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:fdf325d6ca8e363ac7b4d1387396cf98df0764c04a830e8d06326680ef8a8bde"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-win32.whl", hash = "sha256:9d08701841ef1e8ded98962f9403b2df1ad53e0d1da791183c38b61c67852380"},
+    {file = "pylablib_lightweight-1.4.3-cp38-cp38-win_amd64.whl", hash = "sha256:842b064f1a5d1acdb935937ed87caaaef1197d0f660bbddc9ffbb4b14904b90b"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:6219c1837d00bac48cfec29cfb5a08c19e5c687a95472dffd7fb48e813b21f61"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:de49cee62670364b8ba5ca18a13f93a69812118d2f161c254e36325e9f725dbe"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d2c6ffd2afcefcf260a24416da6ca654178e04910bc4276e701116810af9604e"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-musllinux_1_1_i686.whl", hash = "sha256:64f5a1f2176e5b77e39c809b0a6c7d210227e791191aa920d5e757983cdfd27c"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:a0a253fa8b07418b103d95b980de35a935be6e64b59b3b209b2aa138194c28c2"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-win32.whl", hash = "sha256:78f08d8a9fc38cf2f427c36a284e00443befcec137d4a5ce7e1cc8ebd700c910"},
+    {file = "pylablib_lightweight-1.4.3-cp39-cp39-win_amd64.whl", hash = "sha256:2a7b993a0ab2ac3ce2180fa234be4cd593ca68dddd4e7adf12b26e5a5333aed1"},
+    {file = "pylablib_lightweight-1.4.3-pp310-pypy310_pp73-macosx_10_9_x86_64.whl", hash = "sha256:874d52e2a1778def32b79fb18a9ed31b2b2140b5425770a40b76c7bfd877e6b3"},
+    {file = "pylablib_lightweight-1.4.3-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d6cc9202681c757e266156788d6ba43fee7abdc2d733bb2e803473172f90e2e9"},
+    {file = "pylablib_lightweight-1.4.3-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:bf26d1a2b373cb0888533dfcf1abd1a52a51348912298f0bed285d668c2e64aa"},
+    {file = "pylablib_lightweight-1.4.3-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:52afd41f8047a7a2f0bb1ed57618663e5341d7faa3c640960784804391e0c67a"},
+    {file = "pylablib_lightweight-1.4.3-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:42777c106fa6c84f7008fad17bc03498717674bf082dfcc31a61fabcc290e9db"},
+    {file = "pylablib_lightweight-1.4.3-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8227d26f3147bcd2fe2a30c1bff5bc01d770e1bf07d2a40c21c8f692b6dd6c84"},
+    {file = "pylablib_lightweight-1.4.3-pp37-pypy37_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:fb06ece47f2e9ee92616bea662b0c53cdc01b6a9ca4c1dcbab0945e4aadb6437"},
+    {file = "pylablib_lightweight-1.4.3-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:eea15735cec5386c87627c741ba155e0438d4ce65d6239d920c51fb2b6d050cd"},
+    {file = "pylablib_lightweight-1.4.3-pp38-pypy38_pp73-macosx_10_9_x86_64.whl", hash = "sha256:cf95e98bf48d9547b46fde16099512943976a1c72900467f242475c847aa24d4"},
+    {file = "pylablib_lightweight-1.4.3-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5a7c3ab27ff844e16b223541bb15ed97dce348161772a6dfba1eadc8de2a1e88"},
+    {file = "pylablib_lightweight-1.4.3-pp38-pypy38_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:ba9481828a47c78ed8d11c82cdbee53995299576be295bde5331227d1f6092c9"},
+    {file = "pylablib_lightweight-1.4.3-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:b4501179eeab210401045f752a69efa8bed50fdf9d5e1c0cd742db59e7e7584c"},
+    {file = "pylablib_lightweight-1.4.3-pp39-pypy39_pp73-macosx_10_9_x86_64.whl", hash = "sha256:ceb5739ed381986f423cc98f857598c942c8a30f60ccf9a708118368b9d72b58"},
+    {file = "pylablib_lightweight-1.4.3-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:818044941d71425d6dcf6ed3f142194bbb28a1b7f9c8f06cd69344244895fee8"},
+    {file = "pylablib_lightweight-1.4.3-pp39-pypy39_pp73-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d984931f4962e1177b97241696aeb55623e403c2024903aa373b42a8bdcb961b"},
+    {file = "pylablib_lightweight-1.4.3-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:b20fcbe360099210c7e3c726ec7005e929c4b0bb3c44fe7d4005b526261ca5ab"},
+]
+
+[package.dependencies]
+numpy = "*"
+pandas = "*"
+scipy = "*"
+
+[package.extras]
+devio = ["pyft232", "pyserial", "pyusb", "pyvisa (>=1.6)"]
+devio-full = ["nidaqmx", "pyft232", "pyserial", "pyusb", "pyvisa (>=1.6)", "websocket-client"]
+extra = ["numba", "rpyc"]
+gui-pyqt5 = ["pyqt5 (>=5.9)", "pyqtgraph"]
+gui-pyside2 = ["pyqtgraph (>0.10)", "pyside2", "shiboken2"]
+
+[[package]]
 name = "pyobjc-core"
 version = "10.3.2"
 description = "Python<->ObjC Interoperability Module"
@@ -1844,6 +1945,73 @@ files = [
 
 [package.extras]
 diagrams = ["jinja2", "railroad-diagrams"]
+
+[[package]]
+name = "pyqt6"
+version = "6.7.1"
+description = "Python bindings for the Qt cross platform application toolkit"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "PyQt6-6.7.1-1-cp38-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:7f397f4b38b23b5588eb2c0933510deb953d96b1f0323a916c4839c2a66ccccc"},
+    {file = "PyQt6-6.7.1-1-cp38-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:c2f202b7941aa74e5c7e1463a6f27d9131dbc1e6cabe85571d7364f5b3de7397"},
+    {file = "PyQt6-6.7.1-cp38-abi3-macosx_11_0_universal2.whl", hash = "sha256:f053378e3aef6248fa612c8afddda17f942fb63f9fe8a9aeb2a6b6b4cbb0eba9"},
+    {file = "PyQt6-6.7.1-cp38-abi3-manylinux_2_28_aarch64.whl", hash = "sha256:0adb7914c732ad1dee46d9cec838a98cb2b11bc38cc3b7b36fbd8701ae64bf47"},
+    {file = "PyQt6-6.7.1-cp38-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:2d771fa0981514cb1ee937633dfa64f14caa902707d9afffab66677f3a73e3da"},
+    {file = "PyQt6-6.7.1-cp38-abi3-win_amd64.whl", hash = "sha256:fa3954698233fe286a8afc477b84d8517f0788eb46b74da69d3ccc0170d3714c"},
+    {file = "PyQt6-6.7.1.tar.gz", hash = "sha256:3672a82ccd3a62e99ab200a13903421e2928e399fda25ced98d140313ad59cb9"},
+]
+
+[package.dependencies]
+PyQt6-Qt6 = ">=6.7.0,<6.8.0"
+PyQt6-sip = ">=13.8,<14"
+
+[[package]]
+name = "pyqt6-qt6"
+version = "6.7.3"
+description = "The subset of a Qt installation needed by PyQt6."
+optional = false
+python-versions = "*"
+files = [
+    {file = "PyQt6_Qt6-6.7.3-py3-none-macosx_10_14_x86_64.whl", hash = "sha256:f517a93b6b1a814d4aa6587adc312e812ebaf4d70415bb15cfb44268c5ad3f5f"},
+    {file = "PyQt6_Qt6-6.7.3-py3-none-macosx_11_0_arm64.whl", hash = "sha256:8551732984fb36a5f4f3db51eafc4e8e6caf18617365830285306f2db17a94c2"},
+    {file = "PyQt6_Qt6-6.7.3-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:50c7482bcdcf2bb78af257fb10ed8b582f8daf91d829782393bc50ac5a0a900c"},
+    {file = "PyQt6_Qt6-6.7.3-py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:cb525fdd393332de60887953029276a44de480fce1d785251ae639580f5e7246"},
+    {file = "PyQt6_Qt6-6.7.3-py3-none-win_amd64.whl", hash = "sha256:36ea0892b8caeb983af3f285f45fb8dfbb93cfd972439f4e01b7efb2868f6230"},
+]
+
+[[package]]
+name = "pyqt6-sip"
+version = "13.9.1"
+description = "The sip module support for PyQt6"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "PyQt6_sip-13.9.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:e996d320744ca8342cad6f9454345330d4f06bce129812d032bda3bad6967c5c"},
+    {file = "PyQt6_sip-13.9.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2ab85aaf155828331399c59ebdd4d3b0358e42c08250e86b43d56d9873df148a"},
+    {file = "PyQt6_sip-13.9.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:22d66256b800f552ade51a463510bf905f3cb318aae00ff4288fae4de5d0e600"},
+    {file = "PyQt6_sip-13.9.1-cp310-cp310-win_amd64.whl", hash = "sha256:5643c92424fe62cb0b33378fef3d28c1525f91ada79e8a15bd9a05414a09503d"},
+    {file = "PyQt6_sip-13.9.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:57b5312ef13c1766bdf69b317041140b184eb24a51e1e23ce8fc5386ba8dffb2"},
+    {file = "PyQt6_sip-13.9.1-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5004514b08b045ad76425cf3618187091a668d972b017677b1b4b193379ef553"},
+    {file = "PyQt6_sip-13.9.1-cp311-cp311-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:accab6974b2758296400120fdcc9d1f37785b2ea2591f00656e1776f058ded6c"},
+    {file = "PyQt6_sip-13.9.1-cp311-cp311-win_amd64.whl", hash = "sha256:1ec52e962f54137a19208b6e95b6bd9f7a403eb25d7237768a99306cd9db26d1"},
+    {file = "PyQt6_sip-13.9.1-cp311-cp311-win_arm64.whl", hash = "sha256:6e6c1e2592187934f4e790c0c099d0033e986dcef7bdd3c06e3895ffa995e9fc"},
+    {file = "PyQt6_sip-13.9.1-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:1fb405615970e85b622b13b4cad140ff1e4182eb8334a0b27a4698e6217b89b0"},
+    {file = "PyQt6_sip-13.9.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c800db3464481e87b1d2b84523b075df1e8fc7856c6f9623dc243f89be1cb604"},
+    {file = "PyQt6_sip-13.9.1-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:c1942e107b0243ced9e510d507e0f27aeea9d6b13e0a1b7c06fd52a62e0d41f7"},
+    {file = "PyQt6_sip-13.9.1-cp312-cp312-win_amd64.whl", hash = "sha256:552ff8fdc41f5769d3eccc661f022ed496f55f6e0a214c20aaf56e56385d61b6"},
+    {file = "PyQt6_sip-13.9.1-cp312-cp312-win_arm64.whl", hash = "sha256:976c7758f668806d4df7a8853f390ac123d5d1f73591ed368bdb8963574ff589"},
+    {file = "PyQt6_sip-13.9.1-cp313-cp313-macosx_10_13_universal2.whl", hash = "sha256:56ce0afb19cd8a8c63ff93ae506dffb74f844b88adaa6673ebc0dec43af48a76"},
+    {file = "PyQt6_sip-13.9.1-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5d7726556d1ca7a7ed78e19ba53285b64a2a8f6ad7ff4cb18a1832efca1a3102"},
+    {file = "PyQt6_sip-13.9.1-cp313-cp313-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:14f95c6352e3b85dc26bf59cfbf77a470ecbd5fcdcf00af4b648f0e1b9eefb9e"},
+    {file = "PyQt6_sip-13.9.1-cp313-cp313-win_amd64.whl", hash = "sha256:3c269052c770c09b61fce2f2f9ea934a67dfc65f443d59629b4ccc8f89751890"},
+    {file = "PyQt6_sip-13.9.1-cp313-cp313-win_arm64.whl", hash = "sha256:8b2ac36d6e04db6099614b9c1178a2f87788c7ffc3826571fb63d36ddb4c401d"},
+    {file = "PyQt6_sip-13.9.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:69a879cfc94f4984d180321b76f52923861cd5bf4969aa885eef7591ee932517"},
+    {file = "PyQt6_sip-13.9.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:fa27b51ae4c7013b3700cf0ecf46907d1333ae396fc6511311920485cbce094b"},
+    {file = "PyQt6_sip-13.9.1-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:1d322ded1d1fea339cc6ac65b768e72c69c486eebb7db6ccde061b5786d74cc5"},
+    {file = "PyQt6_sip-13.9.1-cp39-cp39-win_amd64.whl", hash = "sha256:8c207528992d59b0801458aa6fcff118e5c099608ef0fc6ff8bccbdc23f29c04"},
+    {file = "pyqt6_sip-13.9.1.tar.gz", hash = "sha256:15be741d1ae8c82bb7afe9a61f3cf8c50457f7d61229a1c39c24cd6e8f4d86dc"},
+]
 
 [[package]]
 name = "pyqtgraph"
