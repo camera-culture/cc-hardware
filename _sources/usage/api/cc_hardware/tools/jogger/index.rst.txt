@@ -1,0 +1,182 @@
+
+:py:mod:`cc_hardware.tools.jogger`
+==================================
+
+
+.. py:module:: cc_hardware.tools.jogger
+
+.. autoapi-nested-parse::
+
+   Joystick-like interface for controlling the gantry system.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.tools.jogger.OutputCapture
+   cc_hardware.tools.jogger.LogBufferHandler
+
+
+
+
+.. py:class:: OutputCapture(buffer)
+
+   Captures stdout and stderr output and stores it in a buffer.
+
+
+.. py:class:: LogBufferHandler(buffer)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.jogger.LogBufferHandler
+      :parts: 1
+
+
+   Logging handler that stores log records in a buffer.
+
+
+   .. py:method:: emit(record)
+
+      Do whatever it takes to actually log the specified logging record.
+
+      This version is intended to be implemented by subclasses and so
+      raises a NotImplementedError.
+
+
+
+   .. py:method:: createLock()
+
+      Acquire a thread lock for serializing access to the underlying I/O.
+
+
+
+   .. py:method:: acquire()
+
+      Acquire the I/O thread lock.
+
+
+
+   .. py:method:: release()
+
+      Release the I/O thread lock.
+
+
+
+   .. py:method:: setLevel(level)
+
+      Set the logging level of this handler.  level must be an int or a str.
+
+
+
+   .. py:method:: format(record)
+
+      Format the specified record.
+
+      If a formatter is set, use it. Otherwise, use the default formatter
+      for the module.
+
+
+
+   .. py:method:: handle(record)
+
+      Conditionally emit the specified logging record.
+
+      Emission depends on filters which may have been added to the handler.
+      Wrap the actual emission of the record with acquisition/release of
+      the I/O thread lock.
+
+      Returns an instance of the log record that was emitted
+      if it passed all filters, otherwise a false value is returned.
+
+
+
+   .. py:method:: setFormatter(fmt)
+
+      Set the formatter for this handler.
+
+
+
+   .. py:method:: flush()
+
+      Ensure all logging output has been flushed.
+
+      This version does nothing and is intended to be implemented by
+      subclasses.
+
+
+
+   .. py:method:: close()
+
+      Tidy up any resources used by the handler.
+
+      This version removes the handler from an internal map of handlers,
+      _handlers, which is used for handler lookup by name. Subclasses
+      should ensure that this gets called from overridden close()
+      methods.
+
+
+
+   .. py:method:: handleError(record)
+
+      Handle errors which occur during an emit() call.
+
+      This method should be called from handlers when an exception is
+      encountered during an emit() call. If raiseExceptions is false,
+      exceptions get silently ignored. This is what is mostly wanted
+      for a logging system - most users will not care about errors in
+      the logging system, they are more interested in application errors.
+      You could, however, replace this with a custom handler if you wish.
+      The record which was being processed is passed in to this method.
+
+
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+
+   .. py:method:: addFilter(filter)
+
+      Add the specified filter to this handler.
+
+
+
+   .. py:method:: removeFilter(filter)
+
+      Remove the specified filter from this handler.
+
+
+
+   .. py:method:: filter(record)
+
+      Determine if a record is loggable by consulting all the filters.
+
+      The default is to allow the record to be logged; any filter can veto
+      this by returning a false value.
+      If a filter attached to a handler returns a log record instance,
+      then that instance is used in place of the original log record in
+      any further processing of the event by that handler.
+      If a filter returns any other true value, the original log record
+      is used in any further processing of the event by that handler.
+
+      If none of the filters return false values, this method returns
+      a log record.
+      If any of the filters return a false value, this method returns
+      a false value.
+
+      .. versionchanged:: 3.2
+
+         Allow filters to be just callables.
+
+      .. versionchanged:: 3.12
+         Allow filters to return a LogRecord instead of
+         modifying it in place.
+
+
+

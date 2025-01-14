@@ -12,11 +12,11 @@
         gtag('js', new Date());
         gtag('config', 'G-WK44DH2ZCM');
     </script>
-    <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="API Reference" href="../usage/api.html" /><link rel="prev" title="Stepper Gantry Collab" href="spad_gantry_capture.html" />
+    <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Camera Viewer" href="camera_viewer.html" /><link rel="prev" title="Stepper Gantry Collab" href="spad_gantry_capture.html" />
 
     <link rel="shortcut icon" href="../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Stepper Motor Controller - cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/drivers/sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../usage/api/cc_hardware/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../usage/api/cc_hardware/tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../usage/api/cc_hardware/tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/cc_hardware/tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/cc_hardware/tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/cc_hardware/tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../usage/api/cc_hardware/tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../usage/api/cc_hardware/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../usage/api/cc_hardware/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -286,15 +296,16 @@
         <article role="main">
           <section id="stepper-motor-controller">
 <h1>Stepper Motor Controller<a class="headerlink" href="#stepper-motor-controller" title="Link to this heading">#</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<p>This example demonstrates how to explicitly define the objects to create and uses <code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> to initialize the demo. The demo itself shows how to initialize and control a stepper motor system.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors</span> <span class="kn">import</span> <span class="n">StepperMotorSystem</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.drivers.stepper_motors.stepper_controller</span> <span class="kn">import</span> <span class="n">SnakeStepperController</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.file_handlers</span> <span class="kn">import</span> <span class="n">PklHandler</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.logger</span> <span class="kn">import</span> <span class="n">get_logger</span>
-<span class="kn">from</span> <span class="nn">cc_hardware.utils.manager</span> <span class="kn">import</span> <span class="n">Manager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.stepper_motors</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepperMotorSystem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.stepper_motors.stepper_controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">SnakeStepperController</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.file_handlers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PklHandler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span>
 
 <span class="c1"># ===============</span>
 
@@ -318,7 +329,7 @@
 <span class="c1"># ===============</span>
 
 
-<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
     <span class="n">LOGDIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">controller</span> <span class="o">=</span> <span class="n">SnakeStepperController</span><span class="p">(</span><span class="n">CONTROLLER_CONFIG</span><span class="p">)</span>
@@ -335,7 +346,7 @@
     <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">writer</span><span class="o">=</span><span class="n">PklHandler</span><span class="p">(</span><span class="n">OUTPUT_PKL</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">loop</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span>
     <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span>
     <span class="n">controller</span><span class="p">:</span> <span class="n">SnakeStepperController</span><span class="p">,</span>
@@ -366,7 +377,7 @@
 <span class="c1"># ===============</span>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
         <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
 
@@ -374,7 +385,7 @@
 <span class="c1"># ===============</span>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">argparse</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
 
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Demo: Stepper Motor Controller&quot;</span><span class="p">)</span>
 
@@ -396,12 +407,12 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../usage/api.html">
+          <a class="next-page" href="camera_viewer.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">API Reference</div>
+                <div class="title">Camera Viewer</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

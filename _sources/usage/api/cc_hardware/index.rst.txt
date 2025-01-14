@@ -8,3 +8,12 @@
 .. py:module:: cc_hardware
 
 
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   tools/index.rst
+
+

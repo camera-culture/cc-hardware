@@ -143,36 +143,39 @@ Classes
 
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
       :classmethod:
 
 
-      Register the given class in this registry.
+      Registers a class in this registry.
 
-      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
-                     a class name to be lazily loaded. If the class_type is a type, this
-                     method will return the class itself (useful for decorators).
-                   * **module_path** -- The module path where the class can be found
-                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                     This is the full importable path to the class. The final class
-                     path will be ``module_path.class_type``.
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
 
-      :returns: The registered class if class_type is a class type, otherwise None.
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
 
 
 
-   .. py:method:: create_from_registry(name, *args, **kwargs)
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
       :classmethod:
 
 
-      Create an instance of a registered class, performing lazy loading if necessary.
+      Creates an instance of a registered class, performing lazy loading if necessary.
 
-      :Parameters: * **name** -- The name of the class to instantiate.
-                   * **\*args** -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
 
-      :returns: An instance of the requested class.
+      :returns: *Self | Any* --
 
-      :raises ValueError: If the class name is not registered.
+                An instance of the requested class, or an associated
+                    'friend' class.
 
 
 
@@ -220,108 +223,9 @@ Classes
 
 
 
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation. This method should
-      block the execution until the motor has reached its target position or
-      completed the current motion command.
-
-
-
-   .. py:property:: position
-      :type: list
-
-      Returns the current position of the stepper motor. The position value should
-      represent the motor's current location in the same units as the move_to and
-      move_by methods.
-
-      :returns: *float* -- The current position of the motor.
-
-
    .. py:method:: __getattr__(name)
 
       This is a passthrough to the underlying motor objects.
-
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely. Implementations
-      should ensure that the motor is properly powered down and any resources are
-      released to avoid damage or memory leaks.
-
-
-
-   .. py:method:: home()
-      :abstractmethod:
-
-
-      Homes the stepper motor to its reference or zero position. This method should
-      move the motor to a predefined starting point, which could involve moving
-      until a limit switch or sensor is triggered to establish a known starting
-      position.
-
-
-
-   .. py:property:: is_okay
-      :type: bool
-      :abstractmethod:
-
-      Checks if the stepper motor is in a healthy operational state. This could
-      involve verifying that the motor is not in an error state, is receiving power,
-      and has no detected hardware issues.
-
-      :returns: *bool* -- True if the motor is operational, False otherwise.
-
-
-   .. py:method:: register(class_type)
-                  register(class_name: str, module_path: str) -> None
-      :classmethod:
-
-
-      Register the given class in this registry.
-
-      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
-                     a class name to be lazily loaded. If the class_type is a type, this
-                     method will return the class itself (useful for decorators).
-                   * **module_path** -- The module path where the class can be found
-                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                     This is the full importable path to the class. The final class
-                     path will be ``module_path.class_type``.
-
-      :returns: The registered class if class_type is a class type, otherwise None.
-
-
-
-   .. py:method:: create_from_registry(name, *args, **kwargs)
-      :classmethod:
-
-
-      Create an instance of a registered class, performing lazy loading if necessary.
-
-      :Parameters: * **name** -- The name of the class to instantiate.
-                   * **\*args** -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
-
-      :returns: An instance of the requested class.
-
-      :raises ValueError: If the class name is not registered.
-
-
-
-   .. py:method:: registry()
-
-      Get the registry for this class.
-
-      :returns: A dictionary mapping class names to class objects or lazy load paths.
-
-
-
-   .. py:method:: registered()
-
-      Get an enumeration of the registered classes.
-
-      :returns: An enumeration of the registered classes.
 
 
 

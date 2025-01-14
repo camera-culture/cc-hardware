@@ -1,0 +1,127 @@
+:orphan:
+
+
+:py:mod:`cc_hardware.drivers.cameras.usb`
+=========================================
+
+
+.. py:module:: cc_hardware.drivers.cameras.usb
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.cameras.usb.USBCameraConfig
+   cc_hardware.drivers.cameras.usb.USBCamera
+
+
+
+
+.. py:class:: USBCameraConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.usb.USBCameraConfig
+      :parts: 1
+
+
+   Configuration for generic USB Camera.
+
+   :ivar instance: The name/identifier for this camera instance.
+   :vartype instance: str
+   :ivar camera_index: The index of the camera to use (e.g., 0, 1, ...).
+   :vartype camera_index: int
+   :ivar start_capture_once: Whether to start capturing once and keep it running
+                             until closed. If False, capturing starts/stops each time you call
+                             :func:`accumulate`.
+   :vartype start_capture_once: bool
+   :ivar exposure: Desired exposure value. Note that not all USB cameras
+                   allow setting exposure directly, and this can vary by platform.
+   :vartype exposure: int | None
+   :ivar force_autoexposure: If True, attempt to enable auto-exposure. Not all
+                             cameras support this.
+
+   :vartype force_autoexposure: bool
+
+
+.. py:class:: USBCamera(config)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.usb.USBCamera
+      :parts: 1
+
+
+   Camera class for a generic USB camera. Captures RGB frames in a background thread
+   and stores them in a queue.
+
+
+   .. py:method:: accumulate(num_samples = 1)
+
+      Accumulates RGB frames from the camera queue.
+
+      :Parameters: **num_samples** (*int*) -- Number of frames to retrieve.
+
+      :keyword return_rgb: Whether to return RGB frames. Defaults to True.
+      :kwtype return_rgb: bool
+      :keyword return_depth: This parameter is ignored for a USB camera,
+                             as we don't capture depth frames. Defaults to False.
+      :kwtype return_depth: bool
+
+      :returns: *List[np.ndarray] or np.ndarray* --     A list of frames if num_samples > 1, or a single frame if
+                    num_samples == 1.
+
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Return the resolution (width, height) of the camera.
+
+      :returns: *Tuple[int, int]* --
+
+                The current resolution of the camera if known,
+                                 otherwise a default or fallback value.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Check if the camera is properly initialized and capturing.
+
+      :returns: *bool* -- True if the camera is initialized and capturing, False otherwise.
+
+
+   .. py:property:: intrinsic_matrix
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the intrinsic matrix of the camera.
+
+      :returns: *np.ndarray* -- The intrinsic matrix of the camera.
+
+      :raises NotImplementedError: This method is not yet implemented for a generic USB
+          camera.
+
+
+   .. py:property:: distortion_coefficients
+      :type: numpy.ndarray
+      :abstractmethod:
+
+      Get the distortion coefficients of the camera.
+
+      :returns: *np.ndarray* -- The distortion coefficients of the camera.
+
+      :raises NotImplementedError: This method is not yet implemented for a generic USB
+          camera.
+
+
+   .. py:method:: close()
+
+      Stops the background capture thread and releases the camera resource.
+
+
+

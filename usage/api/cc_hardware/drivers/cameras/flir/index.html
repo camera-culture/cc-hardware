@@ -16,7 +16,7 @@
 
     <link rel="shortcut icon" href="../../../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware.drivers.cameras.flir - cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="../../sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../utils/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -295,7 +305,7 @@ camera is created. To create a new instance of the camera, one has to override t
 <code class="xref py py-func docutils literal notranslate"><span class="pre">distortion_coefficients()</span></code> and
 <code class="xref py py-func docutils literal notranslate"><span class="pre">intrinsic_matrix()</span></code> methods.</p>
 <p>Example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GrasshopperFlirCamera</span><span class="p">(</span><span class="n">FlirCamera</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">GrasshopperFlirCamera</span><span class="p">(</span><span class="n">FlirCamera</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Specialized camera class for a Grasshopper FLIR camera model.</span>
 <span class="sd">    Inherits from FlirCamera and provides specific intrinsic and</span>
@@ -309,7 +319,7 @@ camera is created. To create a new instance of the camera, one has to override t
 
     <span class="nd">@property</span>
     <span class="nd">@override</span>
-    <span class="k">def</span> <span class="nf">distortion_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">distortion_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the distortion coefficients of the Grasshopper FLIR camera.</span>
 
@@ -320,7 +330,7 @@ camera is created. To create a new instance of the camera, one has to override t
 
     <span class="nd">@property</span>
     <span class="nd">@override</span>
-    <span class="k">def</span> <span class="nf">intrinsic_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">intrinsic_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the intrinsic matrix of the Grasshopper FLIR camera.</span>
 
@@ -387,12 +397,14 @@ size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
   &quot;Camera&quot; [URL=&quot;../camera/index.html#cc_hardware.drivers.cameras.camera.Camera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for a Camera sensor, extending the Sensor class.&quot;];
   &quot;Sensor&quot; -&gt; &quot;Camera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;FlirCamera&quot; [URL=&quot;#cc_hardware.drivers.cameras.flir.FlirCamera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A singleton camera class for FLIR cameras using the PySpin library.&quot;];
   &quot;Camera&quot; -&gt; &quot;FlirCamera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>A singleton camera class for FLIR cameras using the PySpin library.
 Captures images in a background thread and stores them in a queue.</p>
@@ -480,12 +492,6 @@ images. Defaults to False.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.config">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../index.html#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
@@ -493,7 +499,7 @@ images. Defaults to False.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
 any changes given via the kwargs or in the settings, the configuration is sent
 to the sensor.</p>
@@ -501,6 +507,9 @@ to the sensor.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
 the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -517,47 +526,74 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.FlirCamera.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.FlirCamera.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -596,14 +632,16 @@ size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
   &quot;Camera&quot; [URL=&quot;../camera/index.html#cc_hardware.drivers.cameras.camera.Camera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for a Camera sensor, extending the Sensor class.&quot;];
   &quot;Sensor&quot; -&gt; &quot;Camera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;FlirCamera&quot; [URL=&quot;#cc_hardware.drivers.cameras.flir.FlirCamera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A singleton camera class for FLIR cameras using the PySpin library.&quot;];
   &quot;Camera&quot; -&gt; &quot;FlirCamera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;GrasshopperFlirCamera&quot; [URL=&quot;#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Specialized camera class for a Grasshopper FLIR camera model.&quot;];
   &quot;FlirCamera&quot; -&gt; &quot;GrasshopperFlirCamera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Specialized camera class for a Grasshopper FLIR camera model.
 Inherits from FlirCamera and provides specific intrinsic and
@@ -697,12 +735,6 @@ images. Defaults to False.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../index.html#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
@@ -710,7 +742,7 @@ images. Defaults to False.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
 any changes given via the kwargs or in the settings, the configuration is sent
 to the sensor.</p>
@@ -718,6 +750,9 @@ to the sensor.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
 the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -734,47 +769,74 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -873,11 +935,12 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.close"><code class="docutils literal notranslate"><span class="pre">FlirCamera.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.distortion_coefficients"><code class="docutils literal notranslate"><span class="pre">FlirCamera.distortion_coefficients</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.intrinsic_matrix"><code class="docutils literal notranslate"><span class="pre">FlirCamera.intrinsic_matrix</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.config"><code class="docutils literal notranslate"><span class="pre">FlirCamera.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.settings"><code class="docutils literal notranslate"><span class="pre">FlirCamera.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.update"><code class="docutils literal notranslate"><span class="pre">FlirCamera.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.calibrate"><code class="docutils literal notranslate"><span class="pre">FlirCamera.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.__del__"><code class="docutils literal notranslate"><span class="pre">FlirCamera.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.config"><code class="docutils literal notranslate"><span class="pre">FlirCamera.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.create_from_config"><code class="docutils literal notranslate"><span class="pre">FlirCamera.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.register"><code class="docutils literal notranslate"><span class="pre">FlirCamera.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.create_from_registry"><code class="docutils literal notranslate"><span class="pre">FlirCamera.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.FlirCamera.registry"><code class="docutils literal notranslate"><span class="pre">FlirCamera.registry()</span></code></a></li>
@@ -891,11 +954,12 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.resolution"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.is_okay"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.close"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.settings"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.update"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.calibrate"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.__del__"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.config"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_config"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.register"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.create_from_registry"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera.registry"><code class="docutils literal notranslate"><span class="pre">GrasshopperFlirCamera.registry()</span></code></a></li>

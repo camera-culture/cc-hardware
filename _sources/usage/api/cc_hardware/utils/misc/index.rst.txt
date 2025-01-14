@@ -1,3 +1,5 @@
+:orphan:
+
 
 :py:mod:`cc_hardware.utils.misc`
 ================================
@@ -5,14 +7,33 @@
 
 .. py:module:: cc_hardware.utils.misc
 
-.. autoapi-nested-parse::
 
-   Miscellaneous utility functions/classes.
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   asyncio_utils/index.rst
+   blocking_deque/index.rst
+   misc/index.rst
+   serial_utils/index.rst
+   singleton/index.rst
 
 
+Package Contents
+----------------
 
-Module Contents
----------------
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.utils.misc.BlockingDeque
+   cc_hardware.utils.misc.classproperty
+   cc_hardware.utils.misc.SingletonABCMeta
+   cc_hardware.utils.misc.SingletonMeta
+
 
 
 Functions
@@ -20,16 +41,204 @@ Functions
 
 .. autoapisummary::
 
+   cc_hardware.utils.misc.call_async
+   cc_hardware.utils.misc.call_async_gather
+   cc_hardware.utils.misc.call_async_value
    cc_hardware.utils.misc.get_object
+   cc_hardware.utils.misc.arduino_upload
+   cc_hardware.utils.misc.find_device_by_label
+   cc_hardware.utils.misc.find_ports
 
 
 
-.. py:function:: get_object(path)
+.. py:function:: call_async(fn, callback)
+
+   Wraps an asynchronous method and returns the result of the callback
+   synchronously.
+
+
+.. py:function:: call_async_gather(fns, callback)
+
+   Wraps multiple asynchronous methods and returns a list of all the
+   callback values.
+
+
+.. py:function:: call_async_value(fn, idx = 2)
+
+   Wraps an asynchronous method and returns a specific index in the callback
+   list.
+
+
+.. py:class:: BlockingDeque(*args, **kwargs)
+
+   A thread-safe deque wrapper with blocking behavior for item retrieval.
+
+   This class wraps a deque and synchronizes access using threading.Condition,
+   making it suitable for use in multi-threaded environments where safe
+   access to a shared deque is required.
+
+
+   .. py:method:: append(item)
+
+      Append an item to the deque and notify any waiting threads.
+
+      :Parameters: **item** (*Any*) -- The item to append to the deque.
+
+
+
+   .. py:method:: __getattr__(name)
+
+      Access attributes of the underlying deque in a thread-safe manner.
+
+      :Parameters: **name** (*str*) -- The name of the attribute to access.
+
+      :returns: *Any* -- The value of the requested attribute.
+
+
+
+   .. py:method:: __getitem__(index)
+
+      Retrieve an item from the deque by index, blocking if the deque is empty.
+
+      :Parameters: **index** (*int*) -- The index of the item to retrieve.
+
+      :returns: *Any* -- The item at the specified index.
+
+
+
+   .. py:method:: __len__()
+
+      Get the number of items in the deque.
+
+      :returns: *int* -- The number of items in the deque.
+
+
+
+   .. py:method:: __repr__()
+
+      Get the string representation of the deque.
+
+      :returns: *str* -- The string representation of the deque.
+
+
+
+
+.. py:function:: get_object(path, *, verbose = True)
 
    Look up an entity based on the dotpath.
    Does not perform any type checks on the entity.
 
    This is lifted from
    `hydra <https://github.com/facebookresearch/hydra/blob/main/hydra/utils.py>`_.
+
+
+.. py:function:: arduino_upload(port, script)
+
+   Upload an Arduino sketch to the given port.
+
+
+.. py:function:: find_device_by_label(label)
+
+   Find a device by its volume label.
+
+   :Parameters: **label** -- The volume label to search for.
+
+
+.. py:function:: find_ports(cls = None, /, **kwargs)
+
+   Check all available ports for a device.
+
+   :Parameters: * **cls** -- The serial class to use. If None, only the port names are returned.
+                * **\*\*kwargs** -- Additional keyword arguments to pass to the serial class.
+
+   :returns: A list of serial ports or port names.
+
+
+.. py:class:: SingletonABCMeta
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.SingletonABCMeta
+      :parts: 1
+
+
+   A metaclass combining Singleton and Abstract Base Class (ABC) functionality.
+
+   This is useful for creating classes that need to enforce the Singleton
+   pattern while also being an Abstract Base Class.
+
+
+   .. py:method:: register(subclass)
+
+      Register a virtual subclass of an ABC.
+
+      Returns the subclass, to allow usage as a class decorator.
+
+
+
+   .. py:method:: __instancecheck__(instance)
+
+      Override for isinstance(instance, cls).
+
+
+
+   .. py:method:: __subclasscheck__(subclass)
+
+      Override for issubclass(subclass, cls).
+
+
+
+   .. py:method:: __call__(*args, **kwargs)
+
+      Create or retrieve the Singleton instance.
+
+      :Parameters: * **\*args** -- Positional arguments for the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments for the class constructor.
+
+      :returns: *Self* -- The single instance of the class.
+
+
+
+   .. py:method:: instance()
+      :classmethod:
+
+
+      Retrieve the Singleton instance, creating it if necessary.
+
+      :returns: *Self* -- The single instance of the class.
+
+
+
+.. py:class:: SingletonMeta
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.SingletonMeta
+      :parts: 1
+
+
+   A metaclass for implementing the Singleton pattern.
+
+   This ensures that only one instance of the class exists. Additional
+   calls to create an instance will return the same existing instance.
+
+
+   .. py:method:: __call__(*args, **kwargs)
+
+      Create or retrieve the Singleton instance.
+
+      :Parameters: * **\*args** -- Positional arguments for the class constructor.
+                   * **\*\*kwargs** -- Keyword arguments for the class constructor.
+
+      :returns: *Self* -- The single instance of the class.
+
+
+
+   .. py:method:: instance()
+      :classmethod:
+
+
+      Retrieve the Singleton instance, creating it if necessary.
+
+      :returns: *Self* -- The single instance of the class.
+
 
 

@@ -1,0 +1,13 @@
+
+:py:mod:`cc_hardware.tools.camera_viewer`
+=========================================
+
+
+.. py:module:: cc_hardware.tools.camera_viewer
+
+.. autoapi-nested-parse::
+
+   Tool to view the camera feed.
+
+
+

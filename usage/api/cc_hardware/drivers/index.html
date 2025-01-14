@@ -16,7 +16,7 @@
 
     <link rel="shortcut icon" href="../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware.drivers - cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../examples/camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utils/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -334,31 +344,34 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.Camera" title="cc_hardware.drivers.Camera"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Camera</span></code></a></p></td>
 <td><p>Abstract base class for a Camera sensor, extending the Sensor class.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.SafeSerial" title="cc_hardware.drivers.SafeSerial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SafeSerial</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.CameraConfig" title="cc_hardware.drivers.CameraConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CameraConfig</span></code></a></p></td>
+<td><p>Configuration for Camera sensors.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.SafeSerial" title="cc_hardware.drivers.SafeSerial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SafeSerial</span></code></a></p></td>
 <td><p>A thread-safe implementation of the serial.Serial class that synchronizes read and</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.Sensor" title="cc_hardware.drivers.Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.Sensor" title="cc_hardware.drivers.Sensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sensor</span></code></a></p></td>
 <td><p>Abstract base class for sensors.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SensorConfig</span></code></a></p></td>
 <td><p>Configuration for sensors.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.SPADSensor" title="cc_hardware.drivers.SPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.SPADSensor" title="cc_hardware.drivers.SPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensor</span></code></a></p></td>
 <td><p>An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig" title="cc_hardware.drivers.SPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig" title="cc_hardware.drivers.SPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a></p></td>
 <td><p>Configuration for SPAD sensors.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.DummyStepperMotor" title="cc_hardware.drivers.DummyStepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DummyStepperMotor</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.DummyStepperMotor" title="cc_hardware.drivers.DummyStepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DummyStepperMotor</span></code></a></p></td>
 <td><p>This is a dummy stepper motor class that does nothing. This is useful for testing</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotor" title="cc_hardware.drivers.StepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotor" title="cc_hardware.drivers.StepperMotor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotor</span></code></a></p></td>
 <td><p>An abstract base class for controlling a stepper motor. This class provides a</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem" title="cc_hardware.drivers.StepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem" title="cc_hardware.drivers.StepperMotorSystem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a></p></td>
 <td><p>This is a wrapper around multiple stepper motors which defines the system</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystemAxis" title="cc_hardware.drivers.StepperMotorSystemAxis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystemAxis</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystemAxis" title="cc_hardware.drivers.StepperMotorSystemAxis"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperMotorSystemAxis</span></code></a></p></td>
 <td><p>Create a collection of name/value pairs.</p></td>
 </tr>
 </tbody>
@@ -374,16 +387,18 @@ size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
   &quot;Camera&quot; [URL=&quot;cameras/camera/index.html#cc_hardware.drivers.cameras.camera.Camera&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for a Camera sensor, extending the Sensor class.&quot;];
   &quot;Sensor&quot; -&gt; &quot;Camera&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Component&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;Sensor&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Abstract base class for a Camera sensor, extending the Sensor class.
 Defines methods and properties for specific for cameras.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.accumulate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.accumulate" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.accumulate" title="Link to this definition">#</a></dt>
 <dd><p>Accumulate a specified number of samples from the camera.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -437,12 +452,6 @@ Defines methods and properties for specific for cameras.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.Camera.config">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.Camera.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.Camera.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
@@ -450,7 +459,7 @@ Defines methods and properties for specific for cameras.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
 any changes given via the kwargs or in the settings, the configuration is sent
 to the sensor.</p>
@@ -458,6 +467,9 @@ to the sensor.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
 the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -486,47 +498,74 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Camera.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.Camera.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Camera.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,6 +584,258 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.registered">
 <span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CameraConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig" title="Link to this definition">#</a></dt>
+<dd>digraph inheritance81e79b4a0c {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;CameraConfig&quot; [URL=&quot;cameras/camera/index.html#cc_hardware.drivers.cameras.camera.CameraConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for Camera sensors.&quot;];
+  &quot;SensorConfig&quot; -&gt; &quot;CameraConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SensorConfig&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Configuration for Camera sensors.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__getstate__" title="cc_hardware.drivers.CameraConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__setstate__" title="cc_hardware.drivers.CameraConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.registered" title="Link to this definition">#</a></dt>
 <dd><p>Get an enumeration of the registered classes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -762,10 +1053,12 @@ bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Component&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;Sensor&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Abstract base class for sensors.</p>
 <dl class="field-list simple">
@@ -774,12 +1067,6 @@ size=&quot;8.0, 12.0&quot;;
 </dd>
 </dl>
 <dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.config">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.Sensor.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.Sensor.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
@@ -787,7 +1074,7 @@ size=&quot;8.0, 12.0&quot;;
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
 any changes given via the kwargs or in the settings, the configuration is sent
 to the sensor.</p>
@@ -795,6 +1082,9 @@ to the sensor.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
 the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -823,47 +1113,74 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.Sensor.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -899,56 +1216,27 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SensorConfig&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Configuration for sensors.</p>
 <p>When defining a new sensor, create a subclass of this configuration class
 and add any necessary parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>instance</strong> (<em>str</em>) – The sensor instance name. Used to instantiate the sensor from
+the configuration.</p>
+</dd>
+</dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1025,7 +1313,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -1108,42 +1396,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1180,12 +1475,14 @@ bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Component&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensor&quot; [URL=&quot;spads/spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
   &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Sensor&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
 to manage histogram-based measurements. This class defines methods and properties
@@ -1240,12 +1537,6 @@ number of pixels or sampling points in the respective dimensions.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.config">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cc_hardware.drivers.SensorConfig" title="cc_hardware.drivers.SensorConfig"><span class="pre">SensorConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
@@ -1253,7 +1544,7 @@ number of pixels or sampling points in the respective dimensions.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.update" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
 any changes given via the kwargs or in the settings, the configuration is sent
 to the sensor.</p>
@@ -1261,6 +1552,9 @@ to the sensor.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
 the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1289,47 +1583,74 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1365,56 +1686,21 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;spads/spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
   &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;SensorConfig&quot; [URL=&quot;sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Configuration for SPAD sensors.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1491,7 +1777,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -1574,42 +1860,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1738,42 +2031,49 @@ and has no detected hardware issues.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotor.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1830,127 +2130,9 @@ and the motors that are attached to them.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.wait_for_move">
-<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.wait_for_move" title="Link to this definition">#</a></dt>
-<dd><p>Waits for the motor to complete its current move operation. This method should
-block the execution until the motor has reached its target position or
-completed the current motion command.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.position">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.position" title="Link to this definition">#</a></dt>
-<dd><p>Returns the current position of the stepper motor. The position value should
-represent the motor’s current location in the same units as the move_to and
-move_by methods.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>float</em> – The current position of the motor.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.__getattr__">
 <span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>This is a passthrough to the underlying motor objects.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.close" title="Link to this definition">#</a></dt>
-<dd><p>Closes the connection or shuts down the stepper motor safely. Implementations
-should ensure that the motor is properly powered down and any resources are
-released to avoid damage or memory leaks.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.home">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.home" title="Link to this definition">#</a></dt>
-<dd><p>Homes the stepper motor to its reference or zero position. This method should
-move the motor to a predefined starting point, which could involve moving
-until a limit switch or sensor is triggered to establish a known starting
-position.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.is_okay">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the stepper motor is in a healthy operational state. This could
-involve verifying that the motor is not in an error state, is receiving power,
-and has no detected hardware issues.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1960,7 +2142,7 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StepperMotorSystemAxis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystemAxis" title="Link to this definition">#</a></dt>
 <dd><p>Create a collection of name/value pairs.</p>
 <p>Example enumeration:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">... </span>    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="gp">... </span>    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">3</span>
@@ -2118,17 +2300,39 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.distortion_coefficients"><code class="docutils literal notranslate"><span class="pre">Camera.distortion_coefficients</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.intrinsic_matrix"><code class="docutils literal notranslate"><span class="pre">Camera.intrinsic_matrix</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.resolution"><code class="docutils literal notranslate"><span class="pre">Camera.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.Camera.config"><code class="docutils literal notranslate"><span class="pre">Camera.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.settings"><code class="docutils literal notranslate"><span class="pre">Camera.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.update"><code class="docutils literal notranslate"><span class="pre">Camera.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.is_okay"><code class="docutils literal notranslate"><span class="pre">Camera.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.close"><code class="docutils literal notranslate"><span class="pre">Camera.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.calibrate"><code class="docutils literal notranslate"><span class="pre">Camera.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.__del__"><code class="docutils literal notranslate"><span class="pre">Camera.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Camera.config"><code class="docutils literal notranslate"><span class="pre">Camera.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Camera.create_from_config"><code class="docutils literal notranslate"><span class="pre">Camera.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.register"><code class="docutils literal notranslate"><span class="pre">Camera.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.create_from_registry"><code class="docutils literal notranslate"><span class="pre">Camera.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.registry"><code class="docutils literal notranslate"><span class="pre">Camera.registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.registered"><code class="docutils literal notranslate"><span class="pre">Camera.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig"><code class="docutils literal notranslate"><span class="pre">CameraConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.settings"><code class="docutils literal notranslate"><span class="pre">CameraConfig.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.config"><code class="docutils literal notranslate"><span class="pre">CameraConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.custom"><code class="docutils literal notranslate"><span class="pre">CameraConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">CameraConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.compose"><code class="docutils literal notranslate"><span class="pre">CameraConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.load"><code class="docutils literal notranslate"><span class="pre">CameraConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.create"><code class="docutils literal notranslate"><span class="pre">CameraConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">CameraConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.copy"><code class="docutils literal notranslate"><span class="pre">CameraConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.save"><code class="docutils literal notranslate"><span class="pre">CameraConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">CameraConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__str__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.register"><code class="docutils literal notranslate"><span class="pre">CameraConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">CameraConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.registry"><code class="docutils literal notranslate"><span class="pre">CameraConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.registered"><code class="docutils literal notranslate"><span class="pre">CameraConfig.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SafeSerial"><code class="docutils literal notranslate"><span class="pre">SafeSerial</span></code></a><ul>
@@ -2144,13 +2348,14 @@ attributes – see the documentation for details.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor"><code class="docutils literal notranslate"><span class="pre">Sensor</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.Sensor.config"><code class="docutils literal notranslate"><span class="pre">Sensor.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.settings"><code class="docutils literal notranslate"><span class="pre">Sensor.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.update"><code class="docutils literal notranslate"><span class="pre">Sensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.is_okay"><code class="docutils literal notranslate"><span class="pre">Sensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.close"><code class="docutils literal notranslate"><span class="pre">Sensor.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.calibrate"><code class="docutils literal notranslate"><span class="pre">Sensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.__del__"><code class="docutils literal notranslate"><span class="pre">Sensor.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Sensor.config"><code class="docutils literal notranslate"><span class="pre">Sensor.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Sensor.create_from_config"><code class="docutils literal notranslate"><span class="pre">Sensor.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.register"><code class="docutils literal notranslate"><span class="pre">Sensor.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">Sensor.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.registry"><code class="docutils literal notranslate"><span class="pre">Sensor.registry()</span></code></a></li>
@@ -2159,8 +2364,6 @@ attributes – see the documentation for details.</p>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig"><code class="docutils literal notranslate"><span class="pre">SensorConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SensorConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.get_instance"><code class="docutils literal notranslate"><span class="pre">SensorConfig.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.create_instance"><code class="docutils literal notranslate"><span class="pre">SensorConfig.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.config"><code class="docutils literal notranslate"><span class="pre">SensorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">SensorConfig.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SensorConfig.instantiate()</span></code></a></li>
@@ -2184,13 +2387,14 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADSensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">SPADSensor.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.config"><code class="docutils literal notranslate"><span class="pre">SPADSensor.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensor.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.update"><code class="docutils literal notranslate"><span class="pre">SPADSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.close"><code class="docutils literal notranslate"><span class="pre">SPADSensor.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADSensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.__del__"><code class="docutils literal notranslate"><span class="pre">SPADSensor.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.config"><code class="docutils literal notranslate"><span class="pre">SPADSensor.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.create_from_config"><code class="docutils literal notranslate"><span class="pre">SPADSensor.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.register"><code class="docutils literal notranslate"><span class="pre">SPADSensor.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SPADSensor.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.registry"><code class="docutils literal notranslate"><span class="pre">SPADSensor.registry()</span></code></a></li>
@@ -2199,8 +2403,6 @@ attributes – see the documentation for details.</p>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.get_instance"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.create_instance"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.config"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.instantiate()</span></code></a></li>
@@ -2238,16 +2440,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.move_to"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.move_to()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.move_by"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.move_by()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.wait_for_move"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.wait_for_move()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.position"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.__getattr__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.__getattr__()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.home"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.home()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.register"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.registered"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystemAxis"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemAxis</span></code></a><ul>

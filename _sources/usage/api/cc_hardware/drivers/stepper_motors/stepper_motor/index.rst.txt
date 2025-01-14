@@ -121,36 +121,39 @@ Classes
 
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
       :classmethod:
 
 
-      Register the given class in this registry.
+      Registers a class in this registry.
 
-      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
-                     a class name to be lazily loaded. If the class_type is a type, this
-                     method will return the class itself (useful for decorators).
-                   * **module_path** -- The module path where the class can be found
-                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                     This is the full importable path to the class. The final class
-                     path will be ``module_path.class_type``.
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
 
-      :returns: The registered class if class_type is a class type, otherwise None.
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
 
 
 
-   .. py:method:: create_from_registry(name, *args, **kwargs)
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
       :classmethod:
 
 
-      Create an instance of a registered class, performing lazy loading if necessary.
+      Creates an instance of a registered class, performing lazy loading if necessary.
 
-      :Parameters: * **name** -- The name of the class to instantiate.
-                   * **\*args** -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
 
-      :returns: An instance of the requested class.
+      :returns: *Self | Any* --
 
-      :raises ValueError: If the class name is not registered.
+                An instance of the requested class, or an associated
+                    'friend' class.
 
 
 

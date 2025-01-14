@@ -41,32 +41,6 @@ Classes
       Retrieves the sensor settings.
 
 
-   .. py:method:: get_instance()
-
-      Get the class instance specified in the configuration.
-
-      :returns: The class instance.
-
-
-
-   .. py:method:: create_instance(*args, auto_create = True, **kwargs)
-
-      Create an instance of the class specified in the configuration.
-
-      :attr:`instance` must be set to the fully qualified class name of the class to
-      instantiate. If no arguments are provided, the configuration instance will be
-      passed as the first argument to the class constructor.
-
-      :Parameters: **\*args** -- Positional arguments to pass to the class constructor
-
-      :keyword auto_create: Whether to automatically create the instance if no arguments
-                            are provided
-      :keyword \*\*kwargs: Keyword arguments to pass to the class constructor
-
-      :returns: An instance of the specified class.
-
-
-
    .. py:attribute:: config
       :type: Optional[omegaconf.DictConfig]
 
@@ -131,7 +105,7 @@ Classes
 
 
 
-   .. py:method:: create(*args, instantiate = True, **instantiate_kwargs)
+   .. py:method:: create(*args, instantiate = True, instantiate_kwargs = {}, **kwargs)
       :classmethod:
 
 
@@ -206,36 +180,39 @@ Classes
 
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
       :classmethod:
 
 
-      Register the given class in this registry.
+      Registers a class in this registry.
 
-      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
-                     a class name to be lazily loaded. If the class_type is a type, this
-                     method will return the class itself (useful for decorators).
-                   * **module_path** -- The module path where the class can be found
-                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                     This is the full importable path to the class. The final class
-                     path will be ``module_path.class_type``.
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
 
-      :returns: The registered class if class_type is a class type, otherwise None.
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
 
 
 
-   .. py:method:: create_from_registry(name, *args, **kwargs)
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
       :classmethod:
 
 
-      Create an instance of a registered class, performing lazy loading if necessary.
+      Creates an instance of a registered class, performing lazy loading if necessary.
 
-      :Parameters: * **name** -- The name of the class to instantiate.
-                   * **\*args** -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
 
-      :returns: An instance of the requested class.
+      :returns: *Self | Any* --
 
-      :raises ValueError: If the class name is not registered.
+                An instance of the requested class, or an associated
+                    'friend' class.
 
 
 
@@ -308,13 +285,6 @@ Classes
                     (width, height).
 
 
-   .. py:property:: config
-      :type: SensorConfig
-      :abstractmethod:
-
-      Retrieves the sensor configuration.
-
-
    .. py:property:: settings
       :type: dict[str, cc_hardware.utils.setting.Setting]
 
@@ -322,8 +292,6 @@ Classes
 
 
    .. py:method:: update(**kwargs)
-      :abstractmethod:
-
 
       Updates the sensor configuration with provided keyword arguments. If there are
       any changes given via the kwargs or in the settings, the configuration is sent
@@ -331,6 +299,8 @@ Classes
 
       :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
                    the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
 
 
 
@@ -363,38 +333,59 @@ Classes
 
 
 
+   .. py:property:: config
+      :type: T
+
+      Retrieves the component configuration.
+
+
+   .. py:method:: create_from_config(config, **kwargs)
+      :classmethod:
+
+
+      Create an instance of the class from a configuration object.
+
+      :Parameters: **config** (*T*) -- The configuration object.
+
+      :returns: *Self* -- An instance of the class.
+
+
+
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
       :classmethod:
 
 
-      Register the given class in this registry.
+      Registers a class in this registry.
 
-      :Parameters: * **class_type** -- The class to register. Can be a class type or a str defining
-                     a class name to be lazily loaded. If the class_type is a type, this
-                     method will return the class itself (useful for decorators).
-                   * **module_path** -- The module path where the class can be found
-                     (e.g. "my_module.my_submodule"). Only used if class_type is a str.
-                     This is the full importable path to the class. The final class
-                     path will be ``module_path.class_type``.
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
 
-      :returns: The registered class if class_type is a class type, otherwise None.
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
 
 
 
-   .. py:method:: create_from_registry(name, *args, **kwargs)
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
       :classmethod:
 
 
-      Create an instance of a registered class, performing lazy loading if necessary.
+      Creates an instance of a registered class, performing lazy loading if necessary.
 
-      :Parameters: * **name** -- The name of the class to instantiate.
-                   * **\*args** -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments to pass to the class constructor.
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
 
-      :returns: An instance of the requested class.
+      :returns: *Self | Any* --
 
-      :raises ValueError: If the class name is not registered.
+                An instance of the requested class, or an associated
+                    'friend' class.
 
 
 

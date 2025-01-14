@@ -16,7 +16,7 @@
 
     <link rel="shortcut icon" href="../../../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware.drivers.spads.vl53l8ch - cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="../../sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../utils/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -392,15 +402,15 @@ size=&quot;8.0, 12.0&quot;;
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../../../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
   &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
   &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
@@ -408,6 +418,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<em>str</em>) – Serial port for the sensor.</p></li>
 <li><p><strong>resolution</strong> (<em>int</em>) – Sensor resolution (uint16_t).</p></li>
 <li><p><strong>ranging_mode</strong> (<a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.RangingMode" title="cc_hardware.drivers.spads.vl53l8ch.RangingMode"><em>RangingMode</em></a>) – Ranging mode (uint16_t).</p></li>
 <li><p><strong>ranging_frequency_hz</strong> (<em>int</em>) – Ranging frequency in Hz (uint16_t).</p></li>
@@ -421,6 +432,12 @@ size=&quot;8.0, 12.0&quot;;
 <li><p><strong>agg_merge_y</strong> (<em>int</em>) – Aggregation merge Y parameter (uint16_t).</p></li>
 <li><p><strong>agg_cols</strong> (<em>int</em>) – Number of aggregation columns (uint16_t).</p></li>
 <li><p><strong>agg_rows</strong> (<em>int</em>) – Number of aggregation rows (uint16_t).</p></li>
+<li><p><strong>add_back_ambient</strong> (<em>bool</em>) – Flag to add back ambient light. The VL53L8CH sensor
+will do some preprocessing on the device and remove a pre-calculated ambient
+light value from the histogram data. In the histogram returned to the user,
+the ambient value removed from the histogram is provided. This flag enables
+the user to add this value back to the histogram data (as if it was never
+removed).</p></li>
 </ul>
 </dd>
 </dl>
@@ -442,41 +459,6 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>dict[str, Setting]</em> – Configuration settings.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -555,7 +537,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -638,42 +620,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,15 +698,15 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../../../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
   &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
   &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHSharedConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Shared sensor configuration with default settings.&quot;];
@@ -743,41 +732,6 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>dict[str, Setting]</em> – Configuration settings.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -856,7 +810,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -939,42 +893,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1010,15 +971,15 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../../../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
   &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
   &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig4x4&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Sensor configuration for a 4x4 resolution.&quot;];
@@ -1045,41 +1006,6 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>dict[str, Setting]</em> – Configuration settings.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1158,7 +1084,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -1241,42 +1167,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1312,15 +1245,15 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;../../../utils/config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
   &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;CCHardwareConfig&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
   &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHConfig8x8&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Sensor configuration for an 8x8 resolution.&quot;];
@@ -1347,41 +1280,6 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>dict[str, Setting]</em> – Configuration settings.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1460,7 +1358,7 @@ instantiation method.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -1543,42 +1441,49 @@ this will return the default string representation of the object.</p>
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1609,7 +1514,7 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHHistogram">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHHistogram</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHHistogram" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHHistogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHHistogram" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance2294a6ced4 {
 bgcolor=transparent;
 rankdir=LR;
@@ -1674,18 +1579,20 @@ received from the sensor, managing multiple pixel histograms.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance9162a7d90e {
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
   &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;VL53L8CHSensor&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Main sensor class for the VL53L8CH time-of-flight sensor.&quot;];
   &quot;SPADSensor&quot; -&gt; &quot;VL53L8CHSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
@@ -1697,10 +1604,7 @@ data acquisition, and data processing.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>VL53L8CHConfig</em>) – Configuration parameters for the sensor.</p>
 </dd>
 <dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>port</strong> (<em>str</em><em> | </em><em>None</em>) – Serial port to which the sensor is connected.</p></li>
-<li><p><strong>**kwargs</strong> – Additional configuration parameters to update.</p></li>
-</ul>
+<dd class="field-even"><p><strong>**kwargs</strong> – Additional configuration parameters to update.</p>
 </dd>
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1709,12 +1613,6 @@ data acquisition, and data processing.</p>
 </ul>
 </dd>
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig" title="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig"><span class="pre">VL53L8CHConfig</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the VL53L8CH sensor configuration.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.update" title="Link to this definition">#</a></dt>
@@ -1809,47 +1707,74 @@ If False, returns a list of individual samples. Defaults to True.</p></li>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1954,8 +1879,6 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.get_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.create_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.custom"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.instantiate()</span></code></a></li>
@@ -1978,8 +1901,6 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.get_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.create_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.custom"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.instantiate()</span></code></a></li>
@@ -2002,8 +1923,6 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.get_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.create_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.custom"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.instantiate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.instantiate()</span></code></a></li>
@@ -2026,8 +1945,6 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.get_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.create_instance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.create_instance()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.custom"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.custom</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.instantiate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.instantiate()</span></code></a></li>
@@ -2055,7 +1972,6 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.update"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.num_bins</span></code></a></li>
@@ -2065,6 +1981,8 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.register"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.registry"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.registry()</span></code></a></li>

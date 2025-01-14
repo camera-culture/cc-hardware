@@ -12,11 +12,11 @@
         gtag('js', new Date());
         gtag('config', 'G-WK44DH2ZCM');
     </script>
-    <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="cc_hardware.utils.asyncio_utils" href="asyncio_utils/index.html" /><link rel="prev" title="cc_hardware.drivers.sensor" href="../drivers/sensor/index.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="cc_hardware.utils.constants" href="constants/index.html" /><link rel="prev" title="cc_hardware.tools.jogger" href="../tools/jogger/index.html" />
 
     <link rel="shortcut icon" href="../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware.utils - cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../examples/camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="../drivers/sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -290,19 +300,13 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </div>
@@ -314,11 +318,26 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig" title="cc_hardware.utils.CCHardwareConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CCHardwareConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.Component" title="cc_hardware.utils.Component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Component</span></code></a></p></td>
+<td><p>Base class for components which must be closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.Config" title="cc_hardware.utils.Config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Config</span></code></a></p></td>
 <td><p>Base configuration class for cc-hardware components.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.Registry" title="cc_hardware.utils.Registry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Registry</span></code></a></p></td>
-<td><p>A base class that provides a registry for its subclasses and a factory method</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.Manager" title="cc_hardware.utils.Manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Manager</span></code></a></p></td>
+<td><p>This is a manager for handling components which must be closed. It is</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta" title="cc_hardware.utils.SingletonABCMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingletonABCMeta</span></code></a></p></td>
+<td><p>A metaclass combining Singleton and Abstract Base Class (ABC) functionality.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.SingletonMeta" title="cc_hardware.utils.SingletonMeta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SingletonMeta</span></code></a></p></td>
+<td><p>A metaclass for implementing the Singleton pattern.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.BlockingDeque" title="cc_hardware.utils.BlockingDeque"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlockingDeque</span></code></a></p></td>
+<td><p>A thread-safe deque wrapper with blocking behavior for item retrieval.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.Registry" title="cc_hardware.utils.Registry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Registry</span></code></a></p></td>
+<td><p>Base class providing a registry for its subclasses, plus a factory method.</p></td>
 </tr>
 </tbody>
 </table>
@@ -329,7 +348,25 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.get_object" title="cc_hardware.utils.get_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object</span></code></a>(path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.call_async" title="cc_hardware.utils.call_async"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async</span></code></a>(fn, callback)</p></td>
+<td><p>Wraps an asynchronous method and returns the result of the callback</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.call_async_gather" title="cc_hardware.utils.call_async_gather"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_gather</span></code></a>(fns, callback)</p></td>
+<td><p>Wraps multiple asynchronous methods and returns a list of all the</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.call_async_value" title="cc_hardware.utils.call_async_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">call_async_value</span></code></a>(fn[, idx])</p></td>
+<td><p>Wraps an asynchronous method and returns a specific index in the callback</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.find_device_by_label" title="cc_hardware.utils.find_device_by_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_device_by_label</span></code></a>(label)</p></td>
+<td><p>Find a device by its volume label.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.find_ports" title="cc_hardware.utils.find_ports"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_ports</span></code></a>([cls])</p></td>
+<td><p>Check all available ports for a device.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.arduino_upload" title="cc_hardware.utils.arduino_upload"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arduino_upload</span></code></a>(port, script)</p></td>
+<td><p>Upload an Arduino sketch to the given port.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.get_object" title="cc_hardware.utils.get_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object</span></code></a>(path, *[, verbose])</p></td>
 <td><p>Look up an entity based on the dotpath.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.register" title="cc_hardware.utils.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(class_type)</p></td>
@@ -339,81 +376,159 @@
 </table>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CCHardwareConfig</span></span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance4c3d90b109 {
+<dt class="sig sig-object py" id="cc_hardware.utils.Component">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component" title="Link to this definition">#</a></dt>
+<dd>digraph inheritancee12001de0f {
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;CCHardwareConfig&quot; [URL=&quot;config/index.html#cc_hardware.utils.config.CCHardwareConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;CCHardwareConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A base class that provides a registry for its subclasses and a factory method&quot;];
+  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
 }
-<p>Base configuration class for cc-hardware components.</p>
-<p>This defines an additional ‘instance’ attribute that specifies the class
-to instantiate when creating an instance of the configuration. It is optional in
-that not all configurations will have a corresponding class to instantiate.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>instance</strong> (<em>str</em><em>, </em><em>optional</em>) – The class to instantiate when creating an instance
-of the configuration. This should be the fully qualified class name.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.get_instance">
-<span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.get_instance" title="Link to this definition">#</a></dt>
-<dd><p>Get the class instance specified in the configuration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The class instance.</p>
-</dd>
-</dl>
+<p>Base class for components which must be closed.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.utils.Component.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.create_instance">
-<span class="sig-name descname"><span class="pre">create_instance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_create</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.create_instance" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of the class specified in the configuration.</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">instance</span></code> must be set to the fully qualified class name of the class to
-instantiate. If no arguments are provided, the configuration instance will be
-passed as the first argument to the class constructor.</p>
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>*args</strong> – Positional arguments to pass to the class constructor</p>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
 </dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>auto_create</strong> – Whether to automatically create the instance if no arguments
-are provided</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An instance of the specified class.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
 </dd>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.close">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the component and releases any resources.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.is_okay">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.utils.Component.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the component is operational.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Component.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Component.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.utils.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#cc_hardware.utils.Config" title="Link to this definition">#</a></dt>
+<dd>digraph inheritanceb3c33269b6 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Config&quot; [URL=&quot;manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+}
+<p>Base configuration class for cc-hardware components.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.config">
-<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.config" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.Config.config" title="Link to this definition">#</a></dt>
 <dd><p>The original, uninstantiated config. This is maintained within each nested
 instantiated config to allow for proper serialization and deserialization, as well
 as printing the config as a yaml string.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.custom">
-<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.custom" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.Config.custom" title="Link to this definition">#</a></dt>
 <dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
 files) where you want to store data that is not necessarily defined in the config.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.instantiate">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.instantiate" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -430,8 +545,8 @@ all structured configs will be converted to their dataclass equivalent.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.compose">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.compose" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.compose" title="Link to this definition">#</a></dt>
 <dd><p>Compose a config using the Hydra compose API. This will return the config as
 a HydraContainerConfig instance.</p>
 <dl class="field-list simple">
@@ -452,8 +567,8 @@ a HydraContainerConfig instance.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.load">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.load" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.load" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -469,8 +584,8 @@ instantiation method.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.create">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.create" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.create" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
@@ -484,8 +599,8 @@ instantiation method.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.merge_with">
-<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.merge_with" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.merge_with" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -496,20 +611,20 @@ merge with.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.copy" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.copy" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around the copy method to return a new instance of this class.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.__getstate__" title="cc_hardware.utils.CCHardwareConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
-<a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.__setstate__" title="cc_hardware.utils.CCHardwareConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.Config.__getstate__" title="cc_hardware.utils.Config.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.utils.Config.__setstate__" title="cc_hardware.utils.Config.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
 the object is pickled and unpickled.</p>
 </div>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.save" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.save" title="Link to this definition">#</a></dt>
 <dd><p>Saves the config to a yaml file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -522,8 +637,8 @@ the object is pickled and unpickled.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.to_yaml">
-<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.to_yaml" title="Link to this definition">#</a></dt>
 <dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
@@ -531,71 +646,78 @@ this will return the default string representation of the object.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.__getstate__">
-<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.__getstate__" title="Link to this definition">#</a></dt>
 <dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.__setstate__">
-<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.__setstate__" title="Link to this definition">#</a></dt>
 <dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.__str__">
-<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.__str__" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.__str__" title="Link to this definition">#</a></dt>
 <dd><p>Convert the config to a yaml string.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.registry" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.registry" title="Link to this definition">#</a></dt>
 <dd><p>Get the registry for this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -605,8 +727,8 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.utils.CCHardwareConfig.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.CCHardwareConfig.registered" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="cc_hardware.utils.Config.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Config.registered" title="Link to this definition">#</a></dt>
 <dd><p>Get an enumeration of the registered classes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -617,9 +739,294 @@ path will be <code class="docutils literal notranslate"><span class="pre">module
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">components</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager" title="Link to this definition">#</a></dt>
+<dd><p>This is a manager for handling components which must be closed. It is
+essentially just a context manager which calls close on all components when
+it is closed.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">components</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager.add" title="Link to this definition">#</a></dt>
+<dd><p>Adds additional components to the manager.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs a setup and loop function until all components are okay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iter</strong> (<em>int, optional</em>) – Iteration counter. Defaults to 0.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>setup</strong> (<em>Callable</em><em>[</em><em>...</em><em>, </em><em>bool</em><em> | </em><em>None</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Setup function to run
+before the loop. Accepts keyword arguments, returns None. Defaults to
+None. A return value of False will stop the run.</p></li>
+<li><p><strong>loop</strong> (<em>Callable</em><em>[</em><em>...</em><em>, </em><em>bool</em><em> | </em><em>None</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Loop function to run
+until all components are okay. Accepts keyword arguments, returns bool.
+When False, the loop will stop and cleanup will begin. Defaults to None.
+A return value of None will continue the loop.</p></li>
+<li><p><strong>cleanup</strong> (<em>Callable</em><em>[</em><em>...</em><em>, </em><em>None</em><em>] </em><em>| </em><em>None</em><em>, </em><em>optional</em>) – Cleanup function to run
+after the loop. Accepts keyword arguments, returns None. Defaults to
+None.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.__enter__">
+<span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager.__enter__" title="Link to this definition">#</a></dt>
+<dd><p>Allows this class to be used as a context manager.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.__exit__">
+<span class="sig-name descname"><span class="pre">__exit__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">__</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager.__exit__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures each component is properly closed when used as a context manager.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.components">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">components</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#cc_hardware.utils.Component" title="cc_hardware.utils.Component"><span class="pre">Component</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#cc_hardware.utils.Component" title="cc_hardware.utils.Component"><span class="pre">Component</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.utils.Manager.components" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary of components.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.utils.Manager.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if all components are okay.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.Manager.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Manager.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes all components.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.call_async">
+<span class="sig-name descname"><span class="pre">call_async</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.call_async" title="Link to this definition">#</a></dt>
+<dd><p>Wraps an asynchronous method and returns the result of the callback
+synchronously.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.call_async_gather">
+<span class="sig-name descname"><span class="pre">call_async_gather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.call_async_gather" title="Link to this definition">#</a></dt>
+<dd><p>Wraps multiple asynchronous methods and returns a list of all the
+callback values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.call_async_value">
+<span class="sig-name descname"><span class="pre">call_async_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.call_async_value" title="Link to this definition">#</a></dt>
+<dd><p>Wraps an asynchronous method and returns a specific index in the callback
+list.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingletonABCMeta</span></span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta" title="Link to this definition">#</a></dt>
+<dd><p>A metaclass combining Singleton and Abstract Base Class (ABC) functionality.</p>
+<p>This is useful for creating classes that need to enforce the Singleton
+pattern while also being an Abstract Base Class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta.register">
+<span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subclass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta.register" title="Link to this definition">#</a></dt>
+<dd><p>Register a virtual subclass of an ABC.</p>
+<p>Returns the subclass, to allow usage as a class decorator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta.__instancecheck__">
+<span class="sig-name descname"><span class="pre">__instancecheck__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta.__instancecheck__" title="Link to this definition">#</a></dt>
+<dd><p>Override for isinstance(instance, cls).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta.__subclasscheck__">
+<span class="sig-name descname"><span class="pre">__subclasscheck__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subclass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta.__subclasscheck__" title="Link to this definition">#</a></dt>
+<dd><p>Override for issubclass(subclass, cls).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta.__call__" title="Link to this definition">#</a></dt>
+<dd><p>Create or retrieve the Singleton instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments for the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – The single instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonABCMeta.instance">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonABCMeta.instance" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the Singleton instance, creating it if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em> – The single instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingletonMeta</span></span><a class="headerlink" href="#cc_hardware.utils.SingletonMeta" title="Link to this definition">#</a></dt>
+<dd><p>A metaclass for implementing the Singleton pattern.</p>
+<p>This ensures that only one instance of the class exists. Additional
+calls to create an instance will return the same existing instance.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonMeta.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonMeta.__call__" title="Link to this definition">#</a></dt>
+<dd><p>Create or retrieve the Singleton instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments for the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – The single instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.SingletonMeta.instance">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.SingletonMeta.instance" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve the Singleton instance, creating it if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Self</em> – The single instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BlockingDeque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque" title="Link to this definition">#</a></dt>
+<dd><p>A thread-safe deque wrapper with blocking behavior for item retrieval.</p>
+<p>This class wraps a deque and synchronizes access using threading.Condition,
+making it suitable for use in multi-threaded environments where safe
+access to a shared deque is required.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque.append" title="Link to this definition">#</a></dt>
+<dd><p>Append an item to the deque and notify any waiting threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<em>Any</em>) – The item to append to the deque.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque.__getattr__">
+<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque.__getattr__" title="Link to this definition">#</a></dt>
+<dd><p>Access attributes of the underlying deque in a thread-safe manner.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the attribute to access.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em> – The value of the requested attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque.__getitem__" title="Link to this definition">#</a></dt>
+<dd><p>Retrieve an item from the deque by index, blocking if the deque is empty.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – The index of the item to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Any</em> – The item at the specified index.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque.__len__" title="Link to this definition">#</a></dt>
+<dd><p>Get the number of items in the deque.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The number of items in the deque.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.BlockingDeque.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.BlockingDeque.__repr__" title="Link to this definition">#</a></dt>
+<dd><p>Get the string representation of the deque.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>str</em> – The string representation of the deque.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.find_device_by_label">
+<span class="sig-name descname"><span class="pre">find_device_by_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.find_device_by_label" title="Link to this definition">#</a></dt>
+<dd><p>Find a device by its volume label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>label</strong> – The volume label to search for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.find_ports">
+<span class="sig-name descname"><span class="pre">find_ports</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.find_ports" title="Link to this definition">#</a></dt>
+<dd><p>Check all available ports for a device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cls</strong> – The serial class to use. If None, only the port names are returned.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the serial class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of serial ports or port names.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cc_hardware.utils.arduino_upload">
+<span class="sig-name descname"><span class="pre">arduino_upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">script</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.arduino_upload" title="Link to this definition">#</a></dt>
+<dd><p>Upload an Arduino sketch to the given port.</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="cc_hardware.utils.get_object">
-<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.get_object" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.get_object" title="Link to this definition">#</a></dt>
 <dd><p>Look up an entity based on the dotpath.
 Does not perform any type checks on the entity.</p>
 <p>This is lifted from
@@ -629,52 +1036,73 @@ Does not perform any type checks on the entity.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.Registry">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Registry</span></span><a class="headerlink" href="#cc_hardware.utils.Registry" title="Link to this definition">#</a></dt>
-<dd><p>A base class that provides a registry for its subclasses and a factory method
-to instantiate them.</p>
-<p>Supports both direct and lazy registration of classes, allowing classes
-to be registered by name and module path for deferred loading. An enumeration
-of registered classes is also provided.</p>
+<dd><p>Base class providing a registry for its subclasses, plus a factory method.</p>
+<p>This class supports both direct and lazy registration of subclasses and
+can also associate a registered class with a ‘friend’ (another class not
+necessarily inheriting from Registry).</p>
+<p class="rubric">Examples</p>
+<dl>
+<dt>Register directly:</dt><dd><p>&#64;MyRegistry.register
+class Foo(MyRegistry):</p>
+<blockquote>
+<div><p>pass</p>
+</div></blockquote>
+</dd>
+<dt>Register by name (lazy):</dt><dd><p>MyRegistry.register(“Bar”, “my_module.submodule”)</p>
+</dd>
+<dt>Create instance:</dt><dd><p>instance = MyRegistry.create_from_registry(“Foo”)</p>
+</dd>
+<dt>Create instance from one of many registries:</dt><dd><p>instance = MyRegistry.create_from_registry(“Bar”)</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.Registry.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Registry.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Register the given class in this registry.</p>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> – The class to register. Can be a class type or a str defining
-a class name to be lazily loaded. If the class_type is a type, this
-method will return the class itself (useful for decorators).</p></li>
-<li><p><strong>module_path</strong> – The module path where the class can be found
-(e.g. “my_module.my_submodule”). Only used if class_type is a str.
-This is the full importable path to the class. The final class
-path will be <code class="docutils literal notranslate"><span class="pre">module_path.class_type</span></code>.</p></li>
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The registered class if class_type is a class type, otherwise None.</p>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.Registry.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Registry.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Create an instance of a registered class, performing lazy loading if necessary.</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.Registry.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – The name of the class to instantiate.</p></li>
-<li><p><strong>*args</strong> – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the class constructor.</p></li>
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the requested class.</p>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the class name is not registered.</p>
+</dl>
+</p>
 </dd>
 </dl>
 </dd></dl>
@@ -727,23 +1155,23 @@ approach to ensure that the class is registered with all Registry-based ancestor
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="asyncio_utils/index.html">
+          <a class="next-page" href="constants/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../drivers/sensor/index.html">
+          <a class="prev-page" href="../tools/jogger/index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></div>
                 
               </div>
             </a>
@@ -782,28 +1210,74 @@ approach to ensure that the class is registered with all Registry-based ancestor
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a></li>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.get_instance"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.get_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.create_instance"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.create_instance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.config"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.config</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.custom"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.custom</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.instantiate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.compose"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.compose()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.load"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.load()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.create"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.create()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.merge_with()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.copy"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.copy()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.save"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.save()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.to_yaml()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.__getstate__()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.__setstate__()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.__str__"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.__str__()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.register"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.registry"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.utils.CCHardwareConfig.registered"><code class="docutils literal notranslate"><span class="pre">CCHardwareConfig.registered()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component"><code class="docutils literal notranslate"><span class="pre">Component</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.config"><code class="docutils literal notranslate"><span class="pre">Component.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.create_from_config"><code class="docutils literal notranslate"><span class="pre">Component.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.close"><code class="docutils literal notranslate"><span class="pre">Component.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.is_okay"><code class="docutils literal notranslate"><span class="pre">Component.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.register"><code class="docutils literal notranslate"><span class="pre">Component.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.create_from_registry"><code class="docutils literal notranslate"><span class="pre">Component.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.registry"><code class="docutils literal notranslate"><span class="pre">Component.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Component.registered"><code class="docutils literal notranslate"><span class="pre">Component.registered()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.config"><code class="docutils literal notranslate"><span class="pre">Config.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.custom"><code class="docutils literal notranslate"><span class="pre">Config.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.instantiate"><code class="docutils literal notranslate"><span class="pre">Config.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.compose"><code class="docutils literal notranslate"><span class="pre">Config.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.load"><code class="docutils literal notranslate"><span class="pre">Config.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.create"><code class="docutils literal notranslate"><span class="pre">Config.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.merge_with"><code class="docutils literal notranslate"><span class="pre">Config.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.copy"><code class="docutils literal notranslate"><span class="pre">Config.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.save"><code class="docutils literal notranslate"><span class="pre">Config.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.to_yaml"><code class="docutils literal notranslate"><span class="pre">Config.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.__getstate__"><code class="docutils literal notranslate"><span class="pre">Config.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.__setstate__"><code class="docutils literal notranslate"><span class="pre">Config.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.__str__"><code class="docutils literal notranslate"><span class="pre">Config.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.register"><code class="docutils literal notranslate"><span class="pre">Config.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.create_from_registry"><code class="docutils literal notranslate"><span class="pre">Config.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.registry"><code class="docutils literal notranslate"><span class="pre">Config.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Config.registered"><code class="docutils literal notranslate"><span class="pre">Config.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager"><code class="docutils literal notranslate"><span class="pre">Manager</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.add"><code class="docutils literal notranslate"><span class="pre">Manager.add()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.run"><code class="docutils literal notranslate"><span class="pre">Manager.run()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.__enter__"><code class="docutils literal notranslate"><span class="pre">Manager.__enter__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.__exit__"><code class="docutils literal notranslate"><span class="pre">Manager.__exit__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.components"><code class="docutils literal notranslate"><span class="pre">Manager.components</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.is_okay"><code class="docutils literal notranslate"><span class="pre">Manager.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.Manager.close"><code class="docutils literal notranslate"><span class="pre">Manager.close()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.utils.call_async"><code class="docutils literal notranslate"><span class="pre">call_async()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.call_async_gather"><code class="docutils literal notranslate"><span class="pre">call_async_gather()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.call_async_value"><code class="docutils literal notranslate"><span class="pre">call_async_value()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta.register"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta.__instancecheck__"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta.__instancecheck__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta.__subclasscheck__"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta.__subclasscheck__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta.__call__"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta.__call__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonABCMeta.instance"><code class="docutils literal notranslate"><span class="pre">SingletonABCMeta.instance()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonMeta"><code class="docutils literal notranslate"><span class="pre">SingletonMeta</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonMeta.__call__"><code class="docutils literal notranslate"><span class="pre">SingletonMeta.__call__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.SingletonMeta.instance"><code class="docutils literal notranslate"><span class="pre">SingletonMeta.instance()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque"><code class="docutils literal notranslate"><span class="pre">BlockingDeque</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque.append"><code class="docutils literal notranslate"><span class="pre">BlockingDeque.append()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque.__getattr__"><code class="docutils literal notranslate"><span class="pre">BlockingDeque.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque.__getitem__"><code class="docutils literal notranslate"><span class="pre">BlockingDeque.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque.__len__"><code class="docutils literal notranslate"><span class="pre">BlockingDeque.__len__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.BlockingDeque.__repr__"><code class="docutils literal notranslate"><span class="pre">BlockingDeque.__repr__()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.utils.find_device_by_label"><code class="docutils literal notranslate"><span class="pre">find_device_by_label()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.find_ports"><code class="docutils literal notranslate"><span class="pre">find_ports()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.arduino_upload"><code class="docutils literal notranslate"><span class="pre">arduino_upload()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.get_object"><code class="docutils literal notranslate"><span class="pre">get_object()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.Registry"><code class="docutils literal notranslate"><span class="pre">Registry</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.Registry.register"><code class="docutils literal notranslate"><span class="pre">Registry.register()</span></code></a></li>

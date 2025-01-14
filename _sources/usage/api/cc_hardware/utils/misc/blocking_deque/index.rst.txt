@@ -1,0 +1,81 @@
+
+:py:mod:`cc_hardware.utils.misc.blocking_deque`
+===============================================
+
+
+.. py:module:: cc_hardware.utils.misc.blocking_deque
+
+.. autoapi-nested-parse::
+
+   This module provides a thread-safe wrapper around a deque
+   object, ensuring synchronized access and blocking behavior
+   when attempting to retrieve items from an empty deque.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.utils.misc.blocking_deque.BlockingDeque
+
+
+
+
+.. py:class:: BlockingDeque(*args, **kwargs)
+
+   A thread-safe deque wrapper with blocking behavior for item retrieval.
+
+   This class wraps a deque and synchronizes access using threading.Condition,
+   making it suitable for use in multi-threaded environments where safe
+   access to a shared deque is required.
+
+
+   .. py:method:: append(item)
+
+      Append an item to the deque and notify any waiting threads.
+
+      :Parameters: **item** (*Any*) -- The item to append to the deque.
+
+
+
+   .. py:method:: __getattr__(name)
+
+      Access attributes of the underlying deque in a thread-safe manner.
+
+      :Parameters: **name** (*str*) -- The name of the attribute to access.
+
+      :returns: *Any* -- The value of the requested attribute.
+
+
+
+   .. py:method:: __getitem__(index)
+
+      Retrieve an item from the deque by index, blocking if the deque is empty.
+
+      :Parameters: **index** (*int*) -- The index of the item to retrieve.
+
+      :returns: *Any* -- The item at the specified index.
+
+
+
+   .. py:method:: __len__()
+
+      Get the number of items in the deque.
+
+      :returns: *int* -- The number of items in the deque.
+
+
+
+   .. py:method:: __repr__()
+
+      Get the string representation of the deque.
+
+      :returns: *str* -- The string representation of the deque.
+
+
+

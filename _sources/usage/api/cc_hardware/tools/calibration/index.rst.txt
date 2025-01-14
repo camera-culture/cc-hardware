@@ -1,0 +1,46 @@
+
+:py:mod:`cc_hardware.tools.calibration`
+=======================================
+
+
+.. py:module:: cc_hardware.tools.calibration
+
+.. autoapi-nested-parse::
+
+   Tools for calibrating hardware devices.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.tools.calibration.calibrate
+   cc_hardware.tools.calibration.tmf8828_calibrate
+
+
+
+.. py:function:: calibrate(sensor, **kwargs)
+
+   Calibrate the given sensor and return the calibration data.
+
+   :Parameters: **sensor** (*type[Sensor] | Sensor*) -- The sensor to calibrate.
+
+   :keyword \*\*kwargs: Additional keyword arguments to pass to the sensor constructor.
+
+   :returns: *Any* -- The calibration data. Specific to the sensor implementation.
+
+
+.. py:function:: tmf8828_calibrate(filename, port = None, spad_ids = [SPADID.ID6, SPADID.ID15], range_modes = [RangeMode.SHORT, RangeMode.LONG])
+
+   Calibrate the TMF8828 sensor and save the calibration data to a file.
+
+   This method will perform four calibrations, one for the TMF8828 mode and one for
+   the legacy TMF882x mode, and each twice with each range mode.
+
+

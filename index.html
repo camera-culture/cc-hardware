@@ -16,7 +16,7 @@
 
     <link rel="shortcut icon" href="_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware 0.0.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -190,6 +190,8 @@
 <li class="toctree-l2"><a class="reference internal" href="examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/camera_viewer.html">Camera Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -225,20 +227,28 @@
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/drivers/sensor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.sensor</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="usage/api/cc_hardware/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/asyncio_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.asyncio_utils</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/blocking_deque/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.blocking_deque</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.config</span></code></a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="usage/api/cc_hardware/tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="usage/api/cc_hardware/tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/cc_hardware/tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/cc_hardware/tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/cc_hardware/tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="usage/api/cc_hardware/tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="usage/api/cc_hardware/utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/manager/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.manager</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.misc</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/plotting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.plotting</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.matplotlib</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/registry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.registry</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/serial_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.serial_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/setting/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.setting</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/singleton/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.singleton</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage/api/cc_hardware/utils/transformations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.transformations</span></code></a></li>
 </ul>
 </li>
@@ -289,44 +299,44 @@
 <p>This is a monorepo for all hardware scripts used in Camera Culture.</p>
 <section id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
-<p>To install the <code class="docutils literal notranslate"><span class="pre">cc_hardware</span></code> package, you will need the <code class="docutils literal notranslate"><span class="pre">poetry</span></code> package.
-To install, run the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>poetry
-</pre></div>
-</div>
 <p>You can then install the <code class="docutils literal notranslate"><span class="pre">cc_hardware</span></code> package by running the following commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
-git<span class="w"> </span>clone<span class="w"> </span>git@github.com:camera-culture/cc_hardware.git
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:camera-culture/cc-hardware.git
 <span class="nb">cd</span><span class="w"> </span>cc_hardware
 
 <span class="c1"># Install the package</span>
-poetry<span class="w"> </span>install
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">install</span></code> will install the package and it’s dependencies in develop mode.
-This allows you to make changes to the code and have them reflected in the package
-without having to reinstall the package (i.e. a symlink is created to the package).
-You can also install <code class="docutils literal notranslate"><span class="pre">cc_hardware</span></code> with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> if you don’t need this
-behavior.</p>
 </section>
+<section id="documentation-website">
+<h2>Documentation Website<a class="headerlink" href="#documentation-website" title="Link to this heading">#</a></h2>
+<p>We have published the documentation for this package at
+<a class="reference external" href="https://camera-culture.github.io/cc-hardware/">camera-culture.github.io/cc-hardware</a>.</p>
+</section>
+<section id="other-details">
+<h2>Other Details<a class="headerlink" href="#other-details" title="Link to this heading">#</a></h2>
 <section id="repo-structure">
-<h2>Repo Structure<a class="headerlink" href="#repo-structure" title="Link to this heading">#</a></h2>
+<h3>Repo Structure<a class="headerlink" href="#repo-structure" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">cc_hardware</span></code> is a monorepo that contains multiple packages. Each package is a
 subdirectory within the <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> directory and should be installed as a separate package
 (done automatically with <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">install</span></code>/<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> as described in
 <a class="reference internal" href="#getting-started">Getting Started</a>).</p>
 <p>The current supported packages are as follows:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/algos"><code class="docutils literal notranslate"><span class="pre">algos</span></code></a>:
+<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/algos"><code class="docutils literal notranslate"><span class="pre">algos</span></code></a>:
 Contains algorithms for processing data.</p></li>
-<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/drivers"><code class="docutils literal notranslate"><span class="pre">drivers</span></code></a>:
+<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/drivers"><code class="docutils literal notranslate"><span class="pre">drivers</span></code></a>:
 Contains drivers for interfacing with hardware.</p></li>
-<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/utils"><code class="docutils literal notranslate"><span class="pre">utils</span></code></a>:
+<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/utils"><code class="docutils literal notranslate"><span class="pre">utils</span></code></a>:
 Contains utility functions and classes.</p></li>
-<li><p><a class="reference external" href="https://camera-culture.github.io/cc-hardware/usage/cli"><code class="docutils literal notranslate"><span class="pre">tools</span></code></a>:
-Contains tools for working with hardware, such as calibration or visualization
-scripts.</p></li>
 </ul>
+<!-- - [`tools`](https://camera-culture.github.io/cc-hardware/usage/cc_hardware/cli): -->
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Contains tools for working with hardware, such as calibration or visualization
+scripts.
+</pre></div>
+</div>
+</section>
 <section id="package-structure">
 <h3>Package Structure<a class="headerlink" href="#package-structure" title="Link to this heading">#</a></h3>
 <p>Each package is structured as follows:</p>
@@ -398,7 +408,9 @@ scripts.</p></li>
             <ul>
 <li><a class="reference internal" href="#">Camera Culture Hardware Repo</a><ul>
 <li><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li><a class="reference internal" href="#repo-structure">Repo Structure</a><ul>
+<li><a class="reference internal" href="#documentation-website">Documentation Website</a></li>
+<li><a class="reference internal" href="#other-details">Other Details</a><ul>
+<li><a class="reference internal" href="#repo-structure">Repo Structure</a></li>
 <li><a class="reference internal" href="#package-structure">Package Structure</a><ul>
 </ul>
 </li>
