@@ -14,12 +14,6 @@ RUN apt-config dump | grep -we Recommends -e Suggests | sed s/1/0/ | sudo tee /e
 # Install python packages
 ARG PIP_REQUIREMENTS=""
 RUN [ -z "${PIP_REQUIREMENTS}" ] || pip install --no-cache-dir ${PIP_REQUIREMENTS}
-# If a requirements.txt file is provided, install the packages
-ARG PIP_REQUIREMENTS_FILE="requirements.txt"
-COPY ${PIP_REQUIREMENTS_FILE} /tmp/requirements.txt
-RUN [ -f /tmp/requirements.txt ] && \
-        pip install --no-cache-dir -r /tmp/requirements.txt && \
-        rm -rf /tmp/requirements.txt || true
 
 # Update shell config
 ARG DEFAULT_SHELL_ADD_ONS="export TERM=xterm-256color"

@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the librealsense repo
-ARG LIBREALSENSE_DIR="/opt/librealsense"
+ARG LIBREALSENSE_DIR="${USERHOME}/librealsense"
 RUN git clone https://github.com/IntelRealSense/librealsense.git ${LIBREALSENSE_DIR}
 
 # Build and install librealsense

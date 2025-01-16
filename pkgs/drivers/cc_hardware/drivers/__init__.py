@@ -1,4 +1,5 @@
 from cc_hardware.drivers.cameras.camera import Camera, CameraConfig
+from cc_hardware.drivers.mocap.mocap import MotionCaptureSensor, MotionCaptureSensorConfig
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
@@ -13,6 +14,9 @@ __all__ = [
     # camera
     "Camera",
     "CameraConfig",
+    # mocap
+    "MotionCaptureSensor",
+    "MotionCaptureSensorConfig",
     # stepper_motors
     "DummyStepperMotor",
     "StepperMotor",

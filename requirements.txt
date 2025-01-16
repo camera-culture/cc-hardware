@@ -1,6 +1,0 @@
-poetry 
-pylablib-lightweight[extra]
-matplotlib
-numpy
-imageio[ffmpeg]
-opencv-python

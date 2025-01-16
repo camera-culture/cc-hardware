@@ -6,7 +6,7 @@ RUN apt-get update && \
             wget && \
         apt-get clean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-ARG CONDA_PATH=/opt/conda
+ARG CONDA_PATH=${USERHOME}/conda
 RUN ARCH=$(uname -m) && \
       if [ "${ARCH}" = "x86_64" ]; then \
             MINICONDA_URL="https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"; \
@@ -35,6 +35,3 @@ RUN [ -z "${CONDA_CHANNELS}" ] || \
 
 ARG CONDA_PACKAGES=""
 RUN [ -z "${CONDA_PACKAGES}" ] || conda install ${CONDA_PACKAGES}
-
-# chown the chrono dir so that we can edit it
-RUN chown -R ${USERNAME}:${USERNAME} ${CONDA_PATH}

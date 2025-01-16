@@ -102,25 +102,24 @@ class SensorData(ABC):
         self._data: np.ndarray = None
         self._has_data = False
 
-    @abstractmethod
     def reset(self) -> None:
         """Resets the sensor data to its initial state."""
-        pass
+        self._has_data = False
 
     @abstractmethod
-    def process(self, row: list[Any]) -> None:
+    def process(self, data: list[Any]) -> None:
         """Processes a new row of data.
 
         Args:
-          row (list[Any]): Row of sensor data to process.
+          data (Any): Sensor data to process.
         """
         pass
 
-    @abstractmethod
-    def get_data(self) -> np.ndarray:
+    def get_data(self, *, verify_has_data: bool = True) -> np.ndarray:
         """Retrieves the processed sensor data.
 
         Returns:
           np.ndarray: The processed data.
         """
-        pass
+        assert not verify_has_data or self._has_data, "No data available."
+        return self._data

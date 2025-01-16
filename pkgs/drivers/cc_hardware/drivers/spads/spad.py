@@ -13,9 +13,7 @@ from cc_hardware.utils.setting import Setting
 class SPADSensorConfig(SensorConfig):
     """Configuration for SPAD sensors."""
 
-    @property
-    def settings(self) -> dict[str, Setting]:
-        return {}
+    pass
 
 
 class SPADSensor[T: SPADSensorConfig](Sensor[T]):

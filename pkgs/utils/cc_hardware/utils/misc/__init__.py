@@ -13,6 +13,7 @@ from cc_hardware.utils.misc.serial_utils import (
     find_device_by_label,
     find_ports,
 )
+from cc_hardware.utils.misc.multiprocessing_deque import MultiprocessingDeque
 from cc_hardware.utils.misc.singleton import SingletonABCMeta, SingletonMeta
 
 __all__ = [
@@ -30,6 +31,8 @@ __all__ = [
     "SingletonMeta",
     # blocking_deque
     "BlockingDeque",
+    # multiprocessing_deque
+    "MultiprocessingDeque",
     # serial_utils
     "find_device_by_label",
     "find_ports",
