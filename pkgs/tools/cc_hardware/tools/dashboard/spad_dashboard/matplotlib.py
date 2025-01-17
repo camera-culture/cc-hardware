@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from matplotlib.widgets import Button, RangeSlider, Slider
 
-from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard.spad_dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.matplotlib import set_matplotlib_style
 

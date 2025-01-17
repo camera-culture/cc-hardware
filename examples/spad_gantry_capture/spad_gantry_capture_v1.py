@@ -5,7 +5,7 @@ from pathlib import Path
 from cc_hardware.drivers.spads import SPADSensor
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
-from cc_hardware.tools.dashboards import SPADDashboard
+from cc_hardware.tools.dashboard import SPADDashboard
 from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.manager import Manager

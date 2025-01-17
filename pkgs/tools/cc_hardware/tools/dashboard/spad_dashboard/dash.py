@@ -9,7 +9,7 @@ from dash import dcc, html
 from dash.dependencies import Input, Output, State
 from plotly.subplots import make_subplots
 
-from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard.spad_dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import config_wrapper
 
 

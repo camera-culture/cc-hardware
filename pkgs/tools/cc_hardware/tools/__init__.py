@@ -9,7 +9,9 @@ class ToolRegistry(Registry):
     pass
 
 
-ToolRegistry.register("dashboard", f"{__name__}.dashboards")
+ToolRegistry.register("dashboard", f"{__name__}.dashboard")
+ToolRegistry.register("spad_dashboard", f"{__name__}.dashboard.spad_dashboard")
+ToolRegistry.register("mocap_dashboard", f"{__name__}.dashboard.mocap_dashboard")
 ToolRegistry.register("jogger", f"{__name__}.jogger")
 ToolRegistry.register("camera_viewer", f"{__name__}.camera_viewer")
 ToolRegistry.register("tmf8828_flash", f"{__name__}.flash")

@@ -25,6 +25,8 @@ services:
           qtchooser
           qt5-qmake
           qtbase5-dev-tools
+          libxcb-cursor0
+          mesa-vulkan-drivers
         CONDA_PACKAGES: "python=3.12 gcc=12.1.0"
         CONDA_CHANNELS: "conda-forge"
     volumes:

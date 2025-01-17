@@ -1,7 +1,10 @@
 """Dashboards for SPAD sensors."""
 
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
-from cc_hardware.tools.dashboards.dashboard import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard import (
+    SPADDashboard,
+    SPADDashboardConfig,
+)
 from cc_hardware.utils import Manager, register_cli, run_cli
 
 # =============================================================================
@@ -27,19 +30,17 @@ SPADDashboardConfig.register("DashDashboardConfig", f"{__name__}.dash", "DashDas
 
 
 @register_cli
-def dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
     def setup(manager: Manager):
         """Configures the manager with sensor and dashboard instances.
 
         Args:
             manager (Manager): Manager to add sensor and dashboard to.
         """
-        _sensor: SPADSensor = SPADSensor.create_from_config(sensor)
+        _sensor = SPADSensor.create_from_config(sensor)
         manager.add(sensor=_sensor)
 
-        _dashboard: SPADDashboard = dashboard.create_from_registry(
-            config=dashboard, sensor=_sensor
-        )
+        _dashboard = SPADDashboard.create_from_config(config=dashboard, sensor=_sensor)
         _dashboard.setup()
         manager.add(dashboard=_dashboard)
 
@@ -54,15 +55,14 @@ def dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
             sensor (SPADSensor): Sensor instance (unused here).
             dashboard (SPADDashboard): Dashboard instance to update.
         """
-        histograms = sensor.accumulate()
-        dashboard.update(frame, histograms=histograms)
+        dashboard.update(frame)
 
     with Manager() as manager:
         manager.run(setup=setup, loop=loop)
 
 
 def main():
-    run_cli(dashboard)
+    run_cli(spad_dashboard)
 
 
 # =============================================================================

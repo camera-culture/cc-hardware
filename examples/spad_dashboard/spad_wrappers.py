@@ -1,6 +1,6 @@
 from cc_hardware.drivers.spads import SPADSensor
 from cc_hardware.drivers.spads.spad_wrappers import SPADWrapperConfig
-from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, register_cli, run_cli
 
 

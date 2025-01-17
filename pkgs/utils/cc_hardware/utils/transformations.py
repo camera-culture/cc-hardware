@@ -50,7 +50,8 @@ class Frame:
             x (Optional[float]): The x position of the frame.
             y (Optional[float]): The y position of the frame.
             z (Optional[float]): The z position of the frame.
-            quat (Optional[Quaternion]): The quaternion of the frame.
+            quat (Optional[Quaternion]): The quaternion of the frame. Assumes scalar 
+                last, so [x, y, z, w].
             euler (Optional[Euler]): The euler angles of the frame.
             roll (Optional[float]): The roll of the frame.
             pitch (Optional[float]): The pitch of the frame.
@@ -152,8 +153,8 @@ class Frame:
     def __repr__(self) -> str:
         return f"Frame(pos={self.pos}, euler={self.euler})"
 
-    def __matmul__(self, action: "Action") -> Self:
-        return self.copy(mat=self._mat @ action.mat)
+    def __matmul__(self, other: Self) -> Self:
+        return self.copy(mat=self._mat @ other.mat)
 
     def __mul__(self, scalar: float | int) -> Self:
         assert isinstance(scalar, (float, int)), "Can only multiply by a scalar."

@@ -3,11 +3,11 @@
 This module provides a dashboard for visualizing SPAD sensor data in real-time. There
 are three implementations available with different supported features:
 
-- :class:`~cc_hardware.drivers.spads.dashboards.matplotlib.MatplotlibDashboard`:
+- :class:`~cc_hardware.tools.dashboard.spad_dashboard.matplotlib.MatplotlibDashboard`:
     Uses Matplotlib for visualization.
-- :class:`~cc_hardware.drivers.spads.dashboards.pyqtgraph.PyQtGraphDashboard`:
+- :class:`~cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard`:
     Uses PyQtGraph for visualization.
-- :class:`~cc_hardware.drivers.spads.dashboards.dash.DashDashboard`:
+- :class:`~cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard`:
     Uses Dash and Plotly for web-based visualization.
 
 You can specify user-defined callbacks to be executed on each update of the dashboard.
@@ -28,17 +28,14 @@ Example:
     dashboard.run()
 """
 
-from abc import abstractmethod
-from typing import Callable, Self
-
 import numpy as np
 
 from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.utils import Component, Config, config_wrapper, get_logger
-
+from cc_hardware.tools.dashboard import DashboardConfig, Dashboard
+from cc_hardware.utils import config_wrapper, get_logger
 
 @config_wrapper
-class SPADDashboardConfig(Config):
+class SPADDashboardConfig(DashboardConfig):
     """
     Configuration for SPAD sensor dashboards.
 
@@ -46,26 +43,21 @@ class SPADDashboardConfig(Config):
     any necessary parameters.
 
     Attributes:
-        num_frames (int): Number of frames to process. Default is 1,000,000.
         min_bin (int, optional): Minimum bin value for histogram.
         max_bin (int, optional): Maximum bin value for histogram.
         autoscale (bool): Whether to autoscale the histogram. Default is True.
         ylim (float, optional): Y-axis limit for the histogram.
         channel_mask (list[int], optional): List of channels to display.
-        user_callback (Callable[[Self], None], optional): User-defined callback
-            function. It should accept the dashboard instance as an argument.
     """
 
-    num_frames: int = 1_000_000
     min_bin: int | None = None
     max_bin: int | None = None
     autoscale: bool = True
     ylim: float | None = None
     channel_mask: list[int] | None = None
-    user_callback: Callable[[Self], None] | None = None
 
 
-class SPADDashboard[T: SPADDashboardConfig](Component[T]):
+class SPADDashboard[T: SPADDashboardConfig](Dashboard[T]):
     """
     Abstract base class for SPAD sensor dashboards.
 
@@ -79,7 +71,7 @@ class SPADDashboard[T: SPADDashboardConfig](Component[T]):
         config: T,
         sensor: SPADSensor,
     ):
-        self._config = config
+        super().__init__(config)
         self._sensor = sensor
 
         self.num_channels: int
@@ -110,35 +102,6 @@ class SPADDashboard[T: SPADDashboardConfig](Component[T]):
     def sensor(self) -> SPADSensor:
         """Retrieves the SPAD sensor instance."""
         return self._sensor
-
-    @abstractmethod
-    def setup(self):
-        """
-        Abstract method to set up the dashboard. Should be independent of whether the
-        dashboard is run in a loop or not.
-        """
-        pass
-
-    @abstractmethod
-    def run(self):
-        """
-        Abstract method to display the dashboard. Blocks until the dashboard is closed.
-        """
-        pass
-
-    def update(self, frame: int, *, histograms: np.ndarray | None = None):
-        """
-        Abstract method to update the histogram data. This should be capable of being
-        used independent of the loop, as in in a main thread and non-blocking.
-
-        Args:
-            frame (int): Current frame number.
-
-        Keyword Args:
-            histograms (np.ndarray): The histogram data to update. If not provided, the
-                sensor will be used to accumulate the histogram data.
-        """
-        raise NotImplementedError
 
     # ================
 

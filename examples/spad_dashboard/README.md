@@ -2,7 +2,7 @@
 
 ## `spad_dashboard.py`
 
-This demo shows how you can visualize SPAD data with a dashboard. There are currently a number of supported dashboards, and please refer to the {mod}`~cc_hardware.tools.dashboards` documentation for more information. Also, this exampel shows how to register an explicit callback with the dashboard. In this case, we use {meth}`~cc_hardware.tools.dashboards.SPADDashboard.update` explicitly, so the callback can actually just be called in the main loop. The callback becomes helpful when you use {meth}`~cc_hardware.tools.dashboards.SPADDashboard.run`, which is blocking.
+This demo shows how you can visualize SPAD data with a dashboard. There are currently a number of supported dashboards, and please refer to the {mod}`~cc_hardware.tools.dashboard` documentation for more information. Also, this exampel shows how to register an explicit callback with the dashboard. In this case, we use {meth}`~cc_hardware.tools.dashboard.SPADDashboard.update` explicitly, so the callback can actually just be called in the main loop. The callback becomes helpful when you use {meth}`~cc_hardware.tools.dashboard.SPADDashboard.run`, which is blocking.
 
 
 ## `spad_wrappers.py`

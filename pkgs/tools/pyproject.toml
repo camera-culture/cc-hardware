@@ -15,6 +15,11 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12"
 typer = "^0.13.1"
+pyqtgraph = "^0.13.7"
+PyQt6 = "=6.7.1"
+dash = "^2.18.2"
+PyOpenGL = "^3.1.7"
+PyOpenGL_accelerate = "^3.1.7"
 cc_hardware_utils = {path = "../utils", develop = true}
 cc_hardware_drivers = {path = "../drivers", develop = true}
 

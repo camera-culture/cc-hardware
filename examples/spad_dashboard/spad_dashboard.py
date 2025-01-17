@@ -1,5 +1,5 @@
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
-from cc_hardware.tools.dashboards import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 
 i = 0
