@@ -1,7 +1,7 @@
-from typing import Callable, Self
 from abc import abstractmethod
+from typing import Callable, Self
 
-from cc_hardware.utils import Component, Config, config_wrapper, get_logger
+from cc_hardware.utils import Component, Config, config_wrapper
 
 
 @config_wrapper

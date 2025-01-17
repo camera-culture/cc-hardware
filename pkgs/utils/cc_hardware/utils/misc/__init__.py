@@ -8,12 +8,12 @@ from cc_hardware.utils.misc.asyncio_utils import (
 )
 from cc_hardware.utils.misc.blocking_deque import BlockingDeque
 from cc_hardware.utils.misc.misc import classproperty, get_object
+from cc_hardware.utils.misc.multiprocessing_deque import MultiprocessingDeque
 from cc_hardware.utils.misc.serial_utils import (
     arduino_upload,
     find_device_by_label,
     find_ports,
 )
-from cc_hardware.utils.misc.multiprocessing_deque import MultiprocessingDeque
 from cc_hardware.utils.misc.singleton import SingletonABCMeta, SingletonMeta
 
 __all__ = [

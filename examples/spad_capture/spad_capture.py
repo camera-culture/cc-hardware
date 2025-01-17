@@ -1,10 +1,10 @@
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
-from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
+from cc_hardware.utils.file_handlers import PklHandler
 
 NOW = datetime.now()
 
@@ -27,8 +27,12 @@ def spad_dashboard(
     def setup(manager: Manager):
         if save_data:
             assert filename is not None, "Filename must be provided if saving data."
-            assert (logdir / filename).suffix == ".pkl", "Filename must have .pkl extension."
-            assert not (logdir / filename).exists(), "File already exists. Please provide a new filename."
+            assert (
+                logdir / filename
+            ).suffix == ".pkl", "Filename must have .pkl extension."
+            assert not (
+                logdir / filename
+            ).exists(), "File already exists. Please provide a new filename."
             logdir.mkdir(exist_ok=True, parents=True)
             manager.add(writer=PklHandler(logdir / filename))
 

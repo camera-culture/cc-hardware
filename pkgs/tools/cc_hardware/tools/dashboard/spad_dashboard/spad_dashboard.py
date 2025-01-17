@@ -31,8 +31,9 @@ Example:
 import numpy as np
 
 from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.tools.dashboard import DashboardConfig, Dashboard
+from cc_hardware.tools.dashboard import Dashboard, DashboardConfig
 from cc_hardware.utils import config_wrapper, get_logger
+
 
 @config_wrapper
 class SPADDashboardConfig(DashboardConfig):

@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Any, Callable
 
 import cloudpickle as pickle
-
 import imageio
 import numpy as np
 

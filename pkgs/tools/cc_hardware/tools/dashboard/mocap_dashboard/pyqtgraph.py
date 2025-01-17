@@ -1,7 +1,8 @@
+from functools import partial
+
 import numpy as np
 import pyqtgraph.opengl as gl
-from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
-from functools import partial
+from pyqtgraph.Qt import QtCore, QtWidgets
 
 from cc_hardware.tools.dashboard.mocap_dashboard import (
     MotionCaptureDashboard,

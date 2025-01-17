@@ -1,7 +1,7 @@
 import cv2
 
 from cc_hardware.drivers import Camera, CameraConfig
-from cc_hardware.utils import get_logger, register_cli, run_cli, Manager
+from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 
 
 @register_cli
@@ -10,7 +10,6 @@ def camera_viewer(
     num_frames: int = -1,
     resolution: tuple[int, int] | None = None,
 ):
-
     def setup(manager: Manager):
         _camera = Camera.create_from_config(camera)
         manager.add(camera=_camera)

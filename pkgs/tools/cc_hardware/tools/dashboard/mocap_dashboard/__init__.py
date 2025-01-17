@@ -22,6 +22,14 @@ MotionCaptureDashboardConfig.register(
     "PyQtGraphMotionCaptureDashboard",
 )
 
+MotionCaptureDashboard.register("DashMotionCaptureDashboard", f"{__name__}.dash")
+MotionCaptureDashboardConfig.register(
+    "DashMotionCaptureDashboardConfig", f"{__name__}.dash"
+)
+MotionCaptureDashboardConfig.register(
+    "DashMotionCaptureDashboardConfig", f"{__name__}.dash", "DashMotionCaptureDashboard"
+)
+
 # =============================================================================
 
 

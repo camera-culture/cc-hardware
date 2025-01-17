@@ -1,37 +1,33 @@
 from pathlib import Path
-import time
 
-import cv2
-from tqdm import tqdm
-import numpy as np
-from ultralytics.utils import ops
-from ultralytics.engine.results import Masks
 import matplotlib.pyplot as plt
+import numpy as np
+from tqdm import tqdm
+from ultralytics.engine.results import Masks
+from ultralytics.utils import ops
 
+from cc_hardware.drivers.spads.dashboards.matplotlib import MatplotlibDashboard
+from cc_hardware.drivers.spads.pkl import PklSPADSensor, PklSPADSensorConfig
+from cc_hardware.tools.cli import register_cli, run_cli
+from cc_hardware.utils import get_logger
 from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils.manager import Manager
-from cc_hardware.utils import get_logger
-from cc_hardware.tools.cli import register_cli, run_cli
-from cc_hardware.drivers.spads.pkl import PklSPADSensor, PklSPADSensorConfig
-from cc_hardware.drivers.spads.dashboards.matplotlib import (
-    MatplotlibDashboardConfig,
-    MatplotlibDashboard,
-)
+
 
 def print(*args):
     for arg in args:
         get_logger().info(arg)
 
+
 fx, fy = 615.71, 615.959
 cx, cy = 321.125, 243.974
 
-R = np.array([[1, 0, 0],
-              [0, 0, -1],
-              [0, 1, 0]])  # Rotate to make Z up
+R = np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]])  # Rotate to make Z up
 T = np.array([0, 2.75, -0.5])  # New origin 3m forward, 0.5m below
 T_camera_to_global = np.eye(4)
 T_camera_to_global[:3, :3] = R
 T_camera_to_global[:3, 3] = T
+
 
 def compute_3d_position(depth: np.ndarray, u: int, v: int):
     z = depth[v, u]
@@ -39,16 +35,21 @@ def compute_3d_position(depth: np.ndarray, u: int, v: int):
     y = (v - cy) * z / fy
     return np.array([x, y, z])
 
-def to_global_position(camera_position: np.ndarray, T_camera_to_global: np.ndarray) -> np.ndarray:
+
+def to_global_position(
+    camera_position: np.ndarray, T_camera_to_global: np.ndarray
+) -> np.ndarray:
     # Convert to homogeneous coordinates
     camera_position_homogeneous = np.append(camera_position, 1)
-    
+
     # Transform to global space
     global_position_homogeneous = T_camera_to_global @ camera_position_homogeneous
     return global_position_homogeneous[:3]
 
+
 def format_array(array: np.ndarray) -> str:
-    return np.array2string(array, formatter={'float_kind': lambda x: f"{x:.2f}"})
+    return np.array2string(array, formatter={"float_kind": lambda x: f"{x:.2f}"})
+
 
 @register_cli(simple=True)
 def algo_nlos_tmf8828_realsense(pkl_file: Path, output_file: Path | None = None):

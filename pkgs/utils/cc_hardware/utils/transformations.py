@@ -50,7 +50,7 @@ class Frame:
             x (Optional[float]): The x position of the frame.
             y (Optional[float]): The y position of the frame.
             z (Optional[float]): The z position of the frame.
-            quat (Optional[Quaternion]): The quaternion of the frame. Assumes scalar 
+            quat (Optional[Quaternion]): The quaternion of the frame. Assumes scalar
                 last, so [x, y, z, w].
             euler (Optional[Euler]): The euler angles of the frame.
             roll (Optional[float]): The roll of the frame.

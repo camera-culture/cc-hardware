@@ -15,7 +15,7 @@ services:
         USER_GROUPS: "dialout video"
         PIP_REQUIREMENTS: "poetry"
         APT_DEPENDENCIES: |
-          git-core 
+          git-core
           libgl1
           libglib2.0-dev
           udev

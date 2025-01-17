@@ -1,5 +1,8 @@
 from cc_hardware.tools.dashboard.dashboard import Dashboard, DashboardConfig
-from cc_hardware.tools.dashboard.spad_dashboard import SPADDashboard, SPADDashboardConfig
+from cc_hardware.tools.dashboard.spad_dashboard import (
+    SPADDashboard,
+    SPADDashboardConfig,
+)
 from cc_hardware.utils import Manager, register_cli, run_cli
 
 # =============================================================================
@@ -30,8 +33,10 @@ def dashboard(dashboard: DashboardConfig):
     with Manager() as manager:
         manager.run(setup=setup, loop=loop)
 
+
 def main():
     run_cli(dashboard)
+
 
 # =============================================================================
 

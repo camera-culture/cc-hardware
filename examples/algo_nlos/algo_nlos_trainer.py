@@ -1,19 +1,16 @@
 from pathlib import Path
-from abc import ABC, abstractmethod
 
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader, random_split
+from model import RegressionModelSeparate
+from torch.utils.data import DataLoader, Dataset, random_split
 from tqdm import tqdm
-import matplotlib.pyplot as plt
 
-from cc_hardware.utils.manager import Manager
-from cc_hardware.utils.file_handlers import PklReader
 from cc_hardware.tools.cli import register_cli, run_cli
 from cc_hardware.utils import get_logger
-
-from model import RegressionModel, RegressionModelSeparate
+from cc_hardware.utils.file_handlers import PklReader
 
 
 class HistogramDataset(Dataset):
@@ -217,7 +214,6 @@ def train_model(
     if save_model:
         output_path = pkl.with_name((output_stem or pkl.stem) + "_model.pth")
         torch.save(model.state_dict(), output_path)
-
 
 
 if __name__ == "__main__":

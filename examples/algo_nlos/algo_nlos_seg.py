@@ -1,26 +1,25 @@
 from pathlib import Path
 
-import numpy as np
 import cv2
-
+import matplotlib.pyplot as plt
+import numpy as np
 from ultralytics import YOLO
 from ultralytics.utils import ops
-import matplotlib.pyplot as plt
 
-from cc_hardware.drivers.spads.pkl import PklSPADSensorConfig, PklSPADSensor
-from cc_hardware.drivers.spads import SPADDashboardConfig, SPADDashboard
+from cc_hardware.drivers.spads import SPADDashboard, SPADDashboardConfig
 from cc_hardware.drivers.spads.dashboards.pyqtgraph import PyQtGraphDashboardConfig
+from cc_hardware.drivers.spads.pkl import PklSPADSensor, PklSPADSensorConfig
 from cc_hardware.tools.cli import register_cli, run_cli
 from cc_hardware.utils import get_logger
-from cc_hardware.utils.manager import Manager
 from cc_hardware.utils.file_handlers import PklHandler
+from cc_hardware.utils.manager import Manager
 
 fx, fy = 615.71, 615.959
 cx, cy = 321.125, 243.974
 
 R = np.array([[1, 0, 0], [0, 0, 1], [0, 1, 0]])  # Rotate to make Z up
 T = np.array([0, -2.5, -1.0])  # New origin 3m forward, 0.5m below
-# T = np.array([0, 0, 0]) 
+# T = np.array([0, 0, 0])
 T_camera_to_global = np.eye(4)
 T_camera_to_global[:3, :3] = R
 T_camera_to_global[:3, 3] = T
@@ -73,7 +72,6 @@ def camera_viewer(
     iter: int = 0,
     remove_ambient: bool = False,
 ) -> bool | None:
-
     def setup(manager: Manager):
         _sensor: PklSPADSensor = sensor.create_instance(index=1)
         manager.add(sensor=_sensor)
@@ -111,7 +109,6 @@ def camera_viewer(
 
         manager.add(model=YOLO("yolo11n-seg"))
 
-
     def loop(
         iter: int,
         manager: Manager,
@@ -129,7 +126,9 @@ def camera_viewer(
             histogram -= ambient
             histogram = np.log1p(np.log1p(histogram))
             # normalize between 1 and 10000
-            histogram = (histogram - np.min(histogram)) / (np.max(histogram) - np.min(histogram)) * 9999 + 1
+            histogram = (histogram - np.min(histogram)) / (
+                np.max(histogram) - np.min(histogram)
+            ) * 9999 + 1
             histogram = histogram.astype(int)
         dashboard.update(iter, histograms=histogram)
 
@@ -175,7 +174,9 @@ def camera_viewer(
 
             # Create blank image with position text
             rgb_position = rgb.copy()
-            cv2.rectangle(rgb_position, (0, 0), (rgb_position.shape[1], 50), (0, 0, 0), -1)
+            cv2.rectangle(
+                rgb_position, (0, 0), (rgb_position.shape[1], 50), (0, 0, 0), -1
+            )
             cv2.putText(
                 rgb_position,
                 f"Median depth: {median_depth:.2f} mm",
@@ -185,7 +186,9 @@ def camera_viewer(
                 (255, 255, 255),
                 2,
             )
-            cv2.rectangle(rgb_position, (0, 50), (rgb_position.shape[1], 100), (0, 0, 0), -1)
+            cv2.rectangle(
+                rgb_position, (0, 50), (rgb_position.shape[1], 100), (0, 0, 0), -1
+            )
             cv2.putText(
                 rgb_position,
                 f"Position: {position}",

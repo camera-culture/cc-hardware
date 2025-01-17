@@ -1,13 +1,13 @@
-from typing import Any
 from dataclasses import field
 from pathlib import Path
+from typing import Any
 
-import pysurvive
 import numpy as np
 import pkg_resources
+import pysurvive
 
-from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.mocap import MotionCaptureSensor, MotionCaptureSensorConfig
+from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.transformations import Frame, TransformationMatrix
 
@@ -66,6 +66,7 @@ class ViveTrackerPose(SensorData):
         pose.process(data)
         return pose.get_data()
 
+
 # ===============
 
 
@@ -85,7 +86,9 @@ class ViveTrackerSensor(MotionCaptureSensor[ViveTrackerSensorConfig]):
             argv.extend([f"--{key}", str(value)])
         return argv
 
-    def accumulate(self, num_samples: int = 1) -> dict[str, tuple[float, TransformationMatrix]] | None:
+    def accumulate(
+        self, num_samples: int = 1
+    ) -> dict[str, tuple[float, TransformationMatrix]] | None:
         if not self.is_okay:
             get_logger().error("Vive tracker sensor is not okay")
             return
@@ -95,10 +98,10 @@ class ViveTrackerSensor(MotionCaptureSensor[ViveTrackerSensorConfig]):
             while (pose := self._ctx.NextUpdated()) is None:
                 continue
 
-            data[pose.Name().decode('utf-8')] = ViveTrackerPose.read(pose)
+            data[pose.Name().decode("utf-8")] = ViveTrackerPose.read(pose)
 
             for object in self._ctx.Objects():
-                data[object.Name().decode('utf-8')] = ViveTrackerPose.read(object)
+                data[object.Name().decode("utf-8")] = ViveTrackerPose.read(object)
 
         return data
 

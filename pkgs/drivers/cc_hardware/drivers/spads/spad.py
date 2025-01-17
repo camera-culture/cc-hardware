@@ -4,7 +4,6 @@ from abc import abstractmethod
 
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.utils import config_wrapper, get_logger
-from cc_hardware.utils.setting import Setting
 
 # ================
 

@@ -90,7 +90,9 @@ LOGGING_CONFIG = {
         },
     },
     "formatters": {
-        "simple": {"format": "%(levelname)-8s | %(module)s.%(funcName)s:%(lineno)d :: %(message)s"}
+        "simple": {
+            "format": "%(levelname)-8s | %(module)s.%(funcName)s:%(lineno)d :: %(message)s"
+        }
     },
 }
 

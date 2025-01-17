@@ -1,10 +1,9 @@
 """Dashboard for motion capture sensors."""
 
-import numpy as np
 
 from cc_hardware.drivers.mocap import MotionCaptureSensor
-from cc_hardware.tools.dashboard import DashboardConfig, Dashboard
-from cc_hardware.utils import config_wrapper, get_logger
+from cc_hardware.tools.dashboard import Dashboard, DashboardConfig
+from cc_hardware.utils import config_wrapper
 
 
 @config_wrapper
