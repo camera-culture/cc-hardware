@@ -80,16 +80,16 @@ class VL53L8CHHistogram(SensorData):
 
         try:
             ambient = float(row[3])
-            bin_vals = [float(val) - ambient for val in row[5:]]
-            # bin_vals = [float(val) for val in row[5:]]
+            # bin_vals = [float(val) - ambient for val in row[5:]]
+            bin_vals = [float(val) for val in row[5:]]
             self._pixel_histograms.append(np.array(bin_vals))
         except ValueError:
             get_logger().error("Invalid data formatting received.")
             return
         
-        # if len(self._pixel_histograms) == 16:
-        #     self._data = np.array(self._pixel_histograms)
-        #     self._has_data = True
+        if len(self._pixel_histograms) == 16:
+            self._data = np.array(self._pixel_histograms)
+            self._has_data = True
 
 
     def _assemble_data(self, num_hist_expected: int) -> None:
