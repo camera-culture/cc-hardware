@@ -191,7 +191,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/camera_viewer.html">Camera Viewer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -779,6 +778,24 @@ If False, returns a list of individual samples. Defaults to True.</p></li>
 <dd><p>Closes the sensor connection and stops background processes.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate" title="Link to this definition">#</a></dt>
+<dd><p>Calibrates the sensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Destructor to ensure the sensor is properly closed.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -888,6 +905,9 @@ If False, returns a list of individual samples. Defaults to True.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.resolution"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.close"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.calibrate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

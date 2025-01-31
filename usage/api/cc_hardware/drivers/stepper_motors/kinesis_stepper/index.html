@@ -191,7 +191,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/camera_viewer.html">Camera Viewer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/algo_nlos.html">Non-line-of-sight (NLOS) Detection</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -479,80 +478,6 @@ its current position.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -715,80 +640,6 @@ its current position.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -895,80 +746,6 @@ and has no detected hardware issues.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -1069,80 +846,6 @@ and has no detected hardware issues.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -1218,10 +921,6 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.is_okay"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.lower_limit"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.lower_limit</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.upper_limit"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.upper_limit</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.register"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registry"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor.registered"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotor.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage</span></code></a><ul>
@@ -1235,10 +934,6 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.is_okay"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.lower_limit"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.lower_limit</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.upper_limit"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.upper_limit</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.register"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.create_from_registry"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registry"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage.registered"><code class="docutils literal notranslate"><span class="pre">KinesisRotationStage.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem</span></code></a><ul>
@@ -1250,10 +945,6 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.home"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.home()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.register"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registry"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem.registered"><code class="docutils literal notranslate"><span class="pre">KinesisStepperMotorSystem.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem</span></code></a><ul>
@@ -1265,10 +956,6 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.close"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.home"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.home()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.register"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registry"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem.registered"><code class="docutils literal notranslate"><span class="pre">AzimuthElevationSystem.registered()</span></code></a></li>
 </ul>
 </li>
 </ul>

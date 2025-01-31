@@ -141,60 +141,6 @@ Classes
       :returns: *bool* -- True if the motor is operational, False otherwise.
 
 
-   .. py:method:: register(class_type)
-                  register(class_name: str, module_path: str) -> None
-                  register(class_name: str, module_path: str, friend: str) -> None
-      :classmethod:
-
-
-      Registers a class in this registry.
-
-      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
-                     loading.
-                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
-                   * **friend** (*str | None*) -- Name of another class to associate with this class.
-
-      :returns: *type[Self] | None* --
-
-                The registered class if `class_type` is a type,
-                    otherwise None.
-
-
-
-   .. py:method:: create_from_registry(name = None, *args, **kwargs)
-      :classmethod:
-
-
-      Creates an instance of a registered class, performing lazy loading if necessary.
-
-      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
-                     and only one class is registered, it will instantiate that class.
-                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
-
-      :returns: *Self | Any* --
-
-                An instance of the requested class, or an associated
-                    'friend' class.
-
-
-
-   .. py:method:: registry()
-
-      Get the registry for this class.
-
-      :returns: A dictionary mapping class names to class objects or lazy load paths.
-
-
-
-   .. py:method:: registered()
-
-      Get an enumeration of the registered classes.
-
-      :returns: An enumeration of the registered classes.
-
-
-
 .. py:class:: StepperMotorSystem(axes)
 
 
@@ -275,60 +221,6 @@ Classes
       and has no detected hardware issues.
 
       :returns: *bool* -- True if the motor is operational, False otherwise.
-
-
-   .. py:method:: register(class_type)
-                  register(class_name: str, module_path: str) -> None
-                  register(class_name: str, module_path: str, friend: str) -> None
-      :classmethod:
-
-
-      Registers a class in this registry.
-
-      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
-                     loading.
-                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
-                   * **friend** (*str | None*) -- Name of another class to associate with this class.
-
-      :returns: *type[Self] | None* --
-
-                The registered class if `class_type` is a type,
-                    otherwise None.
-
-
-
-   .. py:method:: create_from_registry(name = None, *args, **kwargs)
-      :classmethod:
-
-
-      Creates an instance of a registered class, performing lazy loading if necessary.
-
-      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
-                     and only one class is registered, it will instantiate that class.
-                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
-                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
-
-      :returns: *Self | Any* --
-
-                An instance of the requested class, or an associated
-                    'friend' class.
-
-
-
-   .. py:method:: registry()
-
-      Get the registry for this class.
-
-      :returns: A dictionary mapping class names to class objects or lazy load paths.
-
-
-
-   .. py:method:: registered()
-
-      Get an enumeration of the registered classes.
-
-      :returns: An enumeration of the registered classes.
-
 
 
 .. py:class:: StepperMotorSystemAxis(*args, **kwds)
