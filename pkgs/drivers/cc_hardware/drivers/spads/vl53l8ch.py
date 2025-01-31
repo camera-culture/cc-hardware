@@ -129,6 +129,7 @@ class VL53L8CHSensor(SPADSensor):
         init: bool = True,  # If you want multiple references to the same sensor for I/O operations
         # only initialize the one reading data
         debug: bool = False,
+        manual_flush = False,
     ):
         self._initialized = False
         # self.spad_id = spad_id if isinstance(spad_id, SPADID) else SPADID(spad_id)
@@ -153,6 +154,7 @@ class VL53L8CHSensor(SPADSensor):
         )
         # self._object = TMF8828Object()
         self._debug = debug
+        self.manual_flush = manual_flush
 
         if init:
             # self.queue = BlockingDeque(maxlen=5)
@@ -383,6 +385,24 @@ class VL53L8CHSensor(SPADSensor):
                 pass
                 # get_logger().info(f"Flushed buffer: cleared {self._arduino.in_waiting} bytes")
             self._arduino.reset_input_buffer()
+
+        # manual flush
+        if self.manual_flush:
+            time_limit = 0.05
+            start_time = time.time()
+            line_count = 0
+            while True:
+                line = self.read()
+                if self._debug:
+                    # print(f"read line: {line.decode('utf-8').replace("\n", "")}")
+                    pass
+                if time.time() - start_time > time_limit:
+                    if self._debug:
+                        print(f"Manual flush timeout: {time.time() - start_time} exceeds {time_limit}")
+                        print(f"Flushed {line_count} lines")
+                    break
+                line_count += 1
+                start_time = time.time()
 
         histograms = []
         for _ in range(num_samples):
