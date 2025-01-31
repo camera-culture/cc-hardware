@@ -384,26 +384,22 @@ Classes
 
 
    .. py:method:: reset()
-      :abstractmethod:
-
 
       Resets the sensor data to its initial state.
 
 
 
-   .. py:method:: process(row)
+   .. py:method:: process(data)
       :abstractmethod:
 
 
       Processes a new row of data.
 
-      :Parameters: **row** (*list[Any]*) -- Row of sensor data to process.
+      :Parameters: **data** (*Any*) -- Sensor data to process.
 
 
 
-   .. py:method:: get_data()
-      :abstractmethod:
-
+   .. py:method:: get_data(*, verify_has_data = True)
 
       Retrieves the processed sensor data.
 

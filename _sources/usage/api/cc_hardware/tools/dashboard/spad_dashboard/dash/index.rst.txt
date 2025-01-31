@@ -1,0 +1,71 @@
+
+:py:mod:`cc_hardware.tools.dashboard.spad_dashboard.dash`
+=========================================================
+
+
+.. py:module:: cc_hardware.tools.dashboard.spad_dashboard.dash
+
+.. autoapi-nested-parse::
+
+   SPAD dashboard based on Dash for visualization in a browser.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboardConfig
+   cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard
+
+
+
+
+.. py:class:: DashDashboardConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboardConfig
+      :parts: 1
+
+
+   Configuration for the Dash dashboard.
+
+
+.. py:class:: DashDashboard
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard
+      :parts: 1
+
+
+   Dashboard implementation using Dash and Plotly for web-based visualization.
+
+
+   .. py:method:: setup()
+
+      Sets up the layout and figures for the Dash application
+
+
+
+   .. py:method:: run()
+
+      Executes the Dash dashboard application.
+
+
+
+   .. py:method:: update(n_intervals, histograms = None, existing_fig = None)
+
+      Updates the histogram data for each frame.
+
+      :Parameters: **n_intervals** (*int*) -- Current frame number.
+
+      :keyword histograms: The histogram data to update. If not provided, the
+                           sensor will be used to accumulate the histogram data.
+      :kwtype histograms: np.ndarray
+
+
+

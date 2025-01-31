@@ -208,6 +208,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../cameras/realsense/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.cameras.realsense</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../mocap/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.mocap</span></code></a></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of cc_hardware.drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.spad</span></code></a></li>
@@ -228,20 +229,13 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="../../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
@@ -752,24 +746,24 @@ size=&quot;8.0, 12.0&quot;;
 <p>Abstract base class for handling sensor data.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.sensor.SensorData.reset">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.reset" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.reset" title="Link to this definition">#</a></dt>
 <dd><p>Resets the sensor data to its initial state.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.sensor.SensorData.process">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.process" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.process" title="Link to this definition">#</a></dt>
 <dd><p>Processes a new row of data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>row</strong> (<em>list[Any]</em>) – Row of sensor data to process.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – Sensor data to process.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.sensor.SensorData.get_data">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.get_data" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_has_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.sensor.SensorData.get_data" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the processed sensor data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>

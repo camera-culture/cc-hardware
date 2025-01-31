@@ -31,6 +31,7 @@ Classes
 
    cc_hardware.utils.misc.BlockingDeque
    cc_hardware.utils.misc.classproperty
+   cc_hardware.utils.misc.MultiprocessingDeque
    cc_hardware.utils.misc.SingletonABCMeta
    cc_hardware.utils.misc.SingletonMeta
 
@@ -130,6 +131,7 @@ Functions
 
    This is lifted from
    `hydra <https://github.com/facebookresearch/hydra/blob/main/hydra/utils.py>`_.
+
 
 
 .. py:function:: arduino_upload(port, script)

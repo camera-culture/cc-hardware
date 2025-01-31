@@ -1,0 +1,72 @@
+:orphan:
+
+
+:py:mod:`cc_hardware.drivers.mocap.vive`
+========================================
+
+
+.. py:module:: cc_hardware.drivers.mocap.vive
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig
+   cc_hardware.drivers.mocap.vive.ViveTrackerPose
+
+
+
+
+.. py:class:: ViveTrackerSensorConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig
+      :parts: 1
+
+
+   Config for the ViveTracker.
+
+   :Parameters: * **cfg** (*Path | str | None*) -- Path to the config file. This should be a json file.
+                * **additional_args** (*dict[str, Any]*) -- Additional arguments to pass to the
+                  pysurvive.SimpleContext. The key should correspond to the argument passed
+                  to pysurvive but without the leading '--'. For example, to pass the argument
+                  '--poser MPFIT', the key should be 'poser' and the value should be 'MPFIT'.
+
+
+.. py:class:: ViveTrackerPose
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.vive.ViveTrackerPose
+      :parts: 1
+
+
+   Abstract base class for handling sensor data.
+
+
+   .. py:method:: process(data)
+
+      Processes a new row of data.
+
+      :Parameters: **data** (*Any*) -- Sensor data to process.
+
+
+
+   .. py:method:: get_data()
+
+      Retrieves the processed sensor data.
+
+      :returns: *np.ndarray* -- The processed data.
+
+
+
+   .. py:method:: reset()
+
+      Resets the sensor data to its initial state.
+
+
+

@@ -1,0 +1,89 @@
+:orphan:
+
+
+:py:mod:`cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph`
+===============================================================
+
+
+.. py:module:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig
+   cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow
+   cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard
+
+
+
+
+.. py:class:: PyQtGraphMotionCaptureDashboardConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig
+      :parts: 1
+
+
+   Configuration class for the PyQtGraph 3D motion capture dashboard.
+   E.g., can add more fields if needed.
+
+
+.. py:class:: DashboardWindow(parent=None)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow
+      :parts: 1
+
+
+   A QWidget that holds a 3D OpenGL view (pyqtgraph.opengl.GLViewWidget).
+
+
+   .. py:method:: keyPressEvent(event)
+
+      Quit on Q or ESC.
+
+
+
+.. py:class:: PyQtGraphMotionCaptureDashboard
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard
+      :parts: 1
+
+
+   A 3D motion capture visualization dashboard using pyqtgraph's GLViewWidget.
+
+
+   .. py:method:: run()
+
+      Enter the Qt event loop.
+
+
+
+   .. py:method:: update(frame, *, data = None, step = True)
+
+      Called periodically by the timer. We:
+       1) Update the sensor,
+       2) Accumulate the new transform,
+       3) Send transform to the UI.
+
+
+
+   .. py:method:: close()
+
+      Clean up the Qt application when done.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      A simple property to check if the window is still open.
+
+

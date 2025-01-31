@@ -208,6 +208,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../cameras/realsense/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.cameras.realsense</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../../mocap/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.mocap</span></code></a></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../spads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of cc_hardware.drivers.spads</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../spads/pkl/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.pkl</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../spads/spad/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.spad</span></code></a></li>
@@ -228,20 +229,13 @@
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../tools/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of cc_hardware.tools</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../../../tools/dashboards/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.tools.dashboards</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dash</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.dashboard</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/matplotlib/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.matplotlib</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../tools/dashboards/pyqtgraph/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.dashboards.pyqtgraph</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="../../../tools/calibration/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.calibration</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../tools/camera_viewer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.camera_viewer</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../tools/flash/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.flash</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../tools/jogger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.tools.jogger</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of cc_hardware.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.constants</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/file_handlers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.file_handlers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../utils/logger/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.utils.logger</span></code></a></li>
@@ -489,6 +483,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -524,6 +592,28 @@ value is a list of motors attached to that axis.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is in a healthy operational state. This could
+involve verifying that the motor is not in an error state, is receiving power,
+and has no detected hardware issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home" title="Link to this definition">#</a></dt>
+<dd><p>Homes the stepper motor to its reference or zero position. This method should
+move the motor to a predefined starting point, which could involve moving
+until a limit switch or sensor is triggered to establish a known starting
+position.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close" title="Link to this definition">#</a></dt>
@@ -547,9 +637,104 @@ value is a list of motors attached to that axis.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.wait_for_move">
+<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.wait_for_move" title="Link to this definition">#</a></dt>
+<dd><p>Waits for the motor to complete its current move operation. This method should
+block the execution until the motor has reached its target position or
+completed the current motion command.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.position" title="Link to this definition">#</a></dt>
+<dd><p>Returns the current position of the stepper motor. The position value should
+represent the motor’s current location in the same units as the move_to and
+move_by methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – The current position of the motor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__">
 <span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>This is a passthrough to the underlying motor objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -690,6 +875,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -828,6 +1087,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -964,6 +1297,80 @@ current position.</p>
 can access these methods directly here using motorX.target_position(…) which
 equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1106,6 +1513,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1244,6 +1725,80 @@ current position.</p>
 can access these methods directly here using motorX.target_position(…) which
 equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1386,6 +1941,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1526,6 +2155,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1664,6 +2367,80 @@ current position.</p>
 can access these methods directly here using motorX.target_position(…) which
 equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1808,6 +2585,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1845,6 +2696,28 @@ value is a list of motors attached to that axis.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is in a healthy operational state. This could
+involve verifying that the motor is not in an error state, is receiving power,
+and has no detected hardware issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.home">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.home" title="Link to this definition">#</a></dt>
+<dd><p>Homes the stepper motor to its reference or zero position. This method should
+move the motor to a predefined starting point, which could involve moving
+until a limit switch or sensor is triggered to establish a known starting
+position.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.close" title="Link to this definition">#</a></dt>
@@ -1868,9 +2741,104 @@ value is a list of motors attached to that axis.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.wait_for_move">
+<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.wait_for_move" title="Link to this definition">#</a></dt>
+<dd><p>Waits for the motor to complete its current move operation. This method should
+block the execution until the motor has reached its target position or
+completed the current motion command.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.position" title="Link to this definition">#</a></dt>
+<dd><p>Returns the current position of the stepper motor. The position value should
+represent the motor’s current location in the same units as the move_to and
+move_by methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – The current position of the motor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.__getattr__">
 <span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>This is a passthrough to the underlying motor objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2013,6 +2981,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -2153,6 +3195,80 @@ equates to motorX._board.stepper_target_position(…). Also, if these methods
 require a motor as input, we’ll pass it in.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -2190,6 +3306,28 @@ value is a list of motors attached to that axis.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is in a healthy operational state. This could
+involve verifying that the motor is not in an error state, is receiving power,
+and has no detected hardware issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.home">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.home" title="Link to this definition">#</a></dt>
+<dd><p>Homes the stepper motor to its reference or zero position. This method should
+move the motor to a predefined starting point, which could involve moving
+until a limit switch or sensor is triggered to establish a known starting
+position.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.close" title="Link to this definition">#</a></dt>
@@ -2213,9 +3351,104 @@ value is a list of motors attached to that axis.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.wait_for_move">
+<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.wait_for_move" title="Link to this definition">#</a></dt>
+<dd><p>Waits for the motor to complete its current move operation. This method should
+block the execution until the motor has reached its target position or
+completed the current motion command.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.position" title="Link to this definition">#</a></dt>
+<dd><p>Returns the current position of the stepper motor. The position value should
+represent the motor’s current location in the same units as the move_to and
+move_by methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – The current position of the motor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.__getattr__">
 <span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>This is a passthrough to the underlying motor objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -2296,13 +3529,25 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotor.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.home"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.home()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_to"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.move_to()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_by"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.move_by()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.wait_for_move"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.wait_for_move()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.position"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX</span></code></a><ul>
@@ -2319,6 +3564,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorX.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY</span></code></a><ul>
@@ -2335,6 +3584,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorY.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ</span></code></a><ul>
@@ -2351,6 +3604,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZ.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed</span></code></a><ul>
@@ -2367,6 +3624,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXReversed.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed</span></code></a><ul>
@@ -2383,6 +3644,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorYReversed.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed</span></code></a><ul>
@@ -2399,6 +3664,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.is_okay"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.register"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.create_from_registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registry"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed.registered"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorZReversed.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X</span></code></a><ul>
@@ -2415,6 +3684,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.is_okay"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.close"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.__getattr__"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.register"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.create_from_registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X.registered"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_X.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1</span></code></a><ul>
@@ -2431,6 +3704,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.is_okay"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.close"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.__getattr__"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.register"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.create_from_registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1.registered"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y1.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2</span></code></a><ul>
@@ -2447,13 +3724,25 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.is_okay"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.close"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.__getattr__"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.register"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.create_from_registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2.registered"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry_Y2.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.is_okay"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.home"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.home()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.close"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.move_to"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.move_to()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.move_by"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.move_by()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.wait_for_move"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.wait_for_move()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.position"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.__getattr__"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.register"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.create_from_registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registry"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry.registered"><code class="docutils literal notranslate"><span class="pre">DualDrive2AxisGantry.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X</span></code></a><ul>
@@ -2470,6 +3759,10 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.is_okay"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.close"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.__getattr__"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.register"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X.registered"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_X.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y</span></code></a><ul>
@@ -2486,13 +3779,25 @@ value is a list of motors attached to that axis.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.is_okay"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.close"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.__getattr__"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.register"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y.registered"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry_Y.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.is_okay"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.home"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.home()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.close"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.move_to"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.move_to()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.move_by"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.move_by()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.wait_for_move"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.wait_for_move()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.position"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.__getattr__"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.register"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registry"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry.registered"><code class="docutils literal notranslate"><span class="pre">SingleDrive1AxisGantry.registered()</span></code></a></li>
 </ul>
 </li>
 </ul>
