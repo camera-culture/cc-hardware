@@ -3,10 +3,16 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.drivers.stepper_motors import StepperMotorSystem
-from cc_hardware.drivers.stepper_motors.stepper_controller import StepperController
-from cc_hardware.tools.dashboard import SPADDashboard
+from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.stepper_motors import (
+    StepperMotorSystem,
+    StepperMotorSystemConfig,
+)
+from cc_hardware.drivers.stepper_motors.stepper_controller import (
+    StepperController,
+    StepperControllerConfig,
+)
+from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import get_logger, register_cli, run_cli
 from cc_hardware.utils.file_handlers import PklHandler
 from cc_hardware.utils.manager import Manager
