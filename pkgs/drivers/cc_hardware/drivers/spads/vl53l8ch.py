@@ -388,21 +388,7 @@ class VL53L8CHSensor(SPADSensor):
 
         # manual flush
         if self.manual_flush:
-            time_limit = 0.05
-            start_time = time.time()
-            line_count = 0
-            while True:
-                line = self.read()
-                if self._debug:
-                    # print(f"read line: {line.decode('utf-8').replace("\n", "")}")
-                    pass
-                if time.time() - start_time > time_limit:
-                    if self._debug:
-                        print(f"Manual flush timeout: {time.time() - start_time} exceeds {time_limit}")
-                        print(f"Flushed {line_count} lines")
-                    break
-                line_count += 1
-                start_time = time.time()
+            self.flush_internal_buffer()
 
         histograms = []
         for _ in range(num_samples):
@@ -450,6 +436,23 @@ class VL53L8CHSensor(SPADSensor):
             histograms = np.mean(histograms, axis=0)
         # print(histograms)
         return histograms
+    
+    def flush_internal_buffer(self):
+        time_limit = 0.05
+        start_time = time.time()
+        line_count = 0
+        while True:
+            line = self.read()
+            if self._debug:
+                # print(f"read line: {line.decode('utf-8').replace("\n", "")}")
+                pass
+            if time.time() - start_time > time_limit:
+                if self._debug:
+                    print(f"Manual flush timeout: {time.time() - start_time} exceeds {time_limit}")
+                    print(f"Flushed {line_count} lines")
+                break
+            line_count += 1
+            start_time = time.time()
 
     @property
     def is_okay(self) -> bool:
