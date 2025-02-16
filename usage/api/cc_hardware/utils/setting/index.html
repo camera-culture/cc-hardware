@@ -352,6 +352,158 @@ time it was read.</p></li>
 is compatible with dataclasses.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.Setting.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.Setting.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.setting.Setting.__getstate__" title="cc_hardware.utils.setting.Setting.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.utils.setting.Setting.__setstate__" title="cc_hardware.utils.setting.Setting.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -397,6 +549,158 @@ size=&quot;8.0, 12.0&quot;;
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.default_factory" title="Link to this definition">#</a></dt>
 <dd><p>Factory method to create a new SensorSetting instance in a way that
 is compatible with dataclasses.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__getstate__" title="cc_hardware.utils.setting.RangeSetting.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__setstate__" title="cc_hardware.utils.setting.RangeSetting.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
 </dd></dl>
 
 </dd></dl>
@@ -457,6 +761,158 @@ with dataclasses.</p>
 is compatible with dataclasses.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__getstate__" title="cc_hardware.utils.setting.OptionSetting.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__setstate__" title="cc_hardware.utils.setting.OptionSetting.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -498,6 +954,158 @@ size=&quot;8.0, 12.0&quot;;
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.default_factory" title="Link to this definition">#</a></dt>
 <dd><p>Factory method to create a new SensorSetting instance in a way that
 is compatible with dataclasses.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__getstate__" title="cc_hardware.utils.setting.BoolSetting.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__setstate__" title="cc_hardware.utils.setting.BoolSetting.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
 </dd></dl>
 
 </dd></dl>
@@ -566,22 +1174,74 @@ is compatible with dataclasses.</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting"><code class="docutils literal notranslate"><span class="pre">Setting</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.default_factory"><code class="docutils literal notranslate"><span class="pre">Setting.default_factory()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.config"><code class="docutils literal notranslate"><span class="pre">Setting.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.custom"><code class="docutils literal notranslate"><span class="pre">Setting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.instantiate"><code class="docutils literal notranslate"><span class="pre">Setting.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.compose"><code class="docutils literal notranslate"><span class="pre">Setting.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.load"><code class="docutils literal notranslate"><span class="pre">Setting.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.create"><code class="docutils literal notranslate"><span class="pre">Setting.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.merge_with"><code class="docutils literal notranslate"><span class="pre">Setting.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.copy"><code class="docutils literal notranslate"><span class="pre">Setting.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.save"><code class="docutils literal notranslate"><span class="pre">Setting.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.to_yaml"><code class="docutils literal notranslate"><span class="pre">Setting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__getstate__"><code class="docutils literal notranslate"><span class="pre">Setting.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__setstate__"><code class="docutils literal notranslate"><span class="pre">Setting.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__str__"><code class="docutils literal notranslate"><span class="pre">Setting.__str__()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting"><code class="docutils literal notranslate"><span class="pre">RangeSetting</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.update"><code class="docutils literal notranslate"><span class="pre">RangeSetting.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">RangeSetting.default_factory()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.config"><code class="docutils literal notranslate"><span class="pre">RangeSetting.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.custom"><code class="docutils literal notranslate"><span class="pre">RangeSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">RangeSetting.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.compose"><code class="docutils literal notranslate"><span class="pre">RangeSetting.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.load"><code class="docutils literal notranslate"><span class="pre">RangeSetting.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.create"><code class="docutils literal notranslate"><span class="pre">RangeSetting.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.merge_with"><code class="docutils literal notranslate"><span class="pre">RangeSetting.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.copy"><code class="docutils literal notranslate"><span class="pre">RangeSetting.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.save"><code class="docutils literal notranslate"><span class="pre">RangeSetting.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">RangeSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__str__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__str__()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting"><code class="docutils literal notranslate"><span class="pre">OptionSetting</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.update"><code class="docutils literal notranslate"><span class="pre">OptionSetting.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.from_enum"><code class="docutils literal notranslate"><span class="pre">OptionSetting.from_enum()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">OptionSetting.default_factory()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.config"><code class="docutils literal notranslate"><span class="pre">OptionSetting.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.custom"><code class="docutils literal notranslate"><span class="pre">OptionSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">OptionSetting.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.compose"><code class="docutils literal notranslate"><span class="pre">OptionSetting.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.load"><code class="docutils literal notranslate"><span class="pre">OptionSetting.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.create"><code class="docutils literal notranslate"><span class="pre">OptionSetting.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.merge_with"><code class="docutils literal notranslate"><span class="pre">OptionSetting.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.copy"><code class="docutils literal notranslate"><span class="pre">OptionSetting.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.save"><code class="docutils literal notranslate"><span class="pre">OptionSetting.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">OptionSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__str__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__str__()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting"><code class="docutils literal notranslate"><span class="pre">BoolSetting</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.update"><code class="docutils literal notranslate"><span class="pre">BoolSetting.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">BoolSetting.default_factory()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.config"><code class="docutils literal notranslate"><span class="pre">BoolSetting.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.custom"><code class="docutils literal notranslate"><span class="pre">BoolSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">BoolSetting.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.compose"><code class="docutils literal notranslate"><span class="pre">BoolSetting.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.load"><code class="docutils literal notranslate"><span class="pre">BoolSetting.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.create"><code class="docutils literal notranslate"><span class="pre">BoolSetting.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.merge_with"><code class="docutils literal notranslate"><span class="pre">BoolSetting.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.copy"><code class="docutils literal notranslate"><span class="pre">BoolSetting.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.save"><code class="docutils literal notranslate"><span class="pre">BoolSetting.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">BoolSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__str__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__str__()</span></code></a></li>
 </ul>
 </li>
 </ul>

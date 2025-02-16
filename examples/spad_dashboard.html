@@ -292,6 +292,10 @@
 <section id="spad-dashboard-py">
 <h2><code class="docutils literal notranslate"><span class="pre">spad_dashboard.py</span></code><a class="headerlink" href="#spad-dashboard-py" title="Link to this heading">#</a></h2>
 <p>This demo shows how you can visualize SPAD data with a dashboard. There are currently a number of supported dashboards, and please refer to the <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#module-cc_hardware.tools.dashboard" title="cc_hardware.tools.dashboard"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dashboard</span></code></a> documentation for more information. Also, this exampel shows how to register an explicit callback with the dashboard. In this case, we use <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#cc_hardware.tools.dashboard.SPADDashboard.update" title="cc_hardware.tools.dashboard.SPADDashboard.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> explicitly, so the callback can actually just be called in the main loop. The callback becomes helpful when you use <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#cc_hardware.tools.dashboard.SPADDashboard.run" title="cc_hardware.tools.dashboard.SPADDashboard.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, which is blocking.</p>
+<p>You can call the example with the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/spad_dashboard/spad_wrappers.py<span class="w"> </span><span class="nv">sensor</span><span class="o">=</span>&lt;SPADSensor&gt;<span class="w"> </span><span class="nv">dashboard</span><span class="o">=</span>&lt;SPADDashboard&gt;
+</pre></div>
+</div>
 </section>
 <section id="spad-wrappers-py">
 <h2><code class="docutils literal notranslate"><span class="pre">spad_wrappers.py</span></code><a class="headerlink" href="#spad-wrappers-py" title="Link to this heading">#</a></h2>

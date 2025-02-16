@@ -297,43 +297,12 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig" title="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklSPADSensorConfig</span></code></a></p></td>
-<td><p>Configuration for SPAD sensors.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a></p></td>
 <td><p>A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<dl class="py class">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklSPADSensorConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance68473fb7b5 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;PklSPADSensorConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;PklSPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensors.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklSPADSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="Link to this definition">#</a></dt>
@@ -420,51 +389,10 @@ be loaded. Defaults to None. Will set the index within the handler.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the sensor is operational.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the sensor connection. This method is a no-op for this fake sensor.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate" title="Link to this definition">#</a></dt>
-<dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__">
-<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__" title="Link to this definition">#</a></dt>
-<dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -531,20 +459,11 @@ the fields of SensorConfig.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.pkl</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig.settings</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.update"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

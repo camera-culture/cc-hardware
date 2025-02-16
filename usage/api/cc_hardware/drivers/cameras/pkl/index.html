@@ -404,41 +404,6 @@ Inherits from the abstract Camera class.</p>
 potential cleanup logic.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.pkl.PklCamera.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.cameras.pkl.PklCamera.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.pkl.PklCamera.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.pkl.PklCamera.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.pkl.PklCamera.calibrate">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.pkl.PklCamera.calibrate" title="Link to this definition">#</a></dt>
-<dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.cameras.pkl.PklCamera.__del__">
-<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.cameras.pkl.PklCamera.__del__" title="Link to this definition">#</a></dt>
-<dd><p>Destructor to ensure the sensor is properly closed.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -510,10 +475,6 @@ the fields of SensorConfig.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.intrinsic_matrix"><code class="docutils literal notranslate"><span class="pre">PklCamera.intrinsic_matrix</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.is_okay"><code class="docutils literal notranslate"><span class="pre">PklCamera.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.close"><code class="docutils literal notranslate"><span class="pre">PklCamera.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.settings"><code class="docutils literal notranslate"><span class="pre">PklCamera.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.update"><code class="docutils literal notranslate"><span class="pre">PklCamera.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.calibrate"><code class="docutils literal notranslate"><span class="pre">PklCamera.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.cameras.pkl.PklCamera.__del__"><code class="docutils literal notranslate"><span class="pre">PklCamera.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

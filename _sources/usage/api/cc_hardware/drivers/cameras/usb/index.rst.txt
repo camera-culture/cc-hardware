@@ -48,12 +48,6 @@ Classes
    :vartype force_autoexposure: bool
 
 
-   .. py:property:: settings
-      :type: dict[str, cc_hardware.utils.setting.Setting]
-
-      Retrieves the sensor settings.
-
-
 .. py:class:: USBCamera(config)
 
 
@@ -128,39 +122,6 @@ Classes
    .. py:method:: close()
 
       Stops the background capture thread and releases the camera resource.
-
-
-
-   .. py:property:: settings
-      :type: dict[str, cc_hardware.utils.setting.Setting]
-
-      Retrieves the sensor settings.
-
-
-   .. py:method:: update(**kwargs)
-
-      Updates the sensor configuration with provided keyword arguments. If there are
-      any changes given via the kwargs or in the settings, the configuration is sent
-      to the sensor.
-
-      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
-                   the fields of SensorConfig.
-
-      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
-
-
-
-   .. py:method:: calibrate()
-      :abstractmethod:
-
-
-      Calibrates the sensor.
-
-
-
-   .. py:method:: __del__()
-
-      Destructor to ensure the sensor is properly closed.
 
 
 
