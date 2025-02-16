@@ -6,6 +6,9 @@ outputs/
 # Mac
 .DS_Store
 
+# Misc
+.direnv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

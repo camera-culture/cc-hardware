@@ -4,6 +4,12 @@
 
 This demo shows how you can visualize SPAD data with a dashboard. There are currently a number of supported dashboards, and please refer to the {mod}`~cc_hardware.tools.dashboard` documentation for more information. Also, this exampel shows how to register an explicit callback with the dashboard. In this case, we use {meth}`~cc_hardware.tools.dashboard.SPADDashboard.update` explicitly, so the callback can actually just be called in the main loop. The callback becomes helpful when you use {meth}`~cc_hardware.tools.dashboard.SPADDashboard.run`, which is blocking.
 
+You can call the example with the following command:
+
+```bash
+python examples/spad_dashboard/spad_wrappers.py sensor=<SPADSensor> dashboard=<SPADDashboard>
+```
+
 
 ## `spad_wrappers.py`
 
