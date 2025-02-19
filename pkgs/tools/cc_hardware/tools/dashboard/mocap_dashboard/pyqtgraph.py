@@ -2,7 +2,7 @@ from functools import partial
 
 import numpy as np
 import pyqtgraph.opengl as gl
-from pyqtgraph.Qt import QtCore, QtWidgets
+from pyqtgraph.Qt import QtCore, QtWidgets, QtGui
 
 from cc_hardware.tools.dashboard.mocap_dashboard import (
     MotionCaptureDashboard,
@@ -30,32 +30,54 @@ class GLFrame:
         *,
         width: int = 5,
         antialias: bool = True,
+        alpha: float = 1,
         **kwargs,
     ):
         self.x = gl.GLLinePlotItem(
             pos=np.array([[0, 0, 0], [1, 0, 0]]),
-            color=(1, 0, 0, 1),
+            color=(1, 0, 0, alpha),
             width=width,
             antialias=antialias,
             **kwargs,
         )
         view.addItem(self.x)
+        self.x_label = gl.GLTextItem(
+            text="x",
+            pos=self.x.pos[1],
+            color=(0, 0, 0),
+            font=QtGui.QFont("Arial", 15)
+        )
+        view.addItem(self.x_label)
         self.y = gl.GLLinePlotItem(
             pos=np.array([[0, 0, 0], [0, 1, 0]]),
-            color=(0, 1, 0, 1),
+            color=(0, 1, 0, alpha),
             width=width,
             antialias=antialias,
             **kwargs,
         )
         view.addItem(self.y)
+        self.y_label = gl.GLTextItem(
+            text="y",
+            pos=self.y.pos[1],
+            color=(0, 0, 0),
+            font=QtGui.QFont("Arial", 15)
+        )
+        view.addItem(self.y_label)
         self.z = gl.GLLinePlotItem(
             pos=np.array([[0, 0, 0], [0, 0, 1]]),
-            color=(0, 0, 1, 1),
+            color=(0, 0, 1, alpha),
             width=width,
             antialias=antialias,
             **kwargs,
         )
         view.addItem(self.z)
+        self.z_label = gl.GLTextItem(
+            text="z",
+            pos=self.z.pos[1],
+            color=(0, 0, 0),
+            font=QtGui.QFont("Arial", 15)
+        )
+        view.addItem(self.z_label)
 
         self.label = gl.GLTextItem(
             text=name,
@@ -75,17 +97,35 @@ class GLFrame:
             width=self.x.width,
             antialias=self.x.antialias,
         )
+        self.x_label.setData(
+            text=self.x_label.text,
+            pos=transformed_x[:3, 1].T,
+            color=self.x_label.color,
+            font=self.x_label.font,
+        )
         self.y.setData(
             pos=transformed_y[:3].T,
             color=self.y.color,
             width=self.y.width,
             antialias=self.y.antialias,
         )
+        self.y_label.setData(
+            text=self.y_label.text,
+            pos=transformed_y[:3, 1].T,
+            color=self.y_label.color,
+            font=self.y_label.font,
+        )
         self.z.setData(
             pos=transformed_z[:3].T,
             color=self.z.color,
             width=self.z.width,
             antialias=self.z.antialias,
+        )
+        self.z_label.setData(
+            text=self.z_label.text,
+            pos=transformed_z[:3, 1].T,
+            color=self.z_label.color,
+            font=self.z_label.font,
         )
 
         self.label.setData(
@@ -108,6 +148,8 @@ class DashboardWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        self.is_paused = False
+
     def init_ui(self):
         layout = QtWidgets.QVBoxLayout(self)
         self.view = gl.GLViewWidget()
@@ -120,14 +162,63 @@ class DashboardWindow(QtWidgets.QWidget):
         self.view.addItem(xy_grid)
 
         # Create axes
-        self.origin_frame = GLFrame(self.view, "O")
+        self.origin_frame = GLFrame(self.view, "O", alpha=0.5)
         self.frames: dict[str, GLFrame] = {}
+
+        # Add buttons
+        self.button_layout = QtWidgets.QHBoxLayout()
+        self.current_view_direction = None
+        self.current_view_button = None
+        self.prev_camera = None
+        for direction in ["Orthographic X", "Orthographic -X", "Orthographic Y", "Orthographic -Y", "Orthographic Z", "Orthographic -Z"]:
+            btn = QtWidgets.QPushButton(direction)
+            btn.setCheckable(True)
+            btn.clicked.connect(lambda checked, d=direction, b=btn: self.change_view(d, b))
+            self.button_layout.addWidget(btn)
+        layout.addLayout(self.button_layout)
 
     def update_frames(self, data: dict[str, tuple[float, TransformationMatrix]]):
         for name, (_, frame) in data.items():
             if name not in self.frames:
                 self.frames[name] = GLFrame(self.view, name)
+            frame @= np.array(
+                [
+                    [1, 0, 0, 0],
+                    [0, -1, 0, 0],
+                    [0, 0, -1, 0],
+                    [0, 0, 0, 1],
+                ]
+            )
             self.frames[name] @= frame
+
+    def change_view(self, direction, btn):
+        if self.current_view_direction == direction:
+            self.current_view_direction = None
+            btn.setChecked(False)
+            if self.prev_camera is not None:
+                self.view.setCameraPosition(
+                    azimuth=self.prev_camera["azimuth"],
+                    elevation=self.prev_camera["elevation"],
+                    distance=self.prev_camera["distance"],
+                )
+                self.view.opts["fov"] = self.prev_camera["fov"]
+        else:
+            if self.current_view_button and self.current_view_button != btn:
+                self.current_view_button.setChecked(False)
+            self.current_view_direction = direction
+            self.current_view_button = btn
+            pos_map = {
+                "Orthographic X": dict(elevation=0, azimuth=0),
+                "Orthographic -X": dict(elevation=0, azimuth=180),
+                "Orthographic Y": dict(elevation=90, azimuth=0),
+                "Orthographic -Y": dict(elevation=-90, azimuth=0),
+                "Orthographic Z": dict(elevation=0, azimuth=90),
+                "Orthographic -Z": dict(elevation=0, azimuth=-90),
+            }
+            pos = pos_map[direction]
+            self.prev_camera = dict(azimuth=self.view.opts["azimuth"], elevation=self.view.opts["elevation"], distance=self.view.opts["distance"], fov=self.view.opts["fov"])
+            self.view.setCameraPosition(**pos, distance=2000)
+            self.view.opts["fov"] = 1
 
     def keyPressEvent(self, event):
         """
@@ -135,6 +226,8 @@ class DashboardWindow(QtWidgets.QWidget):
         """
         if event.key() in [QtCore.Qt.Key.Key_Q, QtCore.Qt.Key.Key_Escape]:
             QtWidgets.QApplication.quit()
+        elif event.key() == QtCore.Qt.Key.Key_Space:
+            self.is_paused = not self.is_paused
 
 
 class PyQtGraphMotionCaptureDashboard(
@@ -154,15 +247,15 @@ class PyQtGraphMotionCaptureDashboard(
         else:
             self.win.show()
 
+    def run(self):
+        """
+        Enter the Qt event loop.
+        """
         # Timer to periodically update
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(partial(self.update, frame=-1, step=False))
         self.timer.start(50)
 
-    def run(self):
-        """
-        Enter the Qt event loop.
-        """
         self.app.exec()
 
     def update(
@@ -178,6 +271,9 @@ class PyQtGraphMotionCaptureDashboard(
          2) Accumulate the new transform,
          3) Send transform to the UI.
         """
+        while self.win.is_paused:
+            self.app.processEvents()
+
         self.sensor.update()
         if data is None:
             data = self.sensor.accumulate()
@@ -199,8 +295,11 @@ class PyQtGraphMotionCaptureDashboard(
             self.app = None
 
         if hasattr(self, "timer") and self.timer is not None:
-            self.timer.stop()
-            self.timer = None
+            try:
+                self.timer.stop()
+                self.timer = None
+            except:
+                pass
 
     @property
     def is_okay(self) -> bool:

@@ -196,10 +196,6 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
             save (Path | None): If provided, save the output to this file.
         """
 
-        global pg, QtWidgets, QtCore
-        import pyqtgraph as pg
-        from pyqtgraph.Qt import QtCore
-
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(partial(self.update, frame=-1, step=False))
         self.timer.start(1)

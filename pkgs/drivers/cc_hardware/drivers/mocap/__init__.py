@@ -14,6 +14,12 @@ MotionCaptureSensorConfig.register(
     "ViveTrackerSensorConfig", f"{__name__}.vive", "ViveTrackerSensor"
 )
 
+MotionCaptureSensor.register("PklMotionCaptureSensor", f"{__name__}.pkl")
+MotionCaptureSensorConfig.register("PklMotionCaptureSensorConfig", f"{__name__}.pkl")
+MotionCaptureSensorConfig.register(
+    "PklMotionCaptureSensorConfig", f"{__name__}.pkl", "PklMotionCaptureSensor"
+)
+
 # =============================================================================
 
 __all__ = [

@@ -3,6 +3,10 @@ from cc_hardware.tools.dashboard.spad_dashboard import (
     SPADDashboard,
     SPADDashboardConfig,
 )
+from cc_hardware.tools.dashboard.mocap_dashboard import (
+    MotionCaptureDashboard,
+    MotionCaptureDashboardConfig,
+)
 from cc_hardware.utils import Manager, register_cli, run_cli
 
 # =============================================================================
@@ -46,4 +50,7 @@ __all__ = [
     # spad_dashboard
     "SPADDashboard",
     "SPADDashboardConfig",
+    # mocap_dashboard
+    "MotionCaptureDashboard",
+    "MotionCaptureDashboardConfig",
 ]
