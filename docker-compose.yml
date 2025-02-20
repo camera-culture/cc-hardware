@@ -35,6 +35,7 @@ services:
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     ports:
       - "127.0.0.1:8080-8099:8080"
+      - "127.0.0.1:9990-9999:9999"
     environment:
       DISPLAY: '${DISPLAY:-vnc:0.0}'
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'

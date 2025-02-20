@@ -143,7 +143,8 @@ class Registry:
             if len(cls.registry) > 1:
                 raise ValueError(
                     f"Multiple classes registered with {cls.__name__}. "
-                    "Must specify a name."
+                    "Must specify a name. Options are: "
+                    f"{', '.join(cls.registry.keys())}"
                 )
             name = next(iter(cls.registry.keys()))
 
