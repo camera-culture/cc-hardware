@@ -391,6 +391,17 @@ move_by methods.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_moving">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_moving</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_moving" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is currently in motion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is moving, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_okay">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the stepper motor is in a healthy operational state. This could
@@ -556,6 +567,7 @@ axes which don’t have a motor attached to them.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.move_by"><code class="docutils literal notranslate"><span class="pre">StepperMotor.move_by()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.wait_for_move"><code class="docutils literal notranslate"><span class="pre">StepperMotor.wait_for_move()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.position"><code class="docutils literal notranslate"><span class="pre">StepperMotor.position</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_moving"><code class="docutils literal notranslate"><span class="pre">StepperMotor.is_moving</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.register"><code class="docutils literal notranslate"><span class="pre">StepperMotor.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotor.create_from_registry()</span></code></a></li>

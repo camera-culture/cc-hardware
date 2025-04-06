@@ -144,10 +144,16 @@ Classes
 
 
    .. py:method:: move_by(*positions)
-                  move_by(**positions: float)
+                  move_by(block: bool = True, **positions: float)
 
       Moves the steppers to the specified positions.
 
+
+
+   .. py:property:: is_moving
+      :type: bool
+
+      Returns True if any motor is moving.
 
 
    .. py:method:: __getattr__(name)
@@ -176,6 +182,12 @@ Classes
 
       Moves the steppers to the specified positions.
 
+
+
+   .. py:property:: is_moving
+      :type: bool
+
+      Returns True if any motor is moving.
 
 
    .. py:method:: __getattr__(name)

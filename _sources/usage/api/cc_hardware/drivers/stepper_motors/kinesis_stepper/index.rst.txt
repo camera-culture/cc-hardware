@@ -312,26 +312,6 @@ Classes
                   additional keyword arguments.
 
 
-   .. py:method:: move_to(*positions)
-                  move_to(**positions: float)
-
-      Move to the specified position using positional or keyword arguments.
-
-
-
-   .. py:method:: move_by(*positions)
-                  move_by(**positions: float)
-
-      Moves the steppers to the specified positions.
-
-
-
-   .. py:method:: __getattr__(name)
-
-      This is a passthrough to the underlying motor objects.
-
-
-
 .. py:class:: AzimuthElevationSystem(port)
 
 
@@ -342,25 +322,5 @@ Classes
    A predefined multi-axis system for an azimuth-elevation setup.
 
    :Parameters: **port** (*str*) -- The port of the Kinesis motor device.
-
-
-   .. py:method:: move_to(*positions)
-                  move_to(**positions: float)
-
-      Move to the specified position using positional or keyword arguments.
-
-
-
-   .. py:method:: move_by(*positions)
-                  move_by(**positions: float)
-
-      Moves the steppers to the specified positions.
-
-
-
-   .. py:method:: __getattr__(name)
-
-      This is a passthrough to the underlying motor objects.
-
 
 

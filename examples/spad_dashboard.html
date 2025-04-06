@@ -307,11 +307,15 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/spad_dashboard/spad_wrappers.py<span class="w"> </span><span class="nv">sensor</span><span class="o">=</span>SPADMergeWrapper<span class="w"> </span>sensor/wrapped<span class="o">=</span>SPADMovingAverageWrapper<span class="w"> </span>sensor/wrapped/wrapped<span class="o">=</span>&lt;SPADSensor&gt;<span class="w"> </span>sensor.merge_all<span class="o">=</span>True<span class="w"> </span>sensor.wrapped.window_size<span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">dashboard</span><span class="o">=</span>&lt;SPADDashboard&gt;
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.spads</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">SPADSensorConfig</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.spads</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">SPADSensorConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.tools.dashboard</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADDashboardConfig</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">register_cli</span><span class="p">,</span> <span class="n">run_cli</span>
 
 <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">):</span>
@@ -326,8 +330,46 @@
         <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Callback called&quot;</span><span class="p">)</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configures the manager with sensor and dashboard instances.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        manager (Manager): Manager to add sensor and dashboard to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_config</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
+
+    <span class="n">dashboard</span><span class="o">.</span><span class="n">user_callback</span> <span class="o">=</span> <span class="n">my_callback</span>
+    <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span> <span class="o">=</span> <span class="n">dashboard</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
+        <span class="n">config</span><span class="o">=</span><span class="n">dashboard</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span>
+    <span class="p">)</span>
+    <span class="n">dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dashboard</span><span class="o">=</span><span class="n">dashboard</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates dashboard each frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        frame (int): Current frame number.</span>
+<span class="sd">        manager (Manager): Manager controlling the loop.</span>
+<span class="sd">        sensor (SPADSensor): Sensor instance (unused here).</span>
+<span class="sd">        dashboard (SPADDashboard): Dashboard instance to update.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">t0</span>
+
+    <span class="k">if</span> <span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">fps</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+        <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frame: </span><span class="si">{</span><span class="n">frame</span><span class="si">}</span><span class="s2">, FPS: </span><span class="si">{</span><span class="n">fps</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">histograms</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">()</span>
+    <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">histograms</span><span class="o">=</span><span class="n">histograms</span><span class="p">)</span>
+
+
 <span class="nd">@register_cli</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">spad_dashboard</span><span class="p">(</span><span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">spad_dashboard_demo</span><span class="p">(</span><span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets up and runs the SPAD dashboard.</span>
 
 <span class="sd">    Args:</span>
@@ -335,42 +377,15 @@
 <span class="sd">        dashboard (SPADDashboardConfig): Configuration object for the dashboard.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configures the manager with sensor and dashboard instances.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            manager (Manager): Manager to add sensor and dashboard to.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">_sensor</span><span class="p">:</span> <span class="n">SPADSensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_config</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">_sensor</span><span class="p">)</span>
-
-        <span class="n">dashboard</span><span class="o">.</span><span class="n">user_callback</span> <span class="o">=</span> <span class="n">my_callback</span>
-        <span class="n">_dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span> <span class="o">=</span> <span class="n">dashboard</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
-            <span class="n">config</span><span class="o">=</span><span class="n">dashboard</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">_sensor</span>
-        <span class="p">)</span>
-        <span class="n">_dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dashboard</span><span class="o">=</span><span class="n">_dashboard</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span>
-        <span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Updates dashboard each frame.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            frame (int): Current frame number.</span>
-<span class="sd">            manager (Manager): Manager controlling the loop.</span>
-<span class="sd">            sensor (SPADSensor): Sensor instance (unused here).</span>
-<span class="sd">            dashboard (SPADDashboard): Dashboard instance to update.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">histograms</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">()</span>
-        <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">histograms</span><span class="o">=</span><span class="n">histograms</span><span class="p">)</span>
+    <span class="k">global</span> <span class="n">t0</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
     <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">setup</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="o">=</span><span class="n">dashboard</span><span class="p">),</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run_cli</span><span class="p">(</span><span class="n">spad_dashboard</span><span class="p">)</span>
+    <span class="n">run_cli</span><span class="p">(</span><span class="n">spad_dashboard_demo</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

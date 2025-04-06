@@ -130,6 +130,15 @@ Classes
       :returns: *float* -- The current position of the motor.
 
 
+   .. py:property:: is_moving
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is currently in motion.
+
+      :returns: *bool* -- True if the motor is moving, False otherwise.
+
+
    .. py:property:: is_okay
       :type: bool
       :abstractmethod:
@@ -217,10 +226,16 @@ Classes
 
 
    .. py:method:: move_by(*positions)
-                  move_by(**positions: float)
+                  move_by(block: bool = True, **positions: float)
 
       Moves the steppers to the specified positions.
 
+
+
+   .. py:property:: is_moving
+      :type: bool
+
+      Returns True if any motor is moving.
 
 
    .. py:method:: __getattr__(name)
