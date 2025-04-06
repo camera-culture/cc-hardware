@@ -37,7 +37,9 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
     def __init__(self, config: SPADWrapperConfig):
         super().__init__(config)
 
-        self._sensor = SPADSensor.create_from_config(config.wrapped)
+        self._sensor = config.wrapped
+        if not isinstance(config.wrapped, SPADSensor):
+            self._sensor = SPADSensor.create_from_config(config.wrapped)
 
     def accumulate(self, *args, **kwargs):
         histograms = self._sensor.accumulate(*args, **kwargs)
@@ -158,7 +160,7 @@ class SPADMovingAverageWrapperConfig(SPADWrapperConfig):
     window_size: int
 
     window_size_setting: RangeSetting = RangeSetting.default_factory(
-        title="Window Size", min=1, max=1000, value=II("..window_size")
+        title="Window Size", min=1, max=1000, value=10 # II("..window_size")
     )
 
     @property

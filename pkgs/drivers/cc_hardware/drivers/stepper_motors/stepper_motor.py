@@ -89,6 +89,17 @@ class StepperMotor(Registry, ABC):
 
     @property
     @abstractmethod
+    def is_moving(self) -> bool:
+        """
+        Checks if the stepper motor is currently in motion.
+
+        Returns:
+            bool: True if the motor is moving, False otherwise.
+        """
+        pass
+
+    @property
+    @abstractmethod
     def is_okay(self) -> bool:
         """
         Checks if the stepper motor is in a healthy operational state. This could

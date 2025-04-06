@@ -80,7 +80,7 @@ class StepperMotorSystem(StepperMotor):
         ...
 
     @overload
-    def move_by(self, **positions: float):
+    def move_by(self, block: bool = True, **positions: float):
         ...
 
     def move_by(self, *args: float, **kwargs: float):
@@ -111,6 +111,11 @@ class StepperMotorSystem(StepperMotor):
 
     def wait_for_move(self) -> None:
         self._run_async_gather("run_speed_to_position", lambda _: None)
+
+    @property
+    def is_moving(self) -> bool:
+        """Returns True if any motor is moving."""
+        return any(motor.is_moving for motors in self._axes.values() for motor in motors)
 
     @property
     def position(self) -> list:

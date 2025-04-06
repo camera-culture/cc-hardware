@@ -69,6 +69,7 @@ class SnakeStepperController(StepperController):
             dict: A dictionary with axis names as keys and current positions as values.
                   Returns an empty dictionary if the iteration exceeds total positions.
         """
+        print(f"Current iteration: {iter}, total positions: {self.total_positions}")
         if iter >= self.total_positions:
             return None
 

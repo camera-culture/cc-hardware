@@ -1,8 +1,12 @@
+import time
+from functools import partial
+
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 
 i = 0
+t0 = 0
 
 
 def my_callback(dashboard: SPADDashboard):
@@ -17,8 +21,46 @@ def my_callback(dashboard: SPADDashboard):
         get_logger().info("Callback called")
 
 
+def setup(manager: Manager, sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+    """Configures the manager with sensor and dashboard instances.
+
+    Args:
+        manager (Manager): Manager to add sensor and dashboard to.
+    """
+    sensor: SPADSensor = SPADSensor.create_from_config(sensor)
+    manager.add(sensor=sensor)
+
+    dashboard.user_callback = my_callback
+    dashboard: SPADDashboard = dashboard.create_from_registry(
+        config=dashboard, sensor=sensor
+    )
+    dashboard.setup()
+    manager.add(dashboard=dashboard)
+
+
+def loop(frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashboard):
+    """Updates dashboard each frame.
+
+    Args:
+        frame (int): Current frame number.
+        manager (Manager): Manager controlling the loop.
+        sensor (SPADSensor): Sensor instance (unused here).
+        dashboard (SPADDashboard): Dashboard instance to update.
+    """
+    global t0
+
+    if frame % 10 == 0:
+        t1 = time.time()
+        fps = 10 / (t1 - t0)
+        t0 = time.time()
+        get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
+
+    histograms = sensor.accumulate()
+    dashboard.update(frame, histograms=histograms)
+
+
 @register_cli
-def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+def spad_dashboard_demo(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
     """Sets up and runs the SPAD dashboard.
 
     Args:
@@ -26,39 +68,12 @@ def spad_dashboard(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
         dashboard (SPADDashboardConfig): Configuration object for the dashboard.
     """
 
-    def setup(manager: Manager):
-        """Configures the manager with sensor and dashboard instances.
-
-        Args:
-            manager (Manager): Manager to add sensor and dashboard to.
-        """
-        _sensor: SPADSensor = SPADSensor.create_from_config(sensor)
-        manager.add(sensor=_sensor)
-
-        dashboard.user_callback = my_callback
-        _dashboard: SPADDashboard = dashboard.create_from_registry(
-            config=dashboard, sensor=_sensor
-        )
-        _dashboard.setup()
-        manager.add(dashboard=_dashboard)
-
-    def loop(
-        frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashboard
-    ):
-        """Updates dashboard each frame.
-
-        Args:
-            frame (int): Current frame number.
-            manager (Manager): Manager controlling the loop.
-            sensor (SPADSensor): Sensor instance (unused here).
-            dashboard (SPADDashboard): Dashboard instance to update.
-        """
-        histograms = sensor.accumulate()
-        dashboard.update(frame, histograms=histograms)
+    global t0
+    t0 = time.time()
 
     with Manager() as manager:
-        manager.run(setup=setup, loop=loop)
+        manager.run(setup=partial(setup, sensor=sensor, dashboard=dashboard), loop=loop)
 
 
 if __name__ == "__main__":
-    run_cli(spad_dashboard)
+    run_cli(spad_dashboard_demo)

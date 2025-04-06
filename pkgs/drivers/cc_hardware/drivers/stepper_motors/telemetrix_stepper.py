@@ -150,6 +150,13 @@ class TelemetrixStepperMotor(StepperMotor):
         return revs / self._steps_per_rev * self._cm_per_rev
 
     @property
+    def is_moving(self) -> bool:
+        """Checks if the stepper motor is currently in motion."""
+        def is_moving(data):
+            return data[2] == 1
+        return call_async(self.is_running, is_moving)
+
+    @property
     def is_okay(self) -> bool:
         """Checks if the stepper motor is in a healthy operational state."""
         return self._board is not None
