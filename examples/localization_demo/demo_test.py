@@ -683,11 +683,13 @@ class DemoWindow(QWidget):
         # Set up rendering timers for smooth 3d rendering
         self.frame_timer = QTimer(self)
         self.frame_timer.timeout.connect(self.render_scene)
-        self.frame_timer.start(16)  # Rendering every 16 ms (approximately 60 Hz)
+        self.frame_timer.start(20)  # Rendering every 20 ms (approximately 50 Hz)
+        self.interpolation_factor = 0.0  # To interpolate between positions
 
         # Initial state
         self.current_position = np.array([0.0, 0.0])  # Starting position
         self.last_position = np.array([0.0, 0.0])  # Last applied position (to be rendered)
+        self.interpolated_position = np.array([0.0, 0.0])  # interpolated position for smoother rendering
 
         # Histogram
         self.histogram_display = HistogramWidget(self)
@@ -779,9 +781,9 @@ class DemoWindow(QWidget):
 
         # Create the GLMeshItem
         arrow = GLMeshItem(meshdata=mesh_data, color=(0.7, 0.7, 0.7, 1), smooth=True, drawFaces=True)
-        arrow.translate(0, 0, 0)  # Adjust if needed
+        arrow.translate(0, 0, -10)  # Adjust if needed
         arrow.rotate(180, 1, 0, 0)
-        # arrow.scale(0.1, 0.1, 0.1)  # Optional: scale model
+        arrow.scale(2.0, 2.0, 2.0)  # Optional: scale model
 
         return [arrow]
 
@@ -791,26 +793,47 @@ class DemoWindow(QWidget):
         # self.arrow.translate(dx, dy, 0)
         # self.position = [x, y]
         print(f"Setting new position: {x}, {y}")
+        self.last_position = self.current_position
         self.current_position = np.array([x, y])
 
     def render_scene(self):
+        app.processEvents()
         # Only update position in the scene at the rendering rate (not with each data update)
-        if not np.array_equal(self.last_position, self.current_position):
+        if np.any(self.current_position != self.last_position):
+            # self.arrow.setData(pos=np.array([[0, 0, 0], self.current_position]))  # Update arrow
             dx = self.current_position[0] - self.last_position[0]
             dy = self.current_position[1] - self.last_position[1]
             self.arrow.translate(dx, dy, 0)
+            self.last_position = self.current_position
 
-            self.last_position = self.current_position  # Apply the position change
-            
-            print(f"Rendering new position: {self.last_position}")
+    def render_scene_interpolated(self):
+        app.processEvents()
+        # Only update position in the scene at the rendering rate (not with each data update)
+        if np.any(self.current_position != self.last_position):
+            # Calculate the interpolation factor (time-based, normalized between 0 and 1)
+            self.interpolation_factor += 1/50  # 50 FPS -> 20 ms per frame
+            self.interpolation_factor = min(self.interpolation_factor, 1)  # Ensure it does not exceed 1
+
+            # Interpolate between the last known position and the current target position
+            interpolated_position = self.last_position + self.interpolation_factor * (self.current_position - self.last_position)
+
+            # Update the arrow's position in the scene
+            # self.arrow.setData(pos=np.array([[0, 0, 0], interpolated_position]))  # Update arrow
+            dx = interpolated_position[0] - self.interpolated_position[0]
+            dy = interpolated_position[1] - self.interpolated_position[1]
+            self.arrow.translate(dx, dy, 0)
+            self.interpolated_position = interpolated_position
+
+            # If the interpolation is complete, update the last position
+            if self.interpolation_factor >= 1:
+                self.last_position = self.current_position
+                self.interpolation_factor = 0.0  # Reset the interpolation factor for next update
 
     def update_coord_label(self):
-        print(f"raw output: {self.raw_output}")
         x, y = self.raw_output
         self.coord_label.setText(f"x: {x:.2f}, y: {y:.2f}")
 
     def update_display(self, output):
-        print("updating display")
         self.raw_output = output.numpy().squeeze().tolist()
         self.update_coord_label()
 
@@ -839,7 +862,6 @@ class DemoWindow(QWidget):
         self.set_arrow_position(arrow_pos_x, arrow_pos_y)
 
     def update_histograms(self, hists):
-        print("updating histograms")
         self.histogram_display.update(histograms=hists)
 
     def reposition_histogram_display(self):
