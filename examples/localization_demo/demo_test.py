@@ -760,7 +760,7 @@ class DemoWindow(QWidget):
         plane = gl.GLMeshItem(meshdata=mesh_data, color=color, smooth=True, drawFaces=True)
 
         # Translate the plane to be in front of the camera
-        plane.translate(17.5, 21.0 + distance, 15)  # Place the plane along Z-axis, in front of the camera
+        plane.translate(17.5 + 10, 21.0 + distance, 15)  # Place the plane along Z-axis, in front of the camera
 
         plane.setGLOptions('translucent')
         
