@@ -45,7 +45,7 @@ CAPTURE_COUNT = 1
 
 STDEV_FILTERING = False
 
-MODEL_SAVE_PATH = '../../models/robotics/demo/demo_model_1.mdl'
+MODEL_SAVE_PATH = 'demo_model_1.mdl'
 
 START_BIN = 0
 END_BIN = 16
