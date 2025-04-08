@@ -433,15 +433,31 @@ class MovingCircleWidget(QWidget):
         self.repaint()
 
 
-class Grid3DWindow(QMainWindow):
+class Grid3DWindow(QWidget):
     def __init__(self, flip_x=False, flip_y=False):
         super().__init__()
         self.setWindowTitle("NLOS Demo")
 
         # GL View
+        self.layout = QVBoxLayout(self)
         self.view = gl.GLViewWidget()
+        self.layout.addWidget(self.view)
         self.view.setBackgroundColor('#e5e5e5')
-        self.setCentralWidget(self.view)
+        # self.setCentralWidget(self.view)
+
+        # Coordinate overlay
+        self.coord_label = QLabel(self)
+        self.coord_label.setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 200); color : black; padding: 4px; }")
+        self.coord_label.setFont(QFont("Courier", 10))
+        self.coord_label.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+        self.coord_label.setFixedWidth(150)
+        self.coord_label.setFixedHeight(30)
+        self.coord_label.move(10, 10)  # Position in top-left corner
+        self.coord_label.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        
+        # Make sure the label is always on top
+        self.coord_label.raise_()
+
         # Center of your grid (midpoint of [0, 35] and [0, 42])
         center = QtGui.QVector3D(17.5, 21.0, 0)
 
@@ -450,7 +466,7 @@ class Grid3DWindow(QMainWindow):
         self.view.setCameraPosition(
             elevation=30,  # tilt down 30 degrees
             azimuth=0,     # looking from positive Y toward center (i.e., front view)
-            distance=60    # tweak this to zoom in/out
+            distance=80    # tweak this to zoom in/out
         )
 
         grid_lines = self.create_custom_grid(35, 42, spacing=3.5, color=(0.5, 0.5, 0.5, 1), line_width=2)
@@ -467,13 +483,17 @@ class Grid3DWindow(QMainWindow):
         # plane = self.create_vertical_plane(width=50, height=30, distance=20, color=(0.7, 0.7, 0.7, 0.4))
         # self.view.addItem(plane)
 
+        plane = self.create_wall(width=50, height=30, distance=30, color=(0.7, 0.7, 0.7, 0.5))
+        self.view.addItem(plane)
+
         self.position = [0.0, 0.0]
+        self.raw_output = [0.0, 0.0]
 
         self.flip_x = flip_x
         self.flip_y = flip_y
         self.scale_factor = 1
-        self.true_width = 42
-        self.true_height = 35
+        self.true_width = 35
+        self.true_height = 42
 
     def create_custom_grid(self, x_max, y_max, spacing=1.0, z=0.0, color=(0.5, 0.5, 0.5, 1.0), line_width=1.0):
         lines = []
@@ -517,6 +537,32 @@ class Grid3DWindow(QMainWindow):
         plane.setGLOptions('translucent')
         
         return plane
+    
+    def create_wall(self, width=5, height=10, distance=10, color=(0.5, 0.5, 0.5, 0.2)):
+        # Define vertices for a rectangular plane
+        vertices = np.array([
+            [-width / 2, 0, -height / 2],  # Bottom-left
+            [width / 2, 0, -height / 2],  # Bottom-right
+            [width / 2, 0, height / 2],  # Top-right
+            [-width / 2, 0, height / 2]   # Top-left
+        ])
+
+        # Define the faces (which triangles to form the rectangle)
+        faces = np.array([
+            [0, 1, 2],
+            [0, 2, 3]
+        ])
+
+        # Create the mesh item
+        mesh_data = gl.MeshData(vertexes=vertices, faces=faces)
+        plane = gl.GLMeshItem(meshdata=mesh_data, color=color, smooth=True, drawFaces=True)
+
+        # Translate the plane to be in front of the camera
+        plane.translate(17.5, 21.0 + distance, 15)  # Place the plane along Z-axis, in front of the camera
+
+        plane.setGLOptions('translucent')
+        
+        return plane
 
     def load_arrow_mesh(self, filename="arrow.obj"):
     # Load the OBJ file using trimesh
@@ -531,7 +577,7 @@ class Grid3DWindow(QMainWindow):
 
         # Create the GLMeshItem
         arrow = GLMeshItem(meshdata=mesh_data, color=(0.7, 0.7, 0.7, 1), smooth=True, drawFaces=True)
-        arrow.translate(0, 0, -1)  # Adjust if needed
+        arrow.translate(0, 0, 0)  # Adjust if needed
         arrow.rotate(180, 1, 0, 0)
         # arrow.scale(0.1, 0.1, 0.1)  # Optional: scale model
 
@@ -544,8 +590,16 @@ class Grid3DWindow(QMainWindow):
             part.translate(dx, dy, 0)
         self.position = [x, y]
 
+    def update_coord_label(self):
+        print(f"raw output: {self.raw_output}")
+        x, y = self.raw_output
+        
+        self.coord_label.setText(f"x: {x:.2f}, y: {y:.2f}")
+
     def update_display(self, output):
         print("updating display")
+        self.raw_output = output.numpy().squeeze().tolist()
+        self.update_coord_label()
 
         # Compute circle position
         arrow_pos_x = output[0] * self.scale_factor
