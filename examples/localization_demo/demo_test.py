@@ -3,10 +3,14 @@ from datetime import datetime
 import time
 
 from PyQt6.QtCore import QSize, Qt, QTimer
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton, QVBoxLayout
 from PyQt6.QtGui import QColor, QPalette, QFont
 from PyQt6 import QtGui
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel
+
+import math
+from PyQt6.QtGui import QPainter, QColor
+from functools import partial
 
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
@@ -358,13 +362,6 @@ class KalmanWrapper(ModelWrapper):
         self.kf.update(torch.tensor(output).float().unsqueeze(1))
         return self.kf.get_state()
 
-
-import sys
-import math
-from PyQt6.QtWidgets import QApplication, QWidget
-from PyQt6.QtGui import QPainter, QColor
-from PyQt6.QtCore import QTimer
-
 class MovingCircleWidget(QWidget):
     def __init__(self, flip_x=False, flip_y=False):
         super().__init__()
@@ -433,7 +430,192 @@ class MovingCircleWidget(QWidget):
         self.repaint()
 
 
-class Grid3DWindow(QWidget):
+class HistogramWidget(QWidget):
+    """
+    Dashboard implementation using PyQtGraph for real-time visualization.
+    """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        
+        print("creating histogram widget")
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+        self.setAutoFillBackground(False)
+        # self.setStyleSheet("background-color: rgba(255, 255, 255, 80); border-radius: 10px;")
+
+        # Create a layout and add a GraphicsLayoutWidget
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.plot_widget = pg.GraphicsLayoutWidget()
+        layout.addWidget(self.plot_widget)
+
+        # Set background transparent for the plot
+        self.plot_widget.setBackground(None)
+        
+
+        self.setFixedSize(300, 200)
+        self.setStyleSheet("background: transparent;")
+
+        self._create_plots()
+        # self.plots[0].getViewBox().setBackgroundColor((255, 255, 255, 100))
+
+    def _create_plots(self):
+        self.shared_y = True
+
+        cols, rows = [1, 1]
+
+        self.plots = []
+        self.bars = []
+        bins = np.arange(START_BIN, END_BIN)
+
+        p: pg.PlotItem = self.plot_widget.addPlot()
+        self.plots.append(p)
+        y = np.zeros_like(bins)
+        bg = self._create_bar_graph_item(bins, y)
+        p.addItem(bg)
+        self.bars.append(bg)
+        p.setLabel("bottom", "Bin")
+        p.setLabel("left", "Mean Photon Counts")
+        p.setXRange(START_BIN, END_BIN, padding=0)
+        p.setTitle("Combined Histogram", size="16")
+
+        # if not self.config.autoscale:
+        p.enableAutoRange(axis="y", enable=True)
+
+        # Connect settings to functionality
+        # self.win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
+        # self.win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
+        # self.win.y_limit_textbox.textChanged.connect(self.update_y_limit)
+        # self.win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
+
+        # self.win.autoscale_checkbox.setChecked(self.config.autoscale)
+        # self.win.shared_y_checkbox.setChecked(self.shared_y)
+        # if self.config.ylim is not None:
+        #     self.win.y_limit_textbox.setText(str(self.config.ylim))
+
+        # self.toggle_autoscale(self.config.autoscale)
+        # self.toggle_shared_y(self.shared_y)
+
+    def run(self):
+        """
+        Executes the PyQtGraph dashboard application.
+
+        Args:
+            fullscreen (bool): Whether to display in fullscreen mode.
+            headless (bool): Whether to run in headless mode.
+            save (Path | None): If provided, save the output to this file.
+        """
+
+        self.timer = pg.QtCore.QTimer()
+        self.timer.timeout.connect(partial(self.update, frame=-1, step=False))
+        self.timer.start(1)
+
+    def update(
+        self,
+        *,
+        histograms: np.ndarray | None = None,
+        step: bool = True,
+    ):
+        """
+        Updates the histogram data in the plots.
+        """
+
+        # # Check if the number of channels has changed
+        # if histograms.shape[0] != len(self.plots):
+        #     get_logger().warning(
+        #         "The number of channels has changed from "
+        #         f"{len(self.plots)} to {histograms.shape[0]}."
+        #     )
+        #     self._setup_sensor()
+        #     self._create_plots()
+        #     return
+
+        # If log scale is enabled, replace 0s with 1s to avoid log(0)
+        # ymin = 0
+        # if self.win.log_y_checkbox.isChecked():
+        #     histograms = np.where(histograms < 1, 1, histograms)
+        #     ymin = 1
+
+        # ylim = None
+        # if self.win.y_limit_textbox.isEnabled():
+        #     ylim = self.config.ylim
+        # if self.config.autoscale and self.shared_y:
+            # Set ylim to be max of _all_ channels
+            # ylim = int(histograms[:, self.min_bin : self.max_bin].max()) + 1
+
+        histogram = histograms.mean(axis=0, keepdims=True)
+
+        self.bars[0].setOpts(height=histogram)
+    
+
+        # # Call user callback if provided
+        # if self.config.user_callback is not None:
+        #     self.config.user_callback(self)
+
+        # if not any([plot.isVisible() for plot in self.plots]):
+        #     get_logger().info("Closing GUI...")
+        #     QtWidgets.QApplication.quit()
+
+        # if step:
+        #     self.app.processEvents()
+
+    def _create_bar_graph_item(self, bins, y=None):
+        y = np.zeros_like(bins) if y is None else y
+        return pg.BarGraphItem(x=bins + 0.5, height=y, width=1.0, brush=QtGui.QColor(0, 100, 255, 100))
+
+    # def toggle_autoscale(self, state: int):
+    #     get_logger().debug(f"Autoscale: {bool(state)}")
+    #     self.config.autoscale = bool(state)
+
+    #     self.win.y_limit_textbox.setEnabled(not self.win.autoscale_checkbox.isChecked())
+    #     if self.config.autoscale:
+    #         self.win.y_limit_textbox.clear()
+
+    # def toggle_shared_y(self, state: int):
+    #     get_logger().debug(f"Shared Y-Axis: {bool(state)}")
+    #     self.shared_y = bool(state)
+
+    # def toggle_log_y(self, state: int):
+    #     get_logger().debug(f"Log Y-Axis: {bool(state)}")
+    #     for plot in self.plots:
+    #         plot.setLogMode(y=bool(state))
+
+    # def update_y_limit(self):
+    #     text = self.win.y_limit_textbox.text()
+    #     if text.isdigit():
+    #         self.config.ylim = int(text)
+    #         get_logger().debug(f"Y-Limit set to: {self.config.ylim}")
+    #         for plot in self.plots:
+    #             plot.setYRange(0, self.config.ylim)
+    #     else:
+    #         get_logger().debug("Invalid Y-Limit input")
+
+    # @property
+    # def is_okay(self) -> bool:
+    #     return not self.win.isHidden()
+
+    # def close(self):
+    #     QtWidgets.QApplication.quit()
+    #     if hasattr(self, "win") and self.win is not None:
+    #         self.win.close()
+    #     if hasattr(self, "app") and self.app is not None:
+    #         self.app.quit()
+    #         self.app = None
+    #     if hasattr(self, "timer") and self.timer is not None:
+    #         self.timer.stop()
+    #         self.timer = None
+    def paintEvent(self, event):
+        # Paint semi-transparent white background with rounded corners
+        painter = QtGui.QPainter(self)
+        painter.setRenderHint(QtGui.QPainter.RenderHint.Antialiasing)
+        bg_color = QtGui.QColor(255, 255, 255, 100)  # White with alpha
+        painter.setBrush(bg_color)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawRoundedRect(self.rect(), 0, 0)
+
+class DemoWindow(QWidget):
     def __init__(self, flip_x=False, flip_y=False):
         super().__init__()
         self.setWindowTitle("NLOS Demo")
@@ -444,6 +626,7 @@ class Grid3DWindow(QWidget):
         self.layout.addWidget(self.view)
         self.view.setBackgroundColor('#e5e5e5')
         # self.setCentralWidget(self.view)
+        self.resize(1200, 800)
 
         # Coordinate overlay
         self.coord_label = QLabel(self)
@@ -482,10 +665,12 @@ class Grid3DWindow(QWidget):
 
         # plane = self.create_vertical_plane(width=50, height=30, distance=20, color=(0.7, 0.7, 0.7, 0.4))
         # self.view.addItem(plane)
-
+        
+        # create side wall
         plane = self.create_wall(width=50, height=30, distance=30, color=(0.7, 0.7, 0.7, 0.5))
         self.view.addItem(plane)
 
+        # 3D viewing parameters
         self.position = [0.0, 0.0]
         self.raw_output = [0.0, 0.0]
 
@@ -494,6 +679,16 @@ class Grid3DWindow(QWidget):
         self.scale_factor = 1
         self.true_width = 35
         self.true_height = 42
+
+        # Histogram
+        self.histogram_display = HistogramWidget(self)
+        # self.layout.addWidget(self.histogram_display)
+        self.histogram_display.setFixedSize(400, 300)
+        self.histogram_display.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
+        self.histogram_display.raise_()
+        # self.histogram_display.show()
+        self.histogram_display.run()
+        self.reposition_histogram_display()
 
     def create_custom_grid(self, x_max, y_max, spacing=1.0, z=0.0, color=(0.5, 0.5, 0.5, 1.0), line_width=1.0):
         lines = []
@@ -596,6 +791,7 @@ class Grid3DWindow(QWidget):
         
         self.coord_label.setText(f"x: {x:.2f}, y: {y:.2f}")
 
+
     def update_display(self, output):
         print("updating display")
         self.raw_output = output.numpy().squeeze().tolist()
@@ -624,6 +820,17 @@ class Grid3DWindow(QWidget):
             arrow_pos_y = self.true_height - arrow_pos_y
         
         self.set_arrow_position(arrow_pos_x, arrow_pos_y)
+
+    def update_histograms(self, hists):
+        print("updating histograms")
+        self.histogram_display.update(histograms=hists)
+
+    def reposition_histogram_display(self):
+        margin = 10
+        w, h = self.width(), self.height()
+        print(f'w: {w}, h: {h}')
+        self.histogram_display.move(margin,
+                               h - self.histogram_display.height() - margin)
 
 
 @register_cli
@@ -685,6 +892,7 @@ def spad_dashboard2(
         dashboard.update(frame, histograms=histograms)
         # print(f"shape: {histograms.shape}")
         model_wrapper.external_capture_callback(histograms)
+        gui.update_histograms(histograms)
 
 
         # if save_data:
@@ -723,8 +931,7 @@ if __name__ == "__main__":
     print("Creating window")
     model = DeepLocation8().to(device)
     model_wrapper = KalmanWrapper(model)
-    gui = Grid3DWindow(flip_x=False, flip_y=True)
-    gui.resize(800, 800)
+    gui = DemoWindow(flip_x=False, flip_y=True)
     gui.show()
 
 
