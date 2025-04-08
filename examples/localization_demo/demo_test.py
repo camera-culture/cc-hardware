@@ -510,7 +510,7 @@ class HistogramWidget(QWidget):
 
         self.timer = pg.QtCore.QTimer()
         self.timer.timeout.connect(partial(self.update, frame=-1, step=False))
-        self.timer.start(1)
+        self.timer.start(10)
 
     def update(
         self,
@@ -631,8 +631,8 @@ class DemoWindow(QWidget):
         # Coordinate overlay
         self.coord_label = QLabel(self)
         self.coord_label.setStyleSheet("QLabel { background-color : rgba(255, 255, 255, 200); color : black; padding: 4px; }")
-        self.coord_label.setFont(QFont("Courier", 10))
-        self.coord_label.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
+        # self.coord_label.setFont(QFont("Courier", 10))
+        self.coord_label.setAlignment(Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft)
         self.coord_label.setFixedWidth(150)
         self.coord_label.setFixedHeight(30)
         self.coord_label.move(10, 10)  # Position in top-left corner
@@ -660,8 +660,8 @@ class DemoWindow(QWidget):
 
         # Create arrow
         self.arrow_parts = self.load_arrow_mesh()
-        for part in self.arrow_parts:
-            self.view.addItem(part)
+        self.arrow = self.arrow_parts[0]  # this mesh has only 1 part
+        self.view.addItem(self.arrow)
 
         # plane = self.create_vertical_plane(width=50, height=30, distance=20, color=(0.7, 0.7, 0.7, 0.4))
         # self.view.addItem(plane)
@@ -672,7 +672,7 @@ class DemoWindow(QWidget):
 
         # 3D viewing parameters
         self.position = [0.0, 0.0]
-        self.raw_output = [0.0, 0.0]
+        self.raw_output = [0.0, 0.0]  # used for coordinate display
 
         self.flip_x = flip_x
         self.flip_y = flip_y
@@ -680,14 +680,21 @@ class DemoWindow(QWidget):
         self.true_width = 35
         self.true_height = 42
 
+        # Set up rendering timers for smooth 3d rendering
+        self.frame_timer = QTimer(self)
+        self.frame_timer.timeout.connect(self.render_scene)
+        self.frame_timer.start(16)  # Rendering every 16 ms (approximately 60 Hz)
+
+        # Initial state
+        self.current_position = np.array([0.0, 0.0])  # Starting position
+        self.last_position = np.array([0.0, 0.0])  # Last applied position (to be rendered)
+
         # Histogram
         self.histogram_display = HistogramWidget(self)
-        # self.layout.addWidget(self.histogram_display)
         self.histogram_display.setFixedSize(400, 300)
         self.histogram_display.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
         self.histogram_display.raise_()
-        # self.histogram_display.show()
-        self.histogram_display.run()
+        # self.histogram_display.run()
         self.reposition_histogram_display()
 
     def create_custom_grid(self, x_max, y_max, spacing=1.0, z=0.0, color=(0.5, 0.5, 0.5, 1.0), line_width=1.0):
@@ -779,18 +786,28 @@ class DemoWindow(QWidget):
         return [arrow]
 
     def set_arrow_position(self, x, y):
-        dx = x - self.position[0]
-        dy = y - self.position[1]
-        for part in self.arrow_parts:
-            part.translate(dx, dy, 0)
-        self.position = [x, y]
+        # dx = x - self.position[0]
+        # dy = y - self.position[1]
+        # self.arrow.translate(dx, dy, 0)
+        # self.position = [x, y]
+        print(f"Setting new position: {x}, {y}")
+        self.current_position = np.array([x, y])
+
+    def render_scene(self):
+        # Only update position in the scene at the rendering rate (not with each data update)
+        if not np.array_equal(self.last_position, self.current_position):
+            dx = self.current_position[0] - self.last_position[0]
+            dy = self.current_position[1] - self.last_position[1]
+            self.arrow.translate(dx, dy, 0)
+
+            self.last_position = self.current_position  # Apply the position change
+            
+            print(f"Rendering new position: {self.last_position}")
 
     def update_coord_label(self):
         print(f"raw output: {self.raw_output}")
         x, y = self.raw_output
-        
         self.coord_label.setText(f"x: {x:.2f}, y: {y:.2f}")
-
 
     def update_display(self, output):
         print("updating display")
@@ -798,8 +815,8 @@ class DemoWindow(QWidget):
         self.update_coord_label()
 
         # Compute circle position
-        arrow_pos_x = output[0] * self.scale_factor
-        arrow_pos_y = output[1] * self.scale_factor
+        arrow_pos_x = self.raw_output[0] * self.scale_factor
+        arrow_pos_y = self.raw_output[1] * self.scale_factor
 
         # bound x and y
         if arrow_pos_x < 0:
@@ -890,7 +907,7 @@ def spad_dashboard2(
         histograms = sensor.accumulate()
         print(f"shape: {histograms.shape}")
         dashboard.update(frame, histograms=histograms)
-        # print(f"shape: {histograms.shape}")
+        # dashboard.update(frame, histograms=None)
         model_wrapper.external_capture_callback(histograms)
         gui.update_histograms(histograms)
 
