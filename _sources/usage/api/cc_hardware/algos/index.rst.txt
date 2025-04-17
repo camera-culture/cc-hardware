@@ -16,5 +16,7 @@ Submodules
 
    algorithm/index.rst
    aruco/index.rst
+   modeling_utils/index.rst
+   models/index.rst
 
 

@@ -12,7 +12,7 @@
         gtag('js', new Date());
         gtag('config', 'G-WK44DH2ZCM');
     </script>
-    <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="cc_hardware.drivers.cameras" href="cameras/index.html" /><link rel="prev" title="cc_hardware.algos.aruco" href="../algos/aruco/index.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" /><link rel="search" title="Search" href="../../../../search.html" /><link rel="next" title="cc_hardware.drivers.cameras" href="cameras/index.html" /><link rel="prev" title="cc_hardware.algos.models" href="../algos/models/index.html" />
 
     <link rel="shortcut icon" href="../../../../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>cc_hardware.drivers - cc_hardware 0.0.0 documentation</title>
@@ -197,6 +197,8 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../algos/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of cc_hardware.algos</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../algos/algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../algos/aruco/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.aruco</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algos/modeling_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.modeling_utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../algos/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.models</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 current has-children current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers</span></code></a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of cc_hardware.drivers</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -1212,16 +1214,67 @@ and the motors that are attached to them.</p>
 <dd><p>Moves the steppers to the specified positions.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.wait_for_move">
+<span class="sig-name descname"><span class="pre">wait_for_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.wait_for_move" title="Link to this definition">#</a></dt>
+<dd><p>Waits for the motor to complete its current move operation. This method should
+block the execution until the motor has reached its target position or
+completed the current motion command.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.is_moving">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_moving</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.is_moving" title="Link to this definition">#</a></dt>
 <dd><p>Returns True if any motor is moving.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.position">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">position</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.position" title="Link to this definition">#</a></dt>
+<dd><p>Returns the current position of the stepper motor. The position value should
+represent the motor’s current location in the same units as the move_to and
+move_by methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>float</em> – The current position of the motor.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.__getattr__">
 <span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.__getattr__" title="Link to this definition">#</a></dt>
 <dd><p>This is a passthrough to the underlying motor objects.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the connection or shuts down the stepper motor safely. Implementations
+should ensure that the motor is properly powered down and any resources are
+released to avoid damage or memory leaks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.home">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.home" title="Link to this definition">#</a></dt>
+<dd><p>Homes the stepper motor to its reference or zero position. This method should
+move the motor to a predefined starting point, which could involve moving
+until a limit switch or sensor is triggered to establish a known starting
+position.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.is_okay">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the stepper motor is in a healthy operational state. This could
+involve verifying that the motor is not in an error state, is receiving power,
+and has no detected hardware issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the motor is operational, False otherwise.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1338,14 +1391,14 @@ attributes – see the documentation for details.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../algos/aruco/index.html">
+          <a class="prev-page" href="../algos/models/index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.aruco</span></code></div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.models</span></code></div>
                 
               </div>
             </a>
@@ -1471,8 +1524,13 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.move_to"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.move_to()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.move_by"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.move_by()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.wait_for_move"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.wait_for_move()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.is_moving"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.is_moving</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.position"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.__getattr__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.__getattr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.home"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.home()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.is_okay</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystemAxis"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemAxis</span></code></a><ul>

@@ -35,7 +35,7 @@ Classes
    Configuration for the Dash dashboard.
 
 
-.. py:class:: DashDashboard(config, sensor)
+.. py:class:: DashDashboard
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard
@@ -67,27 +67,5 @@ Classes
                            sensor will be used to accumulate the histogram data.
       :kwtype histograms: np.ndarray
 
-
-
-   .. py:property:: sensor
-      :type: cc_hardware.drivers.spads.SPADSensor
-
-      Retrieves the SPAD sensor instance.
-
-
-   .. py:property:: min_bin
-      :type: int
-
-      Minimum bin value for the histogram.
-
-      Supports variable sized bins based on the sensor configuration.
-
-
-   .. py:property:: max_bin
-      :type: int
-
-      Maximum bin value for the histogram.
-
-      Supports variable sized bins based on the sensor configuration.
 
 

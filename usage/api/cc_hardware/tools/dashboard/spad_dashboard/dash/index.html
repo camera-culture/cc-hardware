@@ -197,6 +197,8 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../algos/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of cc_hardware.algos</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../algos/algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../algos/aruco/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.aruco</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../algos/modeling_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.modeling_utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../algos/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.models</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../drivers/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of cc_hardware.drivers</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -330,7 +332,7 @@ size=&quot;8.0, 12.0&quot;;
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DashDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DashDashboard</span></span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance3105a20812 {
 bgcolor=transparent;
 rankdir=LR;
@@ -373,26 +375,6 @@ size=&quot;8.0, 12.0&quot;;
 sensor will be used to accumulate the histogram data.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.sensor">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../../drivers/spads/index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.sensor" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the SPAD sensor instance.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.min_bin">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_bin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.min_bin" title="Link to this definition">#</a></dt>
-<dd><p>Minimum bin value for the histogram.</p>
-<p>Supports variable sized bins based on the sensor configuration.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.max_bin">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_bin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.max_bin" title="Link to this definition">#</a></dt>
-<dd><p>Maximum bin value for the histogram.</p>
-<p>Supports variable sized bins based on the sensor configuration.</p>
 </dd></dl>
 
 </dd></dl>
@@ -446,9 +428,6 @@ sensor will be used to accumulate the histogram data.</p>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.setup"><code class="docutils literal notranslate"><span class="pre">DashDashboard.setup()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.run"><code class="docutils literal notranslate"><span class="pre">DashDashboard.run()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.update"><code class="docutils literal notranslate"><span class="pre">DashDashboard.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.sensor"><code class="docutils literal notranslate"><span class="pre">DashDashboard.sensor</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.min_bin"><code class="docutils literal notranslate"><span class="pre">DashDashboard.min_bin</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard.max_bin"><code class="docutils literal notranslate"><span class="pre">DashDashboard.max_bin</span></code></a></li>
 </ul>
 </li>
 </ul>

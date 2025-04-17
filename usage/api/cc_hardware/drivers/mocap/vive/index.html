@@ -197,6 +197,8 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../algos/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of cc_hardware.algos</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../algos/algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../algos/aruco/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.aruco</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../algos/modeling_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.modeling_utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../algos/models/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.algos.models</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of cc_hardware.drivers</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -302,6 +304,9 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose" title="cc_hardware.drivers.mocap.vive.ViveTrackerPose"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ViveTrackerPose</span></code></a></p></td>
 <td><p>Abstract base class for handling sensor data.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor" title="cc_hardware.drivers.mocap.vive.ViveTrackerSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ViveTrackerSensor</span></code></a></p></td>
+<td><p>An abstract base class for motion capture sensors.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -336,6 +341,12 @@ to pysurvive but without the leading ‘–’. For example, to pass the argumen
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -378,6 +389,88 @@ size=&quot;8.0, 12.0&quot;;
 <dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerPose.reset">
 <span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose.reset" title="Link to this definition">#</a></dt>
 <dd><p>Resets the sensor data to its initial state.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ViveTrackerSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor" title="Link to this definition">#</a></dt>
+<dd>digraph inheritance25a9443b19 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;MotionCaptureSensor&quot; [URL=&quot;../mocap/index.html#cc_hardware.drivers.mocap.mocap.MotionCaptureSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for motion capture sensors.&quot;];
+  &quot;Sensor&quot; -&gt; &quot;MotionCaptureSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
+  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;ViveTrackerSensor&quot; [URL=&quot;#cc_hardware.drivers.mocap.vive.ViveTrackerSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;MotionCaptureSensor&quot; -&gt; &quot;ViveTrackerSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>An abstract base class for motion capture sensors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.accumulate">
+<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.accumulate" title="Link to this definition">#</a></dt>
+<dd><p>Accumulates the specified number of pose samples from the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_samples</strong> (<em>int</em>) – The number of samples to accumulate into the pose.
+The accumulation method (i.e. summing, averaging) may vary depending on
+the sensor. Defaults to 1.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.close" title="Link to this definition">#</a></dt>
+<dd><p>Closes the sensor and releases any resources.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
+any changes given via the kwargs or in the settings, the configuration is sent
+to the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
+the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.calibrate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.calibrate" title="Link to this definition">#</a></dt>
+<dd><p>Calibrates the sensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.mocap.vive.ViveTrackerSensor.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -426,11 +519,24 @@ size=&quot;8.0, 12.0&quot;;
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.mocap.vive</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensorConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensorConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensorConfig.settings</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose"><code class="docutils literal notranslate"><span class="pre">ViveTrackerPose</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose.process"><code class="docutils literal notranslate"><span class="pre">ViveTrackerPose.process()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose.get_data"><code class="docutils literal notranslate"><span class="pre">ViveTrackerPose.get_data()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerPose.reset"><code class="docutils literal notranslate"><span class="pre">ViveTrackerPose.reset()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.accumulate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.close"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.settings"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.update"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.update()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.calibrate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.mocap.vive.ViveTrackerSensor.__del__"><code class="docutils literal notranslate"><span class="pre">ViveTrackerSensor.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,49 @@
+
+:py:mod:`cc_hardware.algos.models`
+==================================
+
+
+.. py:module:: cc_hardware.algos.models
+
+.. autoapi-nested-parse::
+
+   Neural network model architectures and utils
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.algos.models.DeepLocation8
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   cc_hardware.algos.models.initialize_weights
+
+
+
+.. py:class:: DeepLocation8(height=8, width=8, num_bins=16)
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.algos.models.DeepLocation8
+      :parts: 1
+
+
+   DeepLocation8 model: 2-layer convolutional network designed for 8x8 histogram input
+
+
+.. py:function:: initialize_weights(m)
+
+   Initialize the weights of the model using Kaiming uniform initialization.
+
+
