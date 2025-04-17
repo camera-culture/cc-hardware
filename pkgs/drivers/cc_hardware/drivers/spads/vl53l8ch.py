@@ -562,6 +562,9 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         """
         Closes the sensor connection and stops background processes.
         """
+        if not hasattr(self, "_stop_event"):
+            return
+
         self._stop_event.set()
         if not self._initialized_event.is_set():
             return
