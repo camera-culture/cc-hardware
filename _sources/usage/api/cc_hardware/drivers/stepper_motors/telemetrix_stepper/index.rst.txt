@@ -1629,7 +1629,7 @@ Classes
 
 
 
-.. py:class:: SingleDrive1AxisGantry(*args, **kwargs)
+.. py:class:: SingleDrive1AxisGantry(*args, axes_kwargs, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry

@@ -414,80 +414,6 @@ and has no detected hardware issues.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -569,10 +495,6 @@ axes which don’t have a motor attached to them.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.position"><code class="docutils literal notranslate"><span class="pre">StepperMotor.position</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_moving"><code class="docutils literal notranslate"><span class="pre">StepperMotor.is_moving</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotor.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.register"><code class="docutils literal notranslate"><span class="pre">StepperMotor.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotor.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registry"><code class="docutils literal notranslate"><span class="pre">StepperMotor.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor.registered"><code class="docutils literal notranslate"><span class="pre">StepperMotor.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_motor.DummyStepperMotor"><code class="docutils literal notranslate"><span class="pre">DummyStepperMotor</span></code></a></li>

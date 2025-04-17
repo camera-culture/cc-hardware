@@ -58,7 +58,7 @@ Classes
 
 
 
-.. py:class:: PyQtGraphDashboard
+.. py:class:: PyQtGraphDashboard(config, sensor)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard
@@ -90,5 +90,27 @@ Classes
 
       Updates the histogram data in the plots.
 
+
+
+   .. py:property:: sensor
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Retrieves the SPAD sensor instance.
+
+
+   .. py:property:: min_bin
+      :type: int
+
+      Minimum bin value for the histogram.
+
+      Supports variable sized bins based on the sensor configuration.
+
+
+   .. py:property:: max_bin
+      :type: int
+
+      Maximum bin value for the histogram.
+
+      Supports variable sized bins based on the sensor configuration.
 
 
