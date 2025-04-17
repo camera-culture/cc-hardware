@@ -353,7 +353,7 @@ size=&quot;8.0, 12.0&quot;;
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphMotionCaptureDashboard</span></span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphMotionCaptureDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard" title="Link to this definition">#</a></dt>
 <dd>digraph inheritanceea8f2adb02 {
 bgcolor=transparent;
 rankdir=LR;
@@ -371,6 +371,13 @@ size=&quot;8.0, 12.0&quot;;
   &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
 }
 <p>A 3D motion capture visualization dashboard using pyqtgraph’s GLViewWidget.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.setup" title="Link to this definition">#</a></dt>
+<dd><p>Abstract method to set up the dashboard. Should be independent of whether the
+dashboard is run in a loop or not.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.run" title="Link to this definition">#</a></dt>
@@ -400,6 +407,12 @@ size=&quot;8.0, 12.0&quot;;
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>A simple property to check if the window is still open.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.sensor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sensor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../../drivers/mocap/index.html#cc_hardware.drivers.mocap.MotionCaptureSensor" title="cc_hardware.drivers.mocap.MotionCaptureSensor"><span class="pre">cc_hardware.drivers.mocap.MotionCaptureSensor</span></a></em><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.sensor" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the MotionCapture sensor instance.</p>
 </dd></dl>
 
 </dd></dl>
@@ -454,10 +467,12 @@ size=&quot;8.0, 12.0&quot;;
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.setup"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.setup()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.run"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.run()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.update"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.close"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.is_okay"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.sensor"><code class="docutils literal notranslate"><span class="pre">PyQtGraphMotionCaptureDashboard.sensor</span></code></a></li>
 </ul>
 </li>
 </ul>

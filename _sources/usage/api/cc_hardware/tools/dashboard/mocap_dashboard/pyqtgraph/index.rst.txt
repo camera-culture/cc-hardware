@@ -50,7 +50,7 @@ Classes
 
 
 
-.. py:class:: PyQtGraphMotionCaptureDashboard
+.. py:class:: PyQtGraphMotionCaptureDashboard(config, sensor)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard
@@ -58,6 +58,13 @@ Classes
 
 
    A 3D motion capture visualization dashboard using pyqtgraph's GLViewWidget.
+
+
+   .. py:method:: setup()
+
+      Abstract method to set up the dashboard. Should be independent of whether the
+      dashboard is run in a loop or not.
+
 
 
    .. py:method:: run()
@@ -85,5 +92,11 @@ Classes
       :type: bool
 
       A simple property to check if the window is still open.
+
+
+   .. py:property:: sensor
+      :type: cc_hardware.drivers.mocap.MotionCaptureSensor
+
+      Retrieves the MotionCapture sensor instance.
 
 

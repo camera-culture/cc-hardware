@@ -24,7 +24,7 @@ Classes
 
 
 
-.. py:class:: HistogramDataset(pkl_path = None, rolling_window=1, predict_magnitude = False, merge = False)
+.. py:class:: HistogramDataset(pkl_path = None, rolling_window=1)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.algos.datasets.HistogramDataset
