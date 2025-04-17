@@ -13,7 +13,7 @@ class DeepLocation8(nn.Module):
 
         self.height=height
         self.width=width
-        self.num_bins=16
+        self.num_bins=num_bins
 
         # in: (n, self.height, self.width, 16)
         self.conv_channels = 4
