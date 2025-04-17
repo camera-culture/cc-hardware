@@ -16,7 +16,7 @@ class HistogramDataset(Dataset):
     Can manipulate inputs and targets without affecting raw data.
     """
 
-    def __init__(self, pkl_path: Path = None, rolling_window=1, predict_magnitude: bool = False, merge: bool = False):
+    def __init__(self, pkl_path: Path = None, rolling_window=1):
         """
         Initializes the HistogramDataset.
 
@@ -91,12 +91,6 @@ class HistogramDataset(Dataset):
         self.END_BIN = bins
         self.inputs = self.raw_inputs
         self.targets = self.raw_targets
-
-        if predict_magnitude:
-            self.targets = torch.linalg.norm(self.targets, dim=1, keepdim=True)
-
-        if merge:
-            self.inputs = self.inputs.sum(dim=(1), keepdim=True)
 
     def set_start_bin(self, start_bin: int):
         """
