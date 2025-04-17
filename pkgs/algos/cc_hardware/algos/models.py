@@ -5,6 +5,9 @@ import torch.nn as nn
 
 
 class DeepLocation8(nn.Module):
+    """
+    DeepLocation8 model: 2-layer convolutional network designed for 8x8 histogram input
+    """
     def __init__(self, height=8, width=8, num_bins=16):
         super(DeepLocation8, self).__init__()
 
@@ -53,3 +56,14 @@ class DeepLocation8(nn.Module):
         x = self.fc1_bn(x)
         x = self.fc2(x)
         return x
+    
+
+
+def initialize_weights(m):
+    """
+    Initialize the weights of the model using Kaiming uniform initialization.
+    """
+    if isinstance(m, torch.nn.Linear) or isinstance(m, torch.nn.Conv3d):
+        torch.nn.init.kaiming_uniform_(m.weight, nonlinearity='leaky_relu')
+        if m.bias is not None:
+            torch.nn.init.zeros_(m.bias)
