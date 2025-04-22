@@ -381,7 +381,7 @@ class KalmanWrapper(ModelWrapper):
     def __init__(self, model, queue):
         super().__init__(model, queue)
         self.kf = KalmanFilter(
-            state_dim=2, process_noise_var=0.01, measurement_noise_var=0.1
+            state_dim=2, process_noise_var=0.01, measurement_noise_var=0.01
         )
 
     def process_output(self, output):
@@ -653,7 +653,7 @@ class HistogramWidget(QWidget):
 
 
 class DemoWindow(QWidget):
-    def __init__(self, flip_x=False, flip_y=False):
+    def __init__(self, flip_x=False, flip_y=False, smoothing="EXTRAPOLATE"):
         super().__init__()
         self.setWindowTitle("NLOS Demo")
 
@@ -727,7 +727,15 @@ class DemoWindow(QWidget):
 
         # Set up rendering timers for smooth 3d rendering
         self.frame_timer = QTimer(self)
-        self.frame_timer.timeout.connect(self.render_scene_interpolated)
+        self.smoothing_option = smoothing
+        if self.smoothing_option == "EXTRAPOLATE":
+            self.frame_timer.timeout.connect(self.render_scene_smoothing)
+        elif self.smoothing_option == "INTERPOLATE":
+            self.frame_timer.timeout.connect(self.render_scene_interpolated)
+        elif self.smoothing_option == "NONE":
+            self.frame_timer.timeout.connect(self.render_scene)
+        else:
+            raise Exception("Invalid smoothing option")
         self.frame_timer.start(20)  # Rendering every ms
         self.interpolation_factor = 0.0  # To interpolate between positions
 
@@ -736,9 +744,12 @@ class DemoWindow(QWidget):
         self.last_position = np.array(
             [0.0, 0.0]
         )  # Last applied position (to be rendered)
-        self.interpolated_position = np.array(
+        self.display_position = np.array(
             [0.0, 0.0]
         )  # interpolated position for smoother rendering
+        self.last_frame_time = datetime.now()
+        self.last_update_time = datetime.now()
+        self.duration_last_update = 0  # seconds the last update took
 
         # Histogram
         self.histogram_display = HistogramWidget(self)
@@ -865,21 +876,23 @@ class DemoWindow(QWidget):
         return [arrow]
 
     def set_arrow_position(self, x, y):
-        # dx = x - self.position[0]
-        # dy = y - self.position[1]
-        # self.arrow.translate(dx, dy, 0)
-        # self.position = [x, y]
         print(f"Setting new position: {x}, {y}")
-        # self.last_position = self.current_position
         self.current_position = np.array([x, y])
 
-    def set_arrow_position(self, x, y):
+    def set_arrow_position_interpolated(self, x, y):
         new_target = np.array([x, y])
         if not np.allclose(new_target, self.current_position):
             # Restart interpolation from the current interpolated position
-            self.last_position = self.interpolated_position.copy()
+            self.last_position = self.display_position.copy()
             self.interpolation_factor = 0.0
         self.current_position = new_target
+
+    def set_arrow_position_smoothing(self, x, y):
+        new_target = np.array([x, y])
+        self.last_position = self.display_position.copy()
+        self.current_position = new_target
+        self.duration_last_update = (datetime.now() - self.last_update_time).total_seconds()
+        self.last_update_time = datetime.now()
 
     def render_scene(self):
         app.processEvents()
@@ -890,36 +903,6 @@ class DemoWindow(QWidget):
             dy = self.current_position[1] - self.last_position[1]
             self.arrow.translate(dx, dy, 0)
             self.last_position = self.current_position
-
-    def render_scene_interpolated(self):
-        app.processEvents()
-        # Only update position in the scene at the rendering rate (not with each data update)
-        if np.any(self.current_position != self.last_position):
-            # Calculate the interpolation factor (time-based, normalized between 0 and 1)
-            self.interpolation_factor += 1 / 50  # 50 FPS -> 20 ms per frame
-            self.interpolation_factor = min(
-                self.interpolation_factor, 1
-            )  # Ensure it does not exceed 1
-
-            # Interpolate between the last known position and the current target position
-            interpolated_position = self.last_position + self.interpolation_factor * (
-                self.current_position - self.last_position
-            )
-
-            # Update the arrow's position in the scene
-            # self.arrow.setData(pos=np.array([[0, 0, 0], interpolated_position]))  # Update arrow
-            dx = interpolated_position[0] - self.interpolated_position[0]
-            dy = interpolated_position[1] - self.interpolated_position[1]
-            self.arrow.translate(dx, dy, 0)
-            self.interpolated_position = interpolated_position
-
-            # If the interpolation is complete, update the last position
-            if self.interpolation_factor >= 1:
-                self.last_position = self.current_position
-                self.interpolation_factor = (
-                    0.0  # Reset the interpolation factor for next update
-                )
-
     def render_scene_interpolated(self):
         app.processEvents()
         if np.any(self.current_position != self.last_position):
@@ -927,16 +910,35 @@ class DemoWindow(QWidget):
             self.interpolation_factor = min(self.interpolation_factor, 1)
             t = self.interpolation_factor
             # cubic_factor = 3 * (t**2) - 2 * (t**3)  # cubic ease-in-out factor
-            interpolated_position = self.last_position + self.interpolation_factor * (
+            display_position = self.last_position + self.interpolation_factor * (
                 self.current_position - self.last_position
             )
-            dx = interpolated_position[0] - self.interpolated_position[0]
-            dy = interpolated_position[1] - self.interpolated_position[1]
+            dx = display_position[0] - self.display_position[0]
+            dy = display_position[1] - self.display_position[1]
             self.arrow.translate(dx, dy, 0)
-            self.interpolated_position = interpolated_position
+            self.display_position = display_position
             if self.interpolation_factor >= 1:
                 self.last_position = self.current_position
                 self.interpolation_factor = 0.0
+
+    def render_scene_smoothing(self):
+        app.processEvents()
+        frame_time = datetime.now() - self.last_frame_time
+        self.last_frame_time = datetime.now()
+        # print(f"frame time: {frame_time}")
+
+        if self.duration_last_update == 0:
+            return
+        object_velocity = (self.current_position - self.last_position) / self.duration_last_update
+
+        # assume velocity is relatively constant
+        frame_motion = frame_time.total_seconds() * object_velocity
+        target_position = self.display_position + frame_motion
+        dx = target_position[0] - self.display_position[0]
+        dy = target_position[1] - self.display_position[1]
+        self.arrow.translate(dx, dy, 0)
+        self.display_position = target_position
+
 
     def update_coord_label(self):
         x, y = self.raw_output
@@ -967,8 +969,15 @@ class DemoWindow(QWidget):
         # flip y direction for better visualization
         if self.flip_y:
             arrow_pos_y = self.true_height - arrow_pos_y
-
-        self.set_arrow_position(arrow_pos_x, arrow_pos_y)
+        
+        if self.smoothing_option == "EXTRAPOLATE":
+            self.set_arrow_position_smoothing(arrow_pos_x, arrow_pos_y)
+        elif self.smoothing_option == "INTERPOLATE":
+            self.set_arrow_position_interpolated(arrow_pos_x, arrow_pos_y)
+        elif self.smoothing_option == "NONE":
+            self.set_arrow_position(arrow_pos_x, arrow_pos_y)
+        else:
+            raise Exception(f"Invalid smoothing option")
 
     def update_histograms(self, hists):
         self.histogram_display.update(histograms=hists)
@@ -1052,7 +1061,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     print("Creating window")
-    gui = DemoWindow(flip_x=False, flip_y=True)
+    gui = DemoWindow(flip_x=False, flip_y=True, smoothing="EXTRAPOLATE")
     gui.showFullScreen()
 
     from PyQt6.QtCore import QTimer
