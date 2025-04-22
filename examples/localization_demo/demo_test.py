@@ -5,7 +5,7 @@ from pathlib import Path
 from functools import partial
 import multiprocessing
 
-from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtCore import Qt, QTimer, QEvent
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout
 from PyQt6.QtGui import QColor
 from PyQt6 import QtGui
@@ -653,8 +653,11 @@ class HistogramWidget(QWidget):
 
 
 class DemoWindow(QWidget):
-    def __init__(self, flip_x=False, flip_y=False, smoothing="EXTRAPOLATE"):
+    def __init__(self, flip_x=False, flip_y=False, smoothing="EXTRAPOLATE", input_queue=None):
         super().__init__()
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+        QApplication.instance().installEventFilter(self)
+
         self.setWindowTitle("NLOS Demo")
 
         # GL View
@@ -761,9 +764,20 @@ class DemoWindow(QWidget):
         # self.histogram_display.run()
         self.reposition_histogram_display()
 
+        self.input_queue = input_queue
+        self.user_has_input = False
+        self.user_input_timer = QTimer(self)
+        self.user_input_timer.timeout.connect(self.clear_input_queue)
+        self.user_input_timer.start(500)
+
     def resizeEvent(self, event):
         self.reposition_histogram_display()
         super().resizeEvent(event)
+
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.Type.KeyPress:
+            return self.handle_key(event)
+        return False
 
     def create_custom_grid(
         self,
@@ -990,10 +1004,38 @@ class DemoWindow(QWidget):
             margin, h - self.histogram_display.height() - margin
         )
 
+    def handle_key(self, ev: QtGui.QKeyEvent):
+        if self.input_queue is not None:
+            if ev.key() == Qt.Key.Key_W:
+                self.input_queue.put("W")
+                self.user_has_input = True
+                return True
+            elif ev.key() == Qt.Key.Key_A:
+                self.input_queue.put("A")
+                self.user_has_input = True
+                return True
+            elif ev.key() == Qt.Key.Key_S:
+                self.input_queue.put("S")
+                self.user_has_input = True
+                return True
+            elif ev.key() == Qt.Key.Key_D:
+                self.input_queue.put("D")
+                self.user_has_input = True
+                return True
+        return False
+    
+    def clear_input_queue(self):
+        # clear input queue if user has not interacted this update
+        if self.input_queue is not None:
+            if not self.user_has_input:
+                while not self.input_queue.empty():
+                    self.input_queue.get()
+            self.user_has_input = False
 
-def demo(sensor, gantry, histogram_queue):
+def demo(sensor, gantry, histogram_queue, input_queue):
     gantry_thread = None
     gantry_index = 0
+    gantry_pos = {"x": 0, "y": 0}
 
     model = DeepLocation8().to(device)
     model_wrapper = KalmanWrapper(model, histogram_queue)
@@ -1024,11 +1066,52 @@ def demo(sensor, gantry, histogram_queue):
         model_wrapper.external_capture_callback(histograms)
         histogram_queue.put(histograms)
 
-        nonlocal gantry_thread, gantry_index
+        nonlocal gantry_thread, gantry_index, gantry_pos, input_queue
         if gantry_thread is None or not gantry_thread.is_alive():
-            pos = controller.get_position(gantry_index % controller.total_positions)
+            # Read from input queue and move accordingly
+            input_speed = 0.2
+            max_x = 35
+            max_y = 42
+            input_items = []
+            queue_has_items = True
+            while queue_has_items:
+                try:
+                    input_item = input_queue.get_nowait()
+                    input_items.append(input_item)
+                except:
+                    queue_has_items = False
+
+            # combine input items into one transformation
+            if len(input_items) == 0:
+                return
+            
+            total_delta_x = 0
+            total_delta_y = 0
+            for input_item in input_items:
+                if input_item == "W":
+                    total_delta_x -= input_speed
+                elif input_item == "A":
+                    total_delta_y += input_speed
+                elif input_item == "S":
+                    total_delta_x += input_speed
+                elif input_item == "D":
+                    total_delta_y -= input_speed
+            
+            gantry_pos["x"] += total_delta_x
+            gantry_pos["y"] += total_delta_y
+            
+            if gantry_pos["x"] < 0:
+                gantry_pos["x"] = 0
+            if gantry_pos["x"] > max_x:
+                gantry_pos["x"] = max_x
+            if gantry_pos["y"] < 0:
+                gantry_pos["y"] = 0
+            if gantry_pos["y"] > max_y:
+                gantry_pos["y"] = max_y
+            
+            # pos = controller.get_position(gantry_index % controller.total_positions)
             gantry_thread = threading.Thread(
-                target=gantry.move_to, args=(pos["x"], pos["y"])
+                target=gantry.move_to, args=(gantry_pos["x"], gantry_pos["y"])
             )
             gantry_thread.start()
             gantry_index += 1
@@ -1052,6 +1135,7 @@ def demo(sensor, gantry, histogram_queue):
 if __name__ == "__main__":
     mp_manager = multiprocessing.Manager()
     histogram_queue = mp_manager.Queue()
+    input_queue = mp_manager.Queue()
 
     # model / data parameters
     height = 8
@@ -1061,7 +1145,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     print("Creating window")
-    gui = DemoWindow(flip_x=False, flip_y=True, smoothing="EXTRAPOLATE")
+    gui = DemoWindow(flip_x=False, flip_y=True, smoothing="EXTRAPOLATE", input_queue=input_queue)
     gui.showFullScreen()
 
     from PyQt6.QtCore import QTimer
@@ -1108,6 +1192,7 @@ if __name__ == "__main__":
                 axes_kwargs=dict(speed=2**12),
             ),
             histogram_queue,
+            input_queue,
         ),
     )
     cli_process.start()
