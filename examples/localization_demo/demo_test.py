@@ -23,6 +23,7 @@ from cc_hardware.drivers.spads import SPADSensor
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
+from cc_hardware.algos.models import DeepLocation8
 
 NOW = datetime.now()
 
@@ -54,74 +55,11 @@ device = (
 print(f"Using {device} device")
 
 
-class DeepLocation8(nn.Module):
-    def __init__(self):
-        super().__init__()
-
-        # in: (n, HEIGHT, WIDTH, 16)
-        self.conv_channels = 4
-        self.conv_channels2 = 8
-        self.conv3d = nn.Conv3d(
-            in_channels=1,
-            out_channels=self.conv_channels,
-            kernel_size=(3, 3, 7),
-            padding=(1, 1, 3),
-        )
-        # (n, 4, HEIGHT, WIDTH, 16)
-        self.batchnorm3d = nn.BatchNorm3d(self.conv_channels)
-        self.batchnorm3d2 = nn.BatchNorm3d(self.conv_channels2)
-        # reshape to (n, 4, HEIGHT x WIDTH, 16)
-        self.pool1 = nn.MaxPool1d(kernel_size=2, stride=2, padding=0)
-        # (n, 4, HEIGHT, WIDTH, 8)
-        self.conv3d2 = nn.Conv3d(
-            in_channels=self.conv_channels,
-            out_channels=self.conv_channels2,
-            kernel_size=(3, 3, 5),
-            padding=(1, 1, 2),
-        )
-        # (n, 8, HEIGHT, WIDTH, 8)
-        # reshape to (n, 8, HEIGHT x WIDTH, 8)
-        self.pool2 = nn.MaxPool1d(kernel_size=2, stride=2, padding=0)
-        # (n, 8, HEIGHT, WIDTH, 4)
-
-        self.fc1 = nn.Linear(self.conv_channels2 * HEIGHT * WIDTH * 4, 128)
-        # self.fc1 = nn.Linear(self.conv_channels * NUM_BINS * HEIGHT * WIDTH / 2 / 2 / 2, 128)
-
-        self.fc1_bn = nn.BatchNorm1d(128)
-        self.fc2 = nn.Linear(128, 2)  # 2 output dimensions (x, y)
-        self.relu = nn.LeakyReLU(negative_slope=0.01)
-        self.dropout = nn.Dropout(p=0.7)
-
-    def forward(self, x):
-        x = self.relu(self.conv3d(x.unsqueeze(1)))
-        x = self.batchnorm3d(x)
-        x = torch.reshape(
-            x, (x.shape[0], self.conv_channels * HEIGHT * WIDTH, NUM_BINS)
-        )
-        x = self.pool1(x)
-        x = torch.reshape(x, (x.shape[0], self.conv_channels, HEIGHT, WIDTH, -1))
-        x = self.relu(self.conv3d2(x))
-        x = self.batchnorm3d2(x)
-        x = torch.reshape(x, (x.shape[0], self.conv_channels2 * HEIGHT * WIDTH, -1))
-        x = self.pool2(x)
-        x = torch.reshape(x, (x.shape[0], self.conv_channels2, HEIGHT, WIDTH, -1))
-
-        x = torch.flatten(x, 1)
-        x = self.relu(self.fc1(x))
-        x = self.dropout(x)
-        x = self.fc1_bn(x)
-        x = self.fc2(x)
-        return x
-
-
 class ModelWrapper:
     def __init__(self, model, queue):
         super().__init__()
         self.queue = queue
 
-        # if OUTPUT_SMOOTHING:
-        # self.binary_heats = [0]
-        # self.location_heats = [0 for _ in range(len(self.colors))]
         if OUTPUT_MOMENTUM > 0:
             self.output = None
 
@@ -136,8 +74,6 @@ class ModelWrapper:
 
         if ASYNC:
             self.external_captures = np.empty((0, HEIGHT, WIDTH, NUM_BINS))
-
-        # self.sensor.flush_internal_buffer()
 
         self.model = model
         self.model.load_state_dict(torch.load(MODEL_SAVE_PATH, weights_only=True))
@@ -156,8 +92,6 @@ class ModelWrapper:
             return
 
         hist = np.mean(hists, axis=0, keepdims=True)
-        # hist = np.max(hists, axis=0, keepdims=True)
-        # hist = hists
 
         hist = torch.tensor(hist, dtype=torch.float32).to(device)
 
@@ -476,9 +410,7 @@ class HistogramWidget(QWidget):
 
         print("creating histogram widget")
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        # self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAutoFillBackground(False)
-        # self.setStyleSheet("background-color: rgba(255, 255, 255, 80); border-radius: 10px;")
 
         # Create a layout and add a GraphicsLayoutWidget
         layout = QVBoxLayout(self)
@@ -494,7 +426,6 @@ class HistogramWidget(QWidget):
         self.setStyleSheet("background: transparent;")
 
         self._create_plots()
-        # self.plots[0].getViewBox().setBackgroundColor((255, 255, 255, 100))
 
     def _create_plots(self):
         self.shared_y = True
@@ -516,22 +447,8 @@ class HistogramWidget(QWidget):
         p.setXRange(START_BIN, END_BIN, padding=0)
         p.setTitle("Raw Sensor Data", size="16")
 
-        # if not self.config.autoscale:
+        # autoscale
         p.enableAutoRange(axis="y", enable=True)
-
-        # Connect settings to functionality
-        # self.win.autoscale_checkbox.stateChanged.connect(self.toggle_autoscale)
-        # self.win.shared_y_checkbox.stateChanged.connect(self.toggle_shared_y)
-        # self.win.y_limit_textbox.textChanged.connect(self.update_y_limit)
-        # self.win.log_y_checkbox.stateChanged.connect(self.toggle_log_y)
-
-        # self.win.autoscale_checkbox.setChecked(self.config.autoscale)
-        # self.win.shared_y_checkbox.setChecked(self.shared_y)
-        # if self.config.ylim is not None:
-        #     self.win.y_limit_textbox.setText(str(self.config.ylim))
-
-        # self.toggle_autoscale(self.config.autoscale)
-        # self.toggle_shared_y(self.shared_y)
 
     def run(self):
         """
@@ -557,43 +474,9 @@ class HistogramWidget(QWidget):
         Updates the histogram data in the plots.
         """
 
-        # # Check if the number of channels has changed
-        # if histograms.shape[0] != len(self.plots):
-        #     get_logger().warning(
-        #         "The number of channels has changed from "
-        #         f"{len(self.plots)} to {histograms.shape[0]}."
-        #     )
-        #     self._setup_sensor()
-        #     self._create_plots()
-        #     return
-
-        # If log scale is enabled, replace 0s with 1s to avoid log(0)
-        # ymin = 0
-        # if self.win.log_y_checkbox.isChecked():
-        #     histograms = np.where(histograms < 1, 1, histograms)
-        #     ymin = 1
-
-        # ylim = None
-        # if self.win.y_limit_textbox.isEnabled():
-        #     ylim = self.config.ylim
-        # if self.config.autoscale and self.shared_y:
-        # Set ylim to be max of _all_ channels
-        # ylim = int(histograms[:, self.min_bin : self.max_bin].max()) + 1
-
         histogram = histograms.mean(axis=0, keepdims=True)
 
         self.bars[0].setOpts(height=histogram)
-
-        # # Call user callback if provided
-        # if self.config.user_callback is not None:
-        #     self.config.user_callback(self)
-
-        # if not any([plot.isVisible() for plot in self.plots]):
-        #     get_logger().info("Closing GUI...")
-        #     QtWidgets.QApplication.quit()
-
-        # if step:
-        #     self.app.processEvents()
 
     def _create_bar_graph_item(self, bins, y=None):
         y = np.zeros_like(bins) if y is None else y
@@ -601,47 +484,6 @@ class HistogramWidget(QWidget):
             x=bins + 0.5, height=y, width=1.0, brush=QtGui.QColor(0, 100, 255, 100)
         )
 
-    # def toggle_autoscale(self, state: int):
-    #     get_logger().debug(f"Autoscale: {bool(state)}")
-    #     self.config.autoscale = bool(state)
-
-    #     self.win.y_limit_textbox.setEnabled(not self.win.autoscale_checkbox.isChecked())
-    #     if self.config.autoscale:
-    #         self.win.y_limit_textbox.clear()
-
-    # def toggle_shared_y(self, state: int):
-    #     get_logger().debug(f"Shared Y-Axis: {bool(state)}")
-    #     self.shared_y = bool(state)
-
-    # def toggle_log_y(self, state: int):
-    #     get_logger().debug(f"Log Y-Axis: {bool(state)}")
-    #     for plot in self.plots:
-    #         plot.setLogMode(y=bool(state))
-
-    # def update_y_limit(self):
-    #     text = self.win.y_limit_textbox.text()
-    #     if text.isdigit():
-    #         self.config.ylim = int(text)
-    #         get_logger().debug(f"Y-Limit set to: {self.config.ylim}")
-    #         for plot in self.plots:
-    #             plot.setYRange(0, self.config.ylim)
-    #     else:
-    #         get_logger().debug("Invalid Y-Limit input")
-
-    # @property
-    # def is_okay(self) -> bool:
-    #     return not self.win.isHidden()
-
-    # def close(self):
-    #     QtWidgets.QApplication.quit()
-    #     if hasattr(self, "win") and self.win is not None:
-    #         self.win.close()
-    #     if hasattr(self, "app") and self.app is not None:
-    #         self.app.quit()
-    #         self.app = None
-    #     if hasattr(self, "timer") and self.timer is not None:
-    #         self.timer.stop()
-    #         self.timer = None
     def paintEvent(self, event):
         # Paint semi-transparent white background with rounded corners
         painter = QtGui.QPainter(self)
@@ -665,7 +507,6 @@ class DemoWindow(QWidget):
         self.view = gl.GLViewWidget()
         self.layout.addWidget(self.view)
         self.view.setBackgroundColor("#e5e5e5")
-        # self.setCentralWidget(self.view)
         self.resize(1200, 800)
 
         # Coordinate overlay
@@ -673,7 +514,6 @@ class DemoWindow(QWidget):
         self.coord_label.setStyleSheet(
             "QLabel { background-color : rgba(255, 255, 255, 200); color : black; padding: 4px; }"
         )
-        # self.coord_label.setFont(QFont("Courier", 10))
         self.coord_label.setAlignment(
             Qt.AlignmentFlag.AlignCenter | Qt.AlignmentFlag.AlignLeft
         )
@@ -685,7 +525,7 @@ class DemoWindow(QWidget):
         # Make sure the label is always on top
         self.coord_label.raise_()
 
-        # Center of your grid (midpoint of [0, 35] and [0, 42])
+        # Center grid (midpoint of [0, 35] and [0, 42])
         center = QtGui.QVector3D(17.5, 21.0, 0)
 
         # Set camera position and angle
