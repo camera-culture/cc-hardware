@@ -855,7 +855,10 @@ class DemoWindow(QWidget):
                     self.input_queue.get()
             self.user_has_input = False
 
-def demo(sensor, gantry, histogram_queue, input_queue):
+def scale_histograms(hists, scale_factor=1.0):
+    return hists * scale_factor * scale_factor * scale_factor
+
+def demo(sensor, gantry, histogram_queue, input_queue, scale_factor):
     gantry_thread = None
     gantry_index = 0
     gantry_pos = {"x": 0, "y": 0}
@@ -886,6 +889,10 @@ def demo(sensor, gantry, histogram_queue, input_queue):
 
         histograms = sensor.accumulate()
         print(f"shape: {histograms.shape}")
+
+        nonlocal scale_factor
+        histograms = scale_histograms(histograms, scale_factor)
+
         model_wrapper.external_capture_callback(histograms)
         histogram_queue.put(histograms)
 
@@ -990,6 +997,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--sensor-port", type=str, required=True)
     parser.add_argument("--gantry-port", type=str, required=True)
+    parser.add_argument("--scale-factor", type=float, default=1.0, required=False)
     args = parser.parse_args()
     from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig8x8
 
@@ -997,8 +1005,8 @@ if __name__ == "__main__":
         port=args.sensor_port,
         integration_time_ms=100,
         cnh_num_bins=16,
-        cnh_subsample=2,
-        cnh_start_bin=24,
+        cnh_subsample=round(2 * args.scale_factor),
+        cnh_start_bin=round(24 * args.scale_factor),
     )
     from cc_hardware.drivers.stepper_motors.telemetrix_stepper import (
         SingleDrive1AxisGantry,
@@ -1016,6 +1024,7 @@ if __name__ == "__main__":
             ),
             histogram_queue,
             input_queue,
+            args.scale_factor,
         ),
     )
     cli_process.start()
