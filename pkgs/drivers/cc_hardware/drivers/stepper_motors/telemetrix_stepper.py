@@ -359,7 +359,7 @@ class SingleDrive1AxisGantry_Y(TelemetrixStepperMotorY):
 
 @register
 class SingleDrive1AxisGantry(TelemetrixStepperMotorSystem):
-    def __init__(self, *args, axes_kwargs, **kwargs):
+    def __init__(self, *args, axes_kwargs: dict = dict(), **kwargs):
         axes = {
             StepperMotorSystemAxis.X: [partial(SingleDrive1AxisGantry_X, **axes_kwargs)],
             StepperMotorSystemAxis.Y: [partial(SingleDrive1AxisGantry_Y, **axes_kwargs)],
