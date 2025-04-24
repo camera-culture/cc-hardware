@@ -31,7 +31,7 @@ This repository contains tools for driving a SPAD sensor mounted on a stepper-mo
 >  • Press the gantry’s button until the blue LED is on.  
 
 1. **Edit the script constants**  
-   At the top of `run_spad_capture.py`, set:
+   At the top of `run_capture.py`, set:
    ```python
    X_SAMPLES      = 2          # number of X steps
    Y_SAMPLES      = 2          # number of Y steps
