@@ -43,16 +43,18 @@ This repository contains tools for driving a SPAD sensor mounted on a stepper-mo
    ```bash
    python run_spad_capture.py
    ```
-   - The capture CLI will launch automatically with all the right Hydra overrides.
-   - **At the end**, you’ll see a **big, bold green** message with the full path to your saved `<object>_data.pkl`.
-   - **Copy** that `.pkl` path—you’ll need it in the next step.
+   - The capture CLI will launch automatically with all the right Hydra overrides.  
+   - **At the end**, you’ll see a **big, bold green** message with the full path to your saved `<object>_data.pkl`.  
+   - **Copy** that `.pkl` path—you’ll need it in the next step.  
+   - **Upload your data:** create a new folder with your name, then upload the entire folder containing your `.pkl` file to:  
+     https://drive.google.com/drive/folders/1ChBRaR-Vnr-SJOGt8zbjSx3TvQQH3zp4?usp=share_link
 
 ---
 
 ## 3. Process & Train a Model
 
 1. **Open the notebook**  
-Use the below or Colab/any Jupyter processing environment. 
+   Use the below or Colab/any Jupyter environment:  
    ```bash
    jupyter lab run_capture_process.ipynb
    ```
