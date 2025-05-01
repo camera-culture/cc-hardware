@@ -2,6 +2,8 @@
 logs/
 outputs/
 *.pkl
+core
+bash_history
 
 # Mac
 .DS_Store

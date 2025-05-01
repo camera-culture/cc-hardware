@@ -181,14 +181,6 @@ class DashboardWindow(QtWidgets.QWidget):
         for name, (_, frame) in data.items():
             if name not in self.frames:
                 self.frames[name] = GLFrame(self.view, name)
-            frame @= np.array(
-                [
-                    [1, 0, 0, 0],
-                    [0, -1, 0, 0],
-                    [0, 0, -1, 0],
-                    [0, 0, 0, 1],
-                ]
-            )
             self.frames[name] @= frame
 
     def change_view(self, direction, btn):

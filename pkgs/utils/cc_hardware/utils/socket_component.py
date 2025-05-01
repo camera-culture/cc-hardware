@@ -162,6 +162,19 @@ class SocketComponent(Component[SocketComponentConfig]):
         """
         return self._data_queue.get()
 
+    def has_data(self) -> bool:
+        """
+        Checks if there is data available in the queue.
+
+        Returns:
+            bool: True if there is data available; otherwise, False.
+        """
+        return not self._data_queue.empty()
+
+    def start(self) -> None:
+        with self._state_lock:
+            self._running = True
+
     @property
     def is_okay(self) -> bool:
         """

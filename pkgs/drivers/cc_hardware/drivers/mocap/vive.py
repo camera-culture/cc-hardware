@@ -407,6 +407,14 @@ class ViveTrackerSensor(MotionCaptureSensor[ViveTrackerSensorConfig]):
                     # Create the transformation matrix for the object
                     L = self._calibration.inverse().mat
                     R = Frame.create().mat
+                    L @= np.array(
+                        [
+                            [1, 0, 0, 0],
+                            [0, -1, 0, 0],
+                            [0, 0, -1, 0],
+                            [0, 0, 0, 1],
+                        ]
+                    )
 
                     data[name] = ViveTrackerPose.read(pysurvive.SimpleObject(obj), L, R)
                     obj = pysurvive.survive_simple_get_next_object(self._ctx.ptr, obj)
@@ -416,6 +424,7 @@ class ViveTrackerSensor(MotionCaptureSensor[ViveTrackerSensorConfig]):
 
             good_samples += 1
 
+        data["calibration"] = (-1, self._calibration.mat.copy())
         return data
 
     def calibrate(self) -> bool:

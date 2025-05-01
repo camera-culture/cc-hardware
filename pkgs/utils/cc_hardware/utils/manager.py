@@ -88,6 +88,7 @@ class Manager:
         self._components: dict[type[Component] | Component | Any] = components
 
         self._closed = False
+        self._iter = 0
 
     def add(self, **components: Component | Any):
         """Adds additional components to the manager."""
@@ -134,16 +135,17 @@ class Manager:
                 return
 
             # LOOP
+            self._iter = iter
             while self.is_okay:
                 try:
-                    if loop(iter, manager=self, **self._components) is False:
-                        get_logger().info(f"Exiting loop after {iter} iterations.")
+                    if loop(self._iter, manager=self, **self._components) is False:
+                        get_logger().info(f"Exiting loop after {self._iter} iterations.")
                         break
                 except Exception:
-                    get_logger().exception(f"Failed to run loop {iter}.")
+                    get_logger().exception(f"Failed to run loop {self._iter}.")
                     break
 
-                iter += 1
+                self._iter += 1
 
             # CLEANUP
             try:
@@ -179,6 +181,16 @@ class Manager:
     def components(self) -> dict[str, type[Component] | Component | Any]:
         """Returns a dictionary of components."""
         return self._components
+
+    @property
+    def iter(self) -> int:
+        """Returns the current iteration count."""
+        return self._iter
+    
+    @iter.setter
+    def iter(self, new_iter: int):
+        """Sets the current iteration count."""
+        self._iter = new_iter
 
     @property
     def is_okay(self) -> bool:

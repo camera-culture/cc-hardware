@@ -153,6 +153,9 @@ class PklHandler:
         """
         return len(self._index)
 
+    def close(self):
+        pass
+
 
 class PklReader(PklHandler):
     def __init__(self, path: Path | str):
