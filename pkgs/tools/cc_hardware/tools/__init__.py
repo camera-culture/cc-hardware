@@ -17,6 +17,7 @@ ToolRegistry.register("camera_viewer", f"{__name__}.camera_viewer")
 ToolRegistry.register("tmf8828_flash", f"{__name__}.flash")
 ToolRegistry.register("vl53l8ch_flash", f"{__name__}.flash")
 ToolRegistry.register("tmf8828_calibrate", f"{__name__}.calibration")
+ToolRegistry.register("calibrate", f"{__name__}.calibration")
 
 # =============================================================================
 
@@ -27,6 +28,7 @@ def main():
 
     from cc_hardware.utils import get_logger, run_cli
 
+    print(ToolRegistry.registry)
     parser = argparse.ArgumentParser(description="cc_hardware tools", add_help=False)
 
     parser.add_argument(

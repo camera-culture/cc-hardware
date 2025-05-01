@@ -3,31 +3,47 @@
 from functools import partial
 from typing import Any
 
-from cc_hardware.drivers.sensor import Sensor
+from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.drivers.spads.tmf8828 import SPADID, RangeMode, TMF8828Sensor
 from cc_hardware.utils import Manager, get_logger, register_cli
 
 
-def calibrate(sensor: type[Sensor] | Sensor, **kwargs) -> Any:
-    """Calibrate the given sensor and return the calibration data.
+# def calibrate(sensor: type[Sensor] | Sensor, **kwargs) -> Any:
+#     """Calibrate the given sensor and return the calibration data.
 
-    Args:
-        sensor (type[Sensor] | Sensor): The sensor to calibrate.
+#     Args:
+#         sensor (type[Sensor] | Sensor): The sensor to calibrate.
 
-    Keyword Args:
-        **kwargs: Additional keyword arguments to pass to the sensor constructor.
+#     Keyword Args:
+#         **kwargs: Additional keyword arguments to pass to the sensor constructor.
 
-    Returns:
-        Any: The calibration data. Specific to the sensor implementation.
-    """
+#     Returns:
+#         Any: The calibration data. Specific to the sensor implementation.
+#     """
+
+#     calibration_data = None
+
+#     def setup(manager: Manager, sensor: Sensor):
+#         nonlocal calibration_data
+#         calibration_data = sensor.calibrate()
+
+#     with Manager(sensor=sensor) as manager:
+#         manager.run(setup=setup)
+
+    # return calibration_data
+
+@register_cli
+def calibrate(sensor: SensorConfig) -> Any:
 
     calibration_data = None
 
-    def setup(manager: Manager, sensor: Sensor):
-        nonlocal calibration_data
-        calibration_data = sensor.calibrate()
+    def setup(manager: Manager):
+        _sensor = Sensor.create_from_config(sensor)
 
-    with Manager(sensor=sensor) as manager:
+        nonlocal calibration_data
+        calibration_data = _sensor.calibrate()
+
+    with Manager() as manager:
         manager.run(setup=setup)
 
     return calibration_data

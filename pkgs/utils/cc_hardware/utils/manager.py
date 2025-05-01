@@ -120,7 +120,7 @@ class Manager:
                 None.
         """
         setup = setup or (lambda **_: None)
-        loop = loop or (lambda *_, **__: None)
+        loop = loop or (lambda *_, **__: False)
         cleanup = cleanup or (lambda **_: None)
 
         try:

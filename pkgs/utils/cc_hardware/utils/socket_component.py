@@ -119,13 +119,15 @@ class SocketComponent(Component[SocketComponentConfig]):
                             if self._waiting:
                                 self._waiting = False
                                 self._waiting_event.set()
+                        if self.config.ack:
+                            conn.send(b"ACK")
                         get_logger().info(
                             "Received 'STOP' message; stopping component."
                         )
                         self._stop_event.set()
                         break
                     elif cmd == SocketComponentCommand.DATA:
-                        data_len = int(conn.recv(2))
+                        data_len = int.from_bytes(conn.recv(2), "big")
                         data = conn.recv(data_len)
                         get_logger().info(f"Received data: {data}")
                         self._data_queue.put(data)

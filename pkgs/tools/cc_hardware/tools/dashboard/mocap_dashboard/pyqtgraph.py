@@ -42,10 +42,7 @@ class GLFrame:
         )
         view.addItem(self.x)
         self.x_label = gl.GLTextItem(
-            text="x",
-            pos=self.x.pos[1],
-            color=(0, 0, 0),
-            font=QtGui.QFont("Arial", 15)
+            text="x", pos=self.x.pos[1], color=(0, 0, 0), font=QtGui.QFont("Arial", 15)
         )
         view.addItem(self.x_label)
         self.y = gl.GLLinePlotItem(
@@ -57,10 +54,7 @@ class GLFrame:
         )
         view.addItem(self.y)
         self.y_label = gl.GLTextItem(
-            text="y",
-            pos=self.y.pos[1],
-            color=(0, 0, 0),
-            font=QtGui.QFont("Arial", 15)
+            text="y", pos=self.y.pos[1], color=(0, 0, 0), font=QtGui.QFont("Arial", 15)
         )
         view.addItem(self.y_label)
         self.z = gl.GLLinePlotItem(
@@ -72,10 +66,7 @@ class GLFrame:
         )
         view.addItem(self.z)
         self.z_label = gl.GLTextItem(
-            text="z",
-            pos=self.z.pos[1],
-            color=(0, 0, 0),
-            font=QtGui.QFont("Arial", 15)
+            text="z", pos=self.z.pos[1], color=(0, 0, 0), font=QtGui.QFont("Arial", 15)
         )
         view.addItem(self.z_label)
 
@@ -170,10 +161,19 @@ class DashboardWindow(QtWidgets.QWidget):
         self.current_view_direction = None
         self.current_view_button = None
         self.prev_camera = None
-        for direction in ["Orthographic X", "Orthographic -X", "Orthographic Y", "Orthographic -Y", "Orthographic Z", "Orthographic -Z"]:
+        for direction in [
+            "Orthographic X",
+            "Orthographic -X",
+            "Orthographic Y",
+            "Orthographic -Y",
+            "Orthographic Z",
+            "Orthographic -Z",
+        ]:
             btn = QtWidgets.QPushButton(direction)
             btn.setCheckable(True)
-            btn.clicked.connect(lambda checked, d=direction, b=btn: self.change_view(d, b))
+            btn.clicked.connect(
+                lambda checked, d=direction, b=btn: self.change_view(d, b)
+            )
             self.button_layout.addWidget(btn)
         layout.addLayout(self.button_layout)
 
@@ -216,7 +216,12 @@ class DashboardWindow(QtWidgets.QWidget):
                 "Orthographic -Z": dict(elevation=0, azimuth=-90),
             }
             pos = pos_map[direction]
-            self.prev_camera = dict(azimuth=self.view.opts["azimuth"], elevation=self.view.opts["elevation"], distance=self.view.opts["distance"], fov=self.view.opts["fov"])
+            self.prev_camera = dict(
+                azimuth=self.view.opts["azimuth"],
+                elevation=self.view.opts["elevation"],
+                distance=self.view.opts["distance"],
+                fov=self.view.opts["fov"],
+            )
             self.view.setCameraPosition(**pos, distance=2000)
             self.view.opts["fov"] = 1
 

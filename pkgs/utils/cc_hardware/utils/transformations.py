@@ -1,9 +1,11 @@
 """This module provides classes for working with transformations in 3D space."""
 
 from typing import Annotated, Optional, Self, TypeAlias
+from pathlib import Path
 
 import numpy as np
 from scipy.spatial.transform import Rotation as R
+from hydra_config import config_wrapper, HydraContainerConfig
 
 # Frame = 4x4 transformation matrix
 TransformationMatrix: TypeAlias = Annotated[np.ndarray, "Shape(4, 4)", "dtype(float)"]
@@ -11,6 +13,35 @@ Position: TypeAlias = Annotated[np.ndarray, "Shape(3,)", "dtype(float)"]
 Quaternion: TypeAlias = Annotated[np.ndarray, "Shape(4,)", "dtype(float)"]
 Euler: TypeAlias = Annotated[np.ndarray, "Shape(3,)", "dtype(float)"]
 
+@config_wrapper
+class FrameConfig(HydraContainerConfig):
+    pos: Position | None = None
+    quat: Quaternion | None = None
+    euler: Euler | None = None
+    roll: float | None = None
+    pitch: float | None = None
+    yaw: float | None = None
+    x: float | None = None
+    y: float | None = None
+    z: float | None = None
+    degrees: bool = True
+    right_handed: bool = True
+
+    def create(self) -> "Frame":
+        """Creates a frame from the config."""
+        return Frame.create(
+            pos=self.pos,
+            quat=self.quat,
+            euler=self.euler,
+            roll=self.roll,
+            pitch=self.pitch,
+            yaw=self.yaw,
+            x=self.x,
+            y=self.y,
+            z=self.z,
+            degrees=self.degrees,
+            right_handed=self.right_handed,
+        )
 
 class Frame:
     def __init__(self, mat: TransformationMatrix, *, degrees: bool, right_handed: bool):
@@ -35,6 +66,7 @@ class Frame:
         roll: Optional[float] = None,
         pitch: Optional[float] = None,
         yaw: Optional[float] = None,
+        mat: Optional[TransformationMatrix] = None,
         degrees: bool = True,
         right_handed: bool = True,
     ) -> Self:
@@ -64,6 +96,10 @@ class Frame:
         Returns:
             Frame: The 4x4 transformation matrix.
         """
+        if mat is not None:
+            assert mat.shape == (4, 4), "Matrix must be 4x4."
+            return cls(mat, degrees=degrees, right_handed=right_handed)
+
         euler_seq = "xyz" if right_handed else "zyx"
 
         mat = np.eye(4)
@@ -117,6 +153,22 @@ class Frame:
         degrees = degrees if degrees is not None else self._degrees
         right_handed = right_handed if right_handed is not None else self._right_handed
         return type(self)(mat.copy(), degrees=degrees, right_handed=right_handed)
+
+    def to_dict(self) -> dict[str, list]:
+        return {
+            "pos": self.pos.tolist(),
+            "quat": self.quat.tolist(),
+            "euler": self.euler.tolist(),
+        }
+
+    @staticmethod
+    def from_yaml(filename: Path | str) -> Self:
+        """Loads a frame from a YAML file."""
+        import yaml
+
+        with open(filename, "r") as f:
+            data = yaml.safe_load(f)
+        return Frame.create(**data)
 
     # ==========================
 
