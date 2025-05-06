@@ -28,7 +28,6 @@ def main():
 
     from cc_hardware.utils import get_logger, run_cli
 
-    print(ToolRegistry.registry)
     parser = argparse.ArgumentParser(description="cc_hardware tools", add_help=False)
 
     parser.add_argument(
