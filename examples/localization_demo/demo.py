@@ -855,7 +855,7 @@ class DemoWindow(QWidget):
                     self.input_queue.get()
             self.user_has_input = False
 
-def demo(sensor, gantry, histogram_queue, input_queue):
+def demo(sensor, gantry, histogram_queue, input_queue, manual_gantry):
     gantry_thread = None
     gantry_index = 0
     gantry_pos = {"x": 0, "y": 0}
@@ -889,50 +889,54 @@ def demo(sensor, gantry, histogram_queue, input_queue):
         model_wrapper.external_capture_callback(histograms)
         histogram_queue.put(histograms)
 
-        nonlocal gantry_thread, gantry_index, gantry_pos, input_queue
-        if gantry_thread is None or not gantry_thread.is_alive():
-            # Read from input queue and move accordingly
-            input_speed = 0.2
-            max_x = 35
-            max_y = 42
-            input_items = []
-            queue_has_items = True
-            while queue_has_items:
-                try:
-                    input_item = input_queue.get_nowait()
-                    input_items.append(input_item)
-                except:
-                    queue_has_items = False
+        nonlocal gantry_thread, gantry_index, gantry_pos, input_queue, manual_gantry
 
-            # combine input items into one transformation
-            if len(input_items) == 0:
-                return
+        if gantry_thread is None or not gantry_thread.is_alive():
+
+            if manual_gantry: # MANUAL GANTRY CONTROL MODE
+                # Read from input queue and move accordingly
+                input_speed = 0.2
+                max_x = 35
+                max_y = 42
+                input_items = []
+                queue_has_items = True
+                while queue_has_items:
+                    try:
+                        input_item = input_queue.get_nowait()
+                        input_items.append(input_item)
+                    except:
+                        queue_has_items = False
+
+                # combine input items into one transformation
+                if len(input_items) == 0:
+                    return
+                
+                total_delta_x = 0
+                total_delta_y = 0
+                for input_item in input_items:
+                    if input_item == "W":
+                        total_delta_x -= input_speed
+                    elif input_item == "A":
+                        total_delta_y += input_speed
+                    elif input_item == "S":
+                        total_delta_x += input_speed
+                    elif input_item == "D":
+                        total_delta_y -= input_speed
+                
+                gantry_pos["x"] += total_delta_x
+                gantry_pos["y"] += total_delta_y
+
+                if gantry_pos["x"] < 0:
+                    gantry_pos["x"] = 0
+                if gantry_pos["x"] > max_x:
+                    gantry_pos["x"] = max_x
+                if gantry_pos["y"] < 0:
+                    gantry_pos["y"] = 0
+                if gantry_pos["y"] > max_y:
+                    gantry_pos["y"] = max_y
+            else:
+                gantry_pos = controller.get_position(gantry_index % controller.total_positions)
             
-            total_delta_x = 0
-            total_delta_y = 0
-            for input_item in input_items:
-                if input_item == "W":
-                    total_delta_x -= input_speed
-                elif input_item == "A":
-                    total_delta_y += input_speed
-                elif input_item == "S":
-                    total_delta_x += input_speed
-                elif input_item == "D":
-                    total_delta_y -= input_speed
-            
-            gantry_pos["x"] += total_delta_x
-            gantry_pos["y"] += total_delta_y
-            
-            if gantry_pos["x"] < 0:
-                gantry_pos["x"] = 0
-            if gantry_pos["x"] > max_x:
-                gantry_pos["x"] = max_x
-            if gantry_pos["y"] < 0:
-                gantry_pos["y"] = 0
-            if gantry_pos["y"] > max_y:
-                gantry_pos["y"] = max_y
-            
-            # pos = controller.get_position(gantry_index % controller.total_positions)
             gantry_thread = threading.Thread(
                 target=gantry.move_to, args=(gantry_pos["x"], gantry_pos["y"])
             )
@@ -990,6 +994,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--sensor-port", type=str, required=True)
     parser.add_argument("--gantry-port", type=str, required=True)
+    parser.add_argument("--manual-gantry", type=bool, required=False, default=False)
     args = parser.parse_args()
     from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig8x8
 
@@ -1016,6 +1021,7 @@ if __name__ == "__main__":
             ),
             histogram_queue,
             input_queue,
+            args.manual_gantry,
         ),
     )
     cli_process.start()
