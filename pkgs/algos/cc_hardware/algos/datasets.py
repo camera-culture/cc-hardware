@@ -124,7 +124,7 @@ class HistogramDataset(Dataset):
         """
         return self.inputs.shape[3]
     
-    def augment(self, factor: int, std_multiplier: float = 1.0):
+    def augment(self, factor: int, std_multiplier: float = 1.0, group_by_targets: bool = True):
         """
         Augments the dataset by repeating the inputs and targets a given number of times.
 
@@ -132,10 +132,26 @@ class HistogramDataset(Dataset):
             factor (int): The number of times to repeat the inputs and targets.
             std_multiplier (float): Number of standard deviations to generate augmented sample from.
         """
-        std = self.inputs.std(dim=0)
-        self.inputs = self.inputs.repeat_interleave(factor, dim=0)
-        self.inputs += torch.normal(torch.zeros_like(self.inputs), std * std_multiplier)
-        self.targets = self.targets.repeat_interleave(factor, dim=0)
+        if group_by_targets:
+            augmented_inputs = []
+            augmented_targets = []
+            groups = self.targets.unique(dim=0)
+            for group in groups:
+                group_mask = torch.all(self.targets == group, dim=1)
+                group_inputs = self.inputs[group_mask]
+                group_targets = self.targets[group_mask]
+                group_inputs = group_inputs.repeat_interleave(factor, dim=0)
+                group_inputs += torch.normal(torch.zeros_like(group_inputs), group_inputs.std(dim=0) * std_multiplier)
+                group_targets = group_targets.repeat_interleave(factor, dim=0)
+                augmented_inputs.append(group_inputs)
+                augmented_targets.append(group_targets)
+            self.inputs = torch.cat(augmented_inputs, dim=0)
+            self.targets = torch.cat(augmented_targets, dim=0)
+        else:
+            std = self.inputs.std(dim=0)
+            self.inputs = self.inputs.repeat_interleave(factor, dim=0)
+            self.inputs += torch.normal(torch.zeros_like(self.inputs), std * std_multiplier)
+            self.targets = self.targets.repeat_interleave(factor, dim=0)
 
     def get_mean_capture(self):
         """
