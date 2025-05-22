@@ -8,7 +8,7 @@ class DeepLocation8(nn.Module):
     """
     DeepLocation8 model: 2-layer convolutional network designed for 8x8 histogram input
     """
-    def __init__(self, height=8, width=8, num_bins=16):
+    def __init__(self, height=8, width=8, num_bins=16, out_dims=2):
         super(DeepLocation8, self).__init__()
 
         self.height=height
@@ -34,7 +34,7 @@ class DeepLocation8(nn.Module):
         self.fc1 = nn.Linear(self.conv_channels2 * self.height * self.width * 4, 128)
 
         self.fc1_bn = nn.BatchNorm1d(128)
-        self.fc2 = nn.Linear(128, 2)  # 2 output dimensions (x, y)
+        self.fc2 = nn.Linear(128, out_dims)  # 2 output dimensions (x, y)
         self.relu = nn.LeakyReLU(negative_slope=0.01)
         self.dropout = nn.Dropout(p=0.7)
 
