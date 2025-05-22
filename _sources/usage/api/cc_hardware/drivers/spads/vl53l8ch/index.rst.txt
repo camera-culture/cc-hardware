@@ -366,3 +366,23 @@ Classes
 
 
 
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: calibrate()
+      :abstractmethod:
+
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
+
+

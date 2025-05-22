@@ -63,7 +63,7 @@ Classes
 
 
 
-   .. py:method:: augment(factor, std_multiplier = 1.0)
+   .. py:method:: augment(factor, std_multiplier = 1.0, group_by_targets = True)
 
       Augments the dataset by repeating the inputs and targets a given number of times.
 

@@ -178,16 +178,64 @@ Classes
 
 
 
+   .. py:method:: wait_for_move()
+
+      Waits for the motor to complete its current move operation. This method should
+      block the execution until the motor has reached its target position or
+      completed the current motion command.
+
+
+
    .. py:property:: is_moving
       :type: bool
 
       Returns True if any motor is moving.
 
 
+   .. py:property:: position
+      :type: list
+
+      Returns the current position of the stepper motor. The position value should
+      represent the motor's current location in the same units as the move_to and
+      move_by methods.
+
+      :returns: *float* -- The current position of the motor.
+
+
    .. py:method:: __getattr__(name)
 
       This is a passthrough to the underlying motor objects.
 
+
+
+   .. py:method:: close()
+
+      Closes the connection or shuts down the stepper motor safely. Implementations
+      should ensure that the motor is properly powered down and any resources are
+      released to avoid damage or memory leaks.
+
+
+
+   .. py:method:: home()
+      :abstractmethod:
+
+
+      Homes the stepper motor to its reference or zero position. This method should
+      move the motor to a predefined starting point, which could involve moving
+      until a limit switch or sensor is triggered to establish a known starting
+      position.
+
+
+
+   .. py:property:: is_okay
+      :type: bool
+      :abstractmethod:
+
+      Checks if the stepper motor is in a healthy operational state. This could
+      involve verifying that the motor is not in an error state, is receiving power,
+      and has no detected hardware issues.
+
+      :returns: *bool* -- True if the motor is operational, False otherwise.
 
 
 .. py:class:: StepperMotorSystemAxis(*args, **kwds)
