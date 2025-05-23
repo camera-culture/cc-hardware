@@ -17,7 +17,6 @@ from pyqtgraph.opengl import GLMeshItem, MeshData
 import trimesh
 import numpy as np
 import torch
-from torch import nn
 
 from cc_hardware.drivers.spads import SPADSensor
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
@@ -28,14 +27,11 @@ from cc_hardware.algos.models import DeepLocation8
 NOW = datetime.now()
 
 BINARY = False
-# OUTPUT_SMOOTHING = True
 OUTPUT_MOMENTUM = 0
 EXP_CAPTURE_SMOOTHING = False
 ROLLING_MEANS_CAPTURE = True
 ASYNC = True
 CAPTURE_COUNT = 1
-
-# ZERO_COUNT = 40
 
 STDEV_FILTERING = False
 
@@ -307,6 +303,7 @@ class KalmanWrapper(ModelWrapper):
         return self.kf.get_state()
 
 
+# Old visualization (2D moving circle)
 class MovingCircleWidget(QWidget):
     def __init__(self, flip_x=False, flip_y=False):
         super().__init__()
@@ -955,9 +952,6 @@ def demo(sensor, gantry, histogram_queue, input_queue, manual_gantry):
         except KeyboardInterrupt:
             cleanup(manager.components["gantry"])
 
-
-# python location_test.py dashboard=PyQtGraphDashboardConfig sensor=VL53L8CHConfig4x4 sensor.port=/dev/cu.usbmodem1103 sensor.integration_time_ms=100 sensor.cnh_num_bins=48 sensor.cnh_subsample=1 sensor.cnh_start_bin=10
-# python location_test.py dashboard=PyQtGraphDashboardConfig sensor=VL53L8CHConfig8x8 sensor.port=/dev/cu.usbmodem1103 sensor.integration_time_ms=100 sensor.cnh_num_bins=16 sensor.cnh_subsample=2 sensor.cnh_start_bin=12
 
 if __name__ == "__main__":
     mp_manager = multiprocessing.Manager()

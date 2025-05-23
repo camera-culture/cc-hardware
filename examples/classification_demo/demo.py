@@ -27,50 +27,6 @@ ZERO_COUNT = 10
 
 STDEV_FILTERING = False
 
-class CounterCNN(nn.Module):
-    def __init__(self, out_channels=3):
-        super(CounterCNN, self).__init__()
-        # self.conv1 = nn.Conv2d(in_channels=(end_bin - start_bin), out_channels=16, kernel_size=3, padding=1)
-        # self.batchnorm1 = nn.BatchNorm2d(16)
-        # self.conv2 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=3, padding=1)
-        # self.batchnorm2 = nn.BatchNorm2d(64)
-
-        conv_out_channels = 4
-        self.conv3d = nn.Conv3d(in_channels=1, out_channels=conv_out_channels, kernel_size=(3, 3, 3), padding=(1, 1, 1))
-        self.batchnorm3d = nn.BatchNorm3d(conv_out_channels)
-
-        self.fc1 = nn.Linear(conv_out_channels * (END_BIN - START_BIN) * height * width, 128)
-
-        # self.pool = nn.MaxPool2d(kernel_size=2, stride=2, padding=0)
-        # self.fc1 = nn.Linear(64 * 4 * 4, 128)
-        self.fc1_bn = nn.BatchNorm1d(128)
-        self.fc2 = nn.Linear(128, out_channels)  # Assuming 10 classes for the labels
-        self.relu = nn.LeakyReLU(negative_slope=0.01)
-        self.dropout = nn.Dropout(p=0.7)
-
-    def forward(self, x):
-        # # print(f'x shape at start: {x.shape}')
-        # x = self.relu(self.conv1(x))
-        # # print(f'x shape after conv1: {x.shape}')
-        # x = self.batchnorm1(x)
-        # # x = self.pool(x)
-        # # print(f'x shape after pool1: {x.shape}')
-        # x = self.relu(self.conv2(x))
-        # # print(f'x shape after conv2: {x.shape}')
-        # x = self.batchnorm2(x)
-
-        x = self.relu(self.conv3d(x.unsqueeze(1)))
-        x = self.batchnorm3d(x)
-
-        # x = self.pool(x)
-        # print(f'x shape after pool2: {x.shape}')
-        x = torch.flatten(x, 1)
-        # print(f'x shape after flatten: {x.shape}')
-        x = self.relu(self.fc1(x))
-        x = self.dropout(x)
-        x = self.fc1_bn(x)
-        x = self.fc2(x)
-        return x
 
 class Color(QWidget):
     def __init__(self, color, text="initalizing..."):
@@ -329,8 +285,6 @@ def spad_dashboard2(
     with Manager() as manager:
         manager.run(setup=setup, loop=loop)
 
-# SCRIPT TO RUN:
-# python demo_new2.py dashboard=PyQtGraphDashboardConfig sensor=VL53L8CHConfig4x4 save_data=False sensor.cnh_start_bin=16 sensor.cnh_num_bins=16 sensor.cnh_subsample=3 sensor.integration_time_ms=100
 
 if __name__ == "__main__":
 
