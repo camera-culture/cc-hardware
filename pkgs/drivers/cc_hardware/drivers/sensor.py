@@ -18,8 +18,9 @@ class SensorConfig(Config):
     and add any necessary parameters.
 
     Attributes:
-        instance (str): The sensor instance name. Used to instantiate the sensor from
-            the configuration.
+        settings (dict[str, Setting]): A dictionary of settings for the stepper motor.
+            These are used for UI elements. Actual settings should be defined
+            within the subclass.
     """
 
     @property

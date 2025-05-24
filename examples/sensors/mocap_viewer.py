@@ -1,9 +1,13 @@
 from cc_hardware.drivers import MotionCaptureSensor, MotionCaptureSensorConfig
-from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
+from cc_hardware.tools.dashboard.mocap_dashboard import (
+    MotionCaptureDashboard,
+    MotionCaptureDashboardConfig,
+)
+from cc_hardware.utils import Manager, register_cli, run_cli
 
 
 @register_cli
-def mocap_dashboard(
+def mocap_viewer(
     sensor: MotionCaptureSensorConfig, dashboard: MotionCaptureDashboardConfig
 ):
     def setup(manager: Manager):
@@ -39,10 +43,6 @@ def mocap_dashboard(
 
     with Manager() as manager:
         manager.run(setup=setup, loop=loop)
-
-
-def main():
-    run_cli(mocap_dashboard)
 
 
 if __name__ == "__main__":

@@ -1,3 +1,8 @@
 # Stepper Motor Controller
 
-This example demonstrates how to explicitly define the objects to create and uses {mod}`argparse` to initialize the demo. The demo itself shows how to initialize and control a stepper motor system.
+## `stepper_motor_controller_cli.py`
+
+```bash
+# Port is optional if only one device is connected
+python examples/stepper_motor_controller/stepper_motor_controller_cli.py stepper_system=<GANTRY> stepper_system.port=<PORT>
+```

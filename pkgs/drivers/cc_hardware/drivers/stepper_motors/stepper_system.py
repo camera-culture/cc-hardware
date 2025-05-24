@@ -7,8 +7,10 @@ from typing import Any, Callable, overload
 from cc_hardware.drivers.stepper_motors.stepper_motor import (
     DummyStepperMotor,
     StepperMotor,
+    StepperMotorConfig,
 )
 from cc_hardware.utils import call_async_gather, get_logger
+from cc_hardware.utils import Component, Config, config_wrapper
 
 # ======================
 
@@ -26,32 +28,46 @@ class StepperMotorSystemAxis(Enum):
     ELEVATION = "ELEVATION"
 
 
+@config_wrapper
+class StepperMotorSystemConfig(Config):
+    """Configuration for a stepper motor system.
+
+    Attributes:
+        axes (dict[StepperMotorSystemAxis, list[StepperMotor]]): A dictionary of axes
+            and the motors that are attached to them.
+
+    """
+
+    axes: dict[StepperMotorSystemAxis, list[StepperMotorConfig]]
+
+
 # ======================
 
 
-class StepperMotorSystem(StepperMotor):
+class StepperMotorSystem[T: StepperMotorSystemConfig](Component[T]):
     """This is a wrapper around multiple stepper motors which defines the system
     as a whole (i.e. a gantry or multi-axis rotation stage).
-
-    Args:
-        axes (dict[StepperMotorSystemAxis, list[StepperMotor]]): A dictionary of axes
-            and the motors that are attached to them.
     """
 
     def __init__(
         self,
-        axes: dict[StepperMotorSystemAxis, list[StepperMotor]],
+        config: T,
     ):
-        # The current state of the motor is considered zero (as in the motor is homed).
-        self._axes = axes
+        super().__init__(config)
+
+        self._axes = {
+            axis: [StepperMotor.create_from_config(motor) for motor in motors]
+            for axis, motors in config.axes.items()
+        }
+
+    def initialize(self):
+        get_logger().info(f"Initialized {self.__class__.__name__}.")
 
     @overload
-    def move_to(self, *positions: float):
-        ...
+    def move_to(self, *positions: float): ...
 
     @overload
-    def move_to(self, **positions: float):
-        ...
+    def move_to(self, **positions: float): ...
 
     def move_to(self, *args: float, **kwargs: float):
         """Move to the specified position using positional or keyword arguments."""
@@ -59,13 +75,13 @@ class StepperMotorSystem(StepperMotor):
             raise ValueError("move_to takes either all positional or all keyword args.")
         elif args:
             assert len(args) == len(
-                self._axes
-            ), f"Got {len(args)} positions, expected {len(self._axes)}"
-            positions = {axis: position for axis, position in zip(self._axes, args)}
+                self.config.axes
+            ), f"Got {len(args)} positions, expected {len(self.axes)}"
+            positions = {axis: position for axis, position in zip(self.axes, args)}
         elif kwargs:
             assert len(kwargs) == len(
-                self._axes
-            ), f"Got {len(kwargs)} positions, expected {len(self._axes)}"
+                self.axes
+            ), f"Got {len(kwargs)} positions, expected {len(self.axes)}"
             positions = kwargs
 
         current_positions = self.position
@@ -76,12 +92,10 @@ class StepperMotorSystem(StepperMotor):
         self.move_by(**relative_positions)
 
     @overload
-    def move_by(self, *positions: float):
-        ...
+    def move_by(self, *positions: float): ...
 
     @overload
-    def move_by(self, block: bool = True, **positions: float):
-        ...
+    def move_by(self, block: bool = True, **positions: float): ...
 
     def move_by(self, *args: float, **kwargs: float):
         """Moves the steppers to the specified positions."""
@@ -89,13 +103,13 @@ class StepperMotorSystem(StepperMotor):
             raise ValueError("move_to takes either all positional or all keyword args.")
         elif args:
             assert len(args) == len(
-                self._axes
-            ), f"Got {len(args)} args, expected {len(self._axes)}"
-            positions = {axis: position for axis, position in zip(self._axes, args)}
+                self.axes
+            ), f"Got {len(args)} args, expected {len(self.axes)}"
+            positions = {axis: position for axis, position in zip(self.axes, args)}
         elif kwargs:
             assert len(kwargs) == len(
-                self._axes
-            ), f"Got {len(kwargs)} kwargs, expected {len(self._axes)}"
+                self.axes
+            ), f"Got {len(kwargs)} kwargs, expected {len(self.axes)}"
             positions = {
                 StepperMotorSystemAxis[axis.upper()]: pos
                 for axis, pos in kwargs.items()
@@ -103,7 +117,7 @@ class StepperMotorSystem(StepperMotor):
 
         # Set the target position of each motor
         for axis, position in positions.items():
-            for motor in self._axes[axis]:
+            for motor in self.axes[axis]:
                 get_logger().info(f"Moving {axis} by {position}...")
                 motor.move_by(position)
 
@@ -115,18 +129,18 @@ class StepperMotorSystem(StepperMotor):
     @property
     def is_moving(self) -> bool:
         """Returns True if any motor is moving."""
-        return any(motor.is_moving for motors in self._axes.values() for motor in motors)
+        return any(motor.is_moving for motors in self.axes.values() for motor in motors)
 
     @property
     def position(self) -> list:
-        return [motor.position for motors in self._axes.values() for motor in motors]
+        return [motor.position for motors in self.axes.values() for motor in motors]
 
     def _run_async_gather(self, fn: str, callback: Callable[[list], Any]):
         """Runs the specified function on all motors asynchronously."""
         # TODO: can re remove DummyStepperMotor dependence?
         fns = [
             getattr(motor, fn)
-            for motors in self._axes.values()
+            for motors in self.axes.values()
             for motor in motors
             if not isinstance(motor, DummyStepperMotor)
         ]
@@ -135,7 +149,7 @@ class StepperMotorSystem(StepperMotor):
     def __getattr__(self, name: str) -> Any:
         """This is a passthrough to the underlying motor objects."""
         results, fns = [], []
-        for motors in self._axes.values():
+        for motors in self.axes.values():
             motor_results, motor_fns = [], []
             for motor in motors:
                 # Will throw attribute error if the attribute is not found
@@ -175,19 +189,23 @@ class StepperMotorSystem(StepperMotor):
         else:
             return results
 
+    @property
+    def axes(self) -> dict[StepperMotorSystemAxis, list[StepperMotor]]:
+        """Returns the axes of the stepper motor system."""
+        return self._axes
+
     def close(self):
         get_logger().info("Closing steppers...")
-        if "_axes" in self.__dict__:
-            for motors in self._axes.values():
-                for motor in motors:
-                    motor.close()
+        for motors in self.axes.values():
+            for motor in motors:
+                motor.close()
 
 
 class DummyStepperSystem(StepperMotorSystem):
     """A dummy stepper system that does nothing."""
 
     def __init__(self):
-        super().__init__({})
+        super().__init__(StepperMotorSystemConfig.create(axes={}))
 
     def move_to(self, *positions: float):
         pass

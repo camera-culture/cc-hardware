@@ -6,66 +6,74 @@ connected to a CNCShield using the Telemetrix library."""
 import inspect
 from functools import partial
 from typing import Any
+from dataclasses import field
 
 from telemetrix import telemetrix
 
 from cc_hardware.drivers.stepper_motors import (
     StepperMotor,
+    StepperMotorConfig,
+    StepperMotorSystemConfig,
     StepperMotorSystem,
     StepperMotorSystemAxis,
 )
-from cc_hardware.utils import call_async, get_logger, register
+from cc_hardware.utils import call_async, get_logger, config_wrapper, II
 
 # ======================
 
 
-@register
-class TelemetrixStepperMotor(StepperMotor):
+@config_wrapper
+class TelemetrixStepperMotorConfig(StepperMotorConfig):
+    """Configuration for Telemetrix stepper motors.
+
+    Attributes:
+        board (telemetrix.Telemetrix | None): The Telemetrix board instance. Optional
+            since we set the board in the system.
+
+        distance_pin (int): The pin on the CNCShield that controls this motor's position
+        direction_pin (int): The pin on the CNCShield that controls this motor's
+            position
+        enable_pin (int): The pin that controls this motor's enable pin.
+        cm_per_rev (float): The number of centimeters per revolution of the motor.
+        steps_per_rev (int): The number of steps per revolution of the motor.
+        speed (int): The speed of the motor in cm/s.
+        flip_direction (bool): If True, the motor will move in the opposite direction.
+    """
+
+    board: telemetrix.Telemetrix | None = None
+
+    distance_pin: int
+    direction_pin: int
+    enable_pin: int
+    cm_per_rev: float
+    steps_per_rev: int
+    speed: int
+    flip_direction: bool = False
+
+
+class TelemetrixStepperMotor[T: TelemetrixStepperMotorConfig](StepperMotor[T]):
     """This is a wrapper of the Telemetrix library's interface with stepper motors.
 
     NOTE: Initialization of this class effectively homes the motor. Call
     `set_current_position` to explicitly set the current position.
-
-    Args:
-        board (telemetrix.Telemetrix): The Telemetrix board object
-
-    Keyword Args:
-        distance_pin (int): The pin on the CNCShield that controls this motor's position
-        direction_pin (int): The pin on the CNCShield that controls this motor's
-            position
-        enable_pin (int): The pin that controls this motor's enable pin..
-        cm_per_rev (float): The number of centimeters per revolution of the motor.
-        steps_per_rev (int): The number of steps per revolution of the motor.
-        speed (float): The speed of the motor in cm/s.
-        flip_direction (bool): If True, the motor will move in the opposite direction.
     """
 
     def __init__(
         self,
-        board: telemetrix.Telemetrix,
-        *,
-        distance_pin: int,
-        direction_pin: int,
-        enable_pin: int,
-        cm_per_rev: float,
-        steps_per_rev: int,
-        speed: float,
-        flip_direction: bool = False,
+        config: T,
     ):
-        self._board = board
-        self._cm_per_rev = cm_per_rev
-        self._steps_per_rev = steps_per_rev
-        self._speed = speed
-        self._flip_direction = flip_direction
+        super().__init__(config)
 
         # Create the motor instance and set initial settings
-        self._motor = board.set_pin_mode_stepper(pin1=distance_pin, pin2=direction_pin)
+        self._motor = config.board.set_pin_mode_stepper(
+            pin1=config.distance_pin, pin2=config.direction_pin
+        )
         get_logger().info(f"Created TelemetrixStepperMotor with id {self._motor}")
-        self.set_enable_pin(enable_pin)
+        self.set_enable_pin(config.enable_pin)
         self.set_3_pins_inverted(enable=True)
 
         # Set constants and home the motor
-        self.set_max_speed(self._speed)
+        self.set_max_speed(self.config.speed)
         self.set_current_position(0)
 
         # Initialize the motor
@@ -105,7 +113,7 @@ class TelemetrixStepperMotor(StepperMotor):
         """Returns the current position of the stepper motor."""
 
         def get_position(data):
-            f = -1 if self._flip_direction else 1
+            f = -1 if self.config.flip_direction else 1
             return self.revs_to_cm(data[2]) * f
 
         return call_async(self.get_current_position, get_position)
@@ -117,7 +125,7 @@ class TelemetrixStepperMotor(StepperMotor):
 
     @property
     def flip_direction(self) -> bool:
-        return self._flip_direction
+        return self.config.flip_direction
 
     def set_target_position_cm(self, relative_cm: float):
         """Sets the target position of the motor relative to current position.
@@ -127,44 +135,51 @@ class TelemetrixStepperMotor(StepperMotor):
         """
         get_logger().info(f"Setting target position to {relative_cm} cm...")
         relative_steps = self.cm_to_revs(relative_cm)
-        if self._flip_direction:
+        if self.flip_direction:
             relative_steps *= -1
         self.move(relative_steps)
-        self.set_speed(self._speed)  # Need to set speed again since move overwrites it
+        self.set_speed(
+            self.config.speed
+        )  # Need to set speed again since move overwrites it
 
     def set_absolute_target_position_cm(self, position_cm: float):
         """Sets the absolute target position in cm."""
         get_logger().info(f"Setting absolute target position to {position_cm} cm...")
         steps = self.cm_to_revs(position_cm)
-        if self._flip_direction:
+        if self.flip_direction:
             steps *= -1
-        self._board.stepper_move_to(self._motor, steps)
-        self.set_speed(self._speed)  # Need to set speed again since move overwrites it
+        self.config.board.stepper_move_to(self._motor, steps)
+        self.set_speed(
+            self.config.speed
+        )  # Need to set speed again since move overwrites it
 
     def cm_to_revs(self, cm: float) -> int:
         """Converts cm to steps."""
-        return int(cm / self._cm_per_rev * self._steps_per_rev)
+        return int(cm / self.config.cm_per_rev * self.config.steps_per_rev)
 
     def revs_to_cm(self, revs: int) -> float:
         """Converts steps to cm."""
-        return revs / self._steps_per_rev * self._cm_per_rev
+        return revs / self.config.steps_per_rev * self.config.cm_per_rev
 
     @property
     def is_moving(self) -> bool:
         """Checks if the stepper motor is currently in motion."""
+
         def is_moving(data):
             return data[2] == 1
+
         return call_async(self.is_running, is_moving)
 
     @property
     def is_okay(self) -> bool:
         """Checks if the stepper motor is in a healthy operational state."""
-        return self._board is not None
+        return self.config.board is not None
 
     def close(self) -> None:
         """Closes the connection or shuts down the stepper motor safely."""
-        if "_board" in self.__dict__:
+        if hasattr(self, "_motor"):
             self.stop()
+            del self._motor
 
     def __getattr__(self, key: str) -> Any:
         """This is a passthrough to the underlying stepper object.
@@ -175,7 +190,9 @@ class TelemetrixStepperMotor(StepperMotor):
         require a motor as input, we'll pass it in.
         """
         # Will throw an AttributeError if the attribute doesn't exist in board
-        attr = getattr(self._board, f"stepper_{key}", None) or getattr(self._board, key)
+        attr = getattr(self.config.board, f"stepper_{key}", None) or getattr(
+            self.config.board, key
+        )
 
         # If "motor_id" is in the signature of the method, we'll pass the motor id to
         # the method. This will return False if the attr isn't a method.
@@ -189,52 +206,55 @@ class TelemetrixStepperMotor(StepperMotor):
 # ======================
 
 
-class TelemetrixStepperMotorSystem(StepperMotorSystem):
-    """This is a wrapper of the Telemetrix library's interface with multiple
-    stepper motors.
+@config_wrapper
+class TelemetrixStepperMotorSystemConfig(StepperMotorSystemConfig):
+    """Configuration for Telemetrix stepper motor systems.
 
-    Args:
+    Attributes:
         port (str | None): The port to connect to the Telemetrix board. If None,
             the port will be attempted to be auto-detected.
+        arduino_wait (int): The time to wait for the Arduino to initialize in seconds.
+    """
 
-    Keyword Args:
-        axes (dict[str, list[TelemetrixStepperMotor]]): A dictionary of axes and
-            the motors that are attached to them. The key is the axis name and the
-            value is a list of motors attached to that axis.
-        kwargs: Additional keyword arguments to pass to the Telemetrix board.
+    port: str | None = None
+    arduino_wait: int = 4
+
+
+class TelemetrixStepperMotorSystem[T: TelemetrixStepperMotorSystemConfig](
+    StepperMotorSystem[T]
+):
+    """This is a wrapper of the Telemetrix library's interface with multiple
+    stepper motors.
     """
 
     def __init__(
         self,
-        port: str | None = None,
-        *,
-        axes: dict[str, list[TelemetrixStepperMotor]],
-        **kwargs,
+        config: T,
     ):
         # This is the arduino object. Initialize it once. If port is None, the library
         # will attempt to auto-detect the port.
-        self._board = telemetrix.Telemetrix(port, **kwargs)
+        self._board = telemetrix.Telemetrix(
+            config.port, arduino_wait=config.arduino_wait
+        )
 
-        # Update the axes to include the board
-        axes = {
-            axis: [motor(self._board) for motor in motors]
-            for axis, motors in axes.items()
-        }
+        for motors in config.axes.values():
+            for motor in motors:
+                motor.board = self._board
 
         # Initialize the multi-axis stepper system
-        super().__init__(axes)
+        super().__init__(config)
 
     @property
     def is_okay(self) -> bool:
-        return True
+        return all(motor.is_okay for motors in self.axes.values() for motor in motors)
 
     def home(self):
         raise NotImplementedError(f"Cannot home {self.__class__.__name__}.")
 
     def close(self) -> None:
         """Closes the connection or shuts down the stepper motor safely."""
+        super().close()
         if hasattr(self, "_board"):
-            super().close()
             self._board.shutdown()
             del self._board
 
@@ -245,123 +265,87 @@ class TelemetrixStepperMotorSystem(StepperMotorSystem):
 # https://www.makerstore.com.au/wp-content/uploads/filebase/publications/CNC-Shield-Guide-v1.0.pdf?srsltid=AfmBOooLloq8m90Yut7SvV4jDVqMSgQVeiFeI7rdsZYqy9eaUdIjHfCf
 
 
-@register
-class TelemetrixStepperMotorX(TelemetrixStepperMotor):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("distance_pin", 2)
-        kwargs.setdefault("direction_pin", 5)
-        kwargs.setdefault("enable_pin", 8)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class TelemetrixStepperMotorXConfig(TelemetrixStepperMotorConfig):
+    distance_pin: int = 2
+    direction_pin: int = 5
+    enable_pin: int = 8
 
 
-@register
-class TelemetrixStepperMotorY(TelemetrixStepperMotor):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("distance_pin", 3)
-        kwargs.setdefault("direction_pin", 6)
-        kwargs.setdefault("enable_pin", 8)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class TelemetrixStepperMotorYConfig(TelemetrixStepperMotorConfig):
+    distance_pin: int = 3
+    direction_pin: int = 6
+    enable_pin: int = 8
 
 
-@register
-class TelemetrixStepperMotorZ(TelemetrixStepperMotor):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("distance_pin", 4)
-        kwargs.setdefault("direction_pin", 7)
-        kwargs.setdefault("enable_pin", 8)
-        super().__init__(*args, **kwargs)
-
-
-@register
-class TelemetrixStepperMotorXReversed(TelemetrixStepperMotorX):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("flip_direction", True)
-        super().__init__(*args, **kwargs)
-
-
-@register
-class TelemetrixStepperMotorYReversed(TelemetrixStepperMotorY):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("flip_direction", True)
-        super().__init__(*args, **kwargs)
-
-
-@register
-class TelemetrixStepperMotorZReversed(TelemetrixStepperMotorZ):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("flip_direction", True)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class TelemetrixStepperMotorZConfig(TelemetrixStepperMotorConfig):
+    distance_pin: int = 4
+    direction_pin: int = 7
+    enable_pin: int = 8
 
 
 # ======================
 
 
-@register
-class DualDrive2AxisGantry_X(TelemetrixStepperMotorZ):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("cm_per_rev", 2.8)
-        kwargs.setdefault("steps_per_rev", 200)
-        kwargs.setdefault("speed", 1000)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class DualDrive2AxisGantryXConfig(TelemetrixStepperMotorZConfig):
+    cm_per_rev: float = 2.8
+    steps_per_rev: int = 200
+    speed: int = 1000
 
 
-@register
-class DualDrive2AxisGantry_Y1(TelemetrixStepperMotorY):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("cm_per_rev", 4)
-        kwargs.setdefault("steps_per_rev", 200)
-        kwargs.setdefault("speed", 500)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class DualDrive2AxisGantryY1Config(TelemetrixStepperMotorYConfig):
+    cm_per_rev: float = 4
+    steps_per_rev: int = 200
+    speed: int = 500
 
 
-@register
-class DualDrive2AxisGantry_Y2(TelemetrixStepperMotorXReversed):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("cm_per_rev", 4)
-        kwargs.setdefault("steps_per_rev", 200)
-        kwargs.setdefault("speed", 500)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class DualDrive2AxisGantryY2Config(TelemetrixStepperMotorXConfig):
+    cm_per_rev: float = 4
+    steps_per_rev: int = 200
+    speed: int = 500
+
+    # Flipped direction for Y2 to match Y1
+    flip_direction: bool = True
 
 
-@register
-class DualDrive2AxisGantry(TelemetrixStepperMotorSystem):
-    def __init__(self, *args, **kwargs):
-        axes = {
-            StepperMotorSystemAxis.X: [DualDrive2AxisGantry_X],
-            StepperMotorSystemAxis.Y: [
-                DualDrive2AxisGantry_Y1,
-                DualDrive2AxisGantry_Y2,
-            ],
-        }
-        super().__init__(*args, axes=axes, **kwargs)
+@config_wrapper
+class DualDrive2AxisGantryConfig(TelemetrixStepperMotorSystemConfig):
+    axes: dict[StepperMotorSystemAxis, list[TelemetrixStepperMotorConfig]] = {
+        StepperMotorSystemAxis.X: [DualDrive2AxisGantryXConfig],
+        StepperMotorSystemAxis.Y: [
+            DualDrive2AxisGantryY1Config,
+            DualDrive2AxisGantryY2Config,
+        ],
+    }
 
 
 # ======================
 
 
-@register
-class SingleDrive1AxisGantry_X(TelemetrixStepperMotorX):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("cm_per_rev", 2.8)
-        kwargs.setdefault("steps_per_rev", 2850)
-        kwargs.setdefault("speed", 2**15 - 1)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class SingleDrive1AxisGantryXConfig(TelemetrixStepperMotorXConfig):
+    cm_per_rev: float = 2.8
+    steps_per_rev: int = 2850
+    speed: int = 2**15 - 1
 
 
-@register
-class SingleDrive1AxisGantry_Y(TelemetrixStepperMotorY):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("cm_per_rev", 2.8)
-        kwargs.setdefault("steps_per_rev", 2850)
-        kwargs.setdefault("speed", 2**15 - 1)
-        super().__init__(*args, **kwargs)
+@config_wrapper
+class SingleDrive1AxisGantryYConfig(TelemetrixStepperMotorYConfig):
+    cm_per_rev: float = 2.8
+    steps_per_rev: int = 2850
+    speed: int = 2**15 - 1
 
 
-@register
-class SingleDrive1AxisGantry(TelemetrixStepperMotorSystem):
-    def __init__(self, *args, axes_kwargs, **kwargs):
-        axes = {
-            StepperMotorSystemAxis.X: [partial(SingleDrive1AxisGantry_X, **axes_kwargs)],
-            StepperMotorSystemAxis.Y: [partial(SingleDrive1AxisGantry_Y, **axes_kwargs)],
+@config_wrapper
+class SingleDrive1AxisGantryConfig(TelemetrixStepperMotorSystemConfig):
+    axes: dict[StepperMotorSystemAxis, list[TelemetrixStepperMotorConfig]] = field(
+        default_factory=lambda: {
+            StepperMotorSystemAxis.X: [SingleDrive1AxisGantryXConfig],
+            StepperMotorSystemAxis.Y: [SingleDrive1AxisGantryYConfig],
         }
-        super().__init__(*args, axes=axes, **kwargs)
+    )

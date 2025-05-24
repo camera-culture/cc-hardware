@@ -2,6 +2,7 @@
 
 from abc import abstractmethod
 
+from cc_hardware.utils import Component, Config, config_wrapper
 from cc_hardware.drivers.sensor import Sensor, SensorConfig
 from cc_hardware.utils import config_wrapper, get_logger
 

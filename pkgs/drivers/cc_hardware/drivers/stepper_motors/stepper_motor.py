@@ -3,11 +3,23 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+from cc_hardware.utils import Component, Config, config_wrapper, register
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.registry import Registry, register
+from cc_hardware.utils.setting import Setting
 
 
-class StepperMotor(Registry, ABC):
+@config_wrapper
+class StepperMotorConfig(Config):
+    """Configuration for stepper motors.
+
+    When defining a new stepper, create a subclass of this configuration class
+    and add any necessary parameters.
+    """
+
+    pass
+
+
+class StepperMotor[T: StepperMotorConfig](Component[T]):
     """
     An abstract base class for controlling a stepper motor. This class provides a
     unified interface for common operations such as moving to a specific position,
@@ -95,19 +107,6 @@ class StepperMotor(Registry, ABC):
 
         Returns:
             bool: True if the motor is moving, False otherwise.
-        """
-        pass
-
-    @property
-    @abstractmethod
-    def is_okay(self) -> bool:
-        """
-        Checks if the stepper motor is in a healthy operational state. This could
-        involve verifying that the motor is not in an error state, is receiving power,
-        and has no detected hardware issues.
-
-        Returns:
-            bool: True if the motor is operational, False otherwise.
         """
         pass
 

@@ -84,8 +84,14 @@ class Manager:
     it is closed.
     """
 
-    def __init__(self, **components: type[Component] | Component | Any):
+    def __init__(
+        self,
+        *,
+        cleanup_on_keyboard_interrupt: bool = True,
+        **components: type[Component] | Component | Any,
+    ):
         self._components: dict[type[Component] | Component | Any] = components
+        self._cleanup_on_keyboard_interrupt = cleanup_on_keyboard_interrupt
 
         self._closed = False
 
@@ -134,24 +140,30 @@ class Manager:
                 return
 
             # LOOP
-            while self.is_okay:
-                try:
+            try:
+                while self.is_okay:
                     if loop(iter, manager=self, **self._components) is False:
                         get_logger().info(f"Exiting loop after {iter} iterations.")
                         break
-                except Exception:
-                    get_logger().exception(f"Failed to run loop {iter}.")
-                    break
 
-                iter += 1
+                    iter += 1
+            except KeyboardInterrupt:
+                if not self._cleanup_on_keyboard_interrupt:
+                    get_logger().info("Exiting loop.")
+                    return
+            except Exception:
+                get_logger().warning(f"Failed to run loop {iter}.")
+                return
 
             # CLEANUP
             try:
+                get_logger().info("Cleaning up...")
                 cleanup(manager=self, **self._components)
             except Exception:
                 get_logger().exception("Failed to cleanup components.")
                 return
         finally:
+            # Ensure all components are closed
             self.close()
 
     def __enter__(self):
@@ -204,9 +216,9 @@ class Manager:
             get_logger().info(f"Closing {name}...")
             try:
                 component.close()
-            except Exception:
+            except Exception as e:
                 get_logger().exception(
-                    f"Failed to close {name} ({component.__class__.__name__})."
+                    f"Failed to close {name} ({component.__class__.__name__}): {e}"
                 )
 
         self._closed = True

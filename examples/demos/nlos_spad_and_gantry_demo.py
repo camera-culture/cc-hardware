@@ -28,7 +28,7 @@ def nlos_spad_and_gantry_demo(
         gantry_controller = SnakeStepperController(
             [
                 dict(name="x", range=(0, 32), samples=2),
-                dict(name="y", range=(0, 32), samples=3),
+                dict(name="y", range=(0, 32), samples=2),
             ]
         )
         manager.add(gantry=gantry, controller=gantry_controller)
