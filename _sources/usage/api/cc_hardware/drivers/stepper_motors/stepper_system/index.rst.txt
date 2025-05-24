@@ -21,6 +21,7 @@ Classes
 .. autoapisummary::
 
    cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
+   cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemConfig
    cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem
    cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem
 
@@ -122,7 +123,214 @@ Classes
 
 
 
-.. py:class:: StepperMotorSystem(axes)
+.. py:class:: StepperMotorSystemConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemConfig
+      :parts: 1
+
+
+   Configuration for a stepper motor system.
+
+   :ivar axes: A dictionary of axes
+               and the motors that are attached to them.
+
+
+   :vartype axes: dict[StepperMotorSystemAxis, list[StepperMotor]]
+
+
+   .. py:attribute:: config
+      :type: Optional[omegaconf.DictConfig]
+
+      The original, uninstantiated config. This is maintained within each nested
+      instantiated config to allow for proper serialization and deserialization, as well
+      as printing the config as a yaml string.
+
+
+   .. py:attribute:: custom
+      :type: Optional[Dict[str, Any]]
+
+      Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+      files) where you want to store data that is not necessarily defined in the config.
+
+
+   .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
+      :classmethod:
+
+
+      Instantiate the config into an object.
+
+      :Parameters: **config** (*DictConfig | ListConfig*) -- The config to instantiate.
+
+      :keyword _convert_: The conversion method to use. Defaults to "object", meaning
+                          all structured configs will be converted to their dataclass equivalent.
+      :kwtype _convert_: str
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: compose(config_dir, config_name, *, overrides = [], return_hydra_config = False, **kwargs)
+      :classmethod:
+
+
+      Compose a config using the Hydra compose API. This will return the config as
+      a HydraContainerConfig instance.
+
+      :Parameters: * **config_dir** (*Path | str*) -- The path to the config directory.
+                   * **config_name** (*str*) -- The name of the config file.
+
+      :keyword overrides: The overrides to use when composing the config.
+      :kwtype overrides: List[str]
+      :keyword return_hydra_config: Whether to return the HydraConfig object.
+      :kwtype return_hydra_config: bool
+      :keyword \*\*kwargs: Additional keyword arguments to pass to the instantiation method.
+
+
+
+   .. py:method:: load(*args, instantiate = True, pattern = None, **instantiate_kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.load to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword pattern: The specific pattern to select from the loaded
+                        config.
+      :kwtype pattern: Optional[str]
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: create(*args, instantiate = True, instantiate_kwargs = {}, **kwargs)
+      :classmethod:
+
+
+      Wrapper around OmegaConf.create to instantiate the config.
+
+      :keyword instantiate: Whether to instantiate the config into an object.
+      :kwtype instantiate: bool
+      :keyword \*\*instantiate_kwargs: Additional keyword arguments to pass to the
+                                       instantiation method.
+
+
+
+   .. py:method:: merge_with(*others)
+
+      Wrapper around OmegaConf.merge to merge the config with another config.
+
+      :Parameters: **others** (*DictConfig | ListConfig | Dict | List*) -- The other config(s) to
+                   merge with.
+
+
+
+   .. py:method:: copy()
+
+      Wrapper around the copy method to return a new instance of this class.
+
+      .. note::
+
+         This method will perform a deepcopy, meaning the :meth:`__getstate__` and
+         :meth:`__setstate__` methods will be called. This is fairly slow since
+         the object is pickled and unpickled.
+
+
+
+   .. py:method:: save(path, *, header = None)
+
+      Saves the config to a yaml file.
+
+      :Parameters: **path** (*Path | str*) -- The path to save the config to.
+
+      :keyword header: The header to add to the top of the yaml file.
+      :kwtype header: str
+
+
+
+   .. py:method:: to_yaml()
+
+      Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+      Adds some custom representers.
+
+      This uses the stored config attribute to convert to yaml. If the config is None,
+      this will return the default string representation of the object.
+
+
+
+   .. py:method:: __getstate__()
+
+      This is used to pickle the object. We'll return the config as the state.
+
+
+
+   .. py:method:: __setstate__(state)
+
+      This is used to unpickle the object. We'll set the config from the state.
+
+
+
+   .. py:method:: __str__()
+
+      Convert the config to a yaml string.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
+      :classmethod:
+
+
+      Registers a class in this registry.
+
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
+
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
+      :classmethod:
+
+
+      Creates an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
+
+      :returns: *Self | Any* --
+
+                An instance of the requested class, or an associated
+                    'friend' class.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
+
+
+.. py:class:: StepperMotorSystem(config)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem
@@ -131,9 +339,6 @@ Classes
 
    This is a wrapper around multiple stepper motors which defines the system
    as a whole (i.e. a gantry or multi-axis rotation stage).
-
-   :Parameters: **axes** (*dict[StepperMotorSystemAxis, list[StepperMotor]]*) -- A dictionary of axes
-                and the motors that are attached to them.
 
 
    .. py:method:: move_to(*positions)
@@ -150,28 +355,10 @@ Classes
 
 
 
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation. This method should
-      block the execution until the motor has reached its target position or
-      completed the current motion command.
-
-
-
    .. py:property:: is_moving
       :type: bool
 
       Returns True if any motor is moving.
-
-
-   .. py:property:: position
-      :type: list
-
-      Returns the current position of the stepper motor. The position value should
-      represent the motor's current location in the same units as the move_to and
-      move_by methods.
-
-      :returns: *float* -- The current position of the motor.
 
 
    .. py:method:: __getattr__(name)
@@ -180,22 +367,33 @@ Classes
 
 
 
+   .. py:property:: axes
+      :type: dict[StepperMotorSystemAxis, list[cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor]]
+
+      Returns the axes of the stepper motor system.
+
+
    .. py:method:: close()
 
-      Closes the connection or shuts down the stepper motor safely. Implementations
-      should ensure that the motor is properly powered down and any resources are
-      released to avoid damage or memory leaks.
+      Closes the component and releases any resources.
 
 
 
-   .. py:method:: home()
-      :abstractmethod:
+   .. py:property:: config
+      :type: T
+
+      Retrieves the component configuration.
 
 
-      Homes the stepper motor to its reference or zero position. This method should
-      move the motor to a predefined starting point, which could involve moving
-      until a limit switch or sensor is triggered to establish a known starting
-      position.
+   .. py:method:: create_from_config(config, **kwargs)
+      :classmethod:
+
+
+      Create an instance of the class from a configuration object.
+
+      :Parameters: **config** (*T*) -- The configuration object.
+
+      :returns: *Self* -- An instance of the class.
 
 
 
@@ -203,11 +401,61 @@ Classes
       :type: bool
       :abstractmethod:
 
-      Checks if the stepper motor is in a healthy operational state. This could
-      involve verifying that the motor is not in an error state, is receiving power,
-      and has no detected hardware issues.
+      Checks if the component is operational.
 
-      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
+      :classmethod:
+
+
+      Registers a class in this registry.
+
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
+
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
+      :classmethod:
+
+
+      Creates an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
+
+      :returns: *Self | Any* --
+
+                An instance of the requested class, or an associated
+                    'friend' class.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
 
 
 .. py:class:: DummyStepperSystem
@@ -232,19 +480,9 @@ Classes
 
 
 
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation. This method should
-      block the execution until the motor has reached its target position or
-      completed the current motion command.
-
-
-
    .. py:method:: close()
 
-      Closes the connection or shuts down the stepper motor safely. Implementations
-      should ensure that the motor is properly powered down and any resources are
-      released to avoid damage or memory leaks.
+      Closes the component and releases any resources.
 
 
 
@@ -254,30 +492,33 @@ Classes
       Returns True if any motor is moving.
 
 
-   .. py:property:: position
-      :type: list
-
-      Returns the current position of the stepper motor. The position value should
-      represent the motor's current location in the same units as the move_to and
-      move_by methods.
-
-      :returns: *float* -- The current position of the motor.
-
-
    .. py:method:: __getattr__(name)
 
       This is a passthrough to the underlying motor objects.
 
 
 
-   .. py:method:: home()
-      :abstractmethod:
+   .. py:property:: axes
+      :type: dict[StepperMotorSystemAxis, list[cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor]]
+
+      Returns the axes of the stepper motor system.
 
 
-      Homes the stepper motor to its reference or zero position. This method should
-      move the motor to a predefined starting point, which could involve moving
-      until a limit switch or sensor is triggered to establish a known starting
-      position.
+   .. py:property:: config
+      :type: T
+
+      Retrieves the component configuration.
+
+
+   .. py:method:: create_from_config(config, **kwargs)
+      :classmethod:
+
+
+      Create an instance of the class from a configuration object.
+
+      :Parameters: **config** (*T*) -- The configuration object.
+
+      :returns: *Self* -- An instance of the class.
 
 
 
@@ -285,10 +526,60 @@ Classes
       :type: bool
       :abstractmethod:
 
-      Checks if the stepper motor is in a healthy operational state. This could
-      involve verifying that the motor is not in an error state, is receiving power,
-      and has no detected hardware issues.
+      Checks if the component is operational.
 
-      :returns: *bool* -- True if the motor is operational, False otherwise.
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
+      :classmethod:
+
+
+      Registers a class in this registry.
+
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
+
+      :returns: *type[Self] | None* --
+
+                The registered class if `class_type` is a type,
+                    otherwise None.
+
+
+
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
+      :classmethod:
+
+
+      Creates an instance of a registered class, performing lazy loading if necessary.
+
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
+
+      :returns: *Self | Any* --
+
+                An instance of the requested class, or an associated
+                    'friend' class.
+
+
+
+   .. py:method:: registry()
+
+      Get the registry for this class.
+
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
+
+
+
+   .. py:method:: registered()
+
+      Get an enumeration of the registered classes.
+
+      :returns: An enumeration of the registered classes.
+
 
 

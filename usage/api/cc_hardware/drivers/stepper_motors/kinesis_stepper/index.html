@@ -187,10 +187,8 @@
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/camera_viewer.html">Camera Viewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -330,12 +328,14 @@ bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;KinesisStepperMotor&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for controlling a Kinesis motor using the StepperMotor interface.&quot;];
   &quot;StepperMotor&quot; -&gt; &quot;KinesisStepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;StepperMotor&quot; [URL=&quot;../stepper_motor/index.html#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for controlling a stepper motor. This class provides a&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
 This class provides additional features such as homing, movement with limits, and
@@ -490,14 +490,16 @@ bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;KinesisRotationStage&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
   &quot;KinesisStepperMotor&quot; -&gt; &quot;KinesisRotationStage&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;KinesisStepperMotor&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for controlling a Kinesis motor using the StepperMotor interface.&quot;];
   &quot;StepperMotor&quot; -&gt; &quot;KinesisStepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;StepperMotor&quot; [URL=&quot;../stepper_motor/index.html#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for controlling a stepper motor. This class provides a&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
 This class provides additional features such as homing, movement with limits, and
@@ -652,14 +654,14 @@ bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;KinesisStepperMotorSystem&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper around multiple Kinesis stepper motors which defines the system as a&quot;];
   &quot;StepperMotorSystem&quot; -&gt; &quot;KinesisStepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;StepperMotor&quot; [URL=&quot;../stepper_motor/index.html#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for controlling a stepper motor. This class provides a&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;StepperMotorSystem&quot; [URL=&quot;../stepper_system/index.html#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This is a wrapper around multiple stepper motors which defines the system&quot;];
-  &quot;StepperMotor&quot; -&gt; &quot;StepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;StepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>A wrapper around multiple Kinesis stepper motors which defines the system as a
 whole.</p>
@@ -687,14 +689,14 @@ size=&quot;8.0, 12.0&quot;;
   &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
   &quot;AzimuthElevationSystem&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A predefined multi-axis system for an azimuth-elevation setup.&quot;];
   &quot;KinesisStepperMotorSystem&quot; -&gt; &quot;AzimuthElevationSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;KinesisStepperMotorSystem&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper around multiple Kinesis stepper motors which defines the system as a&quot;];
   &quot;StepperMotorSystem&quot; -&gt; &quot;KinesisStepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;StepperMotor&quot; [URL=&quot;../stepper_motor/index.html#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for controlling a stepper motor. This class provides a&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperMotor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;StepperMotorSystem&quot; [URL=&quot;../stepper_system/index.html#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This is a wrapper around multiple stepper motors which defines the system&quot;];
-  &quot;StepperMotor&quot; -&gt; &quot;StepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Component&quot; -&gt; &quot;StepperMotorSystem&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>A predefined multi-axis system for an azimuth-elevation setup.</p>
 <dl class="field-list simple">

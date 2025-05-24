@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Stepper Gantry Collab" href="spad_gantry_capture.html" /><link rel="prev" title="Examples" href="index.html" />
 
     <link rel="shortcut icon" href="../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>SPAD Dashboard - cc_hardware 0.0.0 documentation</title>
+        <title>&lt;no title&gt; - cc_hardware 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -161,7 +161,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -184,13 +184,11 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">SPAD Dashboard</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stepper_motor_controller.html">Stepper Motor Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="camera_viewer.html">Camera Viewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -283,116 +281,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="spad-dashboard">
-<h1>SPAD Dashboard<a class="headerlink" href="#spad-dashboard" title="Link to this heading">#</a></h1>
-<section id="spad-dashboard-py">
-<h2><code class="docutils literal notranslate"><span class="pre">spad_dashboard.py</span></code><a class="headerlink" href="#spad-dashboard-py" title="Link to this heading">#</a></h2>
-<p>This demo shows how you can visualize SPAD data with a dashboard. There are currently a number of supported dashboards, and please refer to the <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#module-cc_hardware.tools.dashboard" title="cc_hardware.tools.dashboard"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dashboard</span></code></a> documentation for more information. Also, this exampel shows how to register an explicit callback with the dashboard. In this case, we use <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#cc_hardware.tools.dashboard.SPADDashboard.update" title="cc_hardware.tools.dashboard.SPADDashboard.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> explicitly, so the callback can actually just be called in the main loop. The callback becomes helpful when you use <a class="reference internal" href="../usage/api/cc_hardware/tools/dashboard/index.html#cc_hardware.tools.dashboard.SPADDashboard.run" title="cc_hardware.tools.dashboard.SPADDashboard.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, which is blocking.</p>
-<p>You can call the example with the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/spad_dashboard/spad_wrappers.py<span class="w"> </span><span class="nv">sensor</span><span class="o">=</span>&lt;SPADSensor&gt;<span class="w"> </span><span class="nv">dashboard</span><span class="o">=</span>&lt;SPADDashboard&gt;
-</pre></div>
-</div>
-</section>
-<section id="spad-wrappers-py">
-<h2><code class="docutils literal notranslate"><span class="pre">spad_wrappers.py</span></code><a class="headerlink" href="#spad-wrappers-py" title="Link to this heading">#</a></h2>
-<p>This file shows how you can use the <a class="reference internal" href="../usage/api/cc_hardware/drivers/spads/spad_wrappers/index.html#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper" title="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPADWrapper</span></code></a> class to process spad data before returning it to the user. In the following case, we wrap a SPAD sensor with a <a class="reference internal" href="../usage/api/cc_hardware/drivers/spads/spad_wrappers/index.html#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper" title="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">SPADMergeWrapper</span></code></a>, which merges neighboring pixels together.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/spad_dashboard/spad_wrappers.py<span class="w"> </span><span class="nv">sensor</span><span class="o">=</span>SPADMergeWrapper<span class="w"> </span>sensor/wrapped<span class="o">=</span>&lt;SPADSensor&gt;<span class="w"> </span>sensor.merge_all<span class="o">=</span>True<span class="w"> </span><span class="nv">dashboard</span><span class="o">=</span>&lt;SPADDashboard&gt;
-</pre></div>
-</div>
-<p>You can also group wrappers together, like the following:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/spad_dashboard/spad_wrappers.py<span class="w"> </span><span class="nv">sensor</span><span class="o">=</span>SPADMergeWrapper<span class="w"> </span>sensor/wrapped<span class="o">=</span>SPADMovingAverageWrapper<span class="w"> </span>sensor/wrapped/wrapped<span class="o">=</span>&lt;SPADSensor&gt;<span class="w"> </span>sensor.merge_all<span class="o">=</span>True<span class="w"> </span>sensor.wrapped.window_size<span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">dashboard</span><span class="o">=</span>&lt;SPADDashboard&gt;
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.spads</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">SPADSensorConfig</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.tools.dashboard</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPADDashboard</span><span class="p">,</span> <span class="n">SPADDashboardConfig</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">register_cli</span><span class="p">,</span> <span class="n">run_cli</span>
-
-<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">t0</span> <span class="o">=</span> <span class="mi">0</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calls logger at intervals.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        dashboard (SPADDashboard): The dashboard instance to use in the callback.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">i</span>
-    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Callback called&quot;</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configures the manager with sensor and dashboard instances.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        manager (Manager): Manager to add sensor and dashboard to.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span> <span class="o">=</span> <span class="n">SPADSensor</span><span class="o">.</span><span class="n">create_from_config</span><span class="p">(</span><span class="n">sensor</span><span class="p">)</span>
-    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">)</span>
-
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">user_callback</span> <span class="o">=</span> <span class="n">my_callback</span>
-    <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span> <span class="o">=</span> <span class="n">dashboard</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">=</span><span class="n">dashboard</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span>
-    <span class="p">)</span>
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dashboard</span><span class="o">=</span><span class="n">dashboard</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="n">frame</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboard</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Updates dashboard each frame.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        frame (int): Current frame number.</span>
-<span class="sd">        manager (Manager): Manager controlling the loop.</span>
-<span class="sd">        sensor (SPADSensor): Sensor instance (unused here).</span>
-<span class="sd">        dashboard (SPADDashboard): Dashboard instance to update.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">t0</span>
-
-    <span class="k">if</span> <span class="n">frame</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">fps</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
-        <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frame: </span><span class="si">{</span><span class="n">frame</span><span class="si">}</span><span class="s2">, FPS: </span><span class="si">{</span><span class="n">fps</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="n">histograms</span> <span class="o">=</span> <span class="n">sensor</span><span class="o">.</span><span class="n">accumulate</span><span class="p">()</span>
-    <span class="n">dashboard</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">histograms</span><span class="o">=</span><span class="n">histograms</span><span class="p">)</span>
-
-
-<span class="nd">@register_cli</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">spad_dashboard_demo</span><span class="p">(</span><span class="n">sensor</span><span class="p">:</span> <span class="n">SPADSensorConfig</span><span class="p">,</span> <span class="n">dashboard</span><span class="p">:</span> <span class="n">SPADDashboardConfig</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sets up and runs the SPAD dashboard.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        sensor (SPADSensorConfig): Configuration object for the sensor.</span>
-<span class="sd">        dashboard (SPADDashboardConfig): Configuration object for the dashboard.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">global</span> <span class="n">t0</span>
-    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-    <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">setup</span><span class="p">,</span> <span class="n">sensor</span><span class="o">=</span><span class="n">sensor</span><span class="p">,</span> <span class="n">dashboard</span><span class="o">=</span><span class="n">dashboard</span><span class="p">),</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run_cli</span><span class="p">(</span><span class="n">spad_dashboard_demo</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-</section>
-
+          
         </article>
       </div>
       <footer>
@@ -436,28 +331,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">SPAD Dashboard</a><ul>
-<li><a class="reference internal" href="#spad-dashboard-py"><code class="docutils literal notranslate"><span class="pre">spad_dashboard.py</span></code></a></li>
-<li><a class="reference internal" href="#spad-wrappers-py"><code class="docutils literal notranslate"><span class="pre">spad_wrappers.py</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

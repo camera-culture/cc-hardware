@@ -356,7 +356,7 @@ Functions
 
 
 
-.. py:class:: Manager(**components)
+.. py:class:: Manager(*, cleanup_on_keyboard_interrupt = True, **components)
 
    This is a manager for handling components which must be closed. It is
    essentially just a context manager which calls close on all components when

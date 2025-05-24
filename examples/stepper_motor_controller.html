@@ -12,7 +12,7 @@
         gtag('js', new Date());
         gtag('config', 'G-WK44DH2ZCM');
     </script>
-    <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Camera Viewer" href="camera_viewer.html" /><link rel="prev" title="Stepper Gantry Collab" href="spad_gantry_capture.html" />
+    <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="&lt;no title&gt;" href="camera_viewer.html" /><link rel="prev" title="Stepper Gantry Collab" href="spad_gantry_capture.html" />
 
     <link rel="shortcut icon" href="../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Stepper Motor Controller - cc_hardware 0.0.0 documentation</title>
@@ -161,7 +161,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -187,10 +187,8 @@
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="spad_dashboard.html">SPAD Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Stepper Motor Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="camera_viewer.html">Camera Viewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -283,7 +281,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -291,110 +289,13 @@
         <article role="main">
           <section id="stepper-motor-controller">
 <h1>Stepper Motor Controller<a class="headerlink" href="#stepper-motor-controller" title="Link to this heading">#</a></h1>
-<p>This example demonstrates how to explicitly define the objects to create and uses <code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> to initialize the demo. The demo itself shows how to initialize and control a stepper motor system.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.stepper_motors</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepperMotorSystem</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers.stepper_motors.stepper_controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">SnakeStepperController</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.file_handlers</span><span class="w"> </span><span class="kn">import</span> <span class="n">PklHandler</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils.manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span>
-
-<span class="c1"># ===============</span>
-
-<span class="c1"># Uncomment to set the logger to use debug mode</span>
-<span class="c1"># get_logger(level=logging.DEBUG)</span>
-
-<span class="c1"># ===============</span>
-
-<span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<span class="n">LOGDIR</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;logs&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H-%M-%S&quot;</span><span class="p">)</span>
-
-<span class="n">STEPPER_SYSTEM_NAME</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SingleDrive1AxisGantry&quot;</span>
-<span class="n">STEPPER_PORT</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">CONTROLLER_CONFIG</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
-    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
-<span class="p">]</span>
-
-<span class="n">OUTPUT_PKL</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">LOGDIR</span> <span class="o">/</span> <span class="s2">&quot;data.pkl&quot;</span>
-
-<span class="c1"># ===============</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
-    <span class="n">LOGDIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="n">controller</span> <span class="o">=</span> <span class="n">SnakeStepperController</span><span class="p">(</span><span class="n">CONTROLLER_CONFIG</span><span class="p">)</span>
-    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">controller</span><span class="o">=</span><span class="n">controller</span><span class="p">)</span>
-
-    <span class="n">stepper_system</span> <span class="o">=</span> <span class="n">StepperMotorSystem</span><span class="o">.</span><span class="n">create_from_registry</span><span class="p">(</span>
-        <span class="n">STEPPER_SYSTEM_NAME</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">STEPPER_PORT</span>
-    <span class="p">)</span>
-    <span class="n">stepper_system</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
-    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">stepper_system</span><span class="o">=</span><span class="n">stepper_system</span><span class="p">)</span>
-
-    <span class="n">OUTPUT_PKL</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">OUTPUT_PKL</span><span class="o">.</span><span class="n">exists</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;Output file </span><span class="si">{</span><span class="n">OUTPUT_PKL</span><span class="si">}</span><span class="s2"> already exists&quot;</span>
-    <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">writer</span><span class="o">=</span><span class="n">PklHandler</span><span class="p">(</span><span class="n">OUTPUT_PKL</span><span class="p">))</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span>
-    <span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span>
-    <span class="n">controller</span><span class="p">:</span> <span class="n">SnakeStepperController</span><span class="p">,</span>
-    <span class="n">stepper_system</span><span class="p">:</span> <span class="n">StepperMotorSystem</span><span class="p">,</span>
-    <span class="n">writer</span><span class="p">:</span> <span class="n">PklHandler</span><span class="p">,</span>
-    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting iter </span><span class="si">{</span><span class="nb">iter</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-
-    <span class="n">pos</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">get_position</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="n">stepper_system</span><span class="o">.</span><span class="n">move_to</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">])</span>
-
-    <span class="n">writer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;iter&quot;</span><span class="p">:</span> <span class="nb">iter</span><span class="p">,</span>
-            <span class="s2">&quot;pos&quot;</span><span class="p">:</span> <span class="n">pos</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="kc">True</span>
-
-
-<span class="c1"># ===============</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
-
-
-<span class="c1"># ===============</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
-
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Demo: Stepper Motor Controller&quot;</span><span class="p">)</span>
-
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s2">&quot;--port&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The port to use for the stepper motor system.&quot;</span>
-    <span class="p">)</span>
-
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-
-    <span class="n">STEPPER_PORT</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">port</span>
-
-    <span class="n">main</span><span class="p">()</span>
+<section id="stepper-motor-controller-cli-py">
+<h2><code class="docutils literal notranslate"><span class="pre">stepper_motor_controller_cli.py</span></code><a class="headerlink" href="#stepper-motor-controller-cli-py" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Port is optional if only one device is connected</span>
+python<span class="w"> </span>examples/stepper_motor_controller/stepper_motor_controller_cli.py<span class="w"> </span><span class="nv">stepper_system</span><span class="o">=</span>&lt;GANTRY&gt;<span class="w"> </span>stepper_system.port<span class="o">=</span>&lt;PORT&gt;
 </pre></div>
 </div>
+</section>
 </section>
 
         </article>
@@ -407,7 +308,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Camera Viewer</div>
+                <div class="title">&lt;no title&gt;</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -440,8 +341,27 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Stepper Motor Controller</a><ul>
+<li><a class="reference internal" href="#stepper-motor-controller-cli-py"><code class="docutils literal notranslate"><span class="pre">stepper_motor_controller_cli.py</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

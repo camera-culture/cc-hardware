@@ -15,7 +15,7 @@
     <link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="&lt;no title&gt;" href="algo_nlos.html" /><link rel="prev" title="Stepper Motor Controller" href="stepper_motor_controller.html" />
 
     <link rel="shortcut icon" href="../_static/cc-transparent.png"/><!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>Camera Viewer - cc_hardware 0.0.0 documentation</title>
+        <title>&lt;no title&gt; - cc_hardware 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d75fae25" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
@@ -184,13 +184,11 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul class="current">
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="spad_dashboard.html">SPAD Dashboard</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="spad_gantry_capture.html">Stepper Gantry Collab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stepper_motor_controller.html">Stepper Motor Controller</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Camera Viewer</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../usage/api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -289,54 +287,7 @@
           </label>
         </div>
         <article role="main">
-          <section id="camera-viewer">
-<h1>Camera Viewer<a class="headerlink" href="#camera-viewer" title="Link to this heading">#</a></h1>
-<p>This shows a simple demonstration for how to view the camera feed from the SPAD camera.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.drivers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Camera</span><span class="p">,</span> <span class="n">CameraConfig</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cc_hardware.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">register_cli</span><span class="p">,</span> <span class="n">run_cli</span>
-
-
-<span class="nd">@register_cli</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">camera_viewer</span><span class="p">(</span>
-    <span class="n">camera</span><span class="p">:</span> <span class="n">CameraConfig</span><span class="p">,</span>
-    <span class="n">num_frames</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">resolution</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">):</span>
-        <span class="n">_camera</span> <span class="o">=</span> <span class="n">Camera</span><span class="o">.</span><span class="n">create_from_config</span><span class="p">(</span><span class="n">camera</span><span class="p">)</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">camera</span><span class="o">=</span><span class="n">_camera</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">(</span><span class="nb">iter</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">camera</span><span class="p">:</span> <span class="n">Camera</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">num_frames</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">iter</span> <span class="o">&gt;=</span> <span class="n">num_frames</span><span class="p">:</span>
-            <span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Finished capturing </span><span class="si">{</span><span class="n">num_frames</span><span class="si">}</span><span class="s2"> frames.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="n">frame</span> <span class="o">=</span> <span class="n">camera</span><span class="o">.</span><span class="n">accumulate</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># Resize the frame</span>
-        <span class="k">if</span> <span class="n">resolution</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">resolution</span><span class="p">)</span>
-
-        <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Camera Viewer&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="k">with</span> <span class="n">Manager</span><span class="p">()</span> <span class="k">as</span> <span class="n">manager</span><span class="p">:</span>
-        <span class="n">manager</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">setup</span><span class="o">=</span><span class="n">setup</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="n">loop</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">run_cli</span><span class="p">(</span><span class="n">camera_viewer</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-
+          
         </article>
       </div>
       <footer>

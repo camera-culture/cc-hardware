@@ -22,26 +22,56 @@ Classes
 
 .. autoapisummary::
 
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorConfig
    cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystemConfig
    cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y
-   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryXConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY1Config
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY2Config
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryXConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryYConfig
+   cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryConfig
 
 
 
 
-.. py:class:: TelemetrixStepperMotor(board, *, distance_pin, direction_pin, enable_pin, cm_per_rev, steps_per_rev, speed, flip_direction = False)
+.. py:class:: TelemetrixStepperMotorConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorConfig
+      :parts: 1
+
+
+   Configuration for Telemetrix stepper motors.
+
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
+
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
+
+   :vartype flip_direction: bool
+
+
+.. py:class:: TelemetrixStepperMotor(config)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor
@@ -53,24 +83,6 @@ Classes
    NOTE: Initialization of this class effectively homes the motor. Call
    `set_current_position` to explicitly set the current position.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
-
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
 
    .. py:method:: home()
 
@@ -169,7 +181,24 @@ Classes
 
 
 
-.. py:class:: TelemetrixStepperMotorSystem(port = None, *, axes, **kwargs)
+.. py:class:: TelemetrixStepperMotorSystemConfig
+
+
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystemConfig
+      :parts: 1
+
+
+   Configuration for Telemetrix stepper motor systems.
+
+   :ivar port: The port to connect to the Telemetrix board. If None,
+               the port will be attempted to be auto-detected.
+   :vartype port: str | None
+   :ivar arduino_wait: The time to wait for the Arduino to initialize in seconds.
+
+   :vartype arduino_wait: int
+
+
+.. py:class:: TelemetrixStepperMotorSystem(config)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem
@@ -179,15 +208,6 @@ Classes
    This is a wrapper of the Telemetrix library's interface with multiple
    stepper motors.
 
-   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
-                the port will be attempted to be auto-detected.
-
-   :keyword axes: A dictionary of axes and
-                  the motors that are attached to them. The key is the axis name and the
-                  value is a list of motors attached to that axis.
-   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
-   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
-
 
    .. py:method:: close()
 
@@ -195,1463 +215,285 @@ Classes
 
 
 
-.. py:class:: TelemetrixStepperMotorX(*args, **kwargs)
+.. py:class:: TelemetrixStepperMotorXConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorX
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: TelemetrixStepperMotorYConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: TelemetrixStepperMotorY(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorY
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: TelemetrixStepperMotorZConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: TelemetrixStepperMotorZ(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZ
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: DualDrive2AxisGantryXConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: TelemetrixStepperMotorXReversed(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXReversed
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryXConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: DualDrive2AxisGantryY1Config
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: TelemetrixStepperMotorYReversed(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYReversed
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY1Config
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: DualDrive2AxisGantryY2Config
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: TelemetrixStepperMotorZReversed(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZReversed
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY2Config
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: DualDrive2AxisGantryConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: DualDrive2AxisGantry_X(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_X
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motor systems.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar port: The port to connect to the Telemetrix board. If None,
+               the port will be attempted to be auto-detected.
+   :vartype port: str | None
+   :ivar arduino_wait: The time to wait for the Arduino to initialize in seconds.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
-
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
+   :vartype arduino_wait: int
 
 
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+.. py:class:: SingleDrive1AxisGantryXConfig
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
-
-
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: DualDrive2AxisGantry_Y1(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y1
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryXConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: SingleDrive1AxisGantryYConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: DualDrive2AxisGantry_Y2(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry_Y2
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryYConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
+   Configuration for Telemetrix stepper motors.
 
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
+   :ivar board: The Telemetrix board instance. Optional
+                since we set the board in the system.
 
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
+   :vartype board: telemetrix.Telemetrix | None
+   :ivar distance_pin: The pin on the CNCShield that controls this motor's position
+   :vartype distance_pin: int
+   :ivar direction_pin: The pin on the CNCShield that controls this motor's
+                        position
+   :vartype direction_pin: int
+   :ivar enable_pin: The pin that controls this motor's enable pin.
+   :vartype enable_pin: int
+   :ivar cm_per_rev: The number of centimeters per revolution of the motor.
+   :vartype cm_per_rev: float
+   :ivar steps_per_rev: The number of steps per revolution of the motor.
+   :vartype steps_per_rev: int
+   :ivar speed: The speed of the motor in cm/s.
+   :vartype speed: int
+   :ivar flip_direction: If True, the motor will move in the opposite direction.
 
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
+   :vartype flip_direction: bool
 
 
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
+.. py:class:: SingleDrive1AxisGantryConfig
 
 
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: DualDrive2AxisGantry(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantry
+   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryConfig
       :parts: 1
 
 
-   This is a wrapper of the Telemetrix library's interface with multiple
-   stepper motors.
+   Configuration for Telemetrix stepper motor systems.
 
-   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
-                the port will be attempted to be auto-detected.
+   :ivar port: The port to connect to the Telemetrix board. If None,
+               the port will be attempted to be auto-detected.
+   :vartype port: str | None
+   :ivar arduino_wait: The time to wait for the Arduino to initialize in seconds.
 
-   :keyword axes: A dictionary of axes and
-                  the motors that are attached to them. The key is the axis name and the
-                  value is a list of motors attached to that axis.
-   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
-   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-.. py:class:: SingleDrive1AxisGantry_X(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_X
-      :parts: 1
-
-
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
-
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
-
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
-
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
-
-
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
-
-
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: SingleDrive1AxisGantry_Y(*args, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry_Y
-      :parts: 1
-
-
-   This is a wrapper of the Telemetrix library's interface with stepper motors.
-
-   NOTE: Initialization of this class effectively homes the motor. Call
-   `set_current_position` to explicitly set the current position.
-
-   :Parameters: **board** (*telemetrix.Telemetrix*) -- The Telemetrix board object
-
-   :keyword distance_pin: The pin on the CNCShield that controls this motor's position
-   :kwtype distance_pin: int
-   :keyword direction_pin: The pin on the CNCShield that controls this motor's
-                           position
-   :kwtype direction_pin: int
-   :keyword enable_pin: The pin that controls this motor's enable pin..
-   :kwtype enable_pin: int
-   :keyword cm_per_rev: The number of centimeters per revolution of the motor.
-   :kwtype cm_per_rev: float
-   :keyword steps_per_rev: The number of steps per revolution of the motor.
-   :kwtype steps_per_rev: int
-   :keyword speed: The speed of the motor in cm/s.
-   :kwtype speed: float
-   :keyword flip_direction: If True, the motor will move in the opposite direction.
-   :kwtype flip_direction: bool
-
-
-   .. py:method:: home()
-
-      Homes the stepper motor to its reference or zero position.
-
-
-
-   .. py:method:: move_to(position)
-
-      Moves the stepper motor to a specific absolute position.
-
-      :Parameters: **position** (*float*) -- The target absolute position to move the motor to.
-
-
-
-   .. py:method:: move_by(relative_position)
-
-      Moves the stepper motor by a specified relative amount from its current
-      position.
-
-      :Parameters: **relative_position** (*float*) -- The amount to move the motor by, relative to its
-                   current position.
-
-
-
-   .. py:method:: wait_for_move()
-
-      Waits for the motor to complete its current move operation.
-
-
-
-   .. py:property:: position
-      :type: float
-
-      Returns the current position of the stepper motor.
-
-
-   .. py:property:: id
-      :type: int
-
-      Returns the motor's id.
-
-
-   .. py:method:: set_target_position_cm(relative_cm)
-
-      Sets the target position of the motor relative to current position.
-
-      :Parameters: **relative_cm** (*float*) -- The relative position to move the motor to.
-
-
-
-   .. py:method:: set_absolute_target_position_cm(position_cm)
-
-      Sets the absolute target position in cm.
-
-
-
-   .. py:method:: cm_to_revs(cm)
-
-      Converts cm to steps.
-
-
-
-   .. py:method:: revs_to_cm(revs)
-
-      Converts steps to cm.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Checks if the stepper motor is currently in motion.
-
-
-   .. py:property:: is_okay
-      :type: bool
-
-      Checks if the stepper motor is in a healthy operational state.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
-
-
-   .. py:method:: __getattr__(key)
-
-      This is a passthrough to the underlying stepper object.
-
-      Usually, stepper methods are accessed through the board with stepper_*. You
-      can access these methods directly here using motorX.target_position(...) which
-      equates to motorX._board.stepper_target_position(...). Also, if these methods
-      require a motor as input, we'll pass it in.
-
-
-
-.. py:class:: SingleDrive1AxisGantry(*args, axes_kwargs, **kwargs)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantry
-      :parts: 1
-
-
-   This is a wrapper of the Telemetrix library's interface with multiple
-   stepper motors.
-
-   :Parameters: **port** (*str | None*) -- The port to connect to the Telemetrix board. If None,
-                the port will be attempted to be auto-detected.
-
-   :keyword axes: A dictionary of axes and
-                  the motors that are attached to them. The key is the axis name and the
-                  value is a list of motors attached to that axis.
-   :kwtype axes: dict[str, list[TelemetrixStepperMotor]]
-   :keyword kwargs: Additional keyword arguments to pass to the Telemetrix board.
-
-
-   .. py:method:: close()
-
-      Closes the connection or shuts down the stepper motor safely.
-
+   :vartype arduino_wait: int
 
 
