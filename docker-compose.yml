@@ -10,9 +10,9 @@ services:
       dockerfile: "./docker/dev.dockerfile"
       args:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
-        IMAGE_BASE: "dustynv/l4t-ml"
-        IMAGE_TAG: "r36.2.0"
-        USER_GROUPS: "dialout video"
+        IMAGE_BASE: "dustynv/pytorch"
+        IMAGE_TAG: "2.6-r36.4.0-cu128-24.04"
+        USER_GROUPS: "video"
         PIP_REQUIREMENTS: "poetry"
         APT_DEPENDENCIES: |
           git-core
@@ -32,7 +32,7 @@ services:
         CONDA_CHANNELS: "conda-forge"
     volumes:
       - './:/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
-      - '/dev:/dev' # TODO: I don't like this
+      # - '/dev:/dev' # TODO: I don't like this
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     ports:
       - "127.0.0.1:8080-8099:8080"
