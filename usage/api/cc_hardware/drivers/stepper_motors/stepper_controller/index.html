@@ -188,7 +188,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">Home</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motor_controller.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -297,264 +296,149 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperController</span></code></a></p></td>
-<td><p>Base class providing a registry for its subclasses, plus a factory method.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ControllerAxisConfig</span></code></a></p></td>
+<td><p>Configuration for a controller axis.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperController</span></code></a></p></td>
-<td><p>Base class providing a registry for its subclasses, plus a factory method.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a></p></td>
+<td><p>Configuration for a stepper motor controller.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a></p></td>
+<td><p>Configuration for a single axis of a stepper motor controller.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a></p></td>
+<td><p>Configuration for a stepper motor controller.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a></p></td>
+<td><p>Configuration for a stepper motor controller with 2 axes.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StepperController</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController" title="Link to this definition">#</a></dt>
-<dd>digraph inheritanceb55d9dcdb9 {
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ControllerAxisConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig" title="Link to this definition">#</a></dt>
+<dd>digraph inheritanceeb21876370 {
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;ControllerAxisConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a controller axis.&quot;];
+  &quot;Config&quot; -&gt; &quot;ControllerAxisConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;StepperController&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperController&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperController&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
-<p>Base class providing a registry for its subclasses, plus a factory method.</p>
-<p>This class supports both direct and lazy registration of subclasses and
-can also associate a registered class with a ‘friend’ (another class not
-necessarily inheriting from Registry).</p>
-<p class="rubric">Examples</p>
-<dl>
-<dt>Register directly:</dt><dd><p>&#64;MyRegistry.register
-class Foo(MyRegistry):</p>
-<blockquote>
-<div><p>pass</p>
-</div></blockquote>
-</dd>
-<dt>Register by name (lazy):</dt><dd><p>MyRegistry.register(“Bar”, “my_module.submodule”)</p>
-</dd>
-<dt>Create instance:</dt><dd><p>instance = MyRegistry.create_from_registry(“Foo”)</p>
-</dd>
-<dt>Create instance from one of many registries:</dt><dd><p>instance = MyRegistry.create_from_registry(“Bar”)</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position" title="Link to this definition">#</a></dt>
-<dd><p>Get the position for the given iteration.</p>
+<p>Configuration for a controller axis.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iter</strong> (<em>int</em>) – The iteration number.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>list[float]</em> – The position for the given iteration.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – The index of the axis.</p></li>
+<li><p><strong>positions</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – A list of positions for the axis.</p></li>
+<li><p><strong>flipped</strong> (<em>bool</em>) – Whether the axis is flipped or not.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
 </dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SnakeStepperController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_configs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancedb81373023 {
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StepperControllerConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig" title="Link to this definition">#</a></dt>
+<dd>digraph inheritance9d2aac09b9 {
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SnakeStepperController&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;StepperController&quot; -&gt; &quot;SnakeStepperController&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;StepperController&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Registry&quot; -&gt; &quot;StepperController&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;StepperController&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;StepperControllerConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller.&quot;];
+  &quot;Config&quot; -&gt; &quot;StepperControllerConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
-<p>Base class providing a registry for its subclasses, plus a factory method.</p>
-<p>This class supports both direct and lazy registration of subclasses and
-can also associate a registered class with a ‘friend’ (another class not
-necessarily inheriting from Registry).</p>
-<p class="rubric">Examples</p>
-<dl>
-<dt>Register directly:</dt><dd><p>&#64;MyRegistry.register
-class Foo(MyRegistry):</p>
-<blockquote>
-<div><p>pass</p>
-</div></blockquote>
-</dd>
-<dt>Register by name (lazy):</dt><dd><p>MyRegistry.register(“Bar”, “my_module.submodule”)</p>
-</dd>
-<dt>Create instance:</dt><dd><p>instance = MyRegistry.create_from_registry(“Foo”)</p>
-</dd>
-<dt>Create instance from one of many registries:</dt><dd><p>instance = MyRegistry.create_from_registry(“Bar”)</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">
-<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position" title="Link to this definition">#</a></dt>
-<dd><p>Get the position that the controller should move to for the given iteration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iter</strong> (<em>int</em>) – The current iteration index.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>dict</em> –</p>
-<dl class="simple">
-<dt>A dictionary with axis names as keys and current positions as values.</dt><dd><p>Returns an empty dictionary if the iteration exceeds total positions.</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
+<p>Configuration for a stepper motor controller.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
-<dd><p>Registers a class in this registry.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SnakeControllerAxisConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig" title="Link to this definition">#</a></dt>
+<dd>digraph inheritancec3ad738a25 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SnakeControllerAxisConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a single axis of a stepper motor controller.&quot;];
+  &quot;Config&quot; -&gt; &quot;SnakeControllerAxisConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Configuration for a single axis of a stepper motor controller.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
-loading.</p></li>
-<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
-<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+<li><p><strong>range</strong> (<em>tuple</em>) – The range (min, max) for the axis.</p></li>
+<li><p><strong>samples</strong> (<em>int</em>) – Number of samples along this axis.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
-<dl class="simple">
-<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
-</dd>
-</dl>
-</p>
-</dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry" title="Link to this definition">#</a></dt>
-<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SnakeStepperControllerConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig" title="Link to this definition">#</a></dt>
+<dd>digraph inheritancef6292e1115 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SnakeStepperControllerConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller.&quot;];
+  &quot;StepperControllerConfig&quot; -&gt; &quot;SnakeStepperControllerConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;StepperControllerConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller.&quot;];
+  &quot;Config&quot; -&gt; &quot;StepperControllerConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Configuration for a stepper motor controller.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
-and only one class is registered, it will instantiate that class.</p></li>
-<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
-<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><p><em>Self | Any</em> –</p>
-<dl class="simple">
-<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
-</dd>
-</dl>
-</p>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><em>ControllerAxisConfig</em></a><em>]</em>) – A list of axis configurations. Note
+that the keys must be unique and are used to identify the axes in the
+controller.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry">
-<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry" title="Link to this definition">#</a></dt>
-<dd><p>Get the registry for this class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SnakeStepperControllerConfigXY</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY" title="Link to this definition">#</a></dt>
+<dd>digraph inheritancef7aa2c359c {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SnakeStepperControllerConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller.&quot;];
+  &quot;StepperControllerConfig&quot; -&gt; &quot;SnakeStepperControllerConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;SnakeStepperControllerConfigXY&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller with 2 axes.&quot;];
+  &quot;SnakeStepperControllerConfig&quot; -&gt; &quot;SnakeStepperControllerConfigXY&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;StepperControllerConfig&quot; [URL=&quot;#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for a stepper motor controller.&quot;];
+  &quot;Config&quot; -&gt; &quot;StepperControllerConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Configuration for a stepper motor controller with 2 axes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>axes</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><em>ControllerAxisConfig</em></a><em>]</em>) – A list of axis configurations. Note
+that the keys must be unique and are used to identify the axes in the
+controller.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered">
-<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered" title="Link to this definition">#</a></dt>
-<dd><p>Get an enumeration of the registered classes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An enumeration of the registered classes.</p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -619,22 +503,11 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.stepper_motors.stepper_controller</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController"><code class="docutils literal notranslate"><span class="pre">StepperController</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position"><code class="docutils literal notranslate"><span class="pre">StepperController.get_position()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register"><code class="docutils literal notranslate"><span class="pre">StepperController.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperController.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry"><code class="docutils literal notranslate"><span class="pre">StepperController.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered"><code class="docutils literal notranslate"><span class="pre">StepperController.registered()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.get_position()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.register()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.create_from_registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.registry()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.registered()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a></li>
 </ul>
 </li>
 </ul>
