@@ -1,11 +1,10 @@
 """SPAD sensor driver that loads pre-recorded data from a PKL file."""
 
-from copy import deepcopy
 from pathlib import Path
 
 import numpy as np
 
-from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.spad import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.utils import config_wrapper, get_logger
 from cc_hardware.utils.file_handlers import PklReader
 
@@ -14,10 +13,20 @@ from cc_hardware.utils.file_handlers import PklReader
 
 @config_wrapper
 class PklSPADSensorConfig(SPADSensorConfig):
+    """
+    Configuration for the PklSPADSensor.
+
+    Attributes:
+        pkl_path (Path | str): Path to the PKL file containing pre-recorded data.
+        index (int): Initial index for loading data from the PKL file. Default is 0.
+
+        loop (bool): Whether to loop through the data when it reaches the end.
+            Default is False.
+    """
+
     pkl_path: Path | str
-    key: str = "histogram"
-    resolution: tuple[int, int] | None = None
-    merge: bool = True
+    index: int = 0
+
     loop: bool = False
 
 
@@ -35,7 +44,7 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
         config (PklSPADSensorConfig): The configuration object for the fake sensor.
     """
 
-    def __init__(self, config: PklSPADSensorConfig, index: int = 0):
+    def __init__(self, config: PklSPADSensorConfig):
         super().__init__(config)
 
         config.pkl_path = Path(config.pkl_path)
@@ -43,51 +52,43 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
         self._handler = PklReader(config.pkl_path)
         self._num_entries = len(self._handler)
         assert self._num_entries > 0, "No data found in PKL file."
-        self._index = 0
+        self._index = config.index
 
-        entry = self._handler.load(index)
-        assert (
-            config.key in entry
-        ), f"Key '{config.key}' not found in data. Given: {list(entry.keys())}"
-        if config.resolution is None:
-            config.resolution = entry[config.key].shape[:-1]
-            if config.merge:
-                config.resolution = [1, 1]
-            else:
-                config.resolution = [3, 3]
-            # assert len(config.resolution) == 2, "Invalid resolution shape."
-        self._first_entry = deepcopy(entry)
+        first_entry: dict = self._handler.load(0)
+        if self.config.height is None:
+            assert "height" in first_entry, "Height not found in first entry."
+            self.config.height = first_entry["height"]
+        if self.config.width is None:
+            assert "width" in first_entry, "Width not found in first entry."
+            self.config.width = first_entry["width"]
+        if self.config.num_bins is None:
+            assert "num_bins" in first_entry, "Number of bins not found in first entry."
+            self.config.num_bins = first_entry["num_bins"]
+        if self.config.fovx is None:
+            assert "fovx" in first_entry, "FOV X not found in first entry."
+            self.config.fovx = first_entry["fovx"]
+        if self.config.fovy is None:
+            assert "fovy" in first_entry, "FOV Y not found in first entry."
+            self.config.fovy = first_entry["fovy"]
+        if self.config.timing_resolution is None:
+            assert (
+                "timing_resolution" in first_entry
+            ), "Timing resolution not found in first entry."
+            self.config.timing_resolution = first_entry["timing_resolution"]
 
     @property
     def handler(self) -> PklReader:
         return self._handler
 
     def accumulate(
-        self,
-        num_samples: int = 1,
-        *,
-        average: bool = True,
-        return_entry: bool = False,
-        index: int | None = None,
-    ) -> np.ndarray | tuple[np.ndarray, dict] | None:
+        self, num_samples: int = 1, *, index: int | None = None
+    ) -> list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]:
         """
         Accumulates the specified number of histogram samples from the pre-recorded
         data.
 
         Args:
             num_samples (int): The number of samples to accumulate.
-
-        Keyword Args:
-            average (bool): Whether to average the accumulated samples. Defaults to
-                True.
-            return_entry (bool): Whether to return the loaded entry. Defaults to
-                False.
-            index (int): The index of the entry to load. If None, the next entry will
-                be loaded. Defaults to None. Will set the index within the handler.
-
-        Returns:
-            np.ndarray | tuple[np.ndarray, dict] | None: The accumulated histogram
-                data, or a tuple of the data and the loaded
         """
         if index is not None:
             self._index = index
@@ -98,7 +99,7 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
             get_logger().error("No more data available.")
             return None
 
-        histograms = []
+        samples = []
         for _ in range(num_samples):
             try:
                 entry = self._handler.load(self._index)
@@ -107,42 +108,14 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
                 get_logger().error("No more data available.")
                 break
 
-            histogram = entry[self.config.key]
-            if self.config.merge:
-                histogram = np.expand_dims(np.mean(histogram, axis=0), axis=0)
-            histograms.append(histogram)
-        else:
-            histograms = np.array(histograms)
-            if average and len(histograms) > 1:
-                histograms = np.mean(histograms, axis=0)
+            entry = {
+                k: v
+                for k, v in entry.items()
+                if isinstance(k, SPADDataType) and k in self.config.data_type
+            }
+            samples.append(entry)
 
-            if not self.config.merge:
-                histograms = np.squeeze(histograms)
-            if return_entry:
-                return histograms, entry
-            return histograms
-
-        return None
-
-    @property
-    def num_bins(self) -> int:
-        """
-        Returns the number of bins in the sensor's histogram.
-
-        Returns:
-            int: The number of bins in the histogram.
-        """
-        return self._first_entry[self._config.key].shape[-1]
-
-    @property
-    def resolution(self) -> tuple[int, int]:
-        """
-        Returns the resolution of the sensor as a tuple (width, height).
-
-        Returns:
-            tuple[int, int]: The resolution (width, height) of the sensor.
-        """
-        return self.config.resolution
+        return samples[0] if len(samples) == 1 else samples
 
     @property
     def is_okay(self) -> bool:

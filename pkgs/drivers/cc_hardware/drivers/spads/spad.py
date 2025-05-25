@@ -8,7 +8,7 @@ import numpy as np
 from hydra_config.utils import HydraFlagWrapperMeta
 
 from cc_hardware.drivers.sensor import Sensor, SensorConfig, SensorData
-from cc_hardware.utils import config_wrapper, get_logger
+from cc_hardware.utils import config_wrapper
 from cc_hardware.utils.constants import C
 
 # ================
@@ -59,8 +59,15 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
         Sensor: The base class for all sensors in the system.
     """
 
+    def __init__(self, config: T):
+        super().__init__(config)
+
+        self._data: SPADSensorData[T]
+
     @abstractmethod
-    def accumulate(self, num_samples: int = 1):
+    def accumulate(
+        self, num_samples: int = 1
+    ) -> list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]:
         """
         Accumulates the specified number of histogram samples from the sensor.
 
@@ -68,11 +75,15 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
             num_samples (int): The number of samples to accumulate into the histogram.
                 The accumulation method (i.e. summing, averaging) may vary depending on
                 the sensor. Defaults to 1.
+
+        Returns:
+            list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]:
+                The accumulated histogram data. The format may vary depending on the
+                sensor and the number of samples.
         """
         pass
 
     @property
-    @abstractmethod
     def num_bins(self) -> int:
         """
         Returns the number of bins in the sensor's histogram. This indicates the
@@ -83,7 +94,7 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
         Returns:
             int: The total number of bins in the histogram.
         """
-        pass
+        return self._config.num_bins
 
     @num_bins.setter
     def num_bins(self, value: int):
@@ -94,10 +105,10 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
         Args:
             value (int): The new number of bins in the histogram.
         """
-        get_logger().warning(f"Setting the number of bins is not supported for {self}.")
+        self._data.reset()
+        self.update(num_bins=value)
 
     @property
-    @abstractmethod
     def resolution(self) -> tuple[int, int]:
         """
         Returns the resolution of the sensor as a tuple (width, height). This indicates
@@ -108,7 +119,7 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
             tuple[int, int]: A tuple representing the sensor's resolution
                 (width, height).
         """
-        pass
+        return self.config.width, self.config.height
 
     @resolution.setter
     def resolution(self, value: tuple[int, int]):
@@ -120,7 +131,7 @@ class SPADSensor[T: SPADSensorConfig](Sensor[T]):
             value (tuple[int, int]): The new resolution of the sensor as a tuple
                 (width, height).
         """
-        get_logger().warning(f"Setting the resolution is not supported for {self}.")
+        self.update(width=value[0], height=value[1])
 
 
 class SPADSensorData[T: SPADSensorConfig](SensorData):
@@ -142,6 +153,16 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
         """Checks if the sensor has data available."""
         return bool(self._ready_data)
 
+    def process(self, data: dict[SPADDataType, np.ndarray]) -> None:
+        """
+        Processes the incoming data and stores it in the appropriate format.
+
+        Args:
+            data (dict[SPADDataType, np.ndarray]): The incoming data to process.
+        """
+        self._data.update(data)
+        self._ready_data.update(data)
+
     def get_data(
         self, *, verify_has_data: bool = True
     ) -> dict[SPADDataType, np.ndarray]:
@@ -156,7 +177,7 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
                 SPADDataType.HISTOGRAM
             ].copy()
         if SPADDataType.DISTANCE in self._data_type:
-            if SPADDataType.DISTANCE in data:
+            if SPADDataType.DISTANCE in self._data:
                 data[SPADDataType.DISTANCE] = self._ready_data[
                     SPADDataType.DISTANCE
                 ].copy()
@@ -198,9 +219,9 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
 
     def calculate_point_cloud(
         self,
+        *,
         histogram: np.ndarray | None = None,
         distances: np.ndarray | None = None,
-        *,
         subpixel_samples: int = 1,
         bilinear_interpolation: bool = False,
     ) -> np.ndarray:
@@ -219,6 +240,9 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
             np.ndarray: Point cloud (N, 3) in meters.
         """
         assert histogram is not None or distances is not None
+        assert not (histogram is not None and distances is not None), (
+            "Either histogram or distances must be provided, " "but not both."
+        )
 
         # 1) Compute distances
         if distances is None:

@@ -467,47 +467,6 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         return samples
 
     @property
-    def num_bins(self) -> int:
-        """
-        Gets the number of CNH bins in the sensor configuration.
-
-        Returns:
-            int: Number of CNH bins.
-        """
-        return self.config.num_bins
-
-    @num_bins.setter
-    def num_bins(self, value: int):
-        """
-        Sets the number of CNH bins in the sensor configuration.
-
-        Args:
-            value (int): New number of CNH bins.
-        """
-        self._data.reset()
-        self.update(num_bins=value)
-
-    @property
-    def resolution(self) -> tuple[int, int]:
-        """
-        Gets the aggregation grid resolution.
-
-        Returns:
-            tuple[int, int]: Number of aggregation columns and rows.
-        """
-        return self.config.width, self.config.height
-
-    @resolution.setter
-    def resolution(self, value: tuple[int, int]):
-        """
-        Sets the aggregation grid resolution.
-
-        Args:
-            value (tuple[int, int]): New number of aggregation columns and rows.
-        """
-        self.update(width=value[0], height=value[1])
-
-    @property
     def is_okay(self) -> bool:
         """
         Checks if the sensor is operational.
