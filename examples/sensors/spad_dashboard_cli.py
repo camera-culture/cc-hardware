@@ -1,9 +1,12 @@
 import time
+from datetime import datetime
 from functools import partial
+from pathlib import Path
 
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
+from cc_hardware.utils.file_handlers import PklHandler
 
 i = 0
 t0 = 0
@@ -21,12 +24,14 @@ def my_callback(dashboard: SPADDashboard):
         get_logger().info("Callback called")
 
 
-def setup(manager: Manager, sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
-    """Configures the manager with sensor and dashboard instances.
+def setup(
+    manager: Manager,
+    sensor: SPADSensorConfig,
+    dashboard: SPADDashboardConfig,
+    record: bool = False,
+):
+    """Configures the manager with sensor and dashboard instances."""
 
-    Args:
-        manager (Manager): Manager to add sensor and dashboard to.
-    """
     sensor: SPADSensor = SPADSensor.create_from_config(sensor)
     manager.add(sensor=sensor)
 
@@ -37,8 +42,29 @@ def setup(manager: Manager, sensor: SPADSensorConfig, dashboard: SPADDashboardCo
     dashboard.setup()
     manager.add(dashboard=dashboard)
 
+    if record:
+        now = datetime.now()
+        logdir = Path("logs") / now.strftime("%Y-%m-%d") / now.strftime("%H-%M-%S")
+        logdir.mkdir(parents=True, exist_ok=True)
+        get_logger().info(f"Logging to {logdir}")
+        pkl_handler = PklHandler(logdir / "data.pkl")
+        manager.add(pkl_handler=pkl_handler)
 
-def loop(frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashboard):
+        # file_handler.write(
+        #     {
+        #         "resolution": sensor.resolution,
+        #         "num_bins": sensor.num_bins,
+        #     }
+        # )
+
+
+def loop(
+    frame: int,
+    manager: Manager,
+    sensor: SPADSensor,
+    dashboard: SPADDashboard,
+    pkl_handler: PklHandler | None = None,
+):
     """Updates dashboard each frame.
 
     Args:
@@ -58,9 +84,19 @@ def loop(frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashbo
     histograms = sensor.accumulate()
     dashboard.update(frame, histograms=histograms)
 
+    if pkl_handler is not None:
+        pkl_handler.append(
+            {
+                "frame": frame,
+                "histograms": histograms,
+            }
+        )
+
 
 @register_cli
-def spad_dashboard_demo(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig):
+def spad_dashboard_demo(
+    sensor: SPADSensorConfig, dashboard: SPADDashboardConfig, record: bool = False
+):
     """Sets up and runs the SPAD dashboard.
 
     Args:
@@ -72,7 +108,10 @@ def spad_dashboard_demo(sensor: SPADSensorConfig, dashboard: SPADDashboardConfig
     t0 = time.time()
 
     with Manager() as manager:
-        manager.run(setup=partial(setup, sensor=sensor, dashboard=dashboard), loop=loop)
+        manager.run(
+            setup=partial(setup, sensor=sensor, dashboard=dashboard, record=record),
+            loop=loop,
+        )
 
 
 if __name__ == "__main__":

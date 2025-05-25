@@ -151,8 +151,8 @@ class Manager:
                 if not self._cleanup_on_keyboard_interrupt:
                     get_logger().info("Exiting loop.")
                     return
-            except Exception:
-                get_logger().warning(f"Failed to run loop {iter}.")
+            except Exception as e:
+                get_logger().warning(f"Failed to run loop {iter}: {e}")
                 return
 
             # CLEANUP

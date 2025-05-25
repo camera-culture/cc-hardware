@@ -18,6 +18,7 @@ class PklSPADSensorConfig(SPADSensorConfig):
     key: str = "histogram"
     resolution: tuple[int, int] | None = None
     merge: bool = True
+    loop: bool = False
 
 
 class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
@@ -40,11 +41,14 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
         config.pkl_path = Path(config.pkl_path)
         assert config.pkl_path.exists(), f"PKL file {config.pkl_path} does not exist."
         self._handler = PklReader(config.pkl_path)
-        assert len(self._handler) > 0, "No data found in PKL file."
+        self._num_entries = len(self._handler)
+        assert self._num_entries > 0, "No data found in PKL file."
         self._index = 0
 
         entry = self._handler.load(index)
-        assert config.key in entry, f"Key '{config.key}' not found in data."
+        assert (
+            config.key in entry
+        ), f"Key '{config.key}' not found in data. Given: {list(entry.keys())}"
         if config.resolution is None:
             config.resolution = entry[config.key].shape[:-1]
             if config.merge:
@@ -88,7 +92,9 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
         if index is not None:
             self._index = index
 
-        if self._index >= len(self._handler):
+        if self.config.loop:
+            self._index = self._index % self._num_entries
+        if self._index >= self._num_entries:
             get_logger().error("No more data available.")
             return None
 
@@ -140,7 +146,7 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
 
     @property
     def is_okay(self) -> bool:
-        return len(self._handler) > self._index
+        return self._num_entries > self._index or self.config.loop
 
     def close(self) -> None:
         """

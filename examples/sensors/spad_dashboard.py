@@ -103,7 +103,6 @@ def loop(
     dashboard.update(frame, histograms=histograms)
 
     if writer is not None:
-        assert writer is not None
         writer.append(
             {
                 "iter": frame,
