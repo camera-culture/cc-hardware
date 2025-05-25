@@ -91,8 +91,7 @@ class SPADDashboard[T: SPADDashboardConfig](Dashboard[T]):
         """
         Configures the sensor settings and channel mask.
         """
-        h, w = self._sensor.resolution
-        total_channels = h * w
+        total_channels = self._sensor.config.num_pixels
         self.channel_mask = np.arange(total_channels)
         if self.config.channel_mask is not None:
             self.channel_mask = np.array(self.config.channel_mask)

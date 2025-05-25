@@ -17,8 +17,12 @@ import numpy as np
 import pkg_resources
 
 from cc_hardware.drivers.safe_serial import SafeSerial
-from cc_hardware.drivers.sensor import SensorData
-from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.spad import (
+    SPADDataType,
+    SPADSensor,
+    SPADSensorConfig,
+    SPADSensorData,
+)
 from cc_hardware.utils import II, config_wrapper, get_logger
 from cc_hardware.utils.setting import BoolSetting, OptionSetting, RangeSetting, Setting
 
@@ -66,25 +70,24 @@ class VL53L8CHConfig(SPADSensorConfig):
 
     port: str | None = None
 
-    resolution: int  # uint16_t
+    fovx: float = 45.0
+    fovy: float = 45.0
+    timing_resolution: float = 250e-12
+
     ranging_mode: RangingMode  # uint16_t
     ranging_frequency_hz: int  # uint16_t
     integration_time_ms: int  # uint16_t
-    cnh_start_bin: int  # uint16_t
-    cnh_num_bins: int  # uint16_t
-    cnh_subsample: int  # uint16_t
     agg_start_x: int  # uint16_t
     agg_start_y: int  # uint16_t
     agg_merge_x: int  # uint16_t
     agg_merge_y: int  # uint16_t
-    agg_cols: int  # uint16_t
-    agg_rows: int  # uint16_t
 
     add_back_ambient: bool
 
-    resolution_setting: OptionSetting = OptionSetting.default_factory(
-        value=II("..resolution"), options=[16, 64], title="Resolution"
-    )
+    # TODO
+    # resolution_setting: OptionSetting = OptionSetting.default_factory(
+    #     value=II("..resolution"), options=[16, 64], title="Resolution"
+    # )
     ranging_mode_setting: OptionSetting = OptionSetting.from_enum(
         enum=RangingMode, default=II("..ranging_mode"), title="Ranging Mode"
     )
@@ -100,8 +103,8 @@ class VL53L8CHConfig(SPADSensorConfig):
         max=1000,
         title="Integration Time (ms)",
     )
-    cnh_num_bins_setting: RangeSetting = RangeSetting.default_factory(
-        value=II("..cnh_num_bins"), min=1, max=32, title="Number of Bins"
+    num_bins_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..num_bins"), min=1, max=32, title="Number of Bins"
     )
     add_back_ambient_setting: BoolSetting = BoolSetting.default_factory(
         value=II("..add_back_ambient"),
@@ -117,19 +120,19 @@ class VL53L8CHConfig(SPADSensorConfig):
         """
         return struct.pack(
             "<13H",
-            self.resolution,
+            self.height * self.width,
             self.ranging_mode.value,
             self.ranging_frequency_hz,
             self.integration_time_ms,
-            self.cnh_start_bin,
-            self.cnh_num_bins,
-            self.cnh_subsample,
+            self.start_bin,
+            self.num_bins,
+            self.subsample,
             self.agg_start_x,
             self.agg_start_y,
             self.agg_merge_x,
             self.agg_merge_y,
-            self.agg_cols,
-            self.agg_rows,
+            self.width,
+            self.height,
         )
 
     @property
@@ -141,11 +144,11 @@ class VL53L8CHConfig(SPADSensorConfig):
             dict[str, Setting]: Configuration settings.
         """
         return {
-            "resolution": self.resolution_setting,
+            # "resolution": self.resolution_setting,
             "ranging_mode": self.ranging_mode_setting,
             "ranging_frequency_hz": self.ranging_frequency_hz_setting,
             "integration_time_ms": self.integration_time_ms_setting,
-            "cnh_num_bins": self.cnh_num_bins_setting,
+            "num_bins": self.num_bins_setting,
             "add_back_ambient": self.add_back_ambient_setting,
         }
 
@@ -161,8 +164,8 @@ class VL53L8CHSharedConfig(VL53L8CHConfig):
     ranging_mode: RangingMode = RangingMode.AUTONOMOUS
     ranging_frequency_hz: int = 60
     integration_time_ms: int = 10
-    cnh_start_bin: int = 0
-    cnh_subsample: int = 16
+    start_bin: int = 0
+    subsample: int = 16
     agg_start_x: int = 0
     agg_start_y: int = 0
     agg_merge_x: int = 1
@@ -177,10 +180,9 @@ class VL53L8CHConfig4x4(VL53L8CHSharedConfig):
     Sensor configuration for a 4x4 resolution.
     """
 
-    resolution: int = 16
-    cnh_num_bins: int = 8
-    agg_cols: int = 4
-    agg_rows: int = 4
+    height: int = 4
+    width: int = 4
+    num_bins: int = 8
 
 
 @config_wrapper
@@ -189,104 +191,88 @@ class VL53L8CHConfig8x8(VL53L8CHSharedConfig):
     Sensor configuration for an 8x8 resolution.
     """
 
-    resolution: int = 64
-    cnh_num_bins: int = 8
-    agg_cols: int = 8
-    agg_rows: int = 8
+    height: int = 8
+    width: int = 8
+    num_bins: int = 8
 
 
 # ===============
 
 
-class VL53L8CHHistogram(SensorData):
+class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
     """
-    Processes and stores histogram data from the VL53L8CH sensor.
+    Processes and stores both histogram and target data from the VL53L8CH sensor.
 
-    This class handles the accumulation and processing of histogram data
-    received from the sensor, managing multiple pixel histograms.
+    This class handles the accumulation and processing of histogram bins
+    and per-pixel target information, keeping them aligned by pixel index.
     """
-
-    def __init__(self, config: VL53L8CHConfig):
-        """
-        Initializes the VL53L8CHHistogram instance.
-        """
-        super().__init__()
-
-        self._config = config
-        self._pixel_histograms = {}
-        self._has_data = False
-        self._num_pixels = None
-
-    def reset(self, num_pixels: int | None = None) -> None:
-        """
-        Resets the histogram data.
-
-        Args:
-            num_pixels (int): Number of pixels expected in the histogram data.
-        """
-        self._has_data = False
-        self._pixel_histograms = {}
-        if num_pixels is not None:
-            self._num_pixels = num_pixels
 
     def process(self, row: list[str]) -> bool:
         """
-        Processes a row of histogram data.
+        Processes a row of data, routing to histogram or target handlers.
 
         Args:
-            row (list[str]): A list of string values representing a row of data.
+            row (list[str]): A row of string values from sensor output.
 
         Returns:
-            bool: True if processing is successful, False otherwise.
+            bool: True if processing succeeds, False otherwise.
         """
-        assert self._num_pixels is not None, "Number of pixels not set"
 
-        try:
-            agg_num = int(row[1])
-            if agg_num in self._pixel_histograms:
-                get_logger().error(f"Duplicate aggregation number received: {agg_num}")
-                return False
-        except (ValueError, IndexError):
-            get_logger().error("Invalid data formatting received.")
+        if not self._process_histogram(row):
             return False
-
-        try:
-            ambient = abs(float(row[3])) if self._config.add_back_ambient else 0
-            bin_vals = [float(val) + ambient for val in row[5:]]
-            self._pixel_histograms[agg_num] = np.clip(bin_vals, 0, None)
-        except (ValueError, IndexError):
-            get_logger().error("Invalid data formatting received.")
-            return False
-
-        if len(self._pixel_histograms) == self._num_pixels:
-            self._data = np.array(
-                [self._pixel_histograms[k] for k in sorted(self._pixel_histograms)]
-            )
-            self._pixel_histograms = {}
-            self._has_data = True
-
+        if len(self._data[SPADDataType.HISTOGRAM]) == self._config.num_pixels:
+            self._finalize()
         return True
 
-    def get_data(self) -> np.ndarray:
+    def _process_histogram(self, row: list[str]) -> bool:
         """
-        Retrieves the processed histogram data.
+        Processes a histogram row for a single pixel.
+
+        The row is in the following format:
+        "Data Count, Pixel Index, ..., Distance, ..., Ambient, ..., Bins, Bin 0, Bin 1, ..."
+
+        Args:
+            row (list[str]): A histogram data row.
 
         Returns:
-            np.ndarray: A copy of the histogram data.
+            bool: True if valid, False otherwise.
         """
-        data = np.copy(self._data)
-        self.reset()
-        return data
+        histogram = self._data.setdefault(SPADDataType.HISTOGRAM, {})
+        distance = self._data.setdefault(SPADDataType.DISTANCE, {})
 
-    @property
-    def has_data(self) -> bool:
-        """
-        Checks if histogram data is available.
+        try:
+            idx = int(row[1])
+            if idx in histogram:
+                get_logger().error(f"Duplicate histogram for pixel {idx}")
+                return False
 
-        Returns:
-            bool: True if data is available, False otherwise.
+            ambient = float(row[3]) if self._config.add_back_ambient else 0.0
+            bins = [float(v) + ambient for v in row[7:]]
+
+            histogram[idx] = np.clip(bins, 0, None)
+            distance[idx] = float(row[5])
+            return True
+        except (ValueError, IndexError) as e:
+            get_logger().error(f"Invalid histogram formatting: {e}")
+            return False
+
+    def _finalize(self) -> None:
         """
-        return self._has_data
+        Finalizes data when all pixels processed, storing combined output.
+        """
+        histogram = self._data[SPADDataType.HISTOGRAM]
+        self._ready_data[SPADDataType.HISTOGRAM] = np.array(
+            [histogram[i] for i in sorted(histogram)]
+        ).reshape(
+            self._config.height,
+            self._config.width,
+            self._config.num_bins,
+        )
+
+        distance = self._data[SPADDataType.DISTANCE]
+        self._ready_data[SPADDataType.DISTANCE] = np.array(
+            [distance[i] for i in sorted(distance)]
+        ).reshape(self._config.height, self._config.width)
 
 
 # ===============
@@ -312,7 +298,8 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
 
     SCRIPT: Path = Path(
         pkg_resources.resource_filename(
-            "cc_hardware.drivers", str(Path("data") / "vl53l8ch" / "build" / "makefile")
+            "cc_hardware.drivers",
+            str(Path("data") / "vl53l8ch" / "build" / "makefile"),
         )
     )
     BAUDRATE: int = 921_600
@@ -334,19 +321,18 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         """
         super().__init__(config)
         self._config = config
+        self._data = VL53L8CHData(config)
 
-        self._histogram = VL53L8CHHistogram(config)
-
-        # Use Queue for inter-process communication
-        self._queue = multiprocessing.Queue(maxsize=self.config.resolution * 4)
+        # inter-process communication queues/events
+        self._queue = multiprocessing.Queue(
+            maxsize=self.config.height * self.config.width * 4
+        )
         self._write_queue = multiprocessing.Queue(maxsize=10)
         self._initialized_event = multiprocessing.Event()
         self._stop_event = multiprocessing.Event()
 
-        # Send the configuration to the sensor
         self.update(**kwargs)
 
-        # Start the reader process
         self._reader_process = multiprocessing.Process(
             target=self._read_serial_background,
             args=(
@@ -429,10 +415,6 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         if not super().update(**kwargs):
             return
 
-        # Update the agg_cols and agg_rows explicitly
-        num = int(np.sqrt(self.config.resolution))
-        self.config.agg_cols, self.config.agg_rows = num, num
-
         # Send the configuration to the sensor
         try:
             self._write_queue.put(self.config.pack())
@@ -440,67 +422,49 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             get_logger().error("Failed to send configuration to sensor")
 
     def accumulate(
-        self,
-        num_samples: int = 1,
-        *,
-        average: bool = True,
-    ) -> np.ndarray | list[np.ndarray]:
+        self, num_samples: int = 1
+    ) -> list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]:
         """
-        Accumulates histogram data from the sensor.
+        Accumulates histogram and target data from the sensor.
 
         Args:
             num_samples (int): Number of samples to accumulate.
-            average (bool, optional): If True, returns the average of the samples.
-                If False, returns a list of individual samples. Defaults to True.
 
         Returns:
-            np.ndarray | list[np.ndarray]: The accumulated histogram data,
-                either averaged or as a list of samples.
         """
-        histograms = []
+        samples = []
         for _ in range(num_samples):
-            began_read = False
-            self._histogram.reset(self.config.resolution)
-            while not self._histogram.has_data:
+            self._data.reset()
+            began = False
+            while not self._data.has_data:
                 try:
-                    # Retrieve the next line from the queue
-                    line: bytes = self._queue.get(timeout=1)
+                    raw = self._queue.get(timeout=1)
                 except multiprocessing.queues.Empty:
-                    # No data received in time; continue waiting
                     continue
-
                 try:
-                    line_str = line.decode("utf-8").replace("\r", "").replace("\n", "")
-                    get_logger().debug(f"Processing line: {line_str}")
+                    line = raw.decode("utf-8").strip()
+                    get_logger().debug(f"Processing line: {line}")
                 except UnicodeDecodeError:
                     get_logger().error("Error decoding data")
                     continue
 
-                if line_str.startswith("Data Count"):
-                    began_read = True
+                if line.startswith("Data Count"):
+                    began = True
                     continue
-
-                if began_read and line_str.startswith("Agg"):
-                    tokens = [
-                        token.strip() for token in line_str.split(",") if token.strip()
-                    ]
-
-                    if not self._histogram.process(tokens):
-                        get_logger().error("Error processing data")
-                        self._histogram.reset()
-                        began_read = False
+                if began:
+                    tokens = [tok.strip() for tok in line.split(",") if tok.strip()]
+                    if not self._data.process(tokens):
+                        get_logger().error(f"Error processing row: {tokens}")
+                        self._data.reset()
+                        began = False
                         continue
 
-                if self._histogram.has_data:
-                    histograms.append(self._histogram.get_data())
-                    self._histogram.reset()
-                    break  # Move on to next sample
+            # Has data!
+            samples.append(self._data.get_data())
 
         if num_samples == 1:
-            histograms = histograms[0] if histograms else None
-        elif average:
-            histograms = np.mean(histograms, axis=0)
-        return histograms
+            return samples[0]
+        return samples
 
     @property
     def num_bins(self) -> int:
@@ -510,7 +474,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         Returns:
             int: Number of CNH bins.
         """
-        return self.config.cnh_num_bins
+        return self.config.num_bins
 
     @num_bins.setter
     def num_bins(self, value: int):
@@ -520,8 +484,8 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         Args:
             value (int): New number of CNH bins.
         """
-        self._histogram.reset()
-        self.update(cnh_num_bins=value)
+        self._data.reset()
+        self.update(num_bins=value)
 
     @property
     def resolution(self) -> tuple[int, int]:
@@ -531,8 +495,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         Returns:
             tuple[int, int]: Number of aggregation columns and rows.
         """
-        num = int(np.sqrt(self.config.resolution))
-        return num, num
+        return self.config.width, self.config.height
 
     @resolution.setter
     def resolution(self, value: tuple[int, int]):
@@ -542,7 +505,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         Args:
             value (tuple[int, int]): New number of aggregation columns and rows.
         """
-        self.update(agg_cols=value[0], agg_rows=value[1])
+        self.update(width=value[0], height=value[1])
 
     @property
     def is_okay(self) -> bool:

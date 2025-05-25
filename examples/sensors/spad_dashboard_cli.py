@@ -3,7 +3,7 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 from cc_hardware.utils.file_handlers import PklHandler
@@ -32,15 +32,18 @@ def setup(
 ):
     """Configures the manager with sensor and dashboard instances."""
 
-    sensor: SPADSensor = SPADSensor.create_from_config(sensor)
-    manager.add(sensor=sensor)
+    assert (
+        SPADDataType.HISTOGRAM in sensor.data_type
+    ), "Sensor must support histogram data type."
+    _sensor: SPADSensor = SPADSensor.create_from_config(sensor)
+    manager.add(sensor=_sensor)
 
     dashboard.user_callback = my_callback
-    dashboard: SPADDashboard = dashboard.create_from_registry(
-        config=dashboard, sensor=sensor
+    _dashboard: SPADDashboard = dashboard.create_from_registry(
+        config=dashboard, sensor=_sensor
     )
-    dashboard.setup()
-    manager.add(dashboard=dashboard)
+    _dashboard.setup()
+    manager.add(dashboard=_dashboard)
 
     if record:
         now = datetime.now()
@@ -81,16 +84,11 @@ def loop(
         t0 = time.time()
         get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
 
-    histograms = sensor.accumulate()
-    dashboard.update(frame, histograms=histograms)
+    data = sensor.accumulate()
+    dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
 
     if pkl_handler is not None:
-        pkl_handler.append(
-            {
-                "frame": frame,
-                "histograms": histograms,
-            }
-        )
+        pkl_handler.append({"frame": frame, **data})
 
 
 @register_cli

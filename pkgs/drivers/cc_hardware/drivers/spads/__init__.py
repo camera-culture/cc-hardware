@@ -1,6 +1,11 @@
 """SPAD sensor drivers for the cc-hardware package."""
 
-from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.spad import (
+    SPADDataType,
+    SPADSensor,
+    SPADSensorConfig,
+    SPADSensorData,
+)
 
 # =============================================================================
 # Register the SPAD sensor implementations
@@ -42,4 +47,6 @@ SPADSensorConfig.register(
 __all__ = [
     "SPADSensor",
     "SPADSensorConfig",
+    "SPADDataType",
+    "SPADSensorData",
 ]

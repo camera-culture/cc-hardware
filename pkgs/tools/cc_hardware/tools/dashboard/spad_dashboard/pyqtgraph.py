@@ -6,6 +6,7 @@ import numpy as np
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtWidgets
 
+from cc_hardware.drivers.spads import SPADDataType
 from cc_hardware.tools.dashboard.spad_dashboard import (
     SPADDashboard,
     SPADDashboardConfig,
@@ -220,7 +221,10 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
         self.sensor.update()
 
         if histograms is None:
-            histograms = np.array(self.sensor.accumulate(1))
+            histograms = self.sensor.accumulate(1)[SPADDataType.HISTOGRAM]
+
+        # Flatten the histograms
+        histograms = histograms.reshape(self.num_channels, -1)
 
         # Check if the number of channels has changed
         if histograms.shape[0] != len(self.plots):

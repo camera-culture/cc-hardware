@@ -3,8 +3,6 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-import numpy as np
-
 from cc_hardware.utils import Component, Config, config_wrapper
 from cc_hardware.utils.logger import get_logger
 from cc_hardware.utils.setting import Setting
@@ -100,12 +98,12 @@ class SensorData(ABC):
     """Abstract base class for handling sensor data."""
 
     def __init__(self):
-        self._data: np.ndarray = None
-        self._has_data = False
+        self._data: Any = None
+        self._ready_data: Any = None
 
     def reset(self) -> None:
         """Resets the sensor data to its initial state."""
-        self._has_data = False
+        pass
 
     @abstractmethod
     def process(self, data: list[Any]) -> None:
@@ -116,11 +114,13 @@ class SensorData(ABC):
         """
         pass
 
-    def get_data(self, *, verify_has_data: bool = True) -> np.ndarray:
-        """Retrieves the processed sensor data.
+    def get_data(self, *, verify_has_data: bool = True) -> Any:
+        """Retrieves the processed sensor data."""
+        assert not verify_has_data or self.has_data, "No data available."
+        return self._ready_data
 
-        Returns:
-          np.ndarray: The processed data.
-        """
-        assert not verify_has_data or self._has_data, "No data available."
-        return self._data
+    @property
+    @abstractmethod
+    def has_data(self) -> bool:
+        """Checks if there is any processed data available."""
+        pass
