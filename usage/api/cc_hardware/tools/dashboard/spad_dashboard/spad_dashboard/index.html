@@ -292,7 +292,7 @@
 are three implementations available with different supported features:</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><a class="reference internal" href="../matplotlib/index.html#cc_hardware.tools.dashboard.spad_dashboard.matplotlib.MatplotlibDashboard" title="cc_hardware.tools.dashboard.spad_dashboard.matplotlib.MatplotlibDashboard"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibDashboard</span></code></a>:</dt><dd><p>Uses Matplotlib for visualization.</p>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">MatplotlibDashboard</span></code>:</dt><dd><p>Uses Matplotlib for visualization.</p>
 </dd>
 </dl>
 </li>
@@ -302,7 +302,7 @@ are three implementations available with different supported features:</p>
 </dl>
 </li>
 <li><dl class="simple">
-<dt><a class="reference internal" href="../dash/index.html#cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard" title="cc_hardware.tools.dashboard.spad_dashboard.dash.DashDashboard"><code class="xref py py-class docutils literal notranslate"><span class="pre">DashDashboard</span></code></a>:</dt><dd><p>Uses Dash and Plotly for web-based visualization.</p>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">DashDashboard</span></code>:</dt><dd><p>Uses Dash and Plotly for web-based visualization.</p>
 </dd>
 </dl>
 </li>
@@ -340,7 +340,21 @@ are three implementations available with different supported features:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboardConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboardConfig</span></span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboardConfig" title="Link to this definition">#</a></dt>
-<dd><p>Configuration for SPAD sensor dashboards.</p>
+<dd>digraph inheritance9dcbd86463 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Config&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;DashboardConfig&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.DashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for dashboard GUIs.&quot;];
+  &quot;Config&quot; -&gt; &quot;DashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SPADDashboardConfig&quot; [URL=&quot;#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor dashboards.&quot;];
+  &quot;DashboardConfig&quot; -&gt; &quot;SPADDashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Configuration for SPAD sensor dashboards.</p>
 <p>When defining a new dashboard, create a subclass of this configuration class and add
 any necessary parameters.</p>
 <dl class="field-list simple">
@@ -585,7 +599,21 @@ and only one class is registered, it will instantiate that class.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboard" title="Link to this definition">#</a></dt>
-<dd><p>Abstract base class for SPAD sensor dashboards.</p>
+<dd>digraph inheritance20dc732aff {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;Component&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Dashboard&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.Dashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for dashboards.&quot;];
+  &quot;Component&quot; -&gt; &quot;Dashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
+  &quot;SPADDashboard&quot; [URL=&quot;#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for SPAD sensor dashboards.&quot;];
+  &quot;Dashboard&quot; -&gt; &quot;SPADDashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Abstract base class for SPAD sensor dashboards.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

@@ -17,8 +17,6 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
-   dash/index.rst
-   matplotlib/index.rst
    pyqtgraph/index.rst
    spad_dashboard/index.rst
 
