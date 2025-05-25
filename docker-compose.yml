@@ -10,8 +10,8 @@ services:
       dockerfile: "./docker/dev.dockerfile"
       args:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
-        IMAGE_BASE: "arm64v8/debian"
-        IMAGE_TAG: "bookworm-slim"
+        IMAGE_BASE: "dustynv/l4t-ml"
+        IMAGE_TAG: "r36.2.0"
         USER_GROUPS: "dialout video"
         PIP_REQUIREMENTS: "poetry"
         APT_DEPENDENCIES: |
@@ -27,6 +27,7 @@ services:
           qtbase5-dev-tools
           libxcb-cursor0
           mesa-vulkan-drivers
+          vim
         CONDA_PACKAGES: "python=3.12 gcc=12.1.0"
         CONDA_CHANNELS: "conda-forge"
     volumes:
@@ -40,6 +41,7 @@ services:
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
     tty: true
     privileged: True # TODO: I don't like this
+    runtime: nvidia
   vnc:
     image: "camera/${COMPOSE_PROJECT_NAME}:vnc"
     hostname: "${COMPOSE_PROJECT_NAME}-vnc"
