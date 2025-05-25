@@ -3,7 +3,7 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.drivers.spads.spad_wrappers import SPADMergeWrapperConfig
 from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig4x4
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
@@ -22,7 +22,7 @@ OUTPUT_PKL: Path = LOGDIR / "data.pkl"
 
 # You can start with a config and then change options via create.
 WRAPPED_SENSOR = VL53L8CHConfig4x4.create(
-    cnh_num_bins=16,
+    num_bins=16,
 )
 SENSOR = SPADMergeWrapperConfig.create(
     wrapped=WRAPPED_SENSOR,
@@ -99,16 +99,11 @@ def loop(
         t0 = time.time()
         get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
 
-    histograms = sensor.accumulate()
-    dashboard.update(frame, histograms=histograms)
+    data = sensor.accumulate()
+    dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
 
     if writer is not None:
-        writer.append(
-            {
-                "iter": frame,
-                "histogram": histograms,
-            }
-        )
+        writer.append({"iter": frame, **data})
 
 
 if __name__ == "__main__":

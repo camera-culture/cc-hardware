@@ -2,7 +2,7 @@ from typing import Any
 
 import numpy as np
 
-from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.utils import II, config_wrapper
 from cc_hardware.utils.setting import BoolSetting, RangeSetting
 
@@ -16,6 +16,14 @@ class SPADWrapperConfig(SPADSensorConfig):
     """
 
     wrapped: SPADSensorConfig
+
+    data_type: SPADDataType = II(".wrapped.data_type")
+    height: int = II(".wrapped.height")
+    width: int = II(".wrapped.width")
+    num_bins: int = II(".wrapped.num_bins")
+    fovx: float = II(".wrapped.fovx")
+    fovy: float = II(".wrapped.fovy")
+    timing_resolution: float = II(".wrapped.timing_resolution")
 
     @property
     def settings(self) -> dict[str, Any]:
@@ -42,9 +50,7 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
             self._sensor = SPADSensor.create_from_config(config.wrapped)
 
     def accumulate(self, *args, **kwargs):
-        histograms = self._sensor.accumulate(*args, **kwargs)
-
-        return histograms
+        return self._sensor.accumulate(*args, **kwargs)
 
     @property
     def num_bins(self) -> int:
@@ -121,18 +127,26 @@ class SPADMergeWrapper(SPADWrapper[SPADMergeWrapperConfig]):
             self.config.merge_cols = False
 
     def accumulate(self, *args, **kwargs):
-        histograms = super().accumulate(*args, **kwargs)
+        data = super().accumulate(*args, **kwargs)
 
-        histograms = np.reshape(histograms, (*super().resolution, -1))
+        if SPADDataType.HISTOGRAM in self.config.data_type:
+            histograms = data[SPADDataType.HISTOGRAM]
+            data[SPADDataType.HISTOGRAM] = self._merge(histograms)
+        if SPADDataType.DISTANCE in self.config.data_type:
+            distances = data[SPADDataType.DISTANCE]
+            data[SPADDataType.DISTANCE] = self._merge(distances)
+
+        return data
+
+    def _merge(self, data: np.ndarray) -> np.ndarray:
+        """Merges the data based on the configuration."""
         if self.config.merge_rows:
-            histograms = np.expand_dims(np.sum(histograms, axis=0), axis=0)
+            data = np.sum(data, axis=0, keepdims=True)
         if self.config.merge_cols:
-            histograms = np.expand_dims(np.sum(histograms, axis=1), axis=1)
+            data = np.sum(data, axis=1, keepdims=True)
         if self.config.merge_all:
-            histograms = np.expand_dims(np.sum(histograms, axis=(0, 1)), axis=0)
-
-        histograms = np.reshape(histograms, (-1, histograms.shape[-1]))
-        return histograms
+            data = np.sum(data, axis=(0, 1), keepdims=True)
+        return data
 
     @property
     def resolution(self) -> tuple[int, int]:
