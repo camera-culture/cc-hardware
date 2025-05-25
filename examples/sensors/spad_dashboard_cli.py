@@ -38,6 +38,8 @@ def setup(
     _sensor: SPADSensor = SPADSensor.create_from_config(sensor)
     manager.add(sensor=_sensor)
 
+    if dashboard is None:
+        exit()
     dashboard.user_callback = my_callback
     _dashboard: SPADDashboard = dashboard.create_from_registry(
         config=dashboard, sensor=_sensor
@@ -52,13 +54,6 @@ def setup(
         get_logger().info(f"Logging to {logdir}")
         pkl_handler = PklHandler(logdir / "data.pkl")
         manager.add(pkl_handler=pkl_handler)
-
-        # file_handler.write(
-        #     {
-        #         "resolution": sensor.resolution,
-        #         "num_bins": sensor.num_bins,
-        #     }
-        # )
 
 
 def loop(

@@ -152,7 +152,7 @@ class Manager:
                     get_logger().info("Exiting loop.")
                     return
             except Exception as e:
-                get_logger().warning(f"Failed to run loop {iter}: {e}")
+                get_logger().exception(f"Failed to run loop {iter}: {e}")
                 return
 
             # CLEANUP

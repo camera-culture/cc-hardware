@@ -221,7 +221,11 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
         if not self._process_histogram(row):
             return False
         if len(self._data[SPADDataType.HISTOGRAM]) == self._config.num_pixels:
-            self._finalize()
+            try:
+                self._finalize()
+            except ValueError as e:
+                get_logger().error(f"Error finalizing data: {e}")
+                return False
         return True
 
     def _process_histogram(self, row: list[str]) -> bool:
@@ -241,16 +245,16 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
         distance = self._data.setdefault(SPADDataType.DISTANCE, {})
 
         try:
-            idx = int(row[1])
+            idx = int(row[0])
             if idx in histogram:
                 get_logger().error(f"Duplicate histogram for pixel {idx}")
                 return False
 
-            ambient = float(row[3]) if self._config.add_back_ambient else 0.0
-            bins = [float(v) + ambient for v in row[7:]]
+            ambient = float(row[1]) if self._config.add_back_ambient else 0.0
+            bins = [float(v) + ambient for v in row[3:]]
 
             histogram[idx] = np.clip(bins, 0, None)
-            distance[idx] = float(row[5])
+            distance[idx] = float(row[2])
             return True
         except (ValueError, IndexError) as e:
             get_logger().error(f"Invalid histogram formatting: {e}")
@@ -302,7 +306,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             str(Path("data") / "vl53l8ch" / "build" / "makefile"),
         )
     )
-    BAUDRATE: int = 921_600
+    BAUDRATE: int = 2_250_000
 
     def __init__(
         self,
@@ -438,11 +442,11 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             began = False
             while not self._data.has_data:
                 try:
-                    raw = self._queue.get(timeout=1)
+                    raw: bytes = self._queue.get(timeout=1)
                 except multiprocessing.queues.Empty:
                     continue
                 try:
-                    line = raw.decode("utf-8").strip()
+                    line: str = raw.decode("utf-8").strip()
                     get_logger().debug(f"Processing line: {line}")
                 except UnicodeDecodeError:
                     get_logger().error("Error decoding data")
@@ -451,8 +455,9 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
                 if line.startswith("Data Count"):
                     began = True
                     continue
+
                 if began:
-                    tokens = [tok.strip() for tok in line.split(",") if tok.strip()]
+                    tokens = [tok.strip() for tok in line.split(" ") if tok.strip()]
                     if not self._data.process(tokens):
                         get_logger().error(f"Error processing row: {tokens}")
                         self._data.reset()
