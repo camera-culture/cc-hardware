@@ -4,20 +4,20 @@ motors. These classes provide a unified interface for controlling stepper motors
 connected to a CNCShield using the Telemetrix library."""
 
 import inspect
+from dataclasses import field
 from functools import partial
 from typing import Any
-from dataclasses import field
 
 from telemetrix import telemetrix
 
 from cc_hardware.drivers.stepper_motors import (
     StepperMotor,
     StepperMotorConfig,
-    StepperMotorSystemConfig,
     StepperMotorSystem,
     StepperMotorSystemAxis,
+    StepperMotorSystemConfig,
 )
-from cc_hardware.utils import call_async, get_logger, config_wrapper, II
+from cc_hardware.utils import call_async, config_wrapper, get_logger
 
 # ======================
 
@@ -315,13 +315,15 @@ class DualDrive2AxisGantryY2Config(TelemetrixStepperMotorXConfig):
 
 @config_wrapper
 class DualDrive2AxisGantryConfig(TelemetrixStepperMotorSystemConfig):
-    axes: dict[StepperMotorSystemAxis, list[TelemetrixStepperMotorConfig]] = {
-        StepperMotorSystemAxis.X: [DualDrive2AxisGantryXConfig],
-        StepperMotorSystemAxis.Y: [
-            DualDrive2AxisGantryY1Config,
-            DualDrive2AxisGantryY2Config,
-        ],
-    }
+    axes: dict[StepperMotorSystemAxis, list[TelemetrixStepperMotorConfig]] = field(
+        default_factory=lambda: {
+            StepperMotorSystemAxis.X: [DualDrive2AxisGantryXConfig],
+            StepperMotorSystemAxis.Y: [
+                DualDrive2AxisGantryY1Config,
+                DualDrive2AxisGantryY2Config,
+            ],
+        }
+    )
 
 
 # ======================

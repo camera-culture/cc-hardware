@@ -5,22 +5,22 @@ from cc_hardware.drivers.stepper_motors import (
     StepperMotorSystem,
     StepperMotorSystemConfig,
 )
-from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
+from cc_hardware.drivers.stepper_motors.stepper_controller import (
+    StepperController,
+    StepperControllerConfig,
+)
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 
 # ===============
 
-CONTROLLER_CONFIG: list[dict] = [
-    {"name": "x", "range": (0, 16), "samples": 10},
-    {"name": "y", "range": (0, 16), "samples": 10},
-]
 
-# ===============
-
-
-def setup(manager: Manager, stepper_system: StepperMotorSystemConfig):
-    controller = SnakeStepperController(CONTROLLER_CONFIG)
-    manager.add(controller=controller)
+def setup(
+    manager: Manager,
+    stepper_system: StepperMotorSystemConfig,
+    controller: StepperControllerConfig,
+):
+    _controller = StepperController.create_from_config(controller)
+    manager.add(controller=_controller)
 
     _stepper_system = StepperMotorSystem.create_from_config(stepper_system)
     _stepper_system.initialize()
@@ -30,10 +30,14 @@ def setup(manager: Manager, stepper_system: StepperMotorSystemConfig):
 def loop(
     iter: int,
     manager: Manager,
-    controller: SnakeStepperController,
+    controller: StepperController,
     stepper_system: StepperMotorSystem,
+    repeat: bool = True,
 ) -> bool:
     get_logger().info(f"Starting iter {iter}...")
+
+    if repeat:
+        iter = iter % controller.total_positions
 
     pos = controller.get_position(iter)
     if pos is None:
@@ -59,18 +63,24 @@ def cleanup(
 
 
 @register_cli
-def spad_dashboard_demo(stepper_system: StepperMotorSystemConfig):
+def spad_dashboard_demo(
+    stepper_system: StepperMotorSystemConfig,
+    controller: StepperControllerConfig,
+    repeat: bool = True,
+):
     """Sets up and runs the stepper motor controller.
 
     Args:
         stepper_system (StepperMotorSystemConfig): Configuration for the stepper motor
             system.
+        controller (StepperControllerConfig): Configuration for the stepper motor
+            controller.
     """
 
     with Manager() as manager:
         manager.run(
-            setup=partial(setup, stepper_system=stepper_system),
-            loop=loop,
+            setup=partial(setup, stepper_system=stepper_system, controller=controller),
+            loop=partial(loop, repeat=repeat),
             cleanup=cleanup,
         )
 

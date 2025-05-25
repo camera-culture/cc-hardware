@@ -34,28 +34,28 @@ def setup(
     *,
     sensor: SPADSensorConfig,
     dashboard: SPADDashboardConfig,
-    gantry: StepperMotorSystemConfig,
+    stepper_system: StepperMotorSystemConfig,
     controller: StepperControllerConfig,
     logdir: Path,
 ):
     logdir.mkdir(parents=True, exist_ok=True)
 
-    spad = SPADSensor.create_from_config(sensor)
-    if not spad.is_okay:
+    _sensor = SPADSensor.create_from_config(sensor)
+    if not _sensor.is_okay:
         get_logger().fatal("Failed to initialize spad")
         return
-    manager.add(spad=spad)
+    manager.add(sensor=_sensor)
 
-    dashboard = SPADDashboard.create_from_config(dashboard, sensor=spad)
-    dashboard.setup()
-    manager.add(dashboard=dashboard)
+    _dashboard = SPADDashboard.create_from_config(dashboard, sensor=_sensor)
+    _dashboard.setup()
+    manager.add(dashboard=_dashboard)
 
     controller = StepperController.create_from_config(controller)
     manager.add(controller=controller)
 
-    gantry = StepperMotorSystem.create_from_config(gantry)
-    gantry.initialize()
-    manager.add(gantry=gantry)
+    _stepper_system = StepperMotorSystem.create_from_config(stepper_system)
+    _stepper_system.initialize()
+    manager.add(stepper_system=_stepper_system)
 
     output_pkl = logdir / "data.pkl"
     assert not output_pkl.exists(), f"Output file {output_pkl} already exists"
@@ -65,7 +65,7 @@ def setup(
 def loop(
     iter: int,
     manager: Manager,
-    spad: SPADSensor,
+    sensor: SPADSensor,
     dashboard: SPADDashboard,
     controller: StepperController,
     stepper_system: StepperMotorSystem,
@@ -74,7 +74,7 @@ def loop(
 ) -> bool:
     get_logger().info(f"Starting iter {iter}...")
 
-    histogram = spad.accumulate()
+    histogram = sensor.accumulate()
     dashboard.update(iter, histograms=histogram)
 
     pos = controller.get_position(iter)
@@ -100,10 +100,10 @@ def loop(
 
 
 @register_cli
-def spad_gantry_capture_v2(
+def spad_stepper_system_capture(
     sensor: SPADSensorConfig,
     dashboard: SPADDashboardConfig,
-    gantry: StepperMotorSystemConfig,
+    stepper_system: StepperMotorSystemConfig,
     controller: StepperControllerConfig,
     logdir: Path = Path("logs") / NOW.strftime("%Y-%m-%d") / NOW.strftime("%H-%M-%S"),
 ):
@@ -111,16 +111,16 @@ def spad_gantry_capture_v2(
         setup,
         sensor=sensor,
         dashboard=dashboard,
-        gantry=gantry,
+        stepper_system=stepper_system,
         controller=controller,
         logdir=logdir,
     )
 
     with Manager() as manager:
-        manager.run(setup=setup, loop=loop)
+        manager.run(setup=_setup, loop=loop)
 
 
 # ===============
 
 if __name__ == "__main__":
-    run_cli(spad_gantry_capture_v2)
+    run_cli(spad_stepper_system_capture)
