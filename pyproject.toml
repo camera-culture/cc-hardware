@@ -12,7 +12,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.14"
+python = ">=3.10,<3.14"
 cc_hardware_drivers = { path = "pkgs/drivers", develop = true }
 cc_hardware_tools = { path = "pkgs/tools", develop = true }
 cc_hardware_utils = { path = "pkgs/utils", develop = true }
