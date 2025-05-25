@@ -346,12 +346,6 @@ size=&quot;8.0, 12.0&quot;;
 <dd><p>Retrieves the wrapped sensor settings.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig.num_pixels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig.num_pixels" title="Link to this definition">#</a></dt>
-<dd><p>Returns the total number of pixels in the sensor.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -382,102 +376,6 @@ collection.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>SPADWrapperConfig</em>) – The configuration for the sensor wrapper.</p>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate">
-<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate" title="Link to this definition">#</a></dt>
-<dd><p>Accumulates the specified number of histogram samples from the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>num_samples</strong> (<em>int</em>) – The number of samples to accumulate into the histogram.
-The accumulation method (i.e. summing, averaging) may vary depending on
-the sensor. Defaults to 1.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]</em> –     The accumulated histogram data. The format may vary depending on the
-sensor and the number of samples.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.num_bins">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.num_bins" title="Link to this definition">#</a></dt>
-<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
-number of discrete values or ranges that the sensor can measure. The total
-distance a sensor can measure is equal to the number of bins multiplied by
-the bin width.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.resolution">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.resolution" title="Link to this definition">#</a></dt>
-<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
-the spatial resolution of the sensor, where the width and height refer to the
-number of pixels or sampling points in the respective dimensions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
-<dl class="simple">
-<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the sensor is operational.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.close" title="Link to this definition">#</a></dt>
-<dd><p>Closes the sensor and releases any resources.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.calibrate">
-<span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.calibrate" title="Link to this definition">#</a></dt>
-<dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.__del__">
-<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.__del__" title="Link to this definition">#</a></dt>
-<dd><p>Destructor to ensure the sensor is properly closed.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -518,12 +416,6 @@ merge_cols are ignored.</p></li>
 <dd><p>Retrieves the wrapped sensor settings.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig.num_pixels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig.num_pixels" title="Link to this definition">#</a></dt>
-<dd><p>Returns the total number of pixels in the sensor.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -556,102 +448,6 @@ collection.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>SPADWrapperConfig</em>) – The configuration for the sensor wrapper.</p>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.accumulate">
-<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.accumulate" title="Link to this definition">#</a></dt>
-<dd><p>Accumulates the specified number of histogram samples from the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>num_samples</strong> (<em>int</em>) – The number of samples to accumulate into the histogram.
-The accumulation method (i.e. summing, averaging) may vary depending on
-the sensor. Defaults to 1.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]</em> –     The accumulated histogram data. The format may vary depending on the
-sensor and the number of samples.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.resolution">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.resolution" title="Link to this definition">#</a></dt>
-<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
-the spatial resolution of the sensor, where the width and height refer to the
-number of pixels or sampling points in the respective dimensions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
-<dl class="simple">
-<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins" title="Link to this definition">#</a></dt>
-<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
-number of discrete values or ranges that the sensor can measure. The total
-distance a sensor can measure is equal to the number of bins multiplied by
-the bin width.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the sensor is operational.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.close" title="Link to this definition">#</a></dt>
-<dd><p>Closes the sensor and releases any resources.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.calibrate">
-<span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.calibrate" title="Link to this definition">#</a></dt>
-<dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.__del__">
-<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.__del__" title="Link to this definition">#</a></dt>
-<dd><p>Destructor to ensure the sensor is properly closed.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -687,12 +483,6 @@ size=&quot;8.0, 12.0&quot;;
 <dd><p>Retrieves the wrapped sensor settings.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig.num_pixels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig.num_pixels" title="Link to this definition">#</a></dt>
-<dd><p>Returns the total number of pixels in the sensor.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -725,102 +515,6 @@ collection.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>SPADWrapperConfig</em>) – The configuration for the sensor wrapper.</p>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate">
-<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate" title="Link to this definition">#</a></dt>
-<dd><p>Accumulates the specified number of histogram samples from the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>num_samples</strong> (<em>int</em>) – The number of samples to accumulate into the histogram.
-The accumulation method (i.e. summing, averaging) may vary depending on
-the sensor. Defaults to 1.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]</em> –     The accumulated histogram data. The format may vary depending on the
-sensor and the number of samples.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.num_bins">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.num_bins" title="Link to this definition">#</a></dt>
-<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
-number of discrete values or ranges that the sensor can measure. The total
-distance a sensor can measure is equal to the number of bins multiplied by
-the bin width.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.resolution">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.resolution" title="Link to this definition">#</a></dt>
-<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
-the spatial resolution of the sensor, where the width and height refer to the
-number of pixels or sampling points in the respective dimensions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
-<dl class="simple">
-<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay" title="Link to this definition">#</a></dt>
-<dd><p>Checks if the sensor is operational.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.close" title="Link to this definition">#</a></dt>
-<dd><p>Closes the sensor and releases any resources.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate">
-<span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate" title="Link to this definition">#</a></dt>
-<dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.settings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.settings" title="Link to this definition">#</a></dt>
-<dd><p>Retrieves the sensor settings.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.__del__">
-<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.__del__" title="Link to this definition">#</a></dt>
-<dd><p>Destructor to ensure the sensor is properly closed.</p>
-</dd></dl>
-
 </dd></dl>
 
 </section>
@@ -869,55 +563,19 @@ the fields of SensorConfig.</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig"><code class="docutils literal notranslate"><span class="pre">SPADWrapperConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADWrapperConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">SPADWrapperConfig.num_pixels</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper"><code class="docutils literal notranslate"><span class="pre">SPADWrapper</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.accumulate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.__del__"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.__del__()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper"><code class="docutils literal notranslate"><span class="pre">SPADWrapper</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapperConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapperConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapperConfig.num_pixels</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.accumulate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.__del__"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.__del__()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapperConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapperConfig.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapperConfig.num_pixels</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper</span></code></a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.accumulate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.resolution</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.is_okay</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.update()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.settings</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.__del__"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.__del__()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper</span></code></a></li>
 </ul>
 </li>
 </ul>

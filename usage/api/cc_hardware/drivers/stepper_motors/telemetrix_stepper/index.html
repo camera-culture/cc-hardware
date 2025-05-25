@@ -560,40 +560,6 @@ stepper motors.</p>
 <dd><p>Closes the connection or shuts down the stepper motor safely.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_to">
-<span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_to" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">move_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span></dt>
-<dd><p>Move to the specified position using positional or keyword arguments.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_by">
-<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_by" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">move_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span></dt>
-<dd><p>Moves the steppers to the specified positions.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_moving">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_moving</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_moving" title="Link to this definition">#</a></dt>
-<dd><p>Returns True if any motor is moving.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__">
-<span class="sig-name descname"><span class="pre">__getattr__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__" title="Link to this definition">#</a></dt>
-<dd><p>This is a passthrough to the underlying motor objects.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.axes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">axes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../index.html#cc_hardware.drivers.StepperMotorSystemAxis" title="cc_hardware.drivers.StepperMotorSystemAxis"><span class="pre">StepperMotorSystemAxis</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../stepper_motor/index.html#cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor" title="cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor"><span class="pre">cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.axes" title="Link to this definition">#</a></dt>
-<dd><p>Returns the axes of the stepper motor system.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -1055,11 +1021,6 @@ the port will be attempted to be auto-detected.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystemConfig"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystemConfig</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.close"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.close()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_to"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.move_to()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.move_by"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.move_by()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.is_moving"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.is_moving</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.__getattr__"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.__getattr__()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem.axes"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorSystem.axes</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXConfig"><code class="docutils literal notranslate"><span class="pre">TelemetrixStepperMotorXConfig</span></code></a></li>
