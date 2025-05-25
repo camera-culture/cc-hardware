@@ -2,7 +2,6 @@
 This module provides utility classes for writing data to files.
 """
 
-import pickle
 from pathlib import Path
 from typing import Any, Callable
 

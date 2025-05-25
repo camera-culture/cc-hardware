@@ -1,6 +1,6 @@
 # Sensors
 
-This folder contains examples of how to use various sensing interfaces defined within the {mod}`cc_hardware` package. 
+This folder contains examples of how to use various sensing interfaces defined within the {mod}`cc_hardware` package.
 
 ## `camera_viewer.py`
 

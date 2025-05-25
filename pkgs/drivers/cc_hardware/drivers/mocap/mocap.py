@@ -10,6 +10,7 @@ class MotionCaptureSensorConfig(SensorConfig):
 
     pass
 
+
 class MotionCaptureSensor[T: MotionCaptureSensorConfig](Sensor[T]):
     """
     An abstract base class for motion capture sensors.

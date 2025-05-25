@@ -1,29 +1,26 @@
-import threading
-import sys
-from datetime import datetime
-from pathlib import Path
-from functools import partial
 import multiprocessing
+import sys
+import threading
+from datetime import datetime
+from functools import partial
+from pathlib import Path
 
-from PyQt6.QtCore import Qt, QTimer, QEvent
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout
-from PyQt6.QtGui import QColor
-from PyQt6 import QtGui
-from PyQt6.QtWidgets import QWidget, QLabel
-from PyQt6.QtGui import QPainter, QColor
+import numpy as np
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
-from pyqtgraph.opengl import GLMeshItem, MeshData
-import trimesh
-import numpy as np
 import torch
-from torch import nn
+import trimesh
+from PyQt6 import QtGui
+from PyQt6.QtCore import QEvent, Qt, QTimer
+from PyQt6.QtGui import QColor, QPainter
+from PyQt6.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+from pyqtgraph.opengl import GLMeshItem, MeshData
 
-from cc_hardware.drivers.spads import SPADSensor
-from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
-from cc_hardware.drivers.stepper_motors import StepperMotorSystem
-from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 from cc_hardware.algos.models import DeepLocation8
+from cc_hardware.drivers.spads import SPADSensor
+from cc_hardware.drivers.stepper_motors import StepperMotorSystem
+from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
+from cc_hardware.utils import Manager, get_logger
 
 NOW = datetime.now()
 
@@ -50,7 +47,9 @@ HEIGHT = 8
 device = (
     "cuda"
     if torch.cuda.is_available()
-    else "mps" if torch.backends.mps.is_available() else "cpu"
+    else "mps"
+    if torch.backends.mps.is_available()
+    else "cpu"
 )
 print(f"Using {device} device")
 
@@ -478,7 +477,9 @@ class HistogramWidget(QWidget):
 
 
 class DemoWindow(QWidget):
-    def __init__(self, flip_x=False, flip_y=False, smoothing="EXTRAPOLATE", input_queue=None):
+    def __init__(
+        self, flip_x=False, flip_y=False, smoothing="EXTRAPOLATE", input_queue=None
+    ):
         super().__init__()
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         QApplication.instance().installEventFilter(self)
@@ -728,7 +729,9 @@ class DemoWindow(QWidget):
         new_target = np.array([x, y])
         self.last_position = self.display_position.copy()
         self.current_position = new_target
-        self.duration_last_update = (datetime.now() - self.last_update_time).total_seconds()
+        self.duration_last_update = (
+            datetime.now() - self.last_update_time
+        ).total_seconds()
         self.last_update_time = datetime.now()
 
     def render_scene(self):
@@ -740,6 +743,7 @@ class DemoWindow(QWidget):
             dy = self.current_position[1] - self.last_position[1]
             self.arrow.translate(dx, dy, 0)
             self.last_position = self.current_position
+
     def render_scene_interpolated(self):
         app.processEvents()
         if np.any(self.current_position != self.last_position):
@@ -766,7 +770,9 @@ class DemoWindow(QWidget):
 
         if self.duration_last_update == 0:
             return
-        object_velocity = (self.current_position - self.last_position) / self.duration_last_update
+        object_velocity = (
+            self.current_position - self.last_position
+        ) / self.duration_last_update
 
         # assume velocity is relatively constant
         frame_motion = frame_time.total_seconds() * object_velocity
@@ -775,7 +781,6 @@ class DemoWindow(QWidget):
         dy = target_position[1] - self.display_position[1]
         self.arrow.translate(dx, dy, 0)
         self.display_position = target_position
-
 
     def update_coord_label(self):
         x, y = self.raw_output
@@ -806,7 +811,7 @@ class DemoWindow(QWidget):
         # flip y direction for better visualization
         if self.flip_y:
             arrow_pos_y = self.true_height - arrow_pos_y
-        
+
         if self.smoothing_option == "EXTRAPOLATE":
             self.set_arrow_position_smoothing(arrow_pos_x, arrow_pos_y)
         elif self.smoothing_option == "INTERPOLATE":
@@ -814,7 +819,7 @@ class DemoWindow(QWidget):
         elif self.smoothing_option == "NONE":
             self.set_arrow_position(arrow_pos_x, arrow_pos_y)
         else:
-            raise Exception(f"Invalid smoothing option")
+            raise Exception("Invalid smoothing option")
 
     def update_histograms(self, hists):
         self.histogram_display.update(histograms=hists)
@@ -846,7 +851,7 @@ class DemoWindow(QWidget):
                 self.user_has_input = True
                 return True
         return False
-    
+
     def clear_input_queue(self):
         # clear input queue if user has not interacted this update
         if self.input_queue is not None:
@@ -855,8 +860,10 @@ class DemoWindow(QWidget):
                     self.input_queue.get()
             self.user_has_input = False
 
+
 def scale_histograms(hists, scale_factor=1.0):
     return hists * scale_factor * scale_factor * scale_factor
+
 
 def demo(sensor, gantry, histogram_queue, input_queue, scale_factor):
     gantry_thread = None
@@ -914,7 +921,7 @@ def demo(sensor, gantry, histogram_queue, input_queue, scale_factor):
             # combine input items into one transformation
             if len(input_items) == 0:
                 return
-            
+
             total_delta_x = 0
             total_delta_y = 0
             for input_item in input_items:
@@ -926,10 +933,10 @@ def demo(sensor, gantry, histogram_queue, input_queue, scale_factor):
                     total_delta_x += input_speed
                 elif input_item == "D":
                     total_delta_y -= input_speed
-            
+
             gantry_pos["x"] += total_delta_x
             gantry_pos["y"] += total_delta_y
-            
+
             if gantry_pos["x"] < 0:
                 gantry_pos["x"] = 0
             if gantry_pos["x"] > max_x:
@@ -938,7 +945,7 @@ def demo(sensor, gantry, histogram_queue, input_queue, scale_factor):
                 gantry_pos["y"] = 0
             if gantry_pos["y"] > max_y:
                 gantry_pos["y"] = max_y
-            
+
             # pos = controller.get_position(gantry_index % controller.total_positions)
             gantry_thread = threading.Thread(
                 target=gantry.move_to, args=(gantry_pos["x"], gantry_pos["y"])
@@ -975,7 +982,9 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     print("Creating window")
-    gui = DemoWindow(flip_x=False, flip_y=True, smoothing="EXTRAPOLATE", input_queue=input_queue)
+    gui = DemoWindow(
+        flip_x=False, flip_y=True, smoothing="EXTRAPOLATE", input_queue=input_queue
+    )
     gui.showFullScreen()
 
     from PyQt6.QtCore import QTimer

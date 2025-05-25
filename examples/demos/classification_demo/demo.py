@@ -1,18 +1,20 @@
 import sys
 from datetime import datetime
-import time
-
-from PyQt6.QtCore import QSize, Qt, QTimer
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout
-from PyQt6.QtGui import QColor, QPalette, QFont
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel
 
 import numpy as np
 import torch
-from torch import nn
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtGui import QColor, QFont, QPalette
+from PyQt6.QtWidgets import (
+    QApplication,
+    QHBoxLayout,
+    QLabel,
+    QMainWindow,
+    QVBoxLayout,
+    QWidget,
+)
 
 from cc_hardware.algos.models import DeepLocation8
-
 
 OUTPUT_MOMENTUM = 0.9
 
@@ -52,9 +54,10 @@ class Color(QWidget):
         palette = self.palette()
         palette.setColor(QPalette.ColorRole.Window, QColor(color))
         self.setPalette(palette)
-    
+
     def set_text(self, text):
         self.label.setText(text)
+
 
 # Subclass QMainWindow to customize your application's main window
 class MainWindow(QMainWindow):
@@ -71,7 +74,7 @@ class MainWindow(QMainWindow):
 
         for i in range(3):
             layout.addWidget(Color(self.colors[i]))
-        
+
         self.heats = [0 for _ in range(len(self.colors))]
 
         if EXP_CAPTURE_SMOOTHING:
@@ -85,8 +88,10 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        
-        self.model = DeepLocation8(height=4, width=4, num_bins=16, out_dims=3).to(device)
+
+        self.model = DeepLocation8(height=4, width=4, num_bins=16, out_dims=3).to(
+            device
+        )
         self.model.load_state_dict(torch.load(MODEL_SAVE_PATH, weights_only=True))
         self.model.eval()
 
@@ -111,12 +116,14 @@ class MainWindow(QMainWindow):
             hist = self.exp_mean_capture
         else:
             pass
-            
+
         if ROLLING_MEANS_CAPTURE:
             if type(self.last_captures) == int:
                 self.last_captures = hists[:5]
             else:
-                self.last_captures = np.concatenate((self.last_captures, hists[:5]), axis=0)
+                self.last_captures = np.concatenate(
+                    (self.last_captures, hists[:5]), axis=0
+                )
                 self.last_captures = self.last_captures[-5:]
             hist = self.last_captures.mean(axis=0, keepdims=True)
             hist = torch.tensor(hist, dtype=torch.float32).to(device)
@@ -124,19 +131,20 @@ class MainWindow(QMainWindow):
         self.last_captures = self.external_captures[-5:]
         hist = self.last_captures.mean(axis=0, keepdims=True)
         hist = torch.tensor(hist, dtype=torch.float32).to(device)
-        
+
         model_input = hist
         with torch.no_grad():
             output = self.model(model_input)
             output = torch.sigmoid(output)
 
-
         output = output.squeeze(axis=0)
         print(output)
         output = output.flip(0)  # flip array for outward facing display
 
-        self.heats = [OUTPUT_MOMENTUM * heat 
-                        + (1-OUTPUT_MOMENTUM) * output[i] for i, heat in enumerate(self.heats)]
+        self.heats = [
+            OUTPUT_MOMENTUM * heat + (1 - OUTPUT_MOMENTUM) * output[i]
+            for i, heat in enumerate(self.heats)
+        ]
         output = self.heats
 
         strengths = np.array([0 for _ in self.colors])
@@ -163,12 +171,15 @@ class MainWindow(QMainWindow):
 
         for i in range(len(self.colors)):
             self.centralWidget().layout().itemAt(i).widget().set_color(self.colors[i])
-            self.centralWidget().layout().itemAt(i).widget().set_text(f"{output[i]:.2f}")
-            
-    
+            self.centralWidget().layout().itemAt(i).widget().set_text(
+                f"{output[i]:.2f}"
+            )
+
     def update_zero_hist(self, count=ZERO_COUNT):
         if self.external_captures.shape[0] < count:
-            print(f"Found {self.external_captures.shape[0]} captures, waiting for {count}")
+            print(
+                f"Found {self.external_captures.shape[0]} captures, waiting for {count}"
+            )
             return
         #     time.sleep(0.1)
         zero_hists = self.external_captures[-count:]
@@ -187,7 +198,7 @@ class MainWindow(QMainWindow):
         print("processing external capture: ", hists.shape)
         self.external_captures = np.concatenate((self.external_captures, hists), axis=0)
         return hists
-    
+
     def external_capture_callback(self, hists):
         self.process_external_capture(hists)
         print("external captures: ", self.external_captures.shape)
@@ -200,16 +211,12 @@ class MainWindow(QMainWindow):
         self.update_display()
 
 
-from datetime import datetime
 from pathlib import Path
 
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
 from cc_hardware.utils.file_handlers import PklHandler
-
-from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig4x4, VL53L8CHSharedConfig
-from cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph import PyQtGraphDashboardConfig
 
 NOW = datetime.now()
 
@@ -272,7 +279,6 @@ def spad_dashboard2(
         # print(f"shape: {histograms.shape}")
         window.external_capture_callback(histograms)
 
-
         if save_data:
             assert writer is not None
             writer.append(
@@ -287,7 +293,6 @@ def spad_dashboard2(
 
 
 if __name__ == "__main__":
-
     device = (
         "cuda"
         if torch.cuda.is_available()

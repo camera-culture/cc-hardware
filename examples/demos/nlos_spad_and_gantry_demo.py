@@ -1,4 +1,5 @@
 import threading
+
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.drivers.stepper_motors.stepper_controller import SnakeStepperController
@@ -47,7 +48,9 @@ def nlos_spad_and_gantry_demo(
 
         if gantry_thread is None or not gantry_thread.is_alive():
             pos = controller.get_position(gantry_index % controller.total_positions)
-            gantry_thread = threading.Thread(target=gantry.move_to, args=(pos["x"], pos["y"]))
+            gantry_thread = threading.Thread(
+                target=gantry.move_to, args=(pos["x"], pos["y"])
+            )
             gantry_thread.start()
             gantry_index += 1
 

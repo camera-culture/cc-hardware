@@ -160,7 +160,7 @@ class SPADMovingAverageWrapperConfig(SPADWrapperConfig):
     window_size: int
 
     window_size_setting: RangeSetting = RangeSetting.default_factory(
-        title="Window Size", min=1, max=1000, value=10 # II("..window_size")
+        title="Window Size", min=1, max=1000, value=10  # II("..window_size")
     )
 
     @property

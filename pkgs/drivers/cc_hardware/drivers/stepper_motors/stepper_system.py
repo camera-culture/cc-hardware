@@ -9,8 +9,13 @@ from cc_hardware.drivers.stepper_motors.stepper_motor import (
     StepperMotor,
     StepperMotorConfig,
 )
-from cc_hardware.utils import call_async_gather, get_logger
-from cc_hardware.utils import Component, Config, config_wrapper
+from cc_hardware.utils import (
+    Component,
+    Config,
+    call_async_gather,
+    config_wrapper,
+    get_logger,
+)
 
 # ======================
 
@@ -64,10 +69,12 @@ class StepperMotorSystem[T: StepperMotorSystemConfig](Component[T]):
         get_logger().info(f"Initialized {self.__class__.__name__}.")
 
     @overload
-    def move_to(self, *positions: float): ...
+    def move_to(self, *positions: float):
+        ...
 
     @overload
-    def move_to(self, **positions: float): ...
+    def move_to(self, **positions: float):
+        ...
 
     def move_to(self, *args: float, **kwargs: float):
         """Move to the specified position using positional or keyword arguments."""
@@ -92,10 +99,12 @@ class StepperMotorSystem[T: StepperMotorSystemConfig](Component[T]):
         self.move_by(**relative_positions)
 
     @overload
-    def move_by(self, *positions: float): ...
+    def move_by(self, *positions: float):
+        ...
 
     @overload
-    def move_by(self, block: bool = True, **positions: float): ...
+    def move_by(self, block: bool = True, **positions: float):
+        ...
 
     def move_by(self, *args: float, **kwargs: float):
         """Moves the steppers to the specified positions."""

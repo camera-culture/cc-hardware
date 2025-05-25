@@ -1,11 +1,10 @@
 """Stepper motor driver module for controlling stepper motors."""
 
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from typing import Any
 
 from cc_hardware.utils import Component, Config, config_wrapper, register
 from cc_hardware.utils.logger import get_logger
-from cc_hardware.utils.setting import Setting
 
 
 @config_wrapper

@@ -1,13 +1,15 @@
 import time
+from datetime import datetime
 from functools import partial
 from pathlib import Path
-from datetime import datetime
 
 from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
-from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig4x4
 from cc_hardware.drivers.spads.spad_wrappers import SPADMergeWrapperConfig
+from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig4x4
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
-from cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph import PyQtGraphDashboardConfig
+from cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph import (
+    PyQtGraphDashboardConfig,
+)
 from cc_hardware.utils import Manager, get_logger
 from cc_hardware.utils.file_handlers import PklHandler
 
@@ -26,15 +28,14 @@ SENSOR = SPADMergeWrapperConfig.create(
     wrapped=WRAPPED_SENSOR,
     merge_all=True,
 )
-DASHBOARD = PyQtGraphDashboardConfig.create(
-    fullscreen=True
-)
+DASHBOARD = PyQtGraphDashboardConfig.create(fullscreen=True)
 
 # ==========
 
 
 i = 0
 t0 = 0
+
 
 def my_callback(dashboard: SPADDashboard):
     """Calls logger at intervals.
@@ -47,6 +48,7 @@ def my_callback(dashboard: SPADDashboard):
     if i % 10 == 0:
         get_logger().info("Callback called")
 
+
 # ==========
 
 
@@ -57,11 +59,11 @@ def setup(manager: Manager, sensor: SPADSensorConfig, dashboard: SPADDashboardCo
         manager (Manager): Manager to add sensor and dashboard to.
     """
     if RECORD:
-            LOGDIR.mkdir(exist_ok=True, parents=True)
+        LOGDIR.mkdir(exist_ok=True, parents=True)
 
-            OUTPUT_PKL.parent.mkdir(parents=True, exist_ok=True)
-            assert not OUTPUT_PKL.exists(), f"Output file {OUTPUT_PKL} already exists"
-            manager.add(writer=PklHandler(OUTPUT_PKL))
+        OUTPUT_PKL.parent.mkdir(parents=True, exist_ok=True)
+        assert not OUTPUT_PKL.exists(), f"Output file {OUTPUT_PKL} already exists"
+        manager.add(writer=PklHandler(OUTPUT_PKL))
 
     sensor: SPADSensor = SPADSensor.create_from_config(sensor)
     manager.add(sensor=sensor)
@@ -74,7 +76,13 @@ def setup(manager: Manager, sensor: SPADSensorConfig, dashboard: SPADDashboardCo
     manager.add(dashboard=dashboard)
 
 
-def loop(frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashboard, writer: PklHandler | None = None):
+def loop(
+    frame: int,
+    manager: Manager,
+    sensor: SPADSensor,
+    dashboard: SPADDashboard,
+    writer: PklHandler | None = None,
+):
     """Updates dashboard each frame.
 
     Args:
@@ -102,6 +110,7 @@ def loop(frame: int, manager: Manager, sensor: SPADSensor, dashboard: SPADDashbo
                 "histogram": histograms,
             }
         )
+
 
 if __name__ == "__main__":
     t0 = time.time()

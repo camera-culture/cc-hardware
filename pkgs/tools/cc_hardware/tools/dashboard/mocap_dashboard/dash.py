@@ -1,16 +1,16 @@
+import threading
+
 import dash
+import numpy as np
+import plotly.graph_objects as go
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
-import plotly.graph_objects as go
-import numpy as np
-import threading
 
 from cc_hardware.tools.dashboard.mocap_dashboard import (
     MotionCaptureDashboard,
     MotionCaptureDashboardConfig,
 )
 from cc_hardware.utils import config_wrapper
-from cc_hardware.utils.transformations import TransformationMatrix
 
 
 @config_wrapper
@@ -19,7 +19,9 @@ class DashMotionCaptureDashboardConfig(MotionCaptureDashboardConfig):
     port: int = 8050
 
 
-class DashMotionCaptureDashboard(MotionCaptureDashboard[DashMotionCaptureDashboardConfig]):
+class DashMotionCaptureDashboard(
+    MotionCaptureDashboard[DashMotionCaptureDashboardConfig]
+):
     def setup(self):
         self.app = dash.Dash(__name__)
 
@@ -29,7 +31,9 @@ class DashMotionCaptureDashboard(MotionCaptureDashboard[DashMotionCaptureDashboa
         self.trace_indices = {}
 
         self.figure = go.Figure()
-        self.figure.update_layout(scene=dict(aspectmode='cube'), autosize=True, showlegend=False)
+        self.figure.update_layout(
+            scene=dict(aspectmode="cube"), autosize=True, showlegend=False
+        )
 
         self.app.layout = html.Div(
             [
@@ -60,8 +64,12 @@ class DashMotionCaptureDashboard(MotionCaptureDashboard[DashMotionCaptureDashboa
 
     def run(self):
         self.blocking = True
-        self.app.run_server(debug=False, use_reloader=False,
-                            host=self.config.host, port=self.config.port)
+        self.app.run_server(
+            debug=False,
+            use_reloader=False,
+            host=self.config.host,
+            port=self.config.port,
+        )
 
     def update(self, frame=-1, *, data=None, step=True, fig: dict | None = None):
         if not self.blocking:
@@ -100,23 +108,34 @@ class DashMotionCaptureDashboard(MotionCaptureDashboard[DashMotionCaptureDashboa
             if name not in self.trace_indices:
                 # Add new traces for x, y, z, label
                 x_trace = len(fig.data)
-                fig.add_trace(go.Scatter3d(mode='lines', line=dict(color='red', width=5)))
+                fig.add_trace(
+                    go.Scatter3d(mode="lines", line=dict(color="red", width=5))
+                )
                 y_trace = len(fig.data)
-                fig.add_trace(go.Scatter3d(mode='lines', line=dict(color='green', width=5)))
+                fig.add_trace(
+                    go.Scatter3d(mode="lines", line=dict(color="green", width=5))
+                )
                 z_trace = len(fig.data)
-                fig.add_trace(go.Scatter3d(mode='lines', line=dict(color='blue', width=5)))
+                fig.add_trace(
+                    go.Scatter3d(mode="lines", line=dict(color="blue", width=5))
+                )
                 label_trace = len(fig.data)
-                fig.add_trace(go.Scatter3d(mode='text', text=[name], textposition="top center"))
+                fig.add_trace(
+                    go.Scatter3d(mode="text", text=[name], textposition="top center")
+                )
 
                 self.trace_indices[name] = {
-                    'x': x_trace, 'y': y_trace, 'z': z_trace, 'label': label_trace
+                    "x": x_trace,
+                    "y": y_trace,
+                    "z": z_trace,
+                    "label": label_trace,
                 }
 
             # Update existing traces
-            xi = self.trace_indices[name]['x']
-            yi = self.trace_indices[name]['y']
-            zi = self.trace_indices[name]['z']
-            li = self.trace_indices[name]['label']
+            xi = self.trace_indices[name]["x"]
+            yi = self.trace_indices[name]["y"]
+            zi = self.trace_indices[name]["z"]
+            li = self.trace_indices[name]["label"]
 
             fig.data[xi].x = xt[:, 0]
             fig.data[xi].y = xt[:, 1]
