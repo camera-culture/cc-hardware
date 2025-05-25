@@ -305,7 +305,7 @@ Classes
 
 
 
-   .. py:method:: calculate_point_cloud(histogram = None, distances = None, *, subpixel_samples = 1, bilinear_interpolation = False)
+   .. py:method:: calculate_point_cloud(*, histogram = None, distances = None, subpixel_samples = 1, bilinear_interpolation = False)
 
       Calculates the point cloud from histogram or precomputed distances.
 
@@ -379,22 +379,6 @@ Classes
 
 
 
-   .. py:property:: num_bins
-      :type: int
-
-      Gets the number of CNH bins in the sensor configuration.
-
-      :returns: *int* -- Number of CNH bins.
-
-
-   .. py:property:: resolution
-      :type: tuple[int, int]
-
-      Gets the aggregation grid resolution.
-
-      :returns: *tuple[int, int]* -- Number of aggregation columns and rows.
-
-
    .. py:property:: is_okay
       :type: bool
 
@@ -407,6 +391,30 @@ Classes
 
       Closes the sensor connection and stops background processes.
 
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
 
 
    .. py:property:: settings

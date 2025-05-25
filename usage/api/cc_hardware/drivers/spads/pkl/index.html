@@ -296,7 +296,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig" title="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklSPADSensorConfig</span></code></a></p></td>
-<td><p>Configuration for SPAD sensors.</p></td>
+<td><p>Configuration for the PklSPADSensor.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a></p></td>
 <td><p>A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded</p></td>
@@ -315,7 +315,7 @@ size=&quot;8.0, 12.0&quot;;
   &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;PklSPADSensorConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;PklSPADSensorConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for the PklSPADSensor.&quot;];
   &quot;SPADSensorConfig&quot; -&gt; &quot;PklSPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
   &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
@@ -323,11 +323,15 @@ size=&quot;8.0, 12.0&quot;;
   &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
   &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
-<p>Configuration for SPAD sensors.</p>
+<p>Configuration for the PklSPADSensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_type</strong> (<a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADDataType" title="cc_hardware.drivers.spads.SPADDataType"><em>SPADDataType</em></a>) – The type of data the sensor will collect.
-Default is SPADDataType.HISTOGRAM.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pkl_path</strong> (<em>Path</em><em> | </em><em>str</em>) – Path to the PKL file containing pre-recorded data.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – Initial index for loading data from the PKL file. Default is 0.</p></li>
+<li><p><strong>loop</strong> (<em>bool</em>) – Whether to loop through the data when it reaches the end.
+Default is False.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py property">
@@ -346,7 +350,7 @@ Default is SPADDataType.HISTOGRAM.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklSPADSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklSPADSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance65dbcc350d {
 bgcolor=transparent;
 rankdir=LR;
@@ -380,52 +384,12 @@ for testing or simulations without actual hardware.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate">
-<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_entry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate" title="Link to this definition">#</a></dt>
 <dd><p>Accumulates the specified number of histogram samples from the pre-recorded
 data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>num_samples</strong> (<em>int</em>) – The number of samples to accumulate.</p>
-</dd>
-<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>average</strong> (<em>bool</em>) – Whether to average the accumulated samples. Defaults to
-True.</p></li>
-<li><p><strong>return_entry</strong> (<em>bool</em>) – Whether to return the loaded entry. Defaults to
-False.</p></li>
-<li><p><strong>index</strong> (<em>int</em>) – The index of the entry to load. If None, the next entry will
-be loaded. Defaults to None. Will set the index within the handler.</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><p><em>np.ndarray | tuple[np.ndarray, dict] | None</em> –</p>
-<dl class="simple">
-<dt>The accumulated histogram</dt><dd><p>data, or a tuple of the data and the loaded</p>
-</dd>
-</dl>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins" title="Link to this definition">#</a></dt>
-<dd><p>Returns the number of bins in the sensor’s histogram.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>int</em> – The number of bins in the histogram.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution" title="Link to this definition">#</a></dt>
-<dd><p>Returns the resolution of the sensor as a tuple (width, height).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>tuple[int, int]</em> – The resolution (width, height) of the sensor.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,6 +404,38 @@ be loaded. Defaults to None. Will set the index within the handler.</p></li>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the sensor connection. This method is a no-op for this fake sensor.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
+number of discrete values or ranges that the sensor can measure. The total
+distance a sensor can measure is equal to the number of bins multiplied by
+the bin width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution" title="Link to this definition">#</a></dt>
+<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
+the spatial resolution of the sensor, where the width and height refer to the
+number of pixels or sampling points in the respective dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
+<dl class="simple">
+<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -548,10 +544,10 @@ the fields of SensorConfig.</p>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.accumulate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.num_bins</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.num_bins</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.update"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.calibrate()</span></code></a></li>

@@ -136,11 +136,13 @@ Classes
                    The accumulation method (i.e. summing, averaging) may vary depending on
                    the sensor. Defaults to 1.
 
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
 
 
    .. py:property:: num_bins
       :type: int
-      :abstractmethod:
 
       Returns the number of bins in the sensor's histogram. This indicates the
       number of discrete values or ranges that the sensor can measure. The total
@@ -152,7 +154,6 @@ Classes
 
    .. py:property:: resolution
       :type: tuple[int, int]
-      :abstractmethod:
 
       Returns the resolution of the sensor as a tuple (width, height). This indicates
       the spatial resolution of the sensor, where the width and height refer to the
@@ -261,13 +262,21 @@ Classes
       Checks if the sensor has data available.
 
 
+   .. py:method:: process(data)
+
+      Processes the incoming data and stores it in the appropriate format.
+
+      :Parameters: **data** (*dict[SPADDataType, np.ndarray]*) -- The incoming data to process.
+
+
+
    .. py:method:: get_data(*, verify_has_data = True)
 
       Retrieves the processed sensor data.
 
 
 
-   .. py:method:: calculate_point_cloud(histogram = None, distances = None, *, subpixel_samples = 1, bilinear_interpolation = False)
+   .. py:method:: calculate_point_cloud(*, histogram = None, distances = None, subpixel_samples = 1, bilinear_interpolation = False)
 
       Calculates the point cloud from histogram or precomputed distances.
 
@@ -294,16 +303,6 @@ Classes
       :kwtype window: int
 
       :returns: *np.ndarray* -- The calculated distance.
-
-
-
-   .. py:method:: process(data)
-      :abstractmethod:
-
-
-      Processes a new row of data.
-
-      :Parameters: **data** (*Any*) -- Sensor data to process.
 
 
 

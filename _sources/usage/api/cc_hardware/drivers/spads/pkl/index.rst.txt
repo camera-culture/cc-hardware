@@ -32,12 +32,17 @@ Classes
       :parts: 1
 
 
-   Configuration for SPAD sensors.
+   Configuration for the PklSPADSensor.
 
-   :ivar data_type: The type of data the sensor will collect.
-                    Default is SPADDataType.HISTOGRAM.
+   :ivar pkl_path: Path to the PKL file containing pre-recorded data.
+   :vartype pkl_path: Path | str
+   :ivar index: Initial index for loading data from the PKL file. Default is 0.
 
-   :vartype data_type: SPADDataType
+   :vartype index: int
+   :ivar loop: Whether to loop through the data when it reaches the end.
+               Default is False.
+
+   :vartype loop: bool
 
 
    .. py:property:: num_pixels
@@ -52,7 +57,7 @@ Classes
       Retrieves the sensor settings.
 
 
-.. py:class:: PklSPADSensor(config, index = 0)
+.. py:class:: PklSPADSensor(config)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.pkl.PklSPADSensor
@@ -70,44 +75,13 @@ Classes
    :Parameters: **config** (*PklSPADSensorConfig*) -- The configuration object for the fake sensor.
 
 
-   .. py:method:: accumulate(num_samples = 1, *, average = True, return_entry = False, index = None)
+   .. py:method:: accumulate(num_samples = 1, *, index = None)
 
       Accumulates the specified number of histogram samples from the pre-recorded
       data.
 
       :Parameters: **num_samples** (*int*) -- The number of samples to accumulate.
 
-      :keyword average: Whether to average the accumulated samples. Defaults to
-                        True.
-      :kwtype average: bool
-      :keyword return_entry: Whether to return the loaded entry. Defaults to
-                             False.
-      :kwtype return_entry: bool
-      :keyword index: The index of the entry to load. If None, the next entry will
-                      be loaded. Defaults to None. Will set the index within the handler.
-      :kwtype index: int
-
-      :returns: *np.ndarray | tuple[np.ndarray, dict] | None* --
-
-                The accumulated histogram
-                    data, or a tuple of the data and the loaded
-
-
-
-   .. py:property:: num_bins
-      :type: int
-
-      Returns the number of bins in the sensor's histogram.
-
-      :returns: *int* -- The number of bins in the histogram.
-
-
-   .. py:property:: resolution
-      :type: tuple[int, int]
-
-      Returns the resolution of the sensor as a tuple (width, height).
-
-      :returns: *tuple[int, int]* -- The resolution (width, height) of the sensor.
 
 
    .. py:property:: is_okay
@@ -120,6 +94,30 @@ Classes
 
       Closes the sensor connection. This method is a no-op for this fake sensor.
 
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
 
 
    .. py:property:: settings

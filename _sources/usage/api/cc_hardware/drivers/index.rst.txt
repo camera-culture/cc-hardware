@@ -516,11 +516,13 @@ Classes
                    The accumulation method (i.e. summing, averaging) may vary depending on
                    the sensor. Defaults to 1.
 
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
 
 
    .. py:property:: num_bins
       :type: int
-      :abstractmethod:
 
       Returns the number of bins in the sensor's histogram. This indicates the
       number of discrete values or ranges that the sensor can measure. The total
@@ -532,7 +534,6 @@ Classes
 
    .. py:property:: resolution
       :type: tuple[int, int]
-      :abstractmethod:
 
       Returns the resolution of the sensor as a tuple (width, height). This indicates
       the spatial resolution of the sensor, where the width and height refer to the

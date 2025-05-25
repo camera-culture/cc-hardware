@@ -73,6 +73,9 @@ Classes
                    The accumulation method (i.e. summing, averaging) may vary depending on
                    the sensor. Defaults to 1.
 
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
 
 
    .. py:property:: num_bins
@@ -205,6 +208,9 @@ Classes
                    The accumulation method (i.e. summing, averaging) may vary depending on
                    the sensor. Defaults to 1.
 
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
 
 
    .. py:property:: resolution
@@ -307,6 +313,9 @@ Classes
       :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the histogram.
                    The accumulation method (i.e. summing, averaging) may vary depending on
                    the sensor. Defaults to 1.
+
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
 
 
 

@@ -459,12 +459,16 @@ related to collecting and analyzing histogram data.</p>
 The accumulation method (i.e. summing, averaging) may vary depending on
 the sensor. Defaults to 1.</p>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]</em> –     The accumulated histogram data. The format may vary depending on the
+sensor and the number of samples.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensor.num_bins">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensor.num_bins" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensor.num_bins" title="Link to this definition">#</a></dt>
 <dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
 number of discrete values or ranges that the sensor can measure. The total
 distance a sensor can measure is equal to the number of bins multiplied by
@@ -478,7 +482,7 @@ the bin width.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensor.resolution">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensor.resolution" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensor.resolution" title="Link to this definition">#</a></dt>
 <dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
 the spatial resolution of the sensor, where the width and height refer to the
 number of pixels or sampling points in the respective dimensions.</p>
@@ -570,6 +574,17 @@ size=&quot;8.0, 12.0&quot;;
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensorData.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensorData.process" title="Link to this definition">#</a></dt>
+<dd><p>Processes the incoming data and stores it in the appropriate format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict[SPADDataType, np.ndarray]</em>) – The incoming data to process.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensorData.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_has_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensorData.get_data" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the processed sensor data.</p>
@@ -577,7 +592,7 @@ size=&quot;8.0, 12.0&quot;;
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensorData.calculate_point_cloud">
-<span class="sig-name descname"><span class="pre">calculate_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpixel_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bilinear_interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensorData.calculate_point_cloud" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">calculate_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpixel_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bilinear_interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensorData.calculate_point_cloud" title="Link to this definition">#</a></dt>
 <dd><p>Calculates the point cloud from histogram or precomputed distances.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -612,17 +627,6 @@ Defaults to 10.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>np.ndarray</em> – The calculated distance.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad.SPADSensorData.process">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad.SPADSensorData.process" title="Link to this definition">#</a></dt>
-<dd><p>Processes a new row of data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – Sensor data to process.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -724,10 +728,10 @@ Defaults to 10.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData"><code class="docutils literal notranslate"><span class="pre">SPADSensorData</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.reset"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.has_data"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.has_data</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.process"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.process()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.get_data"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.get_data()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.calculate_point_cloud"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.calculate_point_cloud()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.calculate_distance"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.calculate_distance()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad.SPADSensorData.process"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.process()</span></code></a></li>
 </ul>
 </li>
 </ul>

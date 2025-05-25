@@ -966,12 +966,16 @@ related to collecting and analyzing histogram data.</p>
 The accumulation method (i.e. summing, averaging) may vary depending on
 the sensor. Defaults to 1.</p>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]</em> –     The accumulated histogram data. The format may vary depending on the
+sensor and the number of samples.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.num_bins">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.num_bins" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.num_bins" title="Link to this definition">#</a></dt>
 <dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
 number of discrete values or ranges that the sensor can measure. The total
 distance a sensor can measure is equal to the number of bins multiplied by
@@ -985,7 +989,7 @@ the bin width.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.resolution">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.resolution" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.resolution" title="Link to this definition">#</a></dt>
 <dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
 the spatial resolution of the sensor, where the width and height refer to the
 number of pixels or sampling points in the respective dimensions.</p>
