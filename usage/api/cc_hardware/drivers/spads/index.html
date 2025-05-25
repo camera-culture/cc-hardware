@@ -186,8 +186,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/spad_gantry_capture.html">Stepper Gantry Collab</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -307,15 +306,98 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensor</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType" title="cc_hardware.drivers.spads.SPADDataType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADDataType</span></code></a></p></td>
+<td><p>Enum for SPAD data types.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensor</span></code></a></p></td>
 <td><p>An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig" title="cc_hardware.drivers.spads.SPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig" title="cc_hardware.drivers.spads.SPADSensorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a></p></td>
 <td><p>Configuration for SPAD sensors.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData" title="cc_hardware.drivers.spads.SPADSensorData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SPADSensorData</span></code></a></p></td>
+<td><p>Abstract base class for handling sensor data.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADDataType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType" title="Link to this definition">#</a></dt>
+<dd>digraph inheritance0d8925e811 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;Enum&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Create a collection of name/value pairs.&quot;];
+  &quot;Flag&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Support for flags&quot;];
+  &quot;Enum&quot; -&gt; &quot;Flag&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;SPADDataType&quot; [URL=&quot;spad/index.html#cc_hardware.drivers.spads.spad.SPADDataType&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Enum for SPAD data types.&quot;];
+  &quot;Flag&quot; -&gt; &quot;SPADDataType&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Enum for SPAD data types.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__contains__">
+<span class="sig-name descname"><span class="pre">__contains__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__contains__" title="Link to this definition">#</a></dt>
+<dd><p>Returns True if self has at least the same flags set as other.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__iter__" title="Link to this definition">#</a></dt>
+<dd><p>Returns flags in definition order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__repr__" title="Link to this definition">#</a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__dir__">
+<span class="sig-name descname"><span class="pre">__dir__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__dir__" title="Link to this definition">#</a></dt>
+<dd><p>Returns public methods and other interesting attributes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__format__">
+<span class="sig-name descname"><span class="pre">__format__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__format__" title="Link to this definition">#</a></dt>
+<dd><p>Default object formatter.</p>
+<p>Return str(self) if format_spec is empty. Raise TypeError otherwise.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__hash__">
+<span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__hash__" title="Link to this definition">#</a></dt>
+<dd><p>Return hash(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.__reduce_ex__">
+<span class="sig-name descname"><span class="pre">__reduce_ex__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proto</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.__reduce_ex__" title="Link to this definition">#</a></dt>
+<dd><p>Helper for pickle.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.name" title="Link to this definition">#</a></dt>
+<dd><p>The name of the Enum member.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADDataType.value">
+<span class="sig-name descname"><span class="pre">value</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADDataType.value" title="Link to this definition">#</a></dt>
+<dd><p>The value of the Enum member.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor" title="Link to this definition">#</a></dt>
@@ -432,6 +514,100 @@ the fields of SensorConfig.</p>
 <dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -452,10 +628,334 @@ size=&quot;8.0, 12.0&quot;;
   &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
 <p>Configuration for SPAD sensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_type</strong> (<a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType" title="cc_hardware.drivers.spads.SPADDataType"><em>SPADDataType</em></a>) – The type of data the sensor will collect.
+Default is SPADDataType.HISTOGRAM.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.__getstate__" title="cc_hardware.drivers.spads.SPADSensorConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.__setstate__" title="cc_hardware.drivers.spads.SPADSensorConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorConfig.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADSensorData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData" title="Link to this definition">#</a></dt>
+<dd>digraph inheritance777fc14785 {
+bgcolor=transparent;
+rankdir=LR;
+size=&quot;8.0, 12.0&quot;;
+  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
+  &quot;SPADSensorData&quot; [URL=&quot;spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;SensorData&quot; -&gt; &quot;SPADSensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;SensorData&quot; [URL=&quot;../sensor/index.html#cc_hardware.drivers.sensor.SensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for handling sensor data.&quot;];
+  &quot;ABC&quot; -&gt; &quot;SensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Abstract base class for handling sensor data.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor data to its initial state.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.has_data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.has_data" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the sensor has data available.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_has_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the processed sensor data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.calculate_point_cloud">
+<span class="sig-name descname"><span class="pre">calculate_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpixel_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bilinear_interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.calculate_point_cloud" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the point cloud from histogram or precomputed distances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>histogram</strong> (<em>np.ndarray</em>) – Histogram data, if distances not provided.</p></li>
+<li><p><strong>distances</strong> (<em>np.ndarray</em>) – Precomputed distances (mm).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>subpixel_samples</strong> (<em>int</em>) – Number of samples per pixel.</p></li>
+<li><p><strong>bilinear_interpolation</strong> (<em>bool</em>) – Whether to interpolate distances.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>np.ndarray</em> – Point cloud (N, 3) in meters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.calculate_distance">
+<span class="sig-name descname"><span class="pre">calculate_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.calculate_distance" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the distance from the histogram data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>histogram</strong> (<em>np.ndarray</em>) – The histogram data.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>window</strong> (<em>int</em>) – The size of the window to use for distance calculation.
+Defaults to 10.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>np.ndarray</em> – The calculated distance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensorData.process">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensorData.process" title="Link to this definition">#</a></dt>
+<dd><p>Processes a new row of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Any</em>) – Sensor data to process.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -523,6 +1023,19 @@ size=&quot;8.0, 12.0&quot;;
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#package-contents">Package Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType"><code class="docutils literal notranslate"><span class="pre">SPADDataType</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__contains__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__contains__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__iter__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__iter__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__repr__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__repr__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__str__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__dir__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__dir__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__format__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__format__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__hash__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__hash__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.__reduce_ex__"><code class="docutils literal notranslate"><span class="pre">SPADDataType.__reduce_ex__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.name"><code class="docutils literal notranslate"><span class="pre">SPADDataType.name()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADDataType.value"><code class="docutils literal notranslate"><span class="pre">SPADDataType.value()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor"><code class="docutils literal notranslate"><span class="pre">SPADSensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADSensor.num_bins</span></code></a></li>
@@ -533,10 +1046,43 @@ size=&quot;8.0, 12.0&quot;;
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.close"><code class="docutils literal notranslate"><span class="pre">SPADSensor.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADSensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.__del__"><code class="docutils literal notranslate"><span class="pre">SPADSensor.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.config"><code class="docutils literal notranslate"><span class="pre">SPADSensor.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.create_from_config"><code class="docutils literal notranslate"><span class="pre">SPADSensor.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.register"><code class="docutils literal notranslate"><span class="pre">SPADSensor.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SPADSensor.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.registry"><code class="docutils literal notranslate"><span class="pre">SPADSensor.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.registered"><code class="docutils literal notranslate"><span class="pre">SPADSensor.registered()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.num_pixels</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.config"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.compose"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.load"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.create"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.copy"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.save"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.register"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.registry"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorConfig.registered"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData"><code class="docutils literal notranslate"><span class="pre">SPADSensorData</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.reset"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.reset()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.has_data"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.has_data</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.get_data"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.get_data()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.calculate_point_cloud"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.calculate_point_cloud()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.calculate_distance"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.calculate_distance()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensorData.process"><code class="docutils literal notranslate"><span class="pre">SPADSensorData.process()</span></code></a></li>
 </ul>
 </li>
 </ul>

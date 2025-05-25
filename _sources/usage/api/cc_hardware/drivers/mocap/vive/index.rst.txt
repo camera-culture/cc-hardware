@@ -18,7 +18,6 @@ Classes
 
    cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig
    cc_hardware.drivers.mocap.vive.ViveTrackerPose
-   cc_hardware.drivers.mocap.vive.ViveTrackerSensor
 
 
 
@@ -37,12 +36,6 @@ Classes
                   pysurvive.SimpleContext. The key should correspond to the argument passed
                   to pysurvive but without the leading '--'. For example, to pass the argument
                   '--poser MPFIT', the key should be 'poser' and the value should be 'MPFIT'.
-
-
-   .. py:property:: settings
-      :type: dict[str, cc_hardware.utils.setting.Setting]
-
-      Retrieves the sensor settings.
 
 
 .. py:class:: ViveTrackerPose
@@ -67,8 +60,6 @@ Classes
 
       Retrieves the processed sensor data.
 
-      :returns: *np.ndarray* -- The processed data.
-
 
 
    .. py:method:: reset()
@@ -77,68 +68,10 @@ Classes
 
 
 
-.. py:class:: ViveTrackerSensor(config)
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.vive.ViveTrackerSensor
-      :parts: 1
-
-
-   An abstract base class for motion capture sensors.
-
-
-   .. py:method:: accumulate(num_samples = 1)
-
-      Accumulates the specified number of pose samples from the sensor.
-
-      :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the pose.
-                   The accumulation method (i.e. summing, averaging) may vary depending on
-                   the sensor. Defaults to 1.
-
-
-
-   .. py:property:: is_okay
+   .. py:property:: has_data
       :type: bool
-
-      Checks if the sensor is operational.
-
-
-   .. py:method:: close()
-
-      Closes the sensor and releases any resources.
-
-
-
-   .. py:property:: settings
-      :type: dict[str, cc_hardware.utils.setting.Setting]
-
-      Retrieves the sensor settings.
-
-
-   .. py:method:: update(**kwargs)
-
-      Updates the sensor configuration with provided keyword arguments. If there are
-      any changes given via the kwargs or in the settings, the configuration is sent
-      to the sensor.
-
-      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
-                   the fields of SensorConfig.
-
-      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
-
-
-
-   .. py:method:: calibrate()
       :abstractmethod:
 
-
-      Calibrates the sensor.
-
-
-
-   .. py:method:: __del__()
-
-      Destructor to ensure the sensor is properly closed.
-
+      Checks if there is any processed data available.
 
 
