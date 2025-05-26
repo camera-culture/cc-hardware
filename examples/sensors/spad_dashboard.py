@@ -101,8 +101,7 @@ def loop(
         get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
 
     data = sensor.accumulate()
-    assert SPADDataType.HISTOGRAM in data, "Sensor must support histogram data type."
-    dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
+    dashboard.update(frame, data=data)
 
     if writer is not None:
         writer.append({"iter": frame, **data})

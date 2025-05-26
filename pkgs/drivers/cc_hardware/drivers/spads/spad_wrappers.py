@@ -135,6 +135,14 @@ class SPADMergeWrapper(SPADWrapper[SPADMergeWrapperConfig]):
         if SPADDataType.DISTANCE in self.config.data_type:
             distances = data[SPADDataType.DISTANCE]
             data[SPADDataType.DISTANCE] = self._merge(distances)
+        if SPADDataType.POINT_CLOUD in self.config.data_type:
+            point_clouds = data[SPADDataType.POINT_CLOUD]
+            data[SPADDataType.POINT_CLOUD] = self._merge(point_clouds)
+        if SPADDataType.RAW in self.config.data_type:
+            raise ValueError(
+                "SPADMergeWrapper does not support raw data type. "
+                "Please use a different wrapper or remove the raw data type."
+            )
 
         return data
 
@@ -174,7 +182,7 @@ class SPADMovingAverageWrapperConfig(SPADWrapperConfig):
     window_size: int
 
     window_size_setting: RangeSetting = RangeSetting.default_factory(
-        title="Window Size", min=1, max=1000, value=10  # II("..window_size")
+        title="Window Size", min=1, max=1000, value=II("..window_size")
     )
 
     @property
@@ -188,14 +196,45 @@ class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
     def __init__(self, config: SPADMovingAverageWrapperConfig):
         super().__init__(config)
 
-        self._histograms = []
+        self._data: dict[SPADDataType, list[np.ndarray]] = {}
+
+    def update(self, **kwargs) -> None:
+        super().update(**kwargs)
+
+        # Clear the accumulated data when the configuration is updated
+        self._data.clear()
 
     def accumulate(self, *args, **kwargs):
-        histograms = super().accumulate(*args, **kwargs)
+        data = super().accumulate(*args, **kwargs)
 
-        self._histograms.append(histograms)
-        if len(self._histograms) > self.config.window_size:
-            self._histograms.pop(0)
+        if SPADDataType.HISTOGRAM in self.config.data_type:
+            data[SPADDataType.HISTOGRAM] = self._moving_average(
+                data, SPADDataType.HISTOGRAM
+            )
+        if SPADDataType.DISTANCE in self.config.data_type:
+            data[SPADDataType.DISTANCE] = self._moving_average(
+                data, SPADDataType.DISTANCE
+            )
+        if SPADDataType.POINT_CLOUD in self.config.data_type:
+            data[SPADDataType.POINT_CLOUD] = self._moving_average(
+                data, SPADDataType.POINT_CLOUD
+            )
+        if SPADDataType.RAW in self.config.data_type:
+            raise ValueError(
+                "SPADMovingAverageWrapper does not support raw data type. "
+                "Please use a different wrapper or remove the raw data type."
+            )
 
-        moving_average = np.mean(self._histograms, axis=0)
+        return data
+
+    def _moving_average(
+        self, data: dict[SPADDataType, np.ndarray], data_type: SPADDataType
+    ) -> np.ndarray:
+        """Calculates the moving average of the data."""
+
+        self._data.setdefault(data_type, [])
+        self._data[data_type].append(data[data_type].copy())
+        if len(self._data[data_type]) > self.config.window_size:
+            self._data[data_type].pop(0)
+        moving_average = np.mean(self._data[data_type], axis=0)
         return moving_average

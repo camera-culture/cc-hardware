@@ -80,8 +80,7 @@ def loop(
         get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
 
     data = sensor.accumulate()
-    assert SPADDataType.HISTOGRAM in data, "Sensor must return histogram data."
-    dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
+    dashboard.update(frame, data=data)
 
     if pkl_handler is not None:
         pkl_handler.append({"frame": frame, **data})

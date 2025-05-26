@@ -3,7 +3,7 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
 from cc_hardware.drivers.spads.vl53l8ch import VL53L8CHConfig8x8
 from cc_hardware.tools.dashboard import SPADDashboard, SPADDashboardConfig
 from cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph import (
@@ -86,7 +86,7 @@ def loop(
 
     data = sensor.accumulate()
     if dashboard is not None:
-        dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
+        dashboard.update(frame, data=data)
 
     if writer is not None:
         writer.append({"iter": frame, **data})

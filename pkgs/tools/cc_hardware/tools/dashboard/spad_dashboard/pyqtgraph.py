@@ -4,6 +4,7 @@ from functools import partial
 
 import numpy as np
 import pyqtgraph as pg
+from pyqtgraph.opengl import GLAxisItem, GLScatterPlotItem, GLViewWidget
 from pyqtgraph.Qt import QtCore, QtWidgets
 
 from cc_hardware.drivers.spads import SPADDataType
@@ -111,6 +112,30 @@ class DashboardWindow(QtWidgets.QWidget):
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.splitter)
 
+    def enable_point_cloud_view(self) -> None:
+        """Creates a resizable 3-D pane under the histogram grid."""
+        if hasattr(self, "pc_view"):
+            return  # already added
+
+        # Wrap the existing graph & the new GL view in a vertical splitter
+        self.left_splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Vertical)
+        self.graphic_view.setParent(None)
+        self.left_splitter.addWidget(self.graphic_view)
+
+        self.pc_view = GLViewWidget()
+        self.left_splitter.addWidget(self.pc_view)
+
+        # Replace graphic_view in the main splitter with the new splitter
+        self.splitter.insertWidget(0, self.left_splitter)
+
+        # Handle‑sizing ratios (histograms : point‑cloud)
+        self.left_splitter.setStretchFactor(0, 3)
+        self.left_splitter.setStretchFactor(1, 2)
+
+        # Reset split
+        self.splitter.setStretchFactor(0, 4)
+        self.splitter.setStretchFactor(1, 1)
+
     def keyPressEvent(self, event):
         """
         Handles key press events to allow exiting the application.
@@ -142,6 +167,14 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
 
         self.win = DashboardWindow()
         self.win.init_ui(self.sensor.settings)
+
+        if SPADDataType.POINT_CLOUD in self.sensor.config.data_type:
+            self.win.enable_point_cloud_view()
+            self._pc_plot = GLScatterPlotItem(size=10.0, color=(0.2, 0.6, 1.0, 1.0))
+            self.win.pc_view.addItem(self._pc_plot)
+            self._axis = GLAxisItem()  # RGB axes, length = 1 by default
+            self.win.pc_view.addItem(self._axis)
+            self.win.pc_view.opts["distance"] = 5  # camera back a bit
 
         if self.config.fullscreen:
             self.win.showFullScreen()
@@ -211,7 +244,7 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
         self,
         frame: int,
         *,
-        histograms: np.ndarray | None = None,
+        data: dict[SPADDataType, np.ndarray] | None = None,
         step: bool = True,
     ):
         """
@@ -220,8 +253,10 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
         # Update any settings
         self.sensor.update()
 
-        if histograms is None:
-            histograms = self.sensor.accumulate(1)[SPADDataType.HISTOGRAM]
+        if data is None:
+            data = self.sensor.accumulate(1)
+        assert SPADDataType.HISTOGRAM in data, "Histogram data is required."
+        histograms = data[SPADDataType.HISTOGRAM]
 
         # Flatten the histograms
         histograms = histograms.reshape(self.num_channels, -1)
@@ -275,6 +310,17 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
             if channel_ylim is not None:
                 self.plots[idx].setLimits(yMin=ymin, yMax=channel_ylim)
                 self.plots[idx].setYRange(ymin, channel_ylim)
+
+        if SPADDataType.POINT_CLOUD in data:
+            pc = data[SPADDataType.POINT_CLOUD]
+            self._pc_plot.setData(pos=pc.reshape(-1, 3))
+
+            # center camera on data centroid
+            if frame == 10:
+                ctr = pc.mean(axis=0)
+                self.win.pc_view.setCameraPosition(
+                    pos=pg.Vector(ctr[0], ctr[1], ctr[2])
+                )
 
         # Call user callback if provided
         if self.config.user_callback is not None:

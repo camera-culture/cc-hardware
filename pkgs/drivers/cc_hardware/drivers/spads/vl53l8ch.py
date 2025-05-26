@@ -252,7 +252,7 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
                 return False
 
             ambient = float(row[1]) if self._config.add_back_ambient else 0.0
-            bins = [float(v) + ambient for v in row[3:]]
+            bins = np.array([float(v) + ambient for v in row[3:]])
 
             histogram[idx] = np.clip(bins, 0, None)
             distance[idx] = float(row[2])
