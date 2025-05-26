@@ -12,7 +12,7 @@ services:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
         IMAGE_BASE: "dustynv/pytorch"
         IMAGE_TAG: "2.6-r36.4.0-cu128-24.04"
-        USER_GROUPS: "video"
+        USER_GROUPS: "video dialout"
         PIP_REQUIREMENTS: "poetry"
         APT_DEPENDENCIES: |
           git-core
@@ -38,6 +38,8 @@ services:
       - "127.0.0.1:8080-8099:8080"
     environment:
       DISPLAY: '${DISPLAY:-vnc:0.0}'
+    devices:
+      - "/dev/ttyACM0"
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
     tty: true
     privileged: True # TODO: I don't like this
