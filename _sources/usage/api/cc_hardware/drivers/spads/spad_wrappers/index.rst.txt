@@ -44,6 +44,12 @@ Classes
       Retrieves the wrapped sensor settings.
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
 .. py:class:: SPADWrapper(config)
 
 
@@ -57,6 +63,86 @@ Classes
    collection.
 
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
+
+
+   .. py:method:: accumulate(*args, **kwargs)
+
+      Accumulates the specified number of histogram samples from the sensor.
+
+      :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the histogram.
+                   The accumulation method (i.e. summing, averaging) may vary depending on
+                   the sensor. Defaults to 1.
+
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operational.
+
+
+   .. py:method:: close()
+
+      Closes the sensor and releases any resources.
+
+
+
+   .. py:method:: calibrate()
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
 
 
 .. py:class:: SPADMergeWrapperConfig
@@ -80,6 +166,12 @@ Classes
       Retrieves the wrapped sensor settings.
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
 .. py:class:: SPADMergeWrapper(config)
 
 
@@ -93,6 +185,86 @@ Classes
    collection.
 
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
+
+
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
+
+
+
+   .. py:method:: accumulate(*args, **kwargs)
+
+      Accumulates the specified number of histogram samples from the sensor.
+
+      :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the histogram.
+                   The accumulation method (i.e. summing, averaging) may vary depending on
+                   the sensor. Defaults to 1.
+
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operational.
+
+
+   .. py:method:: close()
+
+      Closes the sensor and releases any resources.
+
+
+
+   .. py:method:: calibrate()
+
+      Calibrates the sensor.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
 
 
 .. py:class:: SPADMovingAverageWrapperConfig
@@ -113,6 +285,12 @@ Classes
       Retrieves the wrapped sensor settings.
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
 .. py:class:: SPADMovingAverageWrapper(config)
 
 
@@ -126,5 +304,85 @@ Classes
    collection.
 
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
+
+
+   .. py:method:: accumulate(*args, **kwargs)
+
+      Accumulates the specified number of histogram samples from the sensor.
+
+      :Parameters: **num_samples** (*int*) -- The number of samples to accumulate into the histogram.
+                   The accumulation method (i.e. summing, averaging) may vary depending on
+                   the sensor. Defaults to 1.
+
+      :returns: *list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]* --     The accumulated histogram data. The format may vary depending on the
+                    sensor and the number of samples.
+
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
+
+
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operational.
+
+
+   .. py:method:: close()
+
+      Closes the sensor and releases any resources.
+
+
+
+   .. py:method:: calibrate()
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
+
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
+
 
 

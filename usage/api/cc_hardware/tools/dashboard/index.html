@@ -361,7 +361,7 @@ dashboard is run in a loop or not.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.Dashboard.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.Dashboard.update" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.Dashboard.update" title="Link to this definition">#</a></dt>
 <dd><p>Method to update dashboard synchronously. This should be capable of being
 used independent of the loop, as in a main thread and non-blocking.</p>
 <dl class="field-list simple">
@@ -486,7 +486,9 @@ and only one class is registered, it will instantiate that class.</p></li>
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
+  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
   &quot;Config&quot; [URL=&quot;../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
+  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
   &quot;DashboardConfig&quot; [URL=&quot;dashboard/index.html#cc_hardware.tools.dashboard.dashboard.DashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for dashboard GUIs.&quot;];
@@ -779,7 +781,7 @@ dashboard is run in a loop or not.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.SPADDashboard.update">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.SPADDashboard.update" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.SPADDashboard.update" title="Link to this definition">#</a></dt>
 <dd><p>Method to update dashboard synchronously. This should be capable of being
 used independent of the loop, as in a main thread and non-blocking.</p>
 <dl class="field-list simple">

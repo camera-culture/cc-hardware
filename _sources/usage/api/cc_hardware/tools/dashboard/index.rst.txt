@@ -63,7 +63,7 @@ Classes
 
 
 
-   .. py:method:: update(frame)
+   .. py:method:: update(frame, **kwargs)
       :abstractmethod:
 
 
@@ -421,7 +421,7 @@ Classes
 
 
 
-   .. py:method:: update(frame)
+   .. py:method:: update(frame, **kwargs)
       :abstractmethod:
 
 
