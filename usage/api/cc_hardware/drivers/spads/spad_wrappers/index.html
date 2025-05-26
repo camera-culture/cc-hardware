@@ -732,6 +732,23 @@ collection.</p>
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
+any changes given via the kwargs or in the settings, the configuration is sent
+to the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
+the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate">
 <span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate" title="Link to this definition">#</a></dt>
 <dd><p>Accumulates the specified number of histogram samples from the sensor.</p>
@@ -796,23 +813,6 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate">
 <span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate" title="Link to this definition">#</a></dt>
 <dd><p>Calibrates the sensor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update" title="Link to this definition">#</a></dt>
-<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
-any changes given via the kwargs or in the settings, the configuration is sent
-to the sensor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
-the fields of SensorConfig.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py property">
@@ -913,13 +913,13 @@ the fields of SensorConfig.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.calibrate()</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.__del__"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.__del__()</span></code></a></li>
 </ul>

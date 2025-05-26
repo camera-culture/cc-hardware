@@ -306,6 +306,19 @@ Classes
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
 
 
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
+
+
+
    .. py:method:: accumulate(*args, **kwargs)
 
       Accumulates the specified number of histogram samples from the sensor.
@@ -358,19 +371,6 @@ Classes
    .. py:method:: calibrate()
 
       Calibrates the sensor.
-
-
-
-   .. py:method:: update(**kwargs)
-
-      Updates the sensor configuration with provided keyword arguments. If there are
-      any changes given via the kwargs or in the settings, the configuration is sent
-      to the sensor.
-
-      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
-                   the fields of SensorConfig.
-
-      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
 
 
 

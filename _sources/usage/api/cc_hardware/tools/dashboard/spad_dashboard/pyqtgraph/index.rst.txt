@@ -52,6 +52,12 @@ Classes
 
 
 
+   .. py:method:: enable_point_cloud_view()
+
+      Creates a resizable 3-D pane under the histogram grid.
+
+
+
    .. py:method:: keyPressEvent(event)
 
       Handles key press events to allow exiting the application.
@@ -86,7 +92,7 @@ Classes
 
 
 
-   .. py:method:: update(frame, *, histograms = None, step = True)
+   .. py:method:: update(frame, *, data = None, step = True)
 
       Updates the histogram data in the plots.
 
