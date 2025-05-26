@@ -85,9 +85,9 @@ const uint8_t configSpadId[2][2] = {
                                                       // mask
 };
 
-// set the lower threshold to 10cm
-const uint16_t configLowThreshold = 100;
-// set the upper threshold to 50cm
+// set the lower threshold to 0cm
+const uint16_t configLowThreshold = 0;
+// set the upper threshold to 500cm
 const uint16_t configHighThreshold = 500;
 // select perstistence to be: 0==report every distance, even no distance; 1==
 // report every distance that is a distance, 3== report distance only if 3x in

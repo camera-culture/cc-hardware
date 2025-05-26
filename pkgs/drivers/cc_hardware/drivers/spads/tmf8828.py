@@ -24,13 +24,17 @@ from tqdm import tqdm
 
 from cc_hardware.drivers.safe_serial import SafeSerial
 from cc_hardware.drivers.sensor import SensorData
-from cc_hardware.drivers.spads.spad import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.spad import (
+    SPADDataType,
+    SPADSensor,
+    SPADSensorConfig,
+    SPADSensorData,
+)
 from cc_hardware.utils import config_wrapper, get_logger
 
 # ================
 
 # Configuration constants
-TMF882X_BINS = 128
 TMF882X_SKIP_FIELDS = 3  # Skip the first 3 fields
 TMF882X_IDX_FIELD = TMF882X_SKIP_FIELDS - 1
 
@@ -43,23 +47,8 @@ class SPADID(Enum):
     ID7 = 7
     ID15 = 15
 
-    def get_num_pixels(self) -> int:
-        """
-        Returns the number of pixels based on the SPAD ID.
-
-        Returns:
-            int: The number of pixels corresponding to the SPAD ID.
-        """
-        if self == SPADID.ID6:
-            return 9
-        elif self == SPADID.ID7:
-            return 16
-        elif self == SPADID.ID15:
-            return 64
-        else:
-            raise ValueError(f"Unsupported SPAD ID: {self}")
-
-    def get_num_channels(self) -> int:
+    @property
+    def num_channels(self) -> int:
         """
         Returns the number of channels based on the SPAD ID.
 
@@ -68,7 +57,8 @@ class SPADID(Enum):
         """
         return 10
 
-    def get_active_channels_per_subcapture(self) -> list[int]:
+    @property
+    def active_channels_per_subcapture(self) -> list[int]:
         """
         Returns the number of active channels per subcapture based on the SPAD ID.
 
@@ -85,7 +75,8 @@ class SPADID(Enum):
         else:
             raise ValueError(f"Unsupported SPAD ID: {self}")
 
-    def get_resolution(self) -> tuple[int, int]:
+    @property
+    def resolution(self) -> tuple[int, int]:
         """
         Returns the resolution of the sensor based on the SPAD ID.
 
@@ -101,11 +92,44 @@ class SPADID(Enum):
         else:
             raise ValueError(f"Unsupported SPAD ID: {self}")
 
+    @property
+    def fov(self) -> tuple[float, float]:
+        """
+        Returns the field of view (FOV) in degrees based on the SPAD ID.
+
+        Returns:
+            tuple[float, float]: The field of view (FOVx, FOVy) corresponding to the
+                SPAD ID.
+        """
+        if self == SPADID.ID6:
+            return 41.0, 52.0
+        elif self == SPADID.ID7:
+            return 41.0, 52.0
+        elif self == SPADID.ID15:
+            return 41.0, 52.0
+        else:
+            raise ValueError(f"Unsupported SPAD ID: {self}")
+
 
 # Enum for ranging modes
 class RangeMode(Enum):
     LONG = 0
     SHORT = 1
+
+    @property
+    def timing_resolution(self) -> float:
+        """
+        Returns the timing resolution for the range mode.
+
+        Returns:
+            float: The timing resolution in seconds.
+        """
+        if self == RangeMode.LONG:
+            return 320e-12
+        elif self == RangeMode.SHORT:
+            return 80e-12
+        else:
+            raise ValueError(f"Unsupported range mode: {self}")
 
 
 @config_wrapper
@@ -119,75 +143,88 @@ class TMF8828Config(SPADSensorConfig):
         range_mode (RangeMode): The range mode for the sensor (LONG or SHORT).
     """
 
-    instance: str = "TMF8828Sensor"
-
     port: str | None = None
 
     spad_id: SPADID = SPADID.ID6
     range_mode: RangeMode = RangeMode.LONG
 
+    # placeholders (to be filled in by __post_init__)
+    height: int = 0
+    width: int = 0
+    fovx: float = 0.0
+    fovy: float = 0.0
+    timing_resolution: float = 0.0
+
+    num_bins: int = 128
+
+    def __post_init__(self):
+        self.height, self.width = self.spad_id.resolution
+        self.timing_resolution = self.range_mode.timing_resolution
+        self.fovx, self.fovy = self.spad_id.fov
+
 
 # ================
 
 
-class TMF8828Histogram(SensorData):
+class TMF8828Data(SPADSensorData[TMF8828Config]):
     """
-    A class representing histogram data collected from the TMF8828 sensor. The histogram
-    data is organized into multiple channels and subcaptures to capture detailed
-    measurements.
+    Processes and stores both histogram and target data from the VL53L8CH sensor.
 
-    Args:
-        spad_id (SPADID): The SPAD ID indicating the resolution of the sensor.
+    This class handles the accumulation and processing of histogram bins
+    and per-pixel target information, keeping them aligned by pixel index.
     """
 
-    def __init__(self, spad_id: SPADID):
-        super().__init__()
-        self.spad_id = spad_id
+    def __init__(self, config: TMF8828Config):
+        super().__init__(config)
         self.active_channels_per_subcapture = (
-            spad_id.get_active_channels_per_subcapture()
+            config.spad_id.active_channels_per_subcapture
         )
         self.num_subcaptures = len(self.active_channels_per_subcapture)
-        self._temp_data = np.zeros(
-            (self.num_subcaptures, spad_id.get_num_channels(), TMF882X_BINS),
-            dtype=np.int32,
-        )
-        total_active_channels = sum(self.active_channels_per_subcapture)
-        self._data = np.zeros((total_active_channels, TMF882X_BINS), dtype=np.int32)
-        self.current_subcapture = 0
-        self._has_data = False
-        self._has_bad_data = False
-        self._last_idx = -1
 
     def reset(self) -> None:
-        """
-        Resets the histogram data, clearing temporary and accumulated data arrays.
-        """
-        self._temp_data.fill(0)
-        self._data.fill(0)
-        self._has_data = False
+        super().reset()
         self._has_bad_data = False
         self.current_subcapture = 0
         self._last_idx = -1
 
-    def process(self, row: list[str]) -> None:
+    def process(self, row: list[str]) -> bool:
         """
-        Processes a single row of histogram data. Updates the internal data arrays based
-        on the channel and subcapture configuration.
+        Processes a row of data, routing to histogram or target handlers.
 
         Args:
-            row (list[str]): A list of strings representing a row of data received from
-                the sensor.
+            row (list[str]): A row of string values from sensor output.
+
+        Returns:
+            bool: True if processing succeeds, False otherwise.
         """
+
+        return self._process_histogram(row)
+
+    def _process_histogram(self, row: list[str]) -> bool:
+        """
+        Processes a histogram row for a single pixel.
+
+        The row is in the following format:
+        "Data Count, Pixel Index, ..., Distance, ..., Ambient, ..., Bins, Bin 0, Bin 1, ..."
+
+        Args:
+            row (list[str]): A histogram data row.
+
+        Returns:
+            bool: True if valid, False otherwise.
+        """
+        histogram: dict = self._data.setdefault(SPADDataType.HISTOGRAM, {})
+
         try:
             idx = int(row[TMF882X_IDX_FIELD])
         except (IndexError, ValueError):
             get_logger().error("Invalid index received.")
             self._has_bad_data = True
-            return
+            return False
 
         if idx != self._last_idx + 1 and not self._has_bad_data:
             self._has_bad_data = True
-            return
+            return False
         self._last_idx = idx
 
         try:
@@ -195,12 +232,12 @@ class TMF8828Histogram(SensorData):
         except ValueError:
             get_logger().error("Invalid data received.")
             self._has_bad_data = True
-            return
+            return False
 
-        if len(data) != TMF882X_BINS:
+        if len(data) != self._config.num_bins:
             get_logger().error(f"Invalid data length: {len(data)}")
             self._has_bad_data = True
-            return
+            return False
 
         base_idx = idx // 10
         channel = idx % 10
@@ -208,46 +245,56 @@ class TMF8828Histogram(SensorData):
         if self.current_subcapture >= self.num_subcaptures:
             # Already received all subcaptures
             self._has_bad_data = True
-            return
+            return False
 
         active_channels = self.active_channels_per_subcapture[self.current_subcapture]
 
-        if 0 <= channel <= active_channels:
-            if base_idx == 0:
-                self._temp_data[self.current_subcapture, channel] += data
-            elif base_idx == 1:
-                self._temp_data[self.current_subcapture, channel] += data * 256
-            elif base_idx == 2:
-                self._temp_data[self.current_subcapture, channel] += data * 256 * 256
-                if channel == active_channels:
-                    self.current_subcapture += 1
-                    if self.current_subcapture == self.num_subcaptures:
-                        self._data = self._assemble_data()
-                        self._temp_data.fill(0)
-                        if self._has_bad_data:
-                            self.reset()
-                        else:
-                            self._has_data = True
+        subcapture = histogram.setdefault(
+            self.current_subcapture,
+            np.zeros((active_channels + 1, self._config.num_bins), dtype=np.int32),
+        )
+        if not (0 <= channel <= active_channels):
+            get_logger().error(
+                f"Invalid channel {channel} for subcapture {self.current_subcapture} "
+                f"(active channels: {active_channels})"
+            )
+            return False
 
-    def _assemble_data(self) -> np.ndarray:
-        """
-        Assembles the data from all subcaptures into a single array. Handles
-        reorganization of data based on the SPAD ID, especially for ID15, which requires
-        pixel mapping.
+        if base_idx == 0:
+            subcapture[channel] += data
+        elif base_idx == 1:
+            subcapture[channel] += data * 256
+        elif base_idx == 2:
+            subcapture[channel] += data * 256 * 256
 
-        Returns:
-            np.ndarray: The assembled data array.
+        if base_idx == 2 and channel == active_channels:
+            get_logger().info(
+                f"Completed subcapture {self.current_subcapture + 1} of {self.num_subcaptures}"
+            )
+            self.current_subcapture += 1
+            if self.current_subcapture == self.num_subcaptures:
+                return self._finalize()
+
+        return True
+
+    def _finalize(self) -> bool:
         """
+        Finalizes data when all pixels processed, storing combined output.
+        """
+
+        histogram = self._data[SPADDataType.HISTOGRAM]
+
+        # import pdb; pdb.set_trace()
         combined_data = []
         for subcapture_index in range(self.num_subcaptures):
             active_channels = self.active_channels_per_subcapture[subcapture_index]
-            data = self._temp_data[subcapture_index, 1 : active_channels + 1, :]
+            data = histogram[subcapture_index][1 : active_channels + 1, :]
             combined_data.append(data)
         combined_data = np.vstack(combined_data)
         # Remove ambient data; ambient light is in first 7 bins
         # combined_data -= np.median(combined_data[:, :7], axis=1)[:, np.newaxis].astype(int)
 
-        if self.spad_id == SPADID.ID15:
+        if self._config.spad_id == SPADID.ID15:
             # Rearrange the data according to the pixel mapping
             # fmt: off
             # flake8: noqa
@@ -264,7 +311,9 @@ class TMF8828Histogram(SensorData):
             # fmt: on
             # flake8: noqa
             # Create a 3D array to hold the spatial data
-            spatial_data = np.zeros((8, 8, TMF882X_BINS), dtype=combined_data.dtype)
+            spatial_data = np.zeros(
+                (8, 8, self._config.num_bins), dtype=combined_data.dtype
+            )
 
             for idx, pixel in enumerate(pixel_map.keys()):
                 # Map histogram index to pixel position in 8x8 grid
@@ -272,32 +321,18 @@ class TMF8828Histogram(SensorData):
                 col = (pixel_map[pixel] - 1) % 8
                 spatial_data[row, col, :] = combined_data[idx, :]
 
-            # Flatten the spatial data back to (64, TMF882X_BINS) if needed
-            rearranged_data = spatial_data.reshape(64, TMF882X_BINS)
-            return np.copy(rearranged_data)
+            # Flatten the spatial data back to (64, num_bins) if needed
+            rearranged_data = spatial_data.reshape(64, self._config.num_bins)
+            histogram = np.copy(rearranged_data)
         else:
-            return np.copy(combined_data)
+            histogram = np.copy(combined_data)
 
-    def get_data(self) -> np.ndarray:
-        """
-        Returns a copy of the accumulated histogram data and resets the internal state.
+        self._ready_data[SPADDataType.HISTOGRAM] = histogram
 
-        Returns:
-            np.ndarray: The accumulated histogram data.
-        """
-        data = np.copy(self._data)
-        self.reset()
-        return data
-
-    @property
-    def has_data(self) -> bool:
-        """
-        Checks if the histogram has complete data for all subcaptures.
-
-        Returns:
-            bool: True if all subcaptures have been processed, False otherwise.
-        """
-        return self._has_data
+        if self._has_bad_data:
+            self.reset()
+            return False
+        return True
 
 
 # ================
@@ -339,14 +374,13 @@ class TMF8828Sensor(SPADSensor[TMF8828Config]):
         self.spad_id = config.spad_id
         self.range_mode = config.range_mode
 
-        self._queue = multiprocessing.Queue(
-            maxsize=self.config.spad_id.get_num_pixels()
-        )
+        self._queue = multiprocessing.Queue(maxsize=self.config.num_pixels)
         self._write_queue = multiprocessing.Queue(maxsize=10)
         self._initialized_event = multiprocessing.Event()
         self._stop_event = multiprocessing.Event()
 
-        self._histogram = TMF8828Histogram(self.spad_id)
+        # self._histogram = TMF8828Histogram(self.spad_id)
+        self._data = TMF8828Data(config)
 
         # Start the reader process
         self._reader_process = multiprocessing.Process(
@@ -478,9 +512,7 @@ class TMF8828Sensor(SPADSensor[TMF8828Config]):
     def accumulate(
         self,
         num_samples: int = 1,
-        *,
-        average: bool = True,
-    ) -> np.ndarray | list[np.ndarray]:
+    ) -> list[dict[SPADDataType, np.ndarray]] | dict[SPADDataType, np.ndarray]:
         """
         Accumulates histogram samples from the sensor.
 
@@ -494,17 +526,11 @@ class TMF8828Sensor(SPADSensor[TMF8828Config]):
                 requested.
         """
 
-        histograms = []
-        for _ in tqdm(
-            range(num_samples),
-            disable=(num_samples == 1),
-            leave=False,
-            desc="Accumulating...",
-        ):
-            get_logger().debug(f"Sample {len(histograms) + 1}/{num_samples}")
+        samples = []
+        for _ in range(num_samples):
+            self._data.reset()
 
-            self._histogram.reset()
-            while not self._histogram.has_data:
+            while not self._data.has_data:
                 try:
                     # Retrieve the next line from the queue
                     line: bytes = self._queue.get(timeout=1)
@@ -521,16 +547,11 @@ class TMF8828Sensor(SPADSensor[TMF8828Config]):
 
                 if line_str.startswith("#Raw"):
                     row = line_str.split(",")
-                    self._histogram.process(row)
+                    self._data.process(row)
 
-            histograms.append(self._histogram.get_data())
+            samples.append(self._data.get_data())
 
-        if num_samples == 1:
-            histograms = histograms[0] if histograms else None
-        elif average:
-            histograms = np.mean(histograms, axis=0)
-
-        return histograms
+        return samples[0] if num_samples == 1 else samples
 
     def calibrate(self, configurations: int = 2) -> list[str]:
         """
@@ -579,26 +600,6 @@ class TMF8828Sensor(SPADSensor[TMF8828Config]):
             and self._reader_process.is_alive()
             and not self._stop_event.is_set()
         )
-
-    @property
-    def num_bins(self) -> int:
-        """
-        Returns the number of bins in the sensor's histogram.
-
-        Returns:
-            int: The number of bins in the histogram.
-        """
-        return TMF882X_BINS
-
-    @property
-    def resolution(self) -> tuple[int, int]:
-        """
-        Returns the resolution of the sensor as a tuple (width, height).
-
-        Returns:
-            tuple[int, int]: The resolution (width, height) based on the SPAD ID.
-        """
-        return self.spad_id.get_resolution()
 
     def close(self) -> None:
         """

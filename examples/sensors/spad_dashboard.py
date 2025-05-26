@@ -23,6 +23,7 @@ OUTPUT_PKL: Path = LOGDIR / "data.pkl"
 # You can start with a config and then change options via create.
 WRAPPED_SENSOR = VL53L8CHConfig4x4.create(
     num_bins=16,
+    data_type=SPADDataType.DISTANCE,
 )
 SENSOR = SPADMergeWrapperConfig.create(
     wrapped=WRAPPED_SENSOR,
@@ -100,6 +101,7 @@ def loop(
         get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
 
     data = sensor.accumulate()
+    assert SPADDataType.HISTOGRAM in data, "Sensor must support histogram data type."
     dashboard.update(frame, histograms=data[SPADDataType.HISTOGRAM])
 
     if writer is not None:

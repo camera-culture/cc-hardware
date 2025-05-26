@@ -126,3 +126,37 @@ class SPADDashboard[T: SPADDashboardConfig](Dashboard[T]):
         if self.config.max_bin is None:
             return self._sensor.num_bins
         return self.config.max_bin
+
+
+@config_wrapper
+class DummySPADDashboardConfig(SPADDashboardConfig):
+    pass
+
+
+class DummySPADDashboard(SPADDashboard[DummySPADDashboardConfig]):
+    """
+    Dummy dashboard for testing purposes.
+
+    This dashboard does not display any data but can be used to test the
+    integration of SPAD sensors with the dashboard system.
+    """
+
+    def __init__(self, config: DummySPADDashboardConfig, sensor: SPADSensor):
+        super().__init__(config, sensor)
+        get_logger().info("Dummy SPAD dashboard initialized.")
+
+    def setup(self):
+        pass
+
+    def run(self):
+        pass
+
+    def update(self, frame: int, **kwargs):
+        pass
+
+    @property
+    def is_okay(self) -> bool:
+        return True
+
+    def close(self) -> None:
+        pass

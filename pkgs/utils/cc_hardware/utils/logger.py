@@ -94,6 +94,7 @@ LOGGING_CONFIG = {
             "format": "%(levelname)-8s | %(module)s.%(funcName)s:%(lineno)d :: %(message)s"
         }
     },
+    "disable_existing_loggers": False,
 }
 
 
@@ -106,5 +107,8 @@ def get_logger(
         )
         LOGGING_CONFIG["loggers"][name]["level"] = level
     LOGGING_CONFIG.update(overrides)
-    logging.config.dictConfig(LOGGING_CONFIG)
+    try:
+        logging.config.dictConfig(LOGGING_CONFIG)
+    except ValueError:
+        pass
     return logging.getLogger(name)

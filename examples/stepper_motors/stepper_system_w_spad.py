@@ -3,7 +3,7 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from cc_hardware.drivers.spads import SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.drivers.stepper_motors import (
     StepperMotorSystem,
     StepperMotorSystemConfig,
@@ -74,8 +74,9 @@ def loop(
 ) -> bool:
     get_logger().info(f"Starting iter {iter}...")
 
-    histogram = sensor.accumulate()
-    dashboard.update(iter, histograms=histogram)
+    data = sensor.accumulate()
+    assert SPADDataType.HISTOGRAM in data, "Sensor must support histogram data type."
+    dashboard.update(iter, histograms=data[SPADDataType.HISTOGRAM])
 
     pos = controller.get_position(iter)
     if pos is None:
@@ -87,7 +88,7 @@ def loop(
         {
             "iter": iter,
             "pos": pos,
-            "histogram": histogram,
+            "histogram": data[SPADDataType.HISTOGRAM],
         }
     )
 

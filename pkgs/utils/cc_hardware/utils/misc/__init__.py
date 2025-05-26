@@ -1,5 +1,5 @@
 from hydra_config import config_wrapper, register_cli, run_cli
-from omegaconf import II
+from omegaconf import II, SI
 
 from cc_hardware.utils.misc.asyncio_utils import (
     call_async,
@@ -19,6 +19,7 @@ from cc_hardware.utils.misc.singleton import SingletonABCMeta, SingletonMeta
 __all__ = [
     # hydra_config
     "II",
+    "SI",
     "config_wrapper",
     "register_cli",
     "run_cli",

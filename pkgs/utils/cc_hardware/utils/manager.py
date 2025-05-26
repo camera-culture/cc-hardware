@@ -35,7 +35,7 @@ from cc_hardware.utils.registry import Registry
 
 
 @config_wrapper
-class Config(HydraContainerConfig, Registry):
+class Config(ABC, HydraContainerConfig, Registry):
     """Base configuration class for cc-hardware components."""
 
     pass

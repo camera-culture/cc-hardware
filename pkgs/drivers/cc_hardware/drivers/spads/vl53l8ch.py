@@ -84,9 +84,10 @@ class VL53L8CHConfig(SPADSensorConfig):
 
     add_back_ambient: bool
 
-    # TODO
+    # TODO: Resolution isn't supported right now. Need a way to set height/width from
+    # single setting.
     # resolution_setting: OptionSetting = OptionSetting.default_factory(
-    #     value=II("..resolution"), options=[16, 64], title="Resolution"
+    #     value=II("..resolution"), options=['4x4', '8x8'], title="Resolution"
     # )
     ranging_mode_setting: OptionSetting = OptionSetting.from_enum(
         enum=RangingMode, default=II("..ranging_mode"), title="Ranging Mode"
@@ -492,8 +493,14 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         if not hasattr(self, "_stop_event"):
             return
 
-        self._stop_event.set()
-        if not self._initialized_event.is_set():
+        try:
+            self._stop_event.set()
+            if not self._initialized_event.is_set():
+                return
+        except AttributeError:
+            get_logger().debug(
+                f"{self.__class__.__name__} already closed or not initialized."
+            )
             return
 
         # Signal the reader process to stop

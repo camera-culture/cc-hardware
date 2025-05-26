@@ -44,7 +44,7 @@ class Dashboard[T: DashboardConfig](Component[T]):
         """
         pass
 
-    def update(self, frame: int):
+    def update(self, frame: int, **kwargs):
         """
         Method to update dashboard synchronously. This should be capable of being
         used independent of the loop, as in a main thread and non-blocking.
