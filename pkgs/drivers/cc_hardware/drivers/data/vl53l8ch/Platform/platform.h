@@ -1,14 +1,14 @@
 /**
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 
 #ifndef _PLATFORM_H_
 #define _PLATFORM_H_
@@ -19,7 +19,6 @@
 
 #include "stm32f4xx.h"
 
-
 /**
  * @brief Structure VL53LMZ_Platform needs to be filled by the customer,
  * depending on his platform. At least, it contains the VL53L5CX I2C address.
@@ -28,14 +27,13 @@
  * layer.
  */
 
-typedef struct
-{
-	/* To be filled with customer's platform. At least an I2C address/descriptor
-	 * needs to be added */
-	/* Example for most standard platform : I2C address of sensor */
-    uint16_t  			address;
+typedef struct {
+  /* To be filled with customer's platform. At least an I2C address/descriptor
+   * needs to be added */
+  /* Example for most standard platform : I2C address of sensor */
+  uint16_t address;
 
-    uint8_t 			module_type;  // MZ-AI specific field used by sensor_command.c
+  uint8_t module_type; // MZ-AI specific field used by sensor_command.c
 
 } VL53LMZ_Platform;
 
@@ -46,13 +44,13 @@ typedef struct
  * zone means a lower RAM). The value must be between 1 and 4.
  */
 
-#define 	VL53LMZ_NB_TARGET_PER_ZONE		1U
+#define VL53LMZ_NB_TARGET_PER_ZONE 1U
 
 /*
  * @brief The macro below can be used to avoid data conversion into the driver.
- * By default there is a conversion between firmware and user data. Using this macro
- * allows to use the firmware format instead of user format. The firmware format allows
- * an increased precision.
+ * By default there is a conversion between firmware and user data. Using this
+ * macro allows to use the firmware format instead of user format. The firmware
+ * format allows an increased precision.
  */
 
 // #define 	VL53LMZ_USE_RAW_FORMAT
@@ -64,14 +62,14 @@ typedef struct
  */
 
 // #define VL53LMZ_DISABLE_AMBIENT_PER_SPAD
-// #define VL53LMZ_DISABLE_NB_SPADS_ENABLED
+#define VL53LMZ_DISABLE_NB_SPADS_ENABLED
 // #define VL53LMZ_DISABLE_NB_TARGET_DETECTED
 // #define VL53LMZ_DISABLE_SIGNAL_PER_SPAD
-// #define VL53LMZ_DISABLE_RANGE_SIGMA_MM
+#define VL53LMZ_DISABLE_RANGE_SIGMA_MM
 // #define VL53LMZ_DISABLE_DISTANCE_MM
-// #define VL53LMZ_DISABLE_REFLECTANCE_PERCENT
-// #define VL53LMZ_DISABLE_TARGET_STATUS
-// #define VL53LMZ_DISABLE_MOTION_INDICATOR
+#define VL53LMZ_DISABLE_REFLECTANCE_PERCENT
+#define VL53LMZ_DISABLE_TARGET_STATUS
+#define VL53LMZ_DISABLE_MOTION_INDICATOR
 
 /**
  * @param (VL53LMZ_Platform*) p_platform : Pointer of VL53L5CX platform
@@ -81,10 +79,8 @@ typedef struct
  * @return (uint8_t) status : 0 if OK
  */
 
-uint8_t RdByte(
-		VL53LMZ_Platform *p_platform,
-		uint16_t RegisterAdress,
-		uint8_t *p_value);
+uint8_t RdByte(VL53LMZ_Platform *p_platform, uint16_t RegisterAdress,
+               uint8_t *p_value);
 
 /**
  * @brief Mandatory function used to write one single byte.
@@ -95,10 +91,8 @@ uint8_t RdByte(
  * @return (uint8_t) status : 0 if OK
  */
 
-uint8_t WrByte(
-		VL53LMZ_Platform *p_platform,
-		uint16_t RegisterAdress,
-		uint8_t value);
+uint8_t WrByte(VL53LMZ_Platform *p_platform, uint16_t RegisterAdress,
+               uint8_t value);
 
 /**
  * @brief Mandatory function used to read multiples bytes.
@@ -110,11 +104,8 @@ uint8_t WrByte(
  * @return (uint8_t) status : 0 if OK
  */
 
-uint8_t RdMulti(
-		VL53LMZ_Platform *p_platform,
-		uint16_t RegisterAdress,
-		uint8_t *p_values,
-		uint32_t size);
+uint8_t RdMulti(VL53LMZ_Platform *p_platform, uint16_t RegisterAdress,
+                uint8_t *p_values, uint32_t size);
 
 /**
  * @brief Mandatory function used to write multiples bytes.
@@ -126,12 +117,8 @@ uint8_t RdMulti(
  * @return (uint8_t) status : 0 if OK
  */
 
-uint8_t WrMulti(
-		VL53LMZ_Platform *p_platform,
-		uint16_t RegisterAdress,
-		uint8_t *p_values,
-		uint32_t size);
-
+uint8_t WrMulti(VL53LMZ_Platform *p_platform, uint16_t RegisterAdress,
+                uint8_t *p_values, uint32_t size);
 
 /**
  * @brief Mandatory function, used to swap a buffer. The buffer size is always a
@@ -140,9 +127,7 @@ uint8_t WrMulti(
  * @param (uint16_t) size : Buffer size to swap
  */
 
-void SwapBuffer(
-		uint8_t 		*buffer,
-		uint16_t 	 	 size);
+void SwapBuffer(uint8_t *buffer, uint16_t size);
 /**
  * @brief Mandatory function, used to wait during an amount of time. It must be
  * filled as it's used into the API.
@@ -152,12 +137,6 @@ void SwapBuffer(
  * @return (uint8_t) status : 0 if wait is finished.
  */
 
-uint8_t WaitMs(
-		VL53LMZ_Platform *p_platform,
-		uint32_t TimeMs);
+uint8_t WaitMs(VL53LMZ_Platform *p_platform, uint32_t TimeMs);
 
-
-
-
-
-#endif	// _PLATFORM_H_
+#endif // _PLATFORM_H_

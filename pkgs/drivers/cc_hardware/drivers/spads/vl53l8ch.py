@@ -368,7 +368,9 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
         """
         # Open the serial connection
         try:
-            serial_conn = SafeSerial.create(port=port, baudrate=baudrate, one=True)
+            serial_conn = SafeSerial.create(
+                port=port, baudrate=baudrate, one=True, timeout=1
+            )
         except Exception as e:
             get_logger().error(f"Error opening serial connection: {e}")
             stop_event.set()
@@ -380,13 +382,11 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
             while not stop_event.is_set():
                 # =====
                 # READ
-                if serial_conn.in_waiting > 0:
-                    line = serial_conn.readline()
-                    assert line, "Empty line received"
-
+                line = serial_conn.readline()
+                if line:
                     # Put the line into the queue without blocking
                     try:
-                        queue.put(line, block=False)
+                        queue.put_nowait(line)
                     except multiprocessing.queues.Full:
                         # Queue is full; discard the line to prevent blocking
                         pass
@@ -394,7 +394,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
                 # =====
                 # WRITE
                 try:
-                    config_data = write_queue.get(block=False)
+                    config_data = write_queue.get_nowait()
                     serial_conn.write(config_data)
                 except multiprocessing.queues.Empty:
                     # No data to write
@@ -446,6 +446,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
                     raw: bytes = self._queue.get(timeout=1)
                 except multiprocessing.queues.Empty:
                     continue
+
                 try:
                     line: str = raw.decode("utf-8").strip()
                     get_logger().debug(f"Processing line: {line}")
@@ -453,7 +454,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
                     get_logger().error("Error decoding data")
                     continue
 
-                if line.startswith("Data Count"):
+                if line.startswith("D"):
                     began = True
                     continue
 

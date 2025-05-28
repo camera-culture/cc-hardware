@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "common.h"
 #include "app.h"
+#include "common.h"
 #include "vl53lmz_api.h"
 #include "vl53lmz_plugin_cnh.h"
+
 
 // Sensor Configuration
 VL53LMZ_Configuration Dev;
@@ -45,19 +46,19 @@ int app(UART_HandleTypeDef *huart2) {
   // Set defaults
   command_ready = 0;
   new_config = 1;
-  sensor_config.resolution = 16;
-  sensor_config.ranging_mode = VL53LMZ_RANGING_MODE_AUTONOMOUS;
-  sensor_config.ranging_frequency_hz = 5;
+  sensor_config.resolution = 64;
+  sensor_config.ranging_mode = VL53LMZ_RANGING_MODE_CONTINUOUS;
+  sensor_config.ranging_frequency_hz = 15;
   sensor_config.integration_time_ms = 100;
   sensor_config.cnh_start_bin = 0;
-  sensor_config.cnh_num_bins = 24;
-  sensor_config.cnh_subsample = 4;
+  sensor_config.cnh_num_bins = 18;
+  sensor_config.cnh_subsample = 7;
   sensor_config.agg_start_x = 0;
   sensor_config.agg_start_y = 0;
   sensor_config.agg_merge_x = 1;
   sensor_config.agg_merge_y = 1;
-  sensor_config.agg_cols = 4;
-  sensor_config.agg_rows = 4;
+  sensor_config.agg_cols = 8;
+  sensor_config.agg_rows = 8;
 
   /*********************************/
   /*      Customer platform        */
@@ -106,19 +107,19 @@ int app(UART_HandleTypeDef *huart2) {
         continue;
       }
 
-      printf("Data Count : %3u\n", Dev.streamcount);
+      printf("D\n");
       for (agg_id = 0; agg_id < cnh_config.nb_of_aggregates; agg_id++) {
         vl53lmz_cnh_get_block_addresses(&cnh_config, agg_id, cnh_data_buffer,
                                         &p_hist, &p_hist_scaler, &p_ambient,
                                         &p_ambient_scaler);
 
         amb_value = ((float)*p_ambient) / (2 << *p_ambient_scaler);
-        printf("%2d %.1f %4d", agg_id, amb_value,
+        printf("%d %d %d", agg_id, (int)amb_value,
                Results.distance_mm[VL53LMZ_NB_TARGET_PER_ZONE * agg_id]);
 
         for (bin_num = 0; bin_num < cnh_config.feature_length; bin_num++) {
           bin_value = ((float)p_hist[bin_num]) / (2 << p_hist_scaler[bin_num]);
-          printf(" %.1f", bin_value);
+          printf(" %d", (int)bin_value);
         }
         printf("\n");
       }
@@ -182,9 +183,9 @@ uint8_t process_config(SensorConfig config) {
   /*********************************/
   // Initialize CNH configuration
   status = vl53lmz_cnh_init_config(&cnh_config,          //
-                                    config.cnh_start_bin, //
-                                    config.cnh_num_bins,  //
-                                    config.cnh_subsample);
+                                   config.cnh_start_bin, //
+                                   config.cnh_num_bins,  //
+                                   config.cnh_subsample);
 
   if (status != VL53LMZ_STATUS_OK) {
     printf("ERROR at %s(%d) : vl53lmz_cnh_init_config failed : %d\n", __func__,
@@ -194,13 +195,13 @@ uint8_t process_config(SensorConfig config) {
 
   // Create aggregate map
   status = vl53lmz_cnh_create_agg_map(&cnh_config,        //
-                                       config.resolution,  //
-                                       config.agg_start_x, //
-                                       config.agg_start_y, //
-                                       config.agg_merge_x, //
-                                       config.agg_merge_y, //
-                                       config.agg_cols,    //
-                                       config.agg_rows);
+                                      config.resolution,  //
+                                      config.agg_start_x, //
+                                      config.agg_start_y, //
+                                      config.agg_merge_x, //
+                                      config.agg_merge_y, //
+                                      config.agg_cols,    //
+                                      config.agg_rows);
 
   if (status != VL53LMZ_STATUS_OK) {
     printf("ERROR at %s(%d) : vl53lmz_cnh_create_agg_map failed : %d\n",
@@ -255,6 +256,9 @@ uint8_t process_config(SensorConfig config) {
            __LINE__, status);
     return status;
   }
+
+  // Set sharpness
+  vl53lmz_set_sharpener_percent(&Dev, 0); // 0% sharpness
 
   // Start ranging
   status = vl53lmz_send_output_config_and_start(&Dev);

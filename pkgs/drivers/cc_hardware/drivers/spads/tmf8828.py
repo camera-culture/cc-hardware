@@ -23,7 +23,6 @@ import pkg_resources
 from tqdm import tqdm
 
 from cc_hardware.drivers.safe_serial import SafeSerial
-from cc_hardware.drivers.sensor import SensorData
 from cc_hardware.drivers.spads.spad import (
     SPADDataType,
     SPADSensor,
@@ -125,9 +124,9 @@ class RangeMode(Enum):
             float: The timing resolution in seconds.
         """
         if self == RangeMode.LONG:
-            return 320e-12
+            return 260e-12
         elif self == RangeMode.SHORT:
-            return 80e-12
+            return 100e-12
         else:
             raise ValueError(f"Unsupported range mode: {self}")
 
@@ -245,6 +244,10 @@ class TMF8828Data(SPADSensorData[TMF8828Config]):
         if self.current_subcapture >= self.num_subcaptures:
             # Already received all subcaptures
             self._has_bad_data = True
+            get_logger().error(
+                f"Received data for subcapture {self.current_subcapture}, "
+                f"but only {self.num_subcaptures} subcaptures expected."
+            )
             return False
 
         active_channels = self.active_channels_per_subcapture[self.current_subcapture]
@@ -254,11 +257,7 @@ class TMF8828Data(SPADSensorData[TMF8828Config]):
             np.zeros((active_channels + 1, self._config.num_bins), dtype=np.int32),
         )
         if not (0 <= channel <= active_channels):
-            get_logger().error(
-                f"Invalid channel {channel} for subcapture {self.current_subcapture} "
-                f"(active channels: {active_channels})"
-            )
-            return False
+            return
 
         if base_idx == 0:
             subcapture[channel] += data
@@ -268,9 +267,6 @@ class TMF8828Data(SPADSensorData[TMF8828Config]):
             subcapture[channel] += data * 256 * 256
 
         if base_idx == 2 and channel == active_channels:
-            get_logger().info(
-                f"Completed subcapture {self.current_subcapture + 1} of {self.num_subcaptures}"
-            )
             self.current_subcapture += 1
             if self.current_subcapture == self.num_subcaptures:
                 return self._finalize()
@@ -327,11 +323,14 @@ class TMF8828Data(SPADSensorData[TMF8828Config]):
         else:
             histogram = np.copy(combined_data)
 
-        self._ready_data[SPADDataType.HISTOGRAM] = histogram
+        self._ready_data[SPADDataType.HISTOGRAM] = histogram.reshape(
+            self._config.height, self._config.width, self._config.num_bins
+        )
 
-        if self._has_bad_data:
-            self.reset()
-            return False
+        self._last_idx = -1
+        # if self._has_bad_data:
+        #     self.reset()
+        #     return False
         return True
 
 

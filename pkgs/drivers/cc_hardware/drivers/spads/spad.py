@@ -164,7 +164,7 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
         self._ready_data.update(data)
 
     def get_data(
-        self, *, verify_has_data: bool = True
+        self, *, verify_has_data: bool = True, reset: bool = True
     ) -> dict[SPADDataType, np.ndarray]:
         assert not verify_has_data or self.has_data, "No data available."
 
@@ -212,8 +212,8 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
             assert SPADDataType.RAW in self._data, "No raw data available."
             data[SPADDataType.RAW] = self._ready_data[SPADDataType.RAW].copy()
 
-        # Now reset
-        self.reset()
+        if reset:
+            self.reset()
 
         return data
 
@@ -334,6 +334,6 @@ class SPADSensorData[T: SPADSensorConfig](SensorData):
 
                 # Calculate the time-of-flight
                 tof = bins * self._config.timing_resolution * self._config.subsample
-                distances[i, j] = C * np.dot(weights, tof) / 2
+                distances[i, j] = C * np.dot(weights, tof) / 4 * 1000
 
         return distances

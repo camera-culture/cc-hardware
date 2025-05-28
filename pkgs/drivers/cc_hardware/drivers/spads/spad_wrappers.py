@@ -24,6 +24,8 @@ class SPADWrapperConfig(SPADSensorConfig):
     fovx: float = II(".wrapped.fovx")
     fovy: float = II(".wrapped.fovy")
     timing_resolution: float = II(".wrapped.timing_resolution")
+    subsample: int = II(".wrapped.subsample")
+    start_bin: int = II(".wrapped.start_bin")
 
     @property
     def settings(self) -> dict[str, Any]:
@@ -71,9 +73,8 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
     def calibrate(self) -> bool:
         return self._sensor.calibrate()
 
-    def update(self, **kwargs) -> None:
-        self._sensor.update(**kwargs)
-        super().update(**kwargs)
+    def update(self, **kwargs) -> bool:
+        return self._sensor.update(**kwargs) or super().update(**kwargs)
 
 
 # =============================================================================
@@ -182,7 +183,7 @@ class SPADMovingAverageWrapperConfig(SPADWrapperConfig):
     window_size: int
 
     window_size_setting: RangeSetting = RangeSetting.default_factory(
-        title="Window Size", min=1, max=1000, value=II("..window_size")
+        title="Window Size", min=1, max=100, value=II("..window_size")
     )
 
     @property
@@ -198,11 +199,15 @@ class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
 
         self._data: dict[SPADDataType, list[np.ndarray]] = {}
 
-    def update(self, **kwargs) -> None:
-        super().update(**kwargs)
+    def update(self, **kwargs) -> bool:
+        if not super().update(**kwargs):
+            return
 
         # Clear the accumulated data when the configuration is updated
+        print("Clearing accumulated data for moving average wrapper.")
         self._data.clear()
+
+        return True
 
     def accumulate(self, *args, **kwargs):
         data = super().accumulate(*args, **kwargs)

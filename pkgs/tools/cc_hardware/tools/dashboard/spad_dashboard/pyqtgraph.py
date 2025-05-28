@@ -1,7 +1,9 @@
 """SPAD dashboard based on PyQtGraph for real-time visualization."""
 
+import time
 from functools import partial
 
+import cv2
 import numpy as np
 import pyqtgraph as pg
 from pyqtgraph.opengl import GLAxisItem, GLScatterPlotItem, GLViewWidget
@@ -112,15 +114,22 @@ class DashboardWindow(QtWidgets.QWidget):
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.splitter)
 
+        # after building self.settings_layout
+        self.last_time = time.time()
+        self.fps = 0.0
+        self.fps_label = QtWidgets.QLabel("FPS: 0.0")
+        self.settings_layout.addWidget(self.fps_label)
+
     def enable_point_cloud_view(self) -> None:
         """Creates a resizable 3-D pane under the histogram grid."""
         if hasattr(self, "pc_view"):
             return  # already added
 
-        # Wrap the existing graph & the new GL view in a vertical splitter
-        self.left_splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Vertical)
-        self.graphic_view.setParent(None)
-        self.left_splitter.addWidget(self.graphic_view)
+        if not hasattr(self, "left_splitter"):
+            self.left_splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Vertical)
+            self.graphic_view.setParent(None)
+            self.left_splitter.addWidget(self.graphic_view)
+            self.splitter.insertWidget(0, self.left_splitter)
 
         self.pc_view = GLViewWidget()
         self.left_splitter.addWidget(self.pc_view)
@@ -135,6 +144,27 @@ class DashboardWindow(QtWidgets.QWidget):
         # Reset split
         self.splitter.setStretchFactor(0, 4)
         self.splitter.setStretchFactor(1, 1)
+
+    def enable_depth_view(self) -> None:
+        """Adds a depth‑image pane under any existing plots."""
+        if hasattr(self, "depth_view"):
+            return
+
+        if not hasattr(self, "left_splitter"):
+            self.left_splitter = QtWidgets.QSplitter(QtCore.Qt.Orientation.Vertical)
+            self.graphic_view.setParent(None)
+            self.left_splitter.addWidget(self.graphic_view)
+            self.splitter.insertWidget(0, self.left_splitter)
+
+        # depth view
+        self.depth_viewbox = pg.ViewBox(lockAspect=True, invertY=False)
+        self.depth_view = pg.GraphicsLayoutWidget()
+        self.depth_view.addItem(self.depth_viewbox)
+        self.left_splitter.addWidget(self.depth_view)
+
+        # stretch factors: hist : pc (if any) : depth
+        for i in range(self.left_splitter.count()):
+            self.left_splitter.setStretchFactor(i, 2)
 
     def keyPressEvent(self, event):
         """
@@ -175,6 +205,19 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
             self._axis = GLAxisItem()  # RGB axes, length = 1 by default
             self.win.pc_view.addItem(self._axis)
             self.win.pc_view.opts["distance"] = 5  # camera back a bit
+
+        if SPADDataType.DISTANCE in self.sensor.config.data_type:
+            self.win.enable_depth_view()
+            self._depth_img = pg.ImageItem(axisOrder="row-major", smooth=False)
+            self.win.depth_viewbox.addItem(self._depth_img)
+            # red‑to‑blue LUT (red = near, blue = far)
+            lut = np.zeros((256, 4), dtype=np.ubyte)
+            lut[:, 0] = np.linspace(255, 0, 256)  # R
+            lut[:, 2] = np.linspace(0, 255, 256)  # B
+            lut[:, 3] = 255  # alpha
+            # lut = np.repeat(np.arange(256, dtype=np.ubyte)[:, None], 4, 1)
+            # lut[:, 3] = 255  # opaque
+            self._depth_img.setLookupTable(lut)
 
         if self.config.fullscreen:
             self.win.showFullScreen()
@@ -316,11 +359,30 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
             self._pc_plot.setData(pos=pc.reshape(-1, 3))
 
             # center camera on data centroid
-            if frame == 10:
+            if frame == 0:
                 ctr = pc.mean(axis=0)
                 self.win.pc_view.setCameraPosition(
                     pos=pg.Vector(ctr[0], ctr[1], ctr[2])
                 )
+
+        if SPADDataType.DISTANCE in data:
+            d = data[SPADDataType.DISTANCE].astype(np.float32)
+            rows, cols = self.sensor.resolution[::-1]
+            d_img = d.reshape(rows, cols)
+            d_img = cv2.resize(
+                d_img, (cols * 3, rows * 3), interpolation=cv2.INTER_CUBIC
+            )
+            self._depth_img.setImage(d_img, levels=(d.min(), d.max()), autoLevels=False)
+
+            # keep view centred & scaled
+            self.win.depth_viewbox.autoRange()
+
+        now = time.time()
+        dt = now - self.win.last_time
+        if dt > 0:
+            self.win.fps = 1.0 / dt
+            self.win.fps_label.setText(f"FPS: {self.win.fps:.1f}")
+        self.win.last_time = now
 
         # Call user callback if provided
         if self.config.user_callback is not None:

@@ -7,7 +7,7 @@ extern "C" {
 
 #include <stdint.h>
 
-typedef struct {
+typedef struct __attribute__((packed)) {
   uint16_t resolution;           // 16 or 64
   uint16_t ranging_mode;         // 0: Continuous, 1: Autonomous
   uint16_t ranging_frequency_hz; // Hz
@@ -29,8 +29,7 @@ typedef enum __attribute__((__packed__)) {
   START = 2,
 } CommandType;
 
-
-typedef struct {
+typedef struct __attribute__((packed)) {
   CommandType type;
   SensorConfig config;
 } Command;
