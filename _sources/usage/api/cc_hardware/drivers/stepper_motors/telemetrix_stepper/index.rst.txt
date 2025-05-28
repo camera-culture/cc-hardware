@@ -215,38 +215,6 @@ Classes
 
 
 
-   .. py:method:: move_to(*positions)
-                  move_to(**positions: float)
-
-      Move to the specified position using positional or keyword arguments.
-
-
-
-   .. py:method:: move_by(*positions)
-                  move_by(block: bool = True, **positions: float)
-
-      Moves the steppers to the specified positions.
-
-
-
-   .. py:property:: is_moving
-      :type: bool
-
-      Returns True if any motor is moving.
-
-
-   .. py:method:: __getattr__(name)
-
-      This is a passthrough to the underlying motor objects.
-
-
-
-   .. py:property:: axes
-      :type: dict[StepperMotorSystemAxis, list[cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor]]
-
-      Returns the axes of the stepper motor system.
-
-
 .. py:class:: TelemetrixStepperMotorXConfig
 
 

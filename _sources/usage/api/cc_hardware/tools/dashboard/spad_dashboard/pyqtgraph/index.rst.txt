@@ -58,6 +58,12 @@ Classes
 
 
 
+   .. py:method:: enable_depth_view()
+
+      Adds a depth‑image pane under any existing plots.
+
+
+
    .. py:method:: keyPressEvent(event)
 
       Handles key press events to allow exiting the application.
