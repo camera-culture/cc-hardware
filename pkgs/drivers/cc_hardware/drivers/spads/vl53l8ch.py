@@ -259,8 +259,8 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
                 get_logger().error(f"Duplicate histogram for pixel {idx}")
                 return False
 
-            ambient = float(row[1]) if self._config.add_back_ambient else 0.0
-            bins = np.array([float(v) + ambient for v in row[3:]])
+            ambient = float(row[1]) / 100 if self._config.add_back_ambient else 0.0
+            bins = np.array([float(v) + ambient for v in row[3:]]) / 100
 
             histogram[idx] = np.clip(bins, 0, None)
             distance[idx] = float(row[2])
