@@ -3,8 +3,13 @@ from datetime import datetime
 from functools import partial
 from pathlib import Path
 
-from handheld_nlos_alg.tracking.train.model import Particle
-from handheld_nlos_alg.tracking.utils.utils import load_configs
+import numpy as np
+from backprojection import (
+    BackprojectionAlgorithm,
+    BackprojectionConfig,
+    BackprojectionDashboard,
+    BackprojectionDashboardConfig,
+)
 
 from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
 from cc_hardware.drivers.spads.pkl import PklSPADSensorConfig
@@ -12,7 +17,7 @@ from cc_hardware.drivers.spads.spad_wrappers import (
     SPADBackgroundRemovalWrapperConfig,
     SPADMovingAverageWrapperConfig,
 )
-from cc_hardware.drivers.spads.vl53l8ch import RangingMode, VL53L8CHConfig8x8
+from cc_hardware.drivers.spads.vl53l8ch import RangingMode, VL53L8CHConfig4x4
 from cc_hardware.tools.dashboard.spad_dashboard import (
     DummySPADDashboardConfig,
     SPADDashboard,
@@ -30,24 +35,24 @@ NOW = datetime.now()
 LOGDIR: Path = Path("logs") / NOW.strftime("%Y-%m-%d") / NOW.strftime("%H-%M-%S")
 OUTPUT_PKL: Path = LOGDIR / "data.pkl"
 
-WRAPPED_SENSOR = VL53L8CHConfig8x8.create(
+WRAPPED_SENSOR = VL53L8CHConfig4x4.create(
     num_bins=18,
     subsample=1,
     start_bin=30,
     ranging_mode=RangingMode.CONTINUOUS,
-    ranging_frequency_hz=5,
+    ranging_frequency_hz=1,
     data_type=SPADDataType.HISTOGRAM | SPADDataType.POINT_CLOUD | SPADDataType.DISTANCE,
 )
 WRAPPED_SENSOR = SPADBackgroundRemovalWrapperConfig.create(
     pkl_spad=PklSPADSensorConfig.create(
-        pkl_path=Path("logs") / "2025-05-29/11-54-08/data.pkl",
+        pkl_path=Path("logs") / "2025-06-05/11-26-31/data.pkl",
         index=1,
     ),
     wrapped=WRAPPED_SENSOR,
 )
 WRAPPED_SENSOR = SPADMovingAverageWrapperConfig.create(
     wrapped=WRAPPED_SENSOR,
-    window_size=10,
+    window_size=1,
 )
 SENSOR = WRAPPED_SENSOR
 
@@ -89,14 +94,34 @@ def setup(
         dashboard.setup()
         manager.add(dashboard=dashboard)
 
-    # PARTICLE FILTER
-    configs = load_configs(Path(__file__).parent / "configs")
+    # Initialize the backprojection algorithm
+    backprojection_config = BackprojectionConfig(
+        x_range=(-1, 1),
+        y_range=(-1, 1),
+        z_range=(0, 2),
+        num_x=50,
+        num_y=50,
+        num_z=50,
+    )
+    backprojection_algorithm = BackprojectionAlgorithm(
+        backprojection_config, sensor_config=sensor
+    )
+    manager.add(algorithm=backprojection_algorithm)
 
-    motion_rep = Particle(configs, 1, "cpu")
-
-    # point_canon =
-
-    return False
+    backprojection_dashboard_config = BackprojectionDashboardConfig(
+        xlim=backprojection_config.x_range,
+        ylim=backprojection_config.y_range,
+        zlim=backprojection_config.z_range,
+        xres=backprojection_algorithm.xres,
+        yres=backprojection_algorithm.yres,
+        zres=backprojection_algorithm.zres,
+        num_x=backprojection_config.num_x,
+        num_y=backprojection_config.num_y,
+        num_z=backprojection_config.num_z,
+        # show_
+    )
+    backprojection_dashboard = BackprojectionDashboard(backprojection_dashboard_config)
+    manager.add(backprojection_dashboard=backprojection_dashboard)
 
 
 def loop(
@@ -105,6 +130,8 @@ def loop(
     sensor: SPADSensor,
     dashboard: SPADDashboard | None = None,
     writer: PklHandler | None = None,
+    algorithm: BackprojectionAlgorithm | None = None,
+    backprojection_dashboard: BackprojectionDashboard | None = None,
 ):
     """Updates dashboard each frame.
 
@@ -125,6 +152,36 @@ def loop(
     data = sensor.accumulate()
     if dashboard is not None:
         dashboard.update(frame, data=data)
+
+    if algorithm is not None:
+        assert SPADDataType.POINT_CLOUD in data
+        assert SPADDataType.HISTOGRAM in data
+
+        volume = algorithm.update(data)
+
+        if backprojection_dashboard is not None:
+
+            def filter_volume(volume: np.ndarray, num_x, num_y) -> np.ndarray:
+                volume_unpadded = (
+                    2 * volume[:, :, 1:-1] - volume[:, :, :-2] - volume[:, :, 2:]
+                )
+                zero_pad = np.zeros((num_x, num_y, 1))
+                volume_padded = np.concatenate(
+                    [zero_pad, volume_unpadded, zero_pad], axis=-1
+                )
+                return volume_padded
+
+            volume = filter_volume(
+                volume,
+                num_x=algorithm.config.num_x,
+                num_y=algorithm.config.num_y,
+            )
+            backprojection_dashboard.update(
+                volume,
+                data[SPADDataType.HISTOGRAM].reshape(
+                    -1, data[SPADDataType.HISTOGRAM].shape[-1]
+                ),
+            )
 
     if writer is not None:
         writer.append({"iter": frame, **data})

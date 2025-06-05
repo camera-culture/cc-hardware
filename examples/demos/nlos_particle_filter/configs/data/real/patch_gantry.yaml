@@ -1,0 +1,53 @@
+# === Data directory === #
+data_dir: '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/iPhone/test_checker_pose/reconstruction'
+# data_dir: '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/iPhone/Aaron Captures/NLOS Data Capture/tracking'
+# filename: 'object_motion_snake_10x10_10xsteps_10ysteps_96xrange_96yrange_11p0xinit_11p0yinit_1p0s_eval_redo'
+# filename: 'gantry_motion_snake_20x20_4xsteps_4ysteps_64xrange_64yrange_32p0xinit_26p0yinit_1p0s_object_motion'
+# filename: 'handheld_motion_20x20_1steps_5p0s_test'
+# filename: 'handheld_motion_5x5_1steps_30p0s_lower'
+# filename: 'gantry_motion_snake_5xsteps_5ysteps_128xrange_128yrange_0xinit_0yinit_1p0s_stop_motion_2'
+# filename: 'gantry_motion_snake_2xsteps_5ysteps_128xrange_128yrange_xinit_0yinit_1p0s_cont_motion_4'
+# filename: 'gantry_motion_snake_2xsteps_5ysteps_128xrange_128yrange_0xinit_0yinit_1p0s_cont_motion_4'
+# filename: 'gantry_motion_snake_2xsteps_5ysteps_128xrange_128yrange_0xinit_0yinit_1p0s_cont_motion_5'
+filename: 'gantry_motion_snake_2xsteps_5ysteps_128xrange_116yrange_0xinit_0yinit_1p0s_checker_1'
+
+# === Data capture type === #
+# stop_motion: True # stop motion or continuous capture?
+stop_motion: False
+
+# === Tracking type === #
+cam_tracking: False # is this data used for camera or object tracking?
+                    # if toggled True, point cloud data will be loaded
+                    # so that (x, y) coordinates are in camera coordinates,
+                    # rather than world coordinates. z will be at z = 0
+
+# === Canonical measurement === #
+canon_dir:
+  - '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/simulated/point.npy'
+  # - '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/simulated/patch_20x20.npy'
+
+# === Object location === #
+# obj_pos: [0.6, -0.4, 0.8] # object location
+# obj_pos: [0, 0, 0.5]
+obj_pos: [0, 0.6, 0.5]
+# obj_pos: [0, 0, 0]
+obj_size: 2 # size of bounding volume
+
+# === Particle initialization location === #
+# particle:
+#   vol_size: 1.6
+#   vol_center: [-0.5, 0.7, 0]
+
+particle:
+  vol_size: 2
+  vol_center: [0, 0.6, 0.5]
+
+# === Timing properties === #
+start_gate: 0 #1.56e-9 ##2.08E-9 # in seconds
+end_gate: 6.24E-9 # in seconds
+
+
+# === Background parameters === #
+background: False
+# background: True # was background captured?
+bg_sub: True # use captured background?

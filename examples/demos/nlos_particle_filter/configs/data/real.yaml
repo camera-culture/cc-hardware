@@ -1,0 +1,30 @@
+# === Object name (should match title of yaml file) === #
+# obj_name: 'patch_40x40'
+# obj_name: 'U'
+# obj_name: 'patch_cam_motion'
+# obj_name: 'man_obj_motion_64x64'
+# obj_name: 'U_cam_motion_new'
+# obj_name: 'mannequin_canonical'
+# obj_name: 'man_cam_localization'
+# obj_name: 'multi_patch_easy'
+# obj_name: 'multi_object_emulate'
+# obj_name: 'U_free_motion'
+# obj_name: 'patch_free_motion_bg'
+obj_name: 'patch_gantry'
+# obj_name: 'patch_debug'
+
+# === Frames to integrate per object position === #
+start_frame: 0
+end_frame: -1
+
+# === Bank and bin modes === #
+bin_mode: 1 # 0 for macro, 1 for esrf, 2 for hybrid
+merge_mode: 0 # 0 for mean, 1 for sum, 2 for median
+bank_mode: 0 # 0 for AF Macro, 1 for hybrid
+
+# === Background parameters === #
+background: False # was background captured?
+bg_sub: False # use captured background?
+
+# === Material properties === #
+isDiffuse: False

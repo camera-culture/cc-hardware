@@ -215,8 +215,6 @@ class PyQtGraphDashboard(SPADDashboard[PyQtGraphDashboardConfig]):
             lut[:, 0] = np.linspace(255, 0, 256)  # R
             lut[:, 2] = np.linspace(0, 255, 256)  # B
             lut[:, 3] = 255  # alpha
-            # lut = np.repeat(np.arange(256, dtype=np.ubyte)[:, None], 4, 1)
-            # lut[:, 3] = 255  # opaque
             self._depth_img.setLookupTable(lut)
 
         if self.config.fullscreen:

@@ -1,6 +1,8 @@
 """Dashboards for SPAD sensors."""
 
 from cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard import (
+    DummySPADDashboard,
+    DummySPADDashboardConfig,
     SPADDashboard,
     SPADDashboardConfig,
 )
@@ -24,4 +26,6 @@ SPADDashboardConfig.register(
 __all__ = [
     "SPADDashboard",
     "SPADDashboardConfig",
+    "DummySPADDashboard",
+    "DummySPADDashboardConfig",
 ]

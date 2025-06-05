@@ -1,0 +1,24 @@
+# === Data directory === #
+data_dir: ''
+filename: ''
+
+# === Data capture type === #
+stop_motion: True # stop motion or continuous capture?
+
+# === Tracking type === #
+cam_tracking: False # is this data used for camera or object tracking?
+                    # if toggled True, point cloud data will be loaded
+                    # so that (x, y) coordinates are in camera coordinates,
+                    # rather than world coordinates. z will be at z = 0
+
+# === Canonical measurement === #
+# canon_dir: '.../canon.pth'
+
+# === Object location === #
+# obj_pos: [0.6, -0.4, 0.8] # object location
+obj_pos: [0, 0, 0.5]
+obj_size: 1 # size of bounding volume
+
+# === Timing properties === #
+start_gate: 0 #1.56e-9 ##2.08E-9 # in seconds
+end_gate: 6.24E-9 # in seconds

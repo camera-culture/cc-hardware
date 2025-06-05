@@ -133,7 +133,7 @@ class Manager:
             # SETUP
             try:
                 if setup(manager=self, **self._components) is False:
-                    get_logger().info("Exiting setup.")
+                    get_logger().info("Setup failed, exiting...")
                     return
             except Exception:
                 get_logger().exception("Failed to setup components.")

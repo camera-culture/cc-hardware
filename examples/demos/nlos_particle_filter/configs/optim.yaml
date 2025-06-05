@@ -1,0 +1,38 @@
+# === Toggle reconstruction, tracking, or cam localization === #
+mode: 1 # 1 for tracking, 2 for cam localization
+           # 4 for custom optimization
+
+# === Particle filtering parameters === #
+particle:
+  num_particles: 1000 # number of particles before and after resampling
+  thresh_pct: 0.2 # used only for multinomial resampling
+
+  # particle initialization region
+  # vol_size: 1.5 #1.5
+  # # vol_center: [-0.8, 0.8, 0] # [-0.6, 0.8, 0]
+  # # vol_center: [0, 0.9, 0] # for old mannequin
+  # # vol_center: [0, 0.25, 0] # for new mannequin
+  # vol_center: []
+
+  # forward pass
+  batch_size: 50 # number of particles to pass through SumOfParabolas Model
+  fast_batch_size: 1000
+
+  # motion model
+  motion_model: 'RandomWalk' #'ConstantVelocity' # 'RandomWalk'
+  radius: 0.05 # rough displacement per frame in meters
+
+  # resampling function
+  resample_fn: 'residual' # multinomial, systematic, or residual
+
+  # score function
+  score_fn: 'dot_product_score'
+
+
+# === Logging parameters === #
+log:
+  log_dir: 'logs'
+  DISP_FREQ: 50
+  PRINT_FREQ: 1
+  SAVE_FREQ: 50
+  RESAMPLE_FREQ: 50

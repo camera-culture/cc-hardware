@@ -3,6 +3,7 @@ from typing import Any
 import numpy as np
 
 from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.pkl import PklSPADSensor, PklSPADSensorConfig
 from cc_hardware.utils import II, config_wrapper
 from cc_hardware.utils.setting import BoolSetting, RangeSetting
 
@@ -47,9 +48,7 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
     def __init__(self, config: SPADWrapperConfig):
         super().__init__(config)
 
-        self._sensor = config.wrapped
-        if not isinstance(config.wrapped, SPADSensor):
-            self._sensor = SPADSensor.create_from_config(config.wrapped)
+        self._sensor = SPADSensor.create_from_config(config.wrapped)
 
     def accumulate(self, *args, **kwargs):
         return self._sensor.accumulate(*args, **kwargs)
@@ -67,6 +66,7 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
         return self._sensor.is_okay
 
     def close(self):
+        super().close()
         if hasattr(self, "_sensor"):
             self._sensor.close()
 
@@ -241,5 +241,177 @@ class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
         self._data[data_type].append(data[data_type].copy())
         if len(self._data[data_type]) > self.config.window_size:
             self._data[data_type].pop(0)
-        moving_average = np.mean(self._data[data_type], axis=0)
+        moving_average = np.average(self._data[data_type], axis=0)
         return moving_average
+
+
+# =============================================================================
+
+
+@config_wrapper
+class SPADBackgroundRemovalWrapperConfig(SPADWrapperConfig):
+    """Configuration for SPAD sensor background removal wrapper. Note this only removes
+    the background from the histogram.
+
+    Args:
+        pkl_spad (PklSPADSensorConfig): The configuration for the wrapped PklSPAD
+            sensor.
+
+        clip (bool): Whether to clip the histogram data to zero after background
+            removal. If True, negative values in the histogram will be set to zero.
+
+        remove_background (bool): Whether to remove the background from the data.
+    """
+
+    pkl_spad: PklSPADSensorConfig
+
+    clip: bool = True
+
+    remove_background: bool = True
+    remove_background_setting: BoolSetting = BoolSetting.default_factory(
+        title="Remove Background",
+        value=True,
+    )
+
+    @property
+    def settings(self) -> dict[str, Any]:
+        settings = self.wrapped.settings
+        settings["remove_background"] = self.remove_background_setting
+        return settings
+
+
+class SPADBackgroundRemovalWrapper(SPADWrapper[SPADBackgroundRemovalWrapperConfig]):
+    def __init__(self, config: SPADBackgroundRemovalWrapperConfig):
+        super().__init__(config)
+
+        self._pkl_spad: PklSPADSensor = PklSPADSensor.create_from_config(
+            config.pkl_spad
+        )
+        assert (
+            SPADDataType.HISTOGRAM in self._pkl_spad.config.data_type
+        ), "PklSPADSensor must have histogram data type for background removal."
+        assert self._pkl_spad.config.num_bins == self.config.wrapped.num_bins, (
+            "PklSPADSensor num_bins must match the wrapped sensor num_bins. "
+            f"PklSPADSensor num_bins: {self._pkl_spad.config.num_bins}, "
+            f"Wrapped sensor num_bins: {self.config.wrapped.num_bins}"
+        )
+        assert self._pkl_spad.config.width == self.config.wrapped.width, (
+            "PklSPADSensor width must match the wrapped sensor width. "
+            f"PklSPADSensor width: {self._pkl_spad.config.width}, "
+            f"Wrapped sensor width: {self.config.wrapped.width}"
+        )
+        assert self._pkl_spad.config.height == self.config.wrapped.height, (
+            "PklSPADSensor height must match the wrapped sensor height. "
+            f"PklSPADSensor height: {self._pkl_spad.config.height}, "
+            f"Wrapped sensor height: {self.config.wrapped.height}"
+        )
+        assert self._pkl_spad.config.start_bin == self.config.wrapped.start_bin, (
+            "PklSPADSensor start_bin must match the wrapped sensor start_bin. "
+            f"PklSPADSensor start_bin: {self._pkl_spad.config.start_bin}, "
+            f"Wrapped sensor start_bin: {self.config.wrapped.start_bin}"
+        )
+
+        self._background: np.ndarray | None = None
+        self._initialize_background()
+
+    def _initialize_background(self):
+        """Initializes the background data from the PklSPAD sensor."""
+        histograms = []
+        for i in range(1, len(self._pkl_spad.handler)):
+            entry = self._pkl_spad.accumulate(index=1)
+            assert (
+                SPADDataType.HISTOGRAM in entry
+            ), "PklSPADSensor must have histogram data type for background removal."
+            histograms.append(entry[SPADDataType.HISTOGRAM])
+        assert histograms, "No histogram data found in PklSPAD sensor."
+
+        self._background = np.mean(histograms, axis=0)
+
+    def update(self, **kwargs) -> bool:
+        if not super().update(**kwargs):
+            return False
+
+        if "remove_background" in kwargs:
+            self.config.remove_background = kwargs["remove_background"]
+
+        return True
+
+    def accumulate(self, *args, **kwargs):
+        data = super().accumulate(*args, **kwargs)
+
+        if not self.config.remove_background or self._background is None:
+            return data
+
+        data[SPADDataType.HISTOGRAM] -= self._background
+        if self.config.clip:
+            data[SPADDataType.HISTOGRAM] = np.clip(
+                data[SPADDataType.HISTOGRAM], a_min=0, a_max=None
+            )
+
+        return data
+
+    def close(self):
+        """Closes the PklSPAD sensor."""
+        super().close()
+
+        if hasattr(self, "_pkl_spad"):
+            self._pkl_spad.close()
+
+
+# =============================================================================
+@config_wrapper
+class SPADScalingWrapperConfig(SPADWrapperConfig):
+    """Configuration for SPAD sensor scaling wrapper.
+    This wrapper scales the histogram data by a given factor.
+
+    Args:
+        scale (float): The factor by which to scale the histogram.
+    """
+
+    scale: int = 1
+    scale_setting: RangeSetting = RangeSetting.default_factory(
+        title="Histogram Scale", min=0, max=100, value=II("..scale")
+    )
+
+    @property
+    def settings(self) -> dict[str, Any]:
+        settings = self.wrapped.settings
+        settings["scale"] = self.scale_setting
+        return settings
+
+
+class SPADScalingWrapper(SPADWrapper[SPADScalingWrapperConfig]):
+    """
+    A wrapper class for SPAD sensors that scales the accumulated histogram data.
+    """
+
+    def __init__(self, config: SPADScalingWrapperConfig):
+        super().__init__(config)
+
+        assert (
+            SPADDataType.HISTOGRAM in self._sensor.config.data_type
+        ), "SPADScalingWrapper requires the wrapped sensor to have histogram data type."
+
+    def update(self, **kwargs) -> bool:
+        if not super().update(**kwargs):
+            return False
+
+        if "scale" in kwargs:
+            self.config.scale = kwargs["scale"]
+
+        return True
+
+    def accumulate(self, *args, **kwargs):
+        """
+        Accumulates data from the wrapped sensor and scales the histogram.
+        """
+        data = super().accumulate(*args, **kwargs)
+
+        if self.config.scale == 1.0:  # No scaling needed
+            return data
+
+        histogram_data = data[SPADDataType.HISTOGRAM]
+        scaled_histogram = histogram_data * self.config.scale
+        data[SPADDataType.HISTOGRAM] = scaled_histogram
+
+        return data

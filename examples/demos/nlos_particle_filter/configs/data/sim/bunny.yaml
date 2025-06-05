@@ -1,0 +1,5 @@
+# === bunny dataset ===
+filename: 'data_bunny'
+hist_scale: 1.0E+6
+canon_dir: 'logs/canon/2025-01-07_13-55-40_sim_bunny_alt_False_num_parabs_1000_canon_True_motion_False/ckpts/epoch_1000.pth'
+# canon_dir: '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/simulated/point_canon.pth'

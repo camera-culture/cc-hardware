@@ -41,6 +41,20 @@ SPADSensorConfig.register(
     f"{__name__}.spad_wrappers",
     "SPADMovingAverageWrapper",
 )
+SPADSensor.register("SPADBackgroundRemovalWrapper", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register(
+    "SPADBackgroundRemovalWrapperConfig", f"{__name__}.spad_wrappers"
+)
+SPADSensorConfig.register(
+    "SPADBackgroundRemovalWrapperConfig",
+    f"{__name__}.spad_wrappers",
+    "SPADBackgroundRemovalWrapper",
+)
+SPADSensor.register("SPADScalingWrapper", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register("SPADScalingWrapperConfig", f"{__name__}.spad_wrappers")
+SPADSensorConfig.register(
+    "SPADScalingWrapperConfig", f"{__name__}.spad_wrappers", "SPADScalingWrapper"
+)
 
 # =============================================================================
 

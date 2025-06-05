@@ -7,7 +7,6 @@
 #include "vl53lmz_api.h"
 #include "vl53lmz_plugin_cnh.h"
 
-
 // Sensor Configuration
 VL53LMZ_Configuration Dev;
 VL53LMZ_Motion_Configuration cnh_config;
@@ -114,12 +113,12 @@ int app(UART_HandleTypeDef *huart2) {
                                         &p_ambient_scaler);
 
         amb_value = ((float)*p_ambient) / (2 << *p_ambient_scaler);
-        printf("%d %d %d", agg_id, (int)amb_value,
+        printf("%2d %.1f %4d", agg_id, amb_value,
                Results.distance_mm[VL53LMZ_NB_TARGET_PER_ZONE * agg_id]);
 
         for (bin_num = 0; bin_num < cnh_config.feature_length; bin_num++) {
           bin_value = ((float)p_hist[bin_num]) / (2 << p_hist_scaler[bin_num]);
-          printf(" %d", (int)bin_value);
+          printf(" %.1f", bin_value);
         }
         printf("\n");
       }

@@ -1,0 +1,12 @@
+time: # properties of camera
+  numBins: 104
+  t_res: 64.0E-12
+  pulse_width: 135.0E-12 #60.0E-12
+
+cam_fov: 0.25 # imaged area on wall in meters
+tot_aperture: 0.74 # total scanning area
+num_samps: 4 # number of samples in each direction
+
+lct: # controls how lct should be computed for camera measurement ONLY (not canonical)
+  newNumBins: 128 # 1024 or 512 if computing native signal then LCT
+  scale: 1.0E+5

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from cc_hardware.drivers.spads import SPADDataType, SPADSensorConfig
-from cc_hardware.utils import config_wrapper
+from cc_hardware.utils import Component, config_wrapper
 from cc_hardware.utils.constants import C
 
 # ==========
@@ -107,7 +107,8 @@ class BackprojectionAlgorithm:
         assert SPADDataType.POINT_CLOUD in data, "Point cloud missing"
         assert SPADDataType.HISTOGRAM in data, "Histogram missing"
 
-        pt_cloud = align_plane(data[SPADDataType.POINT_CLOUD].reshape(-1, 3))
+        pt_cloud = data[SPADDataType.POINT_CLOUD].reshape(-1, 3)
+        # pt_cloud = align_plane(pt_cloud)
         hists = process_histograms(data, self.sensor_config).reshape(
             pt_cloud.shape[0], -1
         )
@@ -144,6 +145,21 @@ class BackprojectionAlgorithm:
         z_res = (self.config.z_range[1] - self.config.z_range[0]) / self.config.num_z
         return x_res, y_res, z_res
 
+    @property
+    def xres(self) -> float:
+        """Returns the x resolution of the voxel grid."""
+        return self.resolution[0]
+
+    @property
+    def yres(self) -> float:
+        """Returns the y resolution of the voxel grid."""
+        return self.resolution[1]
+
+    @property
+    def zres(self) -> float:
+        """Returns the z resolution of the voxel grid."""
+        return self.resolution[2]
+
 
 # ==========
 
@@ -162,16 +178,40 @@ class BackprojectionDashboardConfig:
     num_cols: int = 5
     cmap: str = "hot"
     gamma: float = 2.0
-    show_slices: bool = False
-    show_projection: bool = True
+    show_slices: bool = True
+    show_projection: bool = False
+    show_images: bool = False
 
 
-class BackprojectionDashboard:
+class BackprojectionDashboard(Component[BackprojectionDashboardConfig]):
     def __init__(self, config: BackprojectionDashboardConfig):
-        self.config = config
+        super().__init__(config)
         plt.ion()
         norm = mcolors.PowerNorm(gamma=config.gamma)
         self.kwargs = {"cmap": config.cmap, "norm": norm}
+
+        def _format_ax(ax, axis, shape):
+            xnum, ynum = shape
+            if axis == "x":
+                xlim, ylim = config.zlim, config.ylim
+                xlabel, ylabel = "Z (m)", "Y (m)"
+            elif axis == "y":
+                xlim, ylim = config.zlim, config.xlim
+                xlabel, ylabel = "Z (m)", "X (m)"
+            else:
+                xlim, ylim = config.xlim, config.ylim
+                xlabel, ylabel = "X (m)", "Y (m)"
+            xticks = np.linspace(0, xnum - 1, 5)
+            xlabels = np.linspace(xlim[0], xlim[1], 5)
+            yticks = np.linspace(0, ynum - 1, 5)
+            ylabels = np.linspace(ylim[0], ylim[1], 5)
+            ax.set_xticks(xticks)
+            ax.set_xticklabels([f"{v:.2f}" for v in xlabels])
+            ax.set_yticks(yticks)
+            ax.set_yticklabels([f"{v:.2f}" for v in ylabels])
+            ax.set_xlabel(xlabel)
+            ax.set_ylabel(ylabel)
+
         # Slices
         if config.show_slices:
             self.fig_slices = plt.figure(
@@ -195,57 +235,79 @@ class BackprojectionDashboard:
                             else (config.num_x, config.num_y)
                         )
                     )
-                    kwargs = deepcopy(self.kwargs)
-                    im = ax.imshow(np.zeros(shape).T, **kwargs)
-                    ax.set_title(f"{axis}={i}")
+                    im = ax.imshow(np.zeros(shape).T, **deepcopy(self.kwargs))
+                    # ax.set_title(
+                    #     f"{axis} = {config.__dict__[f'{axis}lim'][0] + i * config.__dict__[f'{axis}res']:.2f}"
+                    # )
+                    _format_ax(ax, axis, shape)
                     self.slice_imgs[axis].append((ax, im))
             self.fig_slices.suptitle("Volume Slices")
             self.fig_slices.show()
+
+        if config.show_images:
+            self.fig_images = plt.figure(figsize=(16, 16))
+            for i in range(4):
+                for j in range(4):
+                    ax = self.fig_images.add_subplot(4, 4, i * 4 + j + 1)
+                    ax.imshow(
+                        np.zeros((config.num_y, config.num_x)).T,
+                        **deepcopy(self.kwargs),
+                    )
+                    ax.set_title(f"Image {i * 4 + j + 1}")
+                    # _format_ax(ax, "z", (config.num_y, config.num_x))
+
         # Projection
         if config.show_projection:
-            n_proj = 4 if True else 3
+            n_proj = 4
             self.fig_proj = plt.figure(figsize=(4 * n_proj, 4))
-            self.proj_axes: list = []
-            self.proj_imgs: list = []
+            self.proj_axes = []
+
             # Y-Z
             ax1 = self.fig_proj.add_subplot(1, n_proj, 1)
+            shape1 = (config.num_z, config.num_y)
             im1 = ax1.imshow(
                 np.zeros((config.num_y, config.num_z)).T, **deepcopy(self.kwargs)
             )
             ax1.set_title("Y-Z")
+            _format_ax(ax1, "x", shape1)
             self.proj_axes.append((ax1, im1))
+
             # X-Z
             ax2 = self.fig_proj.add_subplot(1, n_proj, 2)
+            shape2 = (config.num_z, config.num_x)
             im2 = ax2.imshow(
                 np.zeros((config.num_x, config.num_z)).T, **deepcopy(self.kwargs)
             )
             ax2.set_title("X-Z")
+            _format_ax(ax2, "y", shape2)
             self.proj_axes.append((ax2, im2))
+
             # X-Y
             ax3 = self.fig_proj.add_subplot(1, n_proj, 3)
+            shape3 = (config.num_y, config.num_x)
             im3 = ax3.imshow(
                 np.zeros((config.num_x, config.num_y)).T, **deepcopy(self.kwargs)
             )
             ax3.set_title("X-Y")
+            _format_ax(ax3, "z", shape3)
             self.proj_axes.append((ax3, im3))
-            # Signal placeholder
+
+            # Signal
             ax4 = self.fig_proj.add_subplot(1, n_proj, 4)
             im4 = ax4.imshow(np.zeros((1, 1)), **deepcopy(self.kwargs))
             ax4.set_title("Signal")
             self.proj_axes.append((ax4, im4))
+
             self.fig_proj.suptitle("Volume Projection")
             self.fig_proj.show()
 
     def update(self, volume: np.ndarray, signal: np.ndarray) -> None:
         cfg = self.config
-        # update slices
         if cfg.show_slices:
             for axis in ["x", "y", "z"]:
-                imgs = self.slice_imgs[axis]
-                n = getattr(cfg, f"num_{axis}")
-                for i, (ax, im) in enumerate(imgs):
+                for i, (ax, im) in enumerate(self.slice_imgs[axis]):
                     sl = (
-                        volume[i, :, :].T
+                        volume[i].T
                         if axis == "x"
                         else volume[:, i, :].T
                         if axis == "y"
@@ -253,23 +315,47 @@ class BackprojectionDashboard:
                     )
                     im.set_data(sl)
                     im.set_clim([sl.min(), sl.max()])
-                    # ax.set_title(f"{axis}={cfg.__dict__[f'xlim' if axis=='z' else 'zlim'][0] + i * cfg.__dict__[f'{axis}res']:.2f}")
             self.fig_slices.canvas.draw_idle()
-        # update projection
+
         if cfg.show_projection:
             xs = np.max(volume, axis=0)
             ys = np.max(volume, axis=1)
             zs = np.max(volume, axis=2)
-
-            min_total = min(xs.min(), ys.min(), zs.min())
-            max_total = max(xs.max(), ys.max(), zs.max())
-            for idx, arr in enumerate([xs, ys, zs]):
-                ax, im = self.proj_axes[idx]
+            min_val = min(xs.min(), ys.min(), zs.min())
+            max_val = max(xs.max(), ys.max(), zs.max())
+            for (ax, im), arr in zip(self.proj_axes[:3], [xs, ys, zs]):
                 im.set_data(arr)
-                # Reset color limits
-                im.set_clim([min_total, max_total])
+                im.set_clim([min_val, max_val])
             ax, im = self.proj_axes[-1]
             im.set_data(signal)
             im.set_clim([signal.min(), signal.max()])
             self.fig_proj.canvas.draw_idle()
+
+        if cfg.show_images:
+            hist = signal[:, :16]
+            hist = hist.reshape(64, 4, 4)
+            for i in range(4):
+                for j in range(4):
+                    ax = self.fig_images.axes[i * 4 + j]
+                    im = ax.images[0]
+                    im.set_data(hist[:, i, j].reshape(8, 8))
+                    im.set_clim([hist.min(), hist.max()])
+            self.fig_images.canvas.draw_idle()
         plt.pause(0.001)
+
+    @property
+    def is_okay(self) -> bool:
+        """Returns True if the dashboard is okay, i.e., not closed."""
+        okay = True
+        if self.config.show_slices:
+            okay &= plt.fignum_exists(self.fig_slices.number)
+        if self.config.show_projection:
+            okay &= plt.fignum_exists(self.fig_proj.number)
+        return okay
+
+    def close(self) -> None:
+        """Closes the dashboard."""
+        if self.config.show_slices:
+            plt.close(self.fig_slices)
+        if self.config.show_projection:
+            plt.close(self.fig_proj)

@@ -27,6 +27,16 @@ class PklSPADSensorConfig(SPADSensorConfig):
     pkl_path: Path | str
     index: int = 0
 
+    # Placeholders
+    height: int | None = None
+    width: int | None = None
+    num_bins: int | None = None
+    fovx: float | None = None
+    fovy: float | None = None
+    timing_resolution: float | None = None
+    start_bin: int | None = None
+    subsample: int | None = None
+
     loop: bool = False
 
 
@@ -55,26 +65,23 @@ class PklSPADSensor[T: PklSPADSensorConfig](SPADSensor[T]):
         self._index = config.index
 
         first_entry: dict = self._handler.load(0)
-        if self.config.height is None:
-            assert "height" in first_entry, "Height not found in first entry."
-            self.config.height = first_entry["height"]
-        if self.config.width is None:
-            assert "width" in first_entry, "Width not found in first entry."
-            self.config.width = first_entry["width"]
-        if self.config.num_bins is None:
-            assert "num_bins" in first_entry, "Number of bins not found in first entry."
-            self.config.num_bins = first_entry["num_bins"]
-        if self.config.fovx is None:
-            assert "fovx" in first_entry, "FOV X not found in first entry."
-            self.config.fovx = first_entry["fovx"]
-        if self.config.fovy is None:
-            assert "fovy" in first_entry, "FOV Y not found in first entry."
-            self.config.fovy = first_entry["fovy"]
-        if self.config.timing_resolution is None:
-            assert (
-                "timing_resolution" in first_entry
-            ), "Timing resolution not found in first entry."
-            self.config.timing_resolution = first_entry["timing_resolution"]
+        if "config" in first_entry:
+            first_entry = first_entry["config"]
+            self._set_config_attr(first_entry, "height")
+            self._set_config_attr(first_entry, "width")
+            self._set_config_attr(first_entry, "num_bins")
+            self._set_config_attr(first_entry, "fovx")
+            self._set_config_attr(first_entry, "fovy")
+            self._set_config_attr(first_entry, "timing_resolution")
+            self._set_config_attr(first_entry, "start_bin")
+            self._set_config_attr(first_entry, "subsample")
+            self._set_config_attr(first_entry, "data_type")
+
+    def _set_config_attr(self, entry: dict, key: str):
+        assert hasattr(self.config, key), f"Config has no attribute '{key}'."
+        if getattr(self.config, key) is None:
+            assert key in entry, f"Key '{key}' not found in entry."
+            setattr(self.config, key, entry[key])
 
     @property
     def handler(self) -> PklReader:

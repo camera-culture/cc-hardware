@@ -1,0 +1,7 @@
+x_min: -2
+x_max: 2
+num_x: 200
+
+y_min: -2
+y_max: 2
+num_y: 200

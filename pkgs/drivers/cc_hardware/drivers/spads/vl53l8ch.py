@@ -95,7 +95,7 @@ class VL53L8CHConfig(SPADSensorConfig):
     ranging_frequency_hz_setting: RangeSetting = RangeSetting.default_factory(
         value=II("..ranging_frequency_hz"),
         min=1,
-        max=60,
+        max=30,
         title="Ranging Frequency (Hz)",
     )
     integration_time_ms_setting: RangeSetting = RangeSetting.default_factory(
@@ -110,6 +110,12 @@ class VL53L8CHConfig(SPADSensorConfig):
     add_back_ambient_setting: BoolSetting = BoolSetting.default_factory(
         value=II("..add_back_ambient"),
         title="Add Back Ambient Light",
+    )
+    start_bin_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..start_bin"),
+        min=0,
+        max=128,
+        title="Start Bin",
     )
 
     def pack(self) -> bytes:
@@ -151,6 +157,7 @@ class VL53L8CHConfig(SPADSensorConfig):
             "integration_time_ms": self.integration_time_ms_setting,
             "num_bins": self.num_bins_setting,
             "add_back_ambient": self.add_back_ambient_setting,
+            "start_bin": self.start_bin_setting,
         }
 
 
@@ -162,8 +169,7 @@ class VL53L8CHSharedConfig(VL53L8CHConfig):
     Inherits from SensorConfig and provides default values for common parameters.
     """
 
-    ranging_mode: RangingMode = RangingMode.AUTONOMOUS
-    ranging_frequency_hz: int = 60
+    ranging_mode: RangingMode = RangingMode.CONTINUOUS
     integration_time_ms: int = 10
     start_bin: int = 0
     subsample: int = 16
@@ -184,6 +190,7 @@ class VL53L8CHConfig4x4(VL53L8CHSharedConfig):
     height: int = 4
     width: int = 4
     num_bins: int = 8
+    ranging_frequency_hz: int = 30
 
 
 @config_wrapper
@@ -195,6 +202,7 @@ class VL53L8CHConfig8x8(VL53L8CHSharedConfig):
     height: int = 8
     width: int = 8
     num_bins: int = 8
+    ranging_frequency_hz: int = 15
 
 
 # ===============

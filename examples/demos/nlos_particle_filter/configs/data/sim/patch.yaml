@@ -1,0 +1,4 @@
+# === patch dataset === #
+filename: 'patch_data'
+hist_scale: 1
+canon_dir: '/Users/sidsoma/Desktop/Code/papers/siggraph-24/data/simulated/patch_canon.pth'
