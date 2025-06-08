@@ -11,6 +11,11 @@ outputs/
 .envrc
 .*.swp
 
+# Yolo
+yolo*.pt
+runs
+datasets
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

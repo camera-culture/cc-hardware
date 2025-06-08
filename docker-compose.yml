@@ -10,10 +10,10 @@ services:
       dockerfile: "./docker/dev.dockerfile"
       args:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
-        IMAGE_BASE: "dustynv/pytorch"
-        IMAGE_TAG: "2.6-r36.4.0-cu128-24.04"
+        IMAGE_BASE: "dustynv/torchvision"
+        IMAGE_TAG: "0.21.0-r36.4.0-cu128-24.04"
         USER_GROUPS: "video dialout i2c gpio"
-        PIP_REQUIREMENTS: "poetry"
+        PIP_REQUIREMENTS: "poetry ultralytics"
         APT_DEPENDENCIES: |
           git-core
           libgl1
@@ -41,11 +41,23 @@ services:
       - "/dev/ttyACM0"
       - "/dev/i2c-1"
       - "/dev/gpiochip0"
+      # Realsense
+      - "/dev/video0"
+      - "/dev/video1"
+      - "/dev/video2"
+      - "/dev/video3"
+      - "/dev/video4"
+      - "/dev/video5"
+      - "/dev/media1"
+      - "/dev/media2"
+      # ensures hot-reloading
+      - "/dev/bus/usb"
     group_add:
       - "video"
       - "dialout"
       - "116" # i2c
       - "999" # camera
+    shm_size: '8gb'
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
     tty: true
     privileged: True # TODO: I don't like this
