@@ -152,10 +152,29 @@ class PklHandler:
         """
         return len(self._index)
 
+    def __iter__(self):
+        """
+        Iterate over the records in the pickle file.
+
+        Yields:
+            Any: Each record in the pickle file.
+        """
+        with open(self._path, "rb") as file:
+            for pos in self._index:
+                file.seek(pos)
+                yield pickle.load(file)
+
 
 class PklReader(PklHandler):
-    def __init__(self, path: Path | str):
-        super().__init__(path, overwrite=False)
+    """A utility class for reading data from a pickle file.
+    Inherits from PklHandler but sets overwrite to False by default.
+
+    Args:
+        path (Path | str): The path to the pickle file.
+    """
+
+    def __init__(self, path: Path | str, **kwargs):
+        super().__init__(path, overwrite=False, **kwargs)
 
 
 # ==================

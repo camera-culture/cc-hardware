@@ -24,9 +24,12 @@ Example:
         manager.run(setup=setup, loop=loop, cleanup=cleanup)
 """
 
+import queue
+import threading
 from abc import ABC, abstractmethod
+from concurrent.futures import Future
 from functools import partial
-from typing import Any, Callable, Self
+from typing import Any, Callable, Self, TypeVar, cast
 
 from hydra_config import HydraContainerConfig, config_wrapper
 
@@ -77,6 +80,92 @@ class Component[T: Config](ABC, Registry):
         """Checks if the component is operational."""
         ...
 
+    def __del__(self):
+        """Ensures the component is closed when it is deleted."""
+        self.close()
+
+
+class ThreadedComponent[T: Config](Component[T]):
+    def __init__(self, wrapped: Component[T], *, future: bool = True):
+        # avoid __setattr__ before internals exist
+        self._thread: threading.Thread
+        self._tasks: queue.Queue
+        self._future: bool
+        self._wrapped: Component[T]
+        object.__setattr__(self, "_wrapped", wrapped)
+        object.__setattr__(self, "_future", future)
+        object.__setattr__(self, "_tasks", queue.Queue())
+        object.__setattr__(
+            self, "_thread", threading.Thread(target=self._worker, daemon=True)
+        )
+
+        # now safe
+        super().__init__(wrapped.config)
+
+        self._thread.start()
+
+    def __getattr__(self, name: str):
+        attr = getattr(self._wrapped, name)
+        if callable(attr):
+
+            def _call(*args, **kwargs):
+                fut = Future()
+                self._tasks.put((attr, args, kwargs, fut))
+                return fut if self._future else fut.result()
+
+            return _call
+        return self._sync(lambda: getattr(self._wrapped, name))
+
+    def __setattr__(self, name: str, value: Any):
+        if name.startswith("_") or "_tasks" not in self.__dict__:
+            object.__setattr__(self, name, value)
+        else:
+            self._sync(lambda: setattr(self._wrapped, name, value))
+
+    @property
+    def is_okay(self) -> bool:
+        return self._thread.is_alive() and self._wrapped.is_okay
+
+    def close(self):
+        if not self._thread.is_alive():
+            return
+
+        self._sync(self._wrapped.close)
+        self._tasks.put(None)
+        self._thread.join(timeout=5)
+        if self._thread.is_alive():
+            get_logger().warning(
+                f"Could not close {self._wrapped.__class__.__name__} gracefully, "
+            )
+
+    def _sync(self, fn: Callable, *, force_result: bool = False) -> Any | Future:
+        fut = Future()
+        self._tasks.put((fn, (), {}, fut))
+        if force_result or not self._future:
+            return fut.result()
+        return fut
+
+    def _worker(self):
+        while True:
+            item = self._tasks.get()
+            if item is None:
+                break
+            fn, args, kwargs, fut = item
+            try:
+                res = fn(*args, **kwargs)
+                if fut:
+                    fut.set_result(res)
+            except Exception as e:
+                if fut:
+                    fut.set_exception(e)
+
+
+_C = TypeVar("_C", bound=Component)
+
+
+def threaded_component(component: _C, **kwargs) -> _C | ThreadedComponent:
+    return cast(_C | ThreadedComponent, ThreadedComponent(component, **kwargs))
+
 
 class Manager:
     """This is a manager for handling components which must be closed. It is
@@ -94,6 +183,7 @@ class Manager:
         self._cleanup_on_keyboard_interrupt = cleanup_on_keyboard_interrupt
 
         self._closed = False
+        self._looping = True  # TODO: shouldn't start as true
 
     def add(self, **components: Component | Any):
         """Adds additional components to the manager."""
@@ -140,10 +230,11 @@ class Manager:
                 return
 
             # LOOP
+            self._looping = True
             try:
                 while self.is_okay:
                     if loop(iter, manager=self, **self._components) is False:
-                        get_logger().info(f"Exiting loop after {iter} iterations.")
+                        get_logger().info(f"Exiting loop after {iter + 1} iterations.")
                         break
 
                     iter += 1
@@ -154,6 +245,8 @@ class Manager:
             except Exception as e:
                 get_logger().exception(f"Failed to run loop {iter}: {e}")
                 return
+            finally:
+                self._looping = False
 
             # CLEANUP
             try:
@@ -191,6 +284,11 @@ class Manager:
     def components(self) -> dict[str, type[Component] | Component | Any]:
         """Returns a dictionary of components."""
         return self._components
+
+    @property
+    def is_looping(self) -> bool:
+        """Checks if the manager is currently looping."""
+        return self._looping
 
     @property
     def is_okay(self) -> bool:

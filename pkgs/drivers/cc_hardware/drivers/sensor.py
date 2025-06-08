@@ -42,6 +42,16 @@ class Sensor[T: SensorConfig](Component[T]):
         """Retrieves the sensor settings."""
         return self.config.settings
 
+    def reset(self, **kwargs) -> None:
+        """
+        Resets the sensor configuration to its initial state. This method can be
+        overridden by subclasses to implement specific reset behavior.
+
+        Args:
+            **kwargs: Additional parameters that may be used for resetting.
+        """
+        pass
+
     def update(self, **kwargs) -> bool:
         """
         Updates the sensor configuration with provided keyword arguments. If there are

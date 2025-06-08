@@ -45,7 +45,7 @@ class StepperController[T: StepperControllerConfig](Component[T]):
         self.total_positions = 1
 
     @abstractmethod
-    def get_position(self, iter: int) -> list[float]:
+    def get_position(self, iter: int, *, verbose: bool = True) -> list[float]:
         """Get the position for the given iteration.
 
         Args:
@@ -137,7 +137,7 @@ class SnakeStepperController(StepperController[StepperControllerConfig]):
             self.total_positions *= axis.samples
         self.axes: dict[str, ControllerAxisConfig] = axes
 
-    def get_position(self, iter: int) -> dict | None:
+    def get_position(self, iter: int, *, verbose: bool = True) -> dict | None:
         """
         Get the position that the controller should move to for the given iteration.
 
@@ -165,6 +165,9 @@ class SnakeStepperController(StepperController[StepperControllerConfig]):
             else:
                 index = reverse_index if axis.flipped else index
                 current_position[name] = axis.positions[index]
-            get_logger().info(f"Axis {name}: {current_position[name]}")
+            if verbose:
+                get_logger().info(f"Axis {name}: {current_position[name]}")
+            else:
+                get_logger().debug(f"Axis {name}: {current_position[name]}")
 
         return current_position
