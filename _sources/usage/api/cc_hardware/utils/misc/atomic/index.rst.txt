@@ -1,0 +1,10 @@
+:orphan:
+
+
+:py:mod:`cc_hardware.utils.misc.atomic`
+=======================================
+
+
+.. py:module:: cc_hardware.utils.misc.atomic
+
+

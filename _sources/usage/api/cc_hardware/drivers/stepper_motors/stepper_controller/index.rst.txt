@@ -450,7 +450,7 @@ Classes
    Base class for components which must be closed.
 
 
-   .. py:method:: get_position(iter)
+   .. py:method:: get_position(iter, *, verbose = True)
       :abstractmethod:
 
 
@@ -491,6 +491,12 @@ Classes
       :Parameters: **config** (*T*) -- The configuration object.
 
       :returns: *Self* -- An instance of the class.
+
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
 
 
 
@@ -1179,7 +1185,7 @@ Classes
    Base class for components which must be closed.
 
 
-   .. py:method:: get_position(iter)
+   .. py:method:: get_position(iter, *, verbose = True)
 
       Get the position that the controller should move to for the given iteration.
 
@@ -1221,6 +1227,12 @@ Classes
       :Parameters: **config** (*T*) -- The configuration object.
 
       :returns: *Self* -- An instance of the class.
+
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
 
 
 

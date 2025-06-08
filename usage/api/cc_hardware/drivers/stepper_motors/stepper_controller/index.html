@@ -838,7 +838,7 @@ size=&quot;8.0, 12.0&quot;;
 <p>Base class for components which must be closed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position" title="Link to this definition">#</a></dt>
 <dd><p>Get the position for the given iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -885,6 +885,12 @@ size=&quot;8.0, 12.0&quot;;
 <dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1749,7 +1755,7 @@ size=&quot;8.0, 12.0&quot;;
 <p>Base class for components which must be closed.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">
-<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position" title="Link to this definition">#</a></dt>
 <dd><p>Get the position that the controller should move to for the given iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1801,6 +1807,12 @@ size=&quot;8.0, 12.0&quot;;
 <dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1987,6 +1999,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.close"><code class="docutils literal notranslate"><span class="pre">StepperController.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.config"><code class="docutils literal notranslate"><span class="pre">StepperController.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_config"><code class="docutils literal notranslate"><span class="pre">StepperController.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__"><code class="docutils literal notranslate"><span class="pre">StepperController.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register"><code class="docutils literal notranslate"><span class="pre">StepperController.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperController.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry"><code class="docutils literal notranslate"><span class="pre">StepperController.registry()</span></code></a></li>
@@ -2059,6 +2072,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.close"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.registry()</span></code></a></li>

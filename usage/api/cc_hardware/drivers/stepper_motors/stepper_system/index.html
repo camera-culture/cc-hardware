@@ -749,6 +749,12 @@ as a whole (i.e. a gantry or multi-axis rotation stage).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
@@ -902,6 +908,12 @@ size=&quot;8.0, 12.0&quot;;
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.is_okay">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the component is operational.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1083,6 +1095,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.config"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.create_from_config"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.__del__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.register"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem.registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.registry()</span></code></a></li>
@@ -1099,6 +1112,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.config"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.create_from_config"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.__del__"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.register"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem.registry"><code class="docutils literal notranslate"><span class="pre">DummyStepperSystem.registry()</span></code></a></li>

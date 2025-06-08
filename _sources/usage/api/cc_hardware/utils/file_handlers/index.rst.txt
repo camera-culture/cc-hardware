@@ -112,35 +112,25 @@ Classes
 
 
 
-.. py:class:: PklReader(path)
+   .. py:method:: __iter__()
+
+      Iterate over the records in the pickle file.
+
+      :Yields: *Any* -- Each record in the pickle file.
+
+
+
+.. py:class:: PklReader(path, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.utils.file_handlers.PklReader
       :parts: 1
 
 
-   A utility class for writing and reading data to/from pickle files.
+   A utility class for reading data from a pickle file.
+   Inherits from PklHandler but sets overwrite to False by default.
 
-   Provides methods to write data, append data, and load single or multiple
-   records from a pickle file. It also supports indexing for random access
-   to records without loading the entire file into memory.
-
-   :keyword overwrite: If True, overwrite existing file when writing. Defaults to
-                       True.
-   :kwtype overwrite: bool
-
-   .. rubric:: Example
-
-   .. code-block:: python
-
-       handler = PklHandler("data.pkl")
-       handler.write({"key": "value"})
-       handler.append({"another_key": "another_value"})
-
-       record = handler.load()
-       print(record) # {"key": "value"}
-       record = handler.load(1)
-       print(record) # {"another_key": "another_value"}
+   :Parameters: **path** (*Path | str*) -- The path to the pickle file.
 
 
    .. py:method:: update_index(*, prune_fn = lambda _: False)
@@ -200,6 +190,14 @@ Classes
       Get the number of records in the pickle file.
 
       :returns: *int* -- The number of records.
+
+
+
+   .. py:method:: __iter__()
+
+      Iterate over the records in the pickle file.
+
+      :Yields: *Any* -- Each record in the pickle file.
 
 
 

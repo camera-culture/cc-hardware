@@ -299,7 +299,7 @@
 <td><p>A utility class for writing and reading data to/from pickle files.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader" title="cc_hardware.utils.file_handlers.PklReader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PklReader</span></code></a></p></td>
-<td><p>A utility class for writing and reading data to/from pickle files.</p></td>
+<td><p>A utility class for reading data from a pickle file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.utils.file_handlers.VideoWriter" title="cc_hardware.utils.file_handlers.VideoWriter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VideoWriter</span></code></a></p></td>
 <td><p>A utility class for writing video frames to a file.</p></td>
@@ -408,40 +408,37 @@ Defaults to lambda _: False.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.file_handlers.PklHandler.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.file_handlers.PklHandler.__iter__" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over the records in the pickle file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Any</em> – Each record in the pickle file.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.file_handlers.PklReader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.file_handlers.PklReader" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PklReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.file_handlers.PklReader" title="Link to this definition">#</a></dt>
 <dd>digraph inheritancec5465b05bc {
 bgcolor=transparent;
 rankdir=LR;
 size=&quot;8.0, 12.0&quot;;
   &quot;PklHandler&quot; [URL=&quot;#cc_hardware.utils.file_handlers.PklHandler&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A utility class for writing and reading data to/from pickle files.&quot;];
-  &quot;PklReader&quot; [URL=&quot;#cc_hardware.utils.file_handlers.PklReader&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
+  &quot;PklReader&quot; [URL=&quot;#cc_hardware.utils.file_handlers.PklReader&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A utility class for reading data from a pickle file.&quot;];
   &quot;PklHandler&quot; -&gt; &quot;PklReader&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
 }
-<p>A utility class for writing and reading data to/from pickle files.</p>
-<p>Provides methods to write data, append data, and load single or multiple
-records from a pickle file. It also supports indexing for random access
-to records without loading the entire file into memory.</p>
+<p>A utility class for reading data from a pickle file.
+Inherits from PklHandler but sets overwrite to False by default.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite existing file when writing. Defaults to
-True.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to the pickle file.</p>
 </dd>
 </dl>
-<p class="rubric">Example</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">handler</span> <span class="o">=</span> <span class="n">PklHandler</span><span class="p">(</span><span class="s2">&quot;data.pkl&quot;</span><span class="p">)</span>
-<span class="n">handler</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">})</span>
-<span class="n">handler</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;another_key&quot;</span><span class="p">:</span> <span class="s2">&quot;another_value&quot;</span><span class="p">})</span>
-
-<span class="n">record</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="c1"># {&quot;key&quot;: &quot;value&quot;}</span>
-<span class="n">record</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="c1"># {&quot;another_key&quot;: &quot;another_value&quot;}</span>
-</pre></div>
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.file_handlers.PklReader.update_index">
 <span class="sig-name descname"><span class="pre">update_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prune_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">lambda</span> <span class="pre">_:</span> <span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.file_handlers.PklReader.update_index" title="Link to this definition">#</a></dt>
@@ -515,6 +512,17 @@ Defaults to lambda _: False.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><em>int</em> – The number of records.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.file_handlers.PklReader.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.file_handlers.PklReader.__iter__" title="Link to this definition">#</a></dt>
+<dd><p>Iterate over the records in the pickle file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Any</em> – Each record in the pickle file.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -628,6 +636,7 @@ the specified flush interval.</p>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklHandler.load"><code class="docutils literal notranslate"><span class="pre">PklHandler.load()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklHandler.load_all"><code class="docutils literal notranslate"><span class="pre">PklHandler.load_all()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklHandler.__len__"><code class="docutils literal notranslate"><span class="pre">PklHandler.__len__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklHandler.__iter__"><code class="docutils literal notranslate"><span class="pre">PklHandler.__iter__()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader"><code class="docutils literal notranslate"><span class="pre">PklReader</span></code></a><ul>
@@ -637,6 +646,7 @@ the specified flush interval.</p>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader.load"><code class="docutils literal notranslate"><span class="pre">PklReader.load()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader.load_all"><code class="docutils literal notranslate"><span class="pre">PklReader.load_all()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader.__len__"><code class="docutils literal notranslate"><span class="pre">PklReader.__len__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.file_handlers.PklReader.__iter__"><code class="docutils literal notranslate"><span class="pre">PklReader.__iter__()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.utils.file_handlers.VideoWriter"><code class="docutils literal notranslate"><span class="pre">VideoWriter</span></code></a><ul>

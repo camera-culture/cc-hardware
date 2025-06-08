@@ -1746,6 +1746,18 @@ number of pixels or sampling points in the respective dimensions.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate" title="Link to this definition">#</a></dt>
 <dd><p>Calibrates the sensor.</p>
@@ -2035,6 +2047,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.resolution"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.config"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.config</span></code></a></li>

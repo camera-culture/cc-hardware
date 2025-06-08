@@ -1187,6 +1187,15 @@ Classes
       Retrieves the sensor settings.
 
 
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
+
+
    .. py:method:: calibrate()
       :abstractmethod:
 

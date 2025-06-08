@@ -303,6 +303,12 @@ Classes
       Checks if the component is operational.
 
 
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
+
+
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
                   register(class_name: str, module_path: str, friend: str) -> None

@@ -456,6 +456,18 @@ Defines methods and properties for specific for cameras.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Camera.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Camera.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Camera.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
@@ -881,6 +893,18 @@ the sensor. Defaults to 1.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.MotionCaptureSensor.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.MotionCaptureSensor.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.MotionCaptureSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.MotionCaptureSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1501,6 +1525,18 @@ size=&quot;8.0, 12.0&quot;;
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.Sensor.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.Sensor.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
@@ -1975,6 +2011,18 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.settings">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.settings" title="Link to this definition">#</a></dt>
 <dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2500,6 +2548,12 @@ move_by methods.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotor.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotor.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotor.register">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotor.register" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
@@ -2644,6 +2698,12 @@ as a whole (i.e. a gantry or multi-axis rotation stage).</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.is_okay">
 <em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the component is operational.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.StepperMotorSystem.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.StepperMotorSystem.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2886,6 +2946,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.intrinsic_matrix"><code class="docutils literal notranslate"><span class="pre">Camera.intrinsic_matrix</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.resolution"><code class="docutils literal notranslate"><span class="pre">Camera.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.settings"><code class="docutils literal notranslate"><span class="pre">Camera.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Camera.reset"><code class="docutils literal notranslate"><span class="pre">Camera.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.update"><code class="docutils literal notranslate"><span class="pre">Camera.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.is_okay"><code class="docutils literal notranslate"><span class="pre">Camera.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Camera.close"><code class="docutils literal notranslate"><span class="pre">Camera.close()</span></code></a></li>
@@ -2923,6 +2984,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.settings"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.reset"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.update"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensor.close"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensor.close()</span></code></a></li>
@@ -2971,6 +3033,7 @@ attributes – see the documentation for details.</p>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor"><code class="docutils literal notranslate"><span class="pre">Sensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.settings"><code class="docutils literal notranslate"><span class="pre">Sensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.Sensor.reset"><code class="docutils literal notranslate"><span class="pre">Sensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.update"><code class="docutils literal notranslate"><span class="pre">Sensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.is_okay"><code class="docutils literal notranslate"><span class="pre">Sensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.Sensor.close"><code class="docutils literal notranslate"><span class="pre">Sensor.close()</span></code></a></li>
@@ -3010,6 +3073,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADSensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">SPADSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.reset"><code class="docutils literal notranslate"><span class="pre">SPADSensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.update"><code class="docutils literal notranslate"><span class="pre">SPADSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensor.close"><code class="docutils literal notranslate"><span class="pre">SPADSensor.close()</span></code></a></li>
@@ -3057,6 +3121,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.config"><code class="docutils literal notranslate"><span class="pre">StepperMotor.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.create_from_config"><code class="docutils literal notranslate"><span class="pre">StepperMotor.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotor.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.__del__"><code class="docutils literal notranslate"><span class="pre">StepperMotor.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.register"><code class="docutils literal notranslate"><span class="pre">StepperMotor.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotor.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotor.registry"><code class="docutils literal notranslate"><span class="pre">StepperMotor.registry()</span></code></a></li>
@@ -3073,6 +3138,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.config"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.create_from_config"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.create_from_config()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.__del__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.register"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.register()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.create_from_registry()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.StepperMotorSystem.registry"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystem.registry()</span></code></a></li>

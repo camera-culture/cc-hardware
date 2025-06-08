@@ -1095,6 +1095,18 @@ number of pixels or sampling points in the respective dimensions.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
@@ -1336,6 +1348,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.num_bins"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.resolution"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.settings"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.reset"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.update"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.__del__"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.__del__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor.create_from_config"><code class="docutils literal notranslate"><span class="pre">TMF8828Sensor.create_from_config()</span></code></a></li>

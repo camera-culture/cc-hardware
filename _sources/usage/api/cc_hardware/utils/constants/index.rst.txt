@@ -19,3 +19,7 @@ Module Contents
 
    Speed of light in m/s
 
+.. py:data:: TORCH_DEVICE
+
+   Default device for PyTorch operations, using CUDA if available, otherwise CPU.
+

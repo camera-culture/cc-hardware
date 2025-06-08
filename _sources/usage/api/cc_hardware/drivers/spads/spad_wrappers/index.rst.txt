@@ -245,7 +245,7 @@ Classes
 
 
 
-.. py:class:: SPADWrapper(config)
+.. py:class:: SPADWrapper(config, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADWrapper
@@ -258,6 +258,12 @@ Classes
    collection.
 
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state.
+
 
 
    .. py:method:: accumulate(*args, **kwargs)
@@ -301,6 +307,12 @@ Classes
       :type: bool
 
       Checks if the sensor is operational.
+
+
+   .. py:property:: unwrapped
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Returns the underlying SPAD sensor.
 
 
    .. py:method:: close()
@@ -630,7 +642,7 @@ Classes
 
 
 
-.. py:class:: SPADMergeWrapper(config)
+.. py:class:: SPADMergeWrapper(config, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper
@@ -684,6 +696,12 @@ Classes
                     (width, height).
 
 
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state.
+
+
+
    .. py:property:: num_bins
       :type: int
 
@@ -699,6 +717,12 @@ Classes
       :type: bool
 
       Checks if the sensor is operational.
+
+
+   .. py:property:: unwrapped
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Returns the underlying SPAD sensor.
 
 
    .. py:method:: close()
@@ -1012,7 +1036,7 @@ Classes
 
 
 
-.. py:class:: SPADMovingAverageWrapper(config)
+.. py:class:: SPADMovingAverageWrapper(config, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper
@@ -1025,6 +1049,12 @@ Classes
    collection.
 
    :Parameters: **config** (*SPADWrapperConfig*) -- The configuration for the sensor wrapper.
+
+
+   .. py:method:: reset()
+
+      Resets the sensor configuration to its initial state.
+
 
 
    .. py:method:: update(**kwargs)
@@ -1081,6 +1111,12 @@ Classes
       :type: bool
 
       Checks if the sensor is operational.
+
+
+   .. py:property:: unwrapped
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Returns the underlying SPAD sensor.
 
 
    .. py:method:: close()
@@ -1399,7 +1435,7 @@ Classes
 
 
 
-.. py:class:: SPADBackgroundRemovalWrapper(config)
+.. py:class:: SPADBackgroundRemovalWrapper(config, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper
@@ -1446,6 +1482,12 @@ Classes
 
 
 
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state.
+
+
+
    .. py:property:: num_bins
       :type: int
 
@@ -1474,6 +1516,12 @@ Classes
       :type: bool
 
       Checks if the sensor is operational.
+
+
+   .. py:property:: unwrapped
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Returns the underlying SPAD sensor.
 
 
    .. py:method:: calibrate()
@@ -1782,7 +1830,7 @@ Classes
 
 
 
-.. py:class:: SPADScalingWrapper(config)
+.. py:class:: SPADScalingWrapper(config, **kwargs)
 
 
    .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper
@@ -1808,6 +1856,12 @@ Classes
    .. py:method:: accumulate(*args, **kwargs)
 
       Accumulates data from the wrapped sensor and scales the histogram.
+
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state.
 
 
 
@@ -1839,6 +1893,12 @@ Classes
       :type: bool
 
       Checks if the sensor is operational.
+
+
+   .. py:property:: unwrapped
+      :type: cc_hardware.drivers.spads.SPADSensor
+
+      Returns the underlying SPAD sensor.
 
 
    .. py:method:: close()

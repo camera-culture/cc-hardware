@@ -117,6 +117,15 @@ Classes
       Retrieves the sensor settings.
 
 
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
+
+
    .. py:method:: update(**kwargs)
 
       Updates the sensor configuration with provided keyword arguments. If there are
@@ -464,6 +473,15 @@ Classes
       :type: dict[str, cc_hardware.utils.setting.Setting]
 
       Retrieves the sensor settings.
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
 
 
    .. py:method:: update(**kwargs)
@@ -950,6 +968,15 @@ Classes
       Retrieves the sensor settings.
 
 
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
+
+
    .. py:method:: update(**kwargs)
 
       Updates the sensor configuration with provided keyword arguments. If there are
@@ -1338,6 +1365,15 @@ Classes
       :type: dict[str, cc_hardware.utils.setting.Setting]
 
       Retrieves the sensor settings.
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
 
 
    .. py:method:: update(**kwargs)
@@ -1796,6 +1832,12 @@ Classes
       Checks if the component is operational.
 
 
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
+
+
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
                   register(class_name: str, module_path: str, friend: str) -> None
@@ -1922,6 +1964,12 @@ Classes
       :abstractmethod:
 
       Checks if the component is operational.
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
 
 
    .. py:method:: register(class_type)

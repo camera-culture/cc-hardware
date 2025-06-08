@@ -35,9 +35,7 @@ Classes
    cc_hardware.utils.Component
    cc_hardware.utils.Config
    cc_hardware.utils.Manager
-   cc_hardware.utils.SingletonABCMeta
-   cc_hardware.utils.SingletonMeta
-   cc_hardware.utils.BlockingDeque
+   cc_hardware.utils.ThreadedComponent
    cc_hardware.utils.Registry
 
 
@@ -47,14 +45,10 @@ Functions
 
 .. autoapisummary::
 
-   cc_hardware.utils.call_async
-   cc_hardware.utils.call_async_gather
-   cc_hardware.utils.call_async_value
-   cc_hardware.utils.find_device_by_label
-   cc_hardware.utils.find_ports
-   cc_hardware.utils.arduino_upload
-   cc_hardware.utils.get_object
+   cc_hardware.utils.get_logger
+   cc_hardware.utils.threaded_component
    cc_hardware.utils.register
+
 
 
 
@@ -99,6 +93,12 @@ Functions
       :abstractmethod:
 
       Checks if the component is operational.
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
 
 
    .. py:method:: register(class_type)
@@ -409,6 +409,12 @@ Functions
       Returns a dictionary of components.
 
 
+   .. py:property:: is_looping
+      :type: bool
+
+      Checks if the manager is currently looping.
+
+
    .. py:property:: is_okay
       :type: bool
 
@@ -421,194 +427,111 @@ Functions
 
 
 
-.. py:function:: call_async(fn, callback)
-
-   Wraps an asynchronous method and returns the result of the callback
-   synchronously.
+.. py:class:: ThreadedComponent(wrapped, *, future = True)
 
 
-.. py:function:: call_async_gather(fns, callback)
-
-   Wraps multiple asynchronous methods and returns a list of all the
-   callback values.
-
-
-.. py:function:: call_async_value(fn, idx = 2)
-
-   Wraps an asynchronous method and returns a specific index in the callback
-   list.
-
-
-.. py:class:: SingletonABCMeta
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.SingletonABCMeta
+   .. autoapi-inheritance-diagram:: cc_hardware.utils.ThreadedComponent
       :parts: 1
 
 
-   A metaclass combining Singleton and Abstract Base Class (ABC) functionality.
-
-   This is useful for creating classes that need to enforce the Singleton
-   pattern while also being an Abstract Base Class.
+   Base class for components which must be closed.
 
 
-   .. py:method:: register(subclass)
+   .. py:method:: __setattr__(name, value)
 
-      Register a virtual subclass of an ABC.
-
-      Returns the subclass, to allow usage as a class decorator.
+      Implement setattr(self, name, value).
 
 
 
-   .. py:method:: __instancecheck__(instance)
+   .. py:property:: is_okay
+      :type: bool
 
-      Override for isinstance(instance, cls).
-
-
-
-   .. py:method:: __subclasscheck__(subclass)
-
-      Override for issubclass(subclass, cls).
+      Checks if the component is operational.
 
 
+   .. py:method:: close()
 
-   .. py:method:: __call__(*args, **kwargs)
-
-      Create or retrieve the Singleton instance.
-
-      :Parameters: * **\*args** -- Positional arguments for the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments for the class constructor.
-
-      :returns: *Self* -- The single instance of the class.
+      Closes the component and releases any resources.
 
 
 
-   .. py:method:: instance()
+   .. py:property:: config
+      :type: T
+
+      Retrieves the component configuration.
+
+
+   .. py:method:: create_from_config(config, **kwargs)
       :classmethod:
 
 
-      Retrieve the Singleton instance, creating it if necessary.
+      Create an instance of the class from a configuration object.
 
-      :returns: *Self* -- The single instance of the class.
+      :Parameters: **config** (*T*) -- The configuration object.
 
-
-
-.. py:class:: SingletonMeta
-
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.SingletonMeta
-      :parts: 1
-
-
-   A metaclass for implementing the Singleton pattern.
-
-   This ensures that only one instance of the class exists. Additional
-   calls to create an instance will return the same existing instance.
-
-
-   .. py:method:: __call__(*args, **kwargs)
-
-      Create or retrieve the Singleton instance.
-
-      :Parameters: * **\*args** -- Positional arguments for the class constructor.
-                   * **\*\*kwargs** -- Keyword arguments for the class constructor.
-
-      :returns: *Self* -- The single instance of the class.
+      :returns: *Self* -- An instance of the class.
 
 
 
-   .. py:method:: instance()
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
+
+
+   .. py:method:: register(class_type)
+                  register(class_name: str, module_path: str) -> None
+                  register(class_name: str, module_path: str, friend: str) -> None
       :classmethod:
 
 
-      Retrieve the Singleton instance, creating it if necessary.
+      Registers a class in this registry.
 
-      :returns: *Self* -- The single instance of the class.
+      :Parameters: * **class_type** (*type[Self] | str*) -- A class object or a class name for lazy
+                     loading.
+                   * **module_path** (*str | None*) -- Path to the module if `class_type` is a string.
+                   * **friend** (*str | None*) -- Name of another class to associate with this class.
 
+      :returns: *type[Self] | None* --
 
-
-.. py:class:: BlockingDeque(*args, **kwargs)
-
-   A thread-safe deque wrapper with blocking behavior for item retrieval.
-
-   This class wraps a deque and synchronizes access using threading.Condition,
-   making it suitable for use in multi-threaded environments where safe
-   access to a shared deque is required.
-
-
-   .. py:method:: append(item)
-
-      Append an item to the deque and notify any waiting threads.
-
-      :Parameters: **item** (*Any*) -- The item to append to the deque.
+                The registered class if `class_type` is a type,
+                    otherwise None.
 
 
 
-   .. py:method:: __getattr__(name)
-
-      Access attributes of the underlying deque in a thread-safe manner.
-
-      :Parameters: **name** (*str*) -- The name of the attribute to access.
-
-      :returns: *Any* -- The value of the requested attribute.
+   .. py:method:: create_from_registry(name = None, *args, **kwargs)
+      :classmethod:
 
 
+      Creates an instance of a registered class, performing lazy loading if necessary.
 
-   .. py:method:: __getitem__(index)
+      :Parameters: * **name** (*str | None*) -- The name of the class to instantiate. If None,
+                     and only one class is registered, it will instantiate that class.
+                   * **\*args** (*Any*) -- Positional arguments to pass to the class constructor.
+                   * **\*\*kwargs** (*Any*) -- Keyword arguments to pass to the class constructor.
 
-      Retrieve an item from the deque by index, blocking if the deque is empty.
+      :returns: *Self | Any* --
 
-      :Parameters: **index** (*int*) -- The index of the item to retrieve.
-
-      :returns: *Any* -- The item at the specified index.
+                An instance of the requested class, or an associated
+                    'friend' class.
 
 
 
-   .. py:method:: __len__()
+   .. py:method:: registry()
 
-      Get the number of items in the deque.
+      Get the registry for this class.
 
-      :returns: *int* -- The number of items in the deque.
-
-
-
-   .. py:method:: __repr__()
-
-      Get the string representation of the deque.
-
-      :returns: *str* -- The string representation of the deque.
+      :returns: A dictionary mapping class names to class objects or lazy load paths.
 
 
 
-.. py:function:: find_device_by_label(label)
+   .. py:method:: registered()
 
-   Find a device by its volume label.
+      Get an enumeration of the registered classes.
 
-   :Parameters: **label** -- The volume label to search for.
-
-
-.. py:function:: find_ports(cls = None, /, **kwargs)
-
-   Check all available ports for a device.
-
-   :Parameters: * **cls** -- The serial class to use. If None, only the port names are returned.
-                * **\*\*kwargs** -- Additional keyword arguments to pass to the serial class.
-
-   :returns: A list of serial ports or port names.
+      :returns: An enumeration of the registered classes.
 
 
-.. py:function:: arduino_upload(port, script)
-
-   Upload an Arduino sketch to the given port.
-
-
-.. py:function:: get_object(path, *, verbose = True)
-
-   Look up an entity based on the dotpath.
-   Does not perform any type checks on the entity.
-
-   This is lifted from
-   `hydra <https://github.com/facebookresearch/hydra/blob/main/hydra/utils.py>`_.
 
 
 .. py:class:: Registry

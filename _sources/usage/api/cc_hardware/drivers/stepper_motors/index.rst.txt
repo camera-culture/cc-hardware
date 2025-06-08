@@ -54,7 +54,7 @@ Classes
    Base class for components which must be closed.
 
 
-   .. py:method:: get_position(iter)
+   .. py:method:: get_position(iter, *, verbose = True)
       :abstractmethod:
 
 
@@ -95,6 +95,12 @@ Classes
       :Parameters: **config** (*T*) -- The configuration object.
 
       :returns: *Self* -- An instance of the class.
+
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
 
 
 
@@ -477,6 +483,12 @@ Classes
       Checks if the component is operational.
 
 
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
+
+
    .. py:method:: register(class_type)
                   register(class_name: str, module_path: str) -> None
                   register(class_name: str, module_path: str, friend: str) -> None
@@ -807,6 +819,12 @@ Classes
       :abstractmethod:
 
       Checks if the component is operational.
+
+
+   .. py:method:: __del__()
+
+      Ensures the component is closed when it is deleted.
+
 
 
    .. py:method:: register(class_type)

@@ -478,6 +478,18 @@ number of pixels or sampling points in the respective dimensions.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.SPADSensor.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.SPADSensor.update" title="Link to this definition">#</a></dt>
 <dd><p>Updates the sensor configuration with provided keyword arguments. If there are
@@ -1047,6 +1059,7 @@ Defaults to 10.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADSensor.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">SPADSensor.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.reset"><code class="docutils literal notranslate"><span class="pre">SPADSensor.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.update"><code class="docutils literal notranslate"><span class="pre">SPADSensor.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.SPADSensor.close"><code class="docutils literal notranslate"><span class="pre">SPADSensor.close()</span></code></a></li>

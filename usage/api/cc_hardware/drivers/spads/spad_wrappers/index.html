@@ -596,7 +596,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance92e23a3340 {
 bgcolor=transparent;
 rankdir=LR;
@@ -622,6 +622,12 @@ collection.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>SPADWrapperConfig</em>) – The configuration for the sensor wrapper.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate">
 <span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate" title="Link to this definition">#</a></dt>
@@ -675,6 +681,12 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.unwrapped" title="Link to this definition">#</a></dt>
+<dd><p>Returns the underlying SPAD sensor.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1090,7 +1102,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMergeWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMergeWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper" title="Link to this definition">#</a></dt>
 <dd>digraph inheritance31bd7719bd {
 bgcolor=transparent;
 rankdir=LR;
@@ -1170,6 +1182,12 @@ number of pixels or sampling points in the respective dimensions.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins" title="Link to this definition">#</a></dt>
@@ -1188,6 +1206,12 @@ the bin width.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.unwrapped" title="Link to this definition">#</a></dt>
+<dd><p>Returns the underlying SPAD sensor.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1581,7 +1605,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMovingAverageWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMovingAverageWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper" title="Link to this definition">#</a></dt>
 <dd>digraph inheritancea5272b8a89 {
 bgcolor=transparent;
 rankdir=LR;
@@ -1609,6 +1633,12 @@ collection.</p>
 <dd class="field-odd"><p><strong>config</strong> (<em>SPADWrapperConfig</em>) – The configuration for the sensor wrapper.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update" title="Link to this definition">#</a></dt>
@@ -1679,6 +1709,12 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.unwrapped" title="Link to this definition">#</a></dt>
+<dd><p>Returns the underlying SPAD sensor.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2079,7 +2115,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADBackgroundRemovalWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADBackgroundRemovalWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper" title="Link to this definition">#</a></dt>
 <dd>digraph inheritancef95efa97fd {
 bgcolor=transparent;
 rankdir=LR;
@@ -2147,6 +2183,12 @@ sensor and the number of samples.</p>
 <dd><p>Closes the PklSPAD sensor.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.num_bins">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.num_bins" title="Link to this definition">#</a></dt>
@@ -2183,6 +2225,12 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.unwrapped" title="Link to this definition">#</a></dt>
+<dd><p>Returns the underlying SPAD sensor.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2571,7 +2619,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADScalingWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADScalingWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper" title="Link to this definition">#</a></dt>
 <dd>digraph inheritanceaf5047cbcb {
 bgcolor=transparent;
 rankdir=LR;
@@ -2614,6 +2662,12 @@ the fields of SensorConfig.</p>
 <dd><p>Accumulates data from the wrapped sensor and scales the histogram.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.num_bins">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.num_bins" title="Link to this definition">#</a></dt>
@@ -2650,6 +2704,12 @@ number of pixels or sampling points in the respective dimensions.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.is_okay">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.is_okay" title="Link to this definition">#</a></dt>
 <dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.unwrapped">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">unwrapped</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../index.html#cc_hardware.drivers.spads.SPADSensor" title="cc_hardware.drivers.spads.SPADSensor"><span class="pre">cc_hardware.drivers.spads.SPADSensor</span></a></em><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.unwrapped" title="Link to this definition">#</a></dt>
+<dd><p>Returns the underlying SPAD sensor.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2839,10 +2899,12 @@ and only one class is registered, it will instantiate that class.</p></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper"><code class="docutils literal notranslate"><span class="pre">SPADWrapper</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.unwrapped"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.unwrapped</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADWrapper.update()</span></code></a></li>
@@ -2882,8 +2944,10 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.resolution</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.unwrapped"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.unwrapped</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADMergeWrapper.settings</span></code></a></li>
@@ -2919,11 +2983,13 @@ and only one class is registered, it will instantiate that class.</p></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.unwrapped"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.unwrapped</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADMovingAverageWrapper.settings</span></code></a></li>
@@ -2962,9 +3028,11 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.unwrapped"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.unwrapped</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper.__del__"><code class="docutils literal notranslate"><span class="pre">SPADBackgroundRemovalWrapper.__del__()</span></code></a></li>
@@ -3001,9 +3069,11 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.update"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.update()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.accumulate"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.accumulate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.reset"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.reset()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.num_bins"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.num_bins</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.resolution"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.resolution</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.is_okay"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.unwrapped"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.unwrapped</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.close"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.close()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.calibrate"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.calibrate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.settings"><code class="docutils literal notranslate"><span class="pre">SPADScalingWrapper.settings</span></code></a></li>
