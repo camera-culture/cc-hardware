@@ -12,7 +12,7 @@ services:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
         IMAGE_BASE: "dustynv/pytorch"
         IMAGE_TAG: "2.6-r36.4.0-cu128-24.04"
-        USER_GROUPS: "video dialout"
+        USER_GROUPS: "video dialout i2c gpio"
         PIP_REQUIREMENTS: "poetry"
         APT_DEPENDENCIES: |
           git-core
@@ -39,6 +39,13 @@ services:
       DISPLAY: '${DISPLAY:-vnc:0.0}'
     devices:
       - "/dev/ttyACM0"
+      - "/dev/i2c-1"
+      - "/dev/gpiochip0"
+    group_add:
+      - "video"
+      - "dialout"
+      - "116" # i2c
+      - "999" # camera
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
     tty: true
     privileged: True # TODO: I don't like this
