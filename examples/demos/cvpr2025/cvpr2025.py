@@ -7,6 +7,7 @@ from gui.dashboard import CVPR25Dashboard, CVPR25DashboardConfig
 from ml.model import DeepLocation8
 
 from cc_hardware.drivers.spads import SPADDataType, SPADSensor, SPADSensorConfig
+from cc_hardware.drivers.spads.pkl import PklSPADSensor, PklSPADSensorConfig
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
 from cc_hardware.drivers.stepper_motors.stepper_controller import (
     SnakeControllerAxisConfig,
@@ -19,7 +20,6 @@ from cc_hardware.drivers.stepper_motors.telemetrix_stepper import (
 from cc_hardware.utils import (
     AtomicVariable,
     Manager,
-    ThreadedComponent,
     get_logger,
     register_cli,
     run_cli,
@@ -133,9 +133,19 @@ def setup(
 
     assert "sensor" in config, "Configuration must contain 'sensor' key."
     sensor: SPADSensorConfig = config["sensor"]
+    # sensor.window_size = 10
+    # _sensor = threaded_component(
+    #     SPADSensor.create_from_config(sensor, port=sensor_port)
+    # )
     _sensor = threaded_component(
-        SPADSensor.create_from_config(sensor, port=sensor_port)
+        PklSPADSensor.create_from_config(
+            PklSPADSensorConfig.create(
+                pkl_path=config_path.with_name("data.pkl"), loop=True, index=1
+            )
+        )
     )
+    print(_sensor.accumulate().result())
+    exit()
     manager.add(sensor=_sensor)
 
     _sensor.accumulate().add_done_callback(
@@ -151,23 +161,23 @@ def setup(
     )
     manager.add(controller=_controller)
 
-    if stepper_port is not None:
-        STEPPER_SYSTEM.port = stepper_port
-    _stepper_system = threaded_component(
-        StepperMotorSystem.create_from_config(STEPPER_SYSTEM)
-    )
-    _stepper_system.initialize().result()
-    manager.add(stepper_system=_stepper_system)
+    # if stepper_port is not None:
+    #     STEPPER_SYSTEM.port = stepper_port
+    # _stepper_system = threaded_component(
+    #     StepperMotorSystem.create_from_config(STEPPER_SYSTEM)
+    # )
+    # _stepper_system.initialize().result()
+    # manager.add(stepper_system=_stepper_system)
 
-    _stepper_system.move_to(0, 0).add_done_callback(
-        partial(
-            stepper_callback,
-            manager=manager,
-            stepper_system=_stepper_system,
-            controller=_controller,
-            i=0,
-        )
-    )
+    # _stepper_system.move_to(0, 0).add_done_callback(
+    #     partial(
+    #         stepper_callback,
+    #         manager=manager,
+    #         stepper_system=_stepper_system,
+    #         controller=_controller,
+    #         i=0,
+    #     )
+    # )
 
     _gui = CVPR25Dashboard(GUI)
     _gui.setup()
@@ -183,30 +193,15 @@ def setup(
 def loop(
     frame: int,
     manager: Manager,
-    sensor: SPADSensor | ThreadedComponent,
-    stepper_system: StepperMotorSystem | ThreadedComponent,
     model: DeepLocation8,
     gui: CVPR25Dashboard,
     **kwargs,
 ):
-    global t0
-
-    if frame % 10 == 0:
-        t1 = time.time()
-        fps = 10 / (t1 - t0)
-        t0 = time.time()
-        get_logger().info(f"Frame: {frame}, FPS: {fps:.2f}")
-
-    histograms = HISTOGRAMS.get()
-    if len(histograms) == 0:
-        get_logger().warning("No histograms available for evaluation.")
+    histogram = HISTOGRAM.get()
+    if len(histogram) == 0:
+        get_logger().warning("No histogram available for evaluation.")
         return
-    _t0 = time.time()
-    positions = model.evaluate(histograms)
-    _t1 = time.time()
-    get_logger().info(
-        f"Model evaluation took {_t1 - _t0:.4f} seconds for {len(histograms)} histograms."
-    )
+    positions = model.evaluate(histogram)
 
     gui.update(
         frame=frame,
@@ -215,12 +210,13 @@ def loop(
 
 
 def cleanup(
-    stepper_system: StepperMotorSystem,
+    stepper_system: StepperMotorSystem = None,
     **kwargs,
 ):
-    get_logger().info("Cleaning up...")
-    stepper_system.move_to(0, 0)
-    stepper_system.close()
+    pass
+    # get_logger().info("Cleaning up...")
+    # stepper_system.move_to(0, 0)
+    # stepper_system.close()
 
 
 @register_cli

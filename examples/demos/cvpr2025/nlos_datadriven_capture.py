@@ -42,7 +42,7 @@ OUTPUT_PKL: Path = LOGDIR / "data.pkl"
 WRAPPED_SENSOR = VL53L8CHConfig8x8.create(
     num_bins=18,
     subsample=2,
-    start_bin=30,
+    start_bin=20,
     ranging_mode=RangingMode.CONTINUOUS,
     ranging_frequency_hz=9,
     data_type=SPADDataType.HISTOGRAM | SPADDataType.POINT_CLOUD | SPADDataType.DISTANCE,
@@ -66,13 +66,13 @@ DASHBOARD = DummySPADDashboardConfig.create()
 STEPPER_SYSTEM = SingleDrive1AxisGantryConfig.create()
 STEPPER_CONTROLLER = SnakeStepperControllerConfigXY.create(
     axes=dict(
-        x=SnakeControllerAxisConfig(range=(0, 32), samples=5),
-        y=SnakeControllerAxisConfig(range=(0, 32), samples=5),
+        x=SnakeControllerAxisConfig(range=(0, 32), samples=20),
+        y=SnakeControllerAxisConfig(range=(0, 32), samples=20),
     )
 )
 
-REPETITIONS = 5
-REDUNDANT_SAMPLES = 20
+REPETITIONS = 2
+REDUNDANT_SAMPLES = 10
 
 # ==========
 
