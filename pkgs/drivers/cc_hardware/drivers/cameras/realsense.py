@@ -10,7 +10,6 @@ only return the color image by default (set ``return_depth=True`` to return the 
 image, as well).
 """
 
-import multiprocessing
 from typing import override
 
 import numpy as np
@@ -35,8 +34,8 @@ class RealsenseConfig(CameraConfig):
 
 class RealsenseCamera(Camera[RealsenseConfig]):
     """
-    Camera class for Intel RealSense devices. Captures RGB and depth images
-    in a background thread and stores them in a queue.
+    Camera class for Intel RealSense devices. Captures RGB and depth images on the main
+    thread without using background workers.
     """
 
     def __init__(self, config: RealsenseConfig):
@@ -51,126 +50,78 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         self.camera_index = config.camera_index
         self.start_pipeline_once = config.start_pipeline_once
         self.force_autoexposure = config.force_autoexposure
-        self.align = config.align
-
-        context = multiprocessing.get_context("spawn")
-        self.queue = context.Queue(maxsize=1)
-        self.stop_thread = context.Event()
-        self.start_thread = context.Event()
-        self.has_started = context.Event()
-        self.start_capture_event = context.Event()
+        self.align_streams = config.align
 
         # Store exposure settings
         exposure = config.exposure
         self.exposure_settings = exposure if exposure is not None else []
-        # Flag to check if exposure has been initialized
         self.exposure_initialized = exposure is not None
 
-        self._start_background_capture(context)
+        # RealSense pipeline setup
+        self.pipeline: rs.pipeline | None = None
+        self.rs_config: rs.config | None = None
+        self.align: rs.align | None = None
+        self._pipeline_started = False
+
+        # Initialize pipeline configuration
+        self._setup_pipeline()
 
         if self.start_pipeline_once:
-            self.start_capture_event.set()
-            self.has_started.wait()
+            self._start_pipeline()
 
         self._initialized = True
 
-    def _start_background_capture(self, context):
-        """
-        Starts the background thread to initialize the camera and capture images.
-        """
-        self.thread = context.Process(target=self._background_capture, daemon=True)
-        self.thread.start()
+    # --------------------------------------------------------------------- #
+    # Internal helpers
+    # --------------------------------------------------------------------- #
 
-    def _background_capture(self):
-        """Initializes the camera, continuously captures RGB, depth images, and
-        stores them in the queue."""
-        get_logger().info(
-            f"Starting background capture for camera index {self.camera_index}"
-        )
-
+    def _setup_pipeline(self) -> None:
+        """Configure the RealSense pipeline."""
         self.pipeline = rs.pipeline()
         self.rs_config = rs.config()
 
-        # Enable color, depth, and IR streams
+        # Enable color and depth streams
         self.rs_config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
         self.rs_config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
-        # self.rs_config.enable_stream(rs.stream.infrared, 1, 1280, 720, rs.format.y8, 6)
 
-        align = rs.align(rs.stream.color)
+        if self.align_streams:
+            self.align = rs.align(rs.stream.color)
 
-        while not self.stop_thread.is_set():
-            # Wait until capture is started
-            self.start_capture_event.wait()
-            try:
-                get_logger().info(
-                    f"Starting pipeline for camera index {self.camera_index}"
-                )
-                self.pipeline.start(self.rs_config)
-                get_logger().info(
-                    f"Pipeline started for camera index {self.camera_index}"
-                )
+    def _start_pipeline(self) -> None:
+        """Start the RealSense pipeline and initialize exposure settings."""
+        if self._pipeline_started:
+            return
 
-                device = self.pipeline.get_active_profile().get_device()
-                sensors = device.query_sensors()
+        get_logger().info(f"Starting pipeline for camera index {self.camera_index}")
+        self.pipeline.start(self.rs_config)
 
-                if not self.exposure_initialized or self.force_autoexposure:
-                    # Run exposure initialization
-                    self._initialize_exposure(sensors)
-                else:
-                    if isinstance(self.exposure_settings, int):
-                        self.exposure_settings = [self.exposure_settings] * len(sensors)
+        device = self.pipeline.get_active_profile().get_device()
+        sensors = device.query_sensors()
 
-                    # Re-apply saved exposure settings
-                    get_logger().debug("Re-applying exposure settings...")
-                    for sensor, exposure_value in zip(sensors, self.exposure_settings):
-                        if exposure_value is not None and sensor.supports(
-                            rs.option.exposure
-                        ):
-                            sensor.set_option(rs.option.exposure, exposure_value)
-                        if sensor.supports(rs.option.enable_auto_exposure):
-                            sensor.set_option(rs.option.enable_auto_exposure, 0)
-                    get_logger().debug("Exposure settings re-applied.")
+        if not self.exposure_initialized or self.force_autoexposure:
+            self._initialize_exposure(sensors)
+        else:
+            if isinstance(self.exposure_settings, int):
+                self.exposure_settings = [self.exposure_settings] * len(sensors)
 
-                self.has_started.set()
+            get_logger().debug("Re-applying exposure settings...")
+            for sensor, exposure_value in zip(sensors, self.exposure_settings):
+                if exposure_value is not None and sensor.supports(rs.option.exposure):
+                    sensor.set_option(rs.option.exposure, exposure_value)
+                if sensor.supports(rs.option.enable_auto_exposure):
+                    sensor.set_option(rs.option.enable_auto_exposure, 0)
+            get_logger().debug("Exposure settings re-applied.")
 
-                while (
-                    not self.stop_thread.is_set() and self.start_capture_event.is_set()
-                ):
-                    frames = self.pipeline.wait_for_frames()
-                    if self.align:
-                        frames = align.process(frames)
+        self._pipeline_started = True
+        get_logger().info(f"Pipeline started for camera index {self.camera_index}")
 
-                    color_frame = frames.get_color_frame()
-                    depth_frame = frames.get_depth_frame()
-                    # ir_frame = frames.get_infrared_frame()
-
-                    if not color_frame or not depth_frame:
-                        continue
-
-                    color_image = np.asanyarray(color_frame.get_data())
-                    depth_image = np.asanyarray(depth_frame.get_data())
-                    # ir_image = np.asanyarray(ir_frame.get_data())
-
-                    # Store tuple (color_image, depth_image, ir_image) in the queue
-                    try:
-                        self.queue.put((color_image, depth_image, None), block=False)
-                    except multiprocessing.queues.Full:
-                        continue
-            except Exception as ex:
-                get_logger().error(f"Camera error: {ex}")
-                self.stop_thread.set()
-            finally:
-                # Stop the pipeline and reset events
-                get_logger().info(
-                    f"Stopping pipeline for camera index {self.camera_index}"
-                )
-                self.pipeline.stop()
-                self.has_started.clear()
-                self.start_capture_event.clear()
-
-        get_logger().info(
-            f"Background capture thread ending for camera index {self.camera_index}"
-        )
+    def _stop_pipeline(self) -> None:
+        """Stop the RealSense pipeline."""
+        if not self._pipeline_started:
+            return
+        get_logger().info(f"Stopping pipeline for camera index {self.camera_index}")
+        self.pipeline.stop()
+        self._pipeline_started = False
 
     def _initialize_exposure(self, sensors) -> None:
         """
@@ -207,6 +158,10 @@ class RealsenseCamera(Camera[RealsenseConfig]):
 
         self.exposure_initialized = True
 
+    # --------------------------------------------------------------------- #
+    # Public API
+    # --------------------------------------------------------------------- #
+
     @property
     def config(self) -> RealsenseConfig:
         """
@@ -226,7 +181,7 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         return_ir: bool = False,
     ) -> list[np.ndarray] | tuple[list[np.ndarray] | list[np.ndarray]]:
         """
-        Accumulates RGB and depth images from the queue.
+        Accumulates RGB and depth images directly from the pipeline.
 
         Args:
           num_samples (int): Number of image samples to accumulate.
@@ -239,36 +194,35 @@ class RealsenseCamera(Camera[RealsenseConfig]):
           List[np.ndarray] or Tuple[List[np.ndarray], List[np.ndarray]]:
             Accumulated images. Returns a list of RGB images, depth images, or both.
         """
-        if not self.start_pipeline_once:
-            self.start_capture_event.set()
-            self.has_started.wait()
+        if not self._pipeline_started:
+            self._start_pipeline()
 
-            # Clear the queue
-            while not self.queue.empty():
-                self.queue.get()
+        color_images: list[np.ndarray] = []
+        depth_images: list[np.ndarray] = []
+        ir_images: list[np.ndarray] = []
 
         try:
-            color_images = []
-            depth_images = []
-            ir_images = []
-
             while len(color_images) < num_samples:
-                try:
-                    item = self.queue.get()
+                frames = self.pipeline.wait_for_frames()
+                if self.align is not None:
+                    frames = self.align.process(frames)
 
-                    color_image, depth_image, ir_image = item
-                    color_images.append(color_image)
-                    depth_images.append(depth_image)
-                    ir_images.append(ir_image)
-                except IndexError:
-                    continue  # Wait for more data if queue is empty
+                color_frame = frames.get_color_frame()
+                depth_frame = frames.get_depth_frame()
+
+                if not color_frame or not depth_frame:
+                    continue
+
+                color_images.append(np.asanyarray(color_frame.get_data()))
+                depth_images.append(np.asanyarray(depth_frame.get_data()))
+                ir_images.append(None)
 
             if num_samples == 1:
                 color_images = color_images[0]
                 depth_images = depth_images[0]
                 ir_images = ir_images[0]
 
-            result = []
+            result: list[np.ndarray] = []
             if return_rgb:
                 result.append(np.array(color_images))
             if return_depth:
@@ -278,8 +232,11 @@ class RealsenseCamera(Camera[RealsenseConfig]):
             return tuple(result) if len(result) > 1 else result[0]
         finally:
             if not self.start_pipeline_once:
-                self.start_capture_event.clear()
-                self.has_started.clear()
+                self._stop_pipeline()
+
+    # --------------------------------------------------------------------- #
+    # Camera interface implementation
+    # --------------------------------------------------------------------- #
 
     @property
     @override
@@ -301,9 +258,7 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         Returns:
           bool: True if the camera is initialized and ready, False otherwise.
         """
-        return self._initialized and (
-            self.has_started.is_set() or not self.start_pipeline_once
-        )
+        return self._initialized and self._pipeline_started
 
     @property
     @override
@@ -333,15 +288,13 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         """
         raise NotImplementedError
 
+    # --------------------------------------------------------------------- #
+    # Lifecycle
+    # --------------------------------------------------------------------- #
+
     @override
-    def close(self):
+    def close(self) -> None:
         """
-        Stops the background capture thread and deinitializes the camera.
+        Deinitializes the camera and stops the pipeline if running.
         """
-        self.stop_thread.set()  # Signal the background thread to stop
-        self.start_capture_event.set()  # Unblock the thread if waiting
-        if self.thread is not None:
-            while not self.queue.empty():
-                self.queue.get()
-            self.thread.join()  # Wait for the thread to finish
-            self.thread = None
+        self._stop_pipeline()

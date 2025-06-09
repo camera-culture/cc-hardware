@@ -215,6 +215,8 @@ class Manager:
                 after the loop. Accepts keyword arguments, returns None. Defaults to
                 None.
         """
+        self._iter = iter
+
         setup = setup or (lambda **_: None)
         loop = loop or (lambda *_, **__: None)
         cleanup = cleanup or (lambda **_: None)
@@ -233,11 +235,11 @@ class Manager:
             self._looping = True
             try:
                 while self.is_okay:
-                    if loop(iter, manager=self, **self._components) is False:
-                        get_logger().info(f"Exiting loop after {iter + 1} iterations.")
+                    if loop(self._iter, manager=self, **self._components) is False:
+                        get_logger().info(f"Exiting loop after {self._iter + 1} iterations.")
                         break
 
-                    iter += 1
+                    self._iter += 1
             except KeyboardInterrupt:
                 if not self._cleanup_on_keyboard_interrupt:
                     get_logger().info("Exiting loop.")
@@ -279,6 +281,10 @@ class Manager:
     def __exit__(self, *_, **__):
         """Ensures each component is properly closed when used as a context manager."""
         self.close()
+
+    def set_iter(self, iter: int):
+        """Sets the iteration counter."""
+        self._iter = iter
 
     @property
     def components(self) -> dict[str, type[Component] | Component | Any]:
