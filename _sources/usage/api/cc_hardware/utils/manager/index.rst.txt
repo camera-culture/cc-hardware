@@ -507,6 +507,12 @@ Classes
 
 
 
+   .. py:method:: set_iter(iter)
+
+      Sets the iteration counter.
+
+
+
    .. py:property:: components
       :type: dict[str, type[Component] | Component | Any]
 
