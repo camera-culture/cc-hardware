@@ -10,10 +10,10 @@ services:
       dockerfile: "./docker/dev.dockerfile"
       args:
         PROJECT: "${COMPOSE_PROJECT_NAME}"
-        IMAGE_BASE: "arm64v8/debian"
-        IMAGE_TAG: "bookworm-slim"
-        USER_GROUPS: "dialout video"
-        PIP_REQUIREMENTS: "poetry"
+        IMAGE_BASE: "dustynv/torchvision"
+        IMAGE_TAG: "0.21.0-r36.4.0-cu128-24.04"
+        USER_GROUPS: "video dialout i2c gpio"
+        PIP_REQUIREMENTS: "poetry ultralytics"
         APT_DEPENDENCIES: |
           git-core
           libgl1
@@ -27,19 +27,41 @@ services:
           qtbase5-dev-tools
           libxcb-cursor0
           mesa-vulkan-drivers
+          vim
         CONDA_PACKAGES: "python=3.12 gcc=12.1.0"
         CONDA_CHANNELS: "conda-forge"
     volumes:
       - './:/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
-      - '/dev:/dev' # TODO: I don't like this
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     ports:
       - "127.0.0.1:8080-8099:8080"
     environment:
       DISPLAY: '${DISPLAY:-vnc:0.0}'
+    devices:
+      - "/dev/ttyACM0"
+      - "/dev/i2c-1"
+      - "/dev/gpiochip0"
+      # Realsense
+      - "/dev/video0"
+      - "/dev/video1"
+      - "/dev/video2"
+      - "/dev/video3"
+      - "/dev/video4"
+      - "/dev/video5"
+      - "/dev/media1"
+      - "/dev/media2"
+      # ensures hot-reloading
+      - "/dev/bus/usb"
+    group_add:
+      - "video"
+      - "dialout"
+      - "116" # i2c
+      - "999" # camera
+    shm_size: '8gb'
     working_dir: '/home/${COMPOSE_PROJECT_NAME}/${COMPOSE_PROJECT_NAME}'
     tty: true
     privileged: True # TODO: I don't like this
+    runtime: nvidia
   vnc:
     image: "camera/${COMPOSE_PROJECT_NAME}:vnc"
     hostname: "${COMPOSE_PROJECT_NAME}-vnc"

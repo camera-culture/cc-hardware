@@ -45,10 +45,15 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
         config (SPADWrapperConfig): The configuration for the sensor wrapper.
     """
 
-    def __init__(self, config: SPADWrapperConfig):
+    def __init__(self, config: SPADWrapperConfig, **kwargs):
         super().__init__(config)
 
-        self._sensor = SPADSensor.create_from_config(config.wrapped)
+        self._sensor = SPADSensor.create_from_config(config.wrapped, **kwargs)
+
+    def reset(self, **kwargs) -> None:
+        """Resets the sensor configuration to its initial state."""
+        super().reset(**kwargs)
+        self._sensor.reset(**kwargs)
 
     def accumulate(self, *args, **kwargs):
         return self._sensor.accumulate(*args, **kwargs)
@@ -64,6 +69,11 @@ class SPADWrapper[T: SPADWrapperConfig](SPADSensor[T]):
     @property
     def is_okay(self) -> bool:
         return self._sensor.is_okay
+
+    @property
+    def unwrapped(self) -> SPADSensor:
+        """Returns the underlying SPAD sensor."""
+        return self._sensor
 
     def close(self):
         super().close()
@@ -115,9 +125,6 @@ class SPADMergeWrapperConfig(SPADWrapperConfig):
 
 
 class SPADMergeWrapper(SPADWrapper[SPADMergeWrapperConfig]):
-    def __init__(self, config: SPADMergeWrapperConfig):
-        super().__init__(config)
-
     def update(self, **kwargs) -> None:
         super().update(**kwargs)
 
@@ -194,10 +201,14 @@ class SPADMovingAverageWrapperConfig(SPADWrapperConfig):
 
 
 class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
-    def __init__(self, config: SPADMovingAverageWrapperConfig):
-        super().__init__(config)
+    def __init__(self, config: SPADMovingAverageWrapperConfig, **kwargs):
+        super().__init__(config, **kwargs)
 
         self._data: dict[SPADDataType, list[np.ndarray]] = {}
+
+    def reset(self) -> None:
+        super().reset()
+        self._data.clear()
 
     def update(self, **kwargs) -> bool:
         if not super().update(**kwargs):
@@ -281,8 +292,8 @@ class SPADBackgroundRemovalWrapperConfig(SPADWrapperConfig):
 
 
 class SPADBackgroundRemovalWrapper(SPADWrapper[SPADBackgroundRemovalWrapperConfig]):
-    def __init__(self, config: SPADBackgroundRemovalWrapperConfig):
-        super().__init__(config)
+    def __init__(self, config: SPADBackgroundRemovalWrapperConfig, **kwargs):
+        super().__init__(config, **kwargs)
 
         self._pkl_spad: PklSPADSensor = PklSPADSensor.create_from_config(
             config.pkl_spad
@@ -385,8 +396,8 @@ class SPADScalingWrapper(SPADWrapper[SPADScalingWrapperConfig]):
     A wrapper class for SPAD sensors that scales the accumulated histogram data.
     """
 
-    def __init__(self, config: SPADScalingWrapperConfig):
-        super().__init__(config)
+    def __init__(self, config: SPADScalingWrapperConfig, **kwargs):
+        super().__init__(config, **kwargs)
 
         assert (
             SPADDataType.HISTOGRAM in self._sensor.config.data_type

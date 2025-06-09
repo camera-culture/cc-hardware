@@ -6,6 +6,7 @@ from cc_hardware.utils.misc.asyncio_utils import (
     call_async_gather,
     call_async_value,
 )
+from cc_hardware.utils.misc.atomic import AtomicVariable
 from cc_hardware.utils.misc.blocking_deque import BlockingDeque
 from cc_hardware.utils.misc.misc import classproperty, get_object
 from cc_hardware.utils.misc.multiprocessing_deque import MultiprocessingDeque
@@ -41,4 +42,6 @@ __all__ = [
     # misc
     "get_object",
     "classproperty",
+    # atomic
+    "AtomicVariable",
 ]

@@ -117,6 +117,12 @@ class VL53L8CHConfig(SPADSensorConfig):
         max=128,
         title="Start Bin",
     )
+    subsample_setting: RangeSetting = RangeSetting.default_factory(
+        value=II("..subsample"),
+        min=1,
+        max=16,
+        title="Subsample",
+    )
 
     def pack(self) -> bytes:
         """
@@ -158,6 +164,7 @@ class VL53L8CHConfig(SPADSensorConfig):
             "num_bins": self.num_bins_setting,
             "add_back_ambient": self.add_back_ambient_setting,
             "start_bin": self.start_bin_setting,
+            "subsample": self.subsample_setting,
         }
 
 
@@ -259,8 +266,8 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
                 get_logger().error(f"Duplicate histogram for pixel {idx}")
                 return False
 
-            ambient = float(row[1]) / 100 if self._config.add_back_ambient else 0.0
-            bins = np.array([float(v) + ambient for v in row[3:]]) / 100
+            ambient = int(row[1]) if self._config.add_back_ambient else 0.0
+            bins = np.array([int(v) + ambient for v in row[3:]])
 
             histogram[idx] = np.clip(bins, 0, None)
             distance[idx] = float(row[2])

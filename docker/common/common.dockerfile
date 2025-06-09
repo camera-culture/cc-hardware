@@ -21,3 +21,12 @@ ARG USER_SHELL_ADD_ONS=""
 RUN echo "${DEFAULT_SHELL_ADD_ONS}" >> ${USERSHELLPROFILE} && \
         sed -i 's/#force_color_prompt=yes/force_color_prompt=yes/' ${USERSHELLPROFILE} && \
         [ -z "${USER_SHELL_ADD_ONS}" ] || echo "${USER_SHELL_ADD_ONS}" >> ${USERSHELLPROFILE}
+
+# Transfer ownership of specified directories to the user
+ARG CHOWN_DIRS=""
+RUN if [ -n "${CHOWN_DIRS}" ]; then \
+        for dir in ${CHOWN_DIRS}; do \
+            echo "Changing ownership of ${dir}"; \
+            chown -R ${USERNAME}:${USERNAME} ${dir}; \
+        done; \
+    fi

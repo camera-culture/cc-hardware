@@ -64,20 +64,21 @@ camera_create_proj() {
     project_dir="$HOME/projects/$project_name"
     mkdir -p "$project_dir"
 
-    # Create alias for the project
+    # Create alias for the current session
     alias "$project_name"="tmux new -A -s $project_name -c $project_dir"
 
-    # Create Conda environment
-    if ! "$HOME/.conda/bin/conda" env list | grep -q "$project_name"; then
+    # Create Conda environment if it doesn't exist
+    if ! "$HOME/.conda/bin/conda" env list | grep -q "^$project_name"; then
         "$HOME/.conda/bin/conda" create -y -n "$project_name" python=3.9
         echo "Conda environment '$project_name' created."
     fi
 
-    # Add activation logic to .bashrc
-    if ! grep -q "camera_create_proj_logic" ~/.bashrc; then
-        cat <<'BRC' >> ~/.bashrc
+    # Add logic to .bashrc if not already present
+    if ! grep -q "camera_create_${project_name}_logic" ~/.bashrc; then
+        cat >> ~/.bashrc <<BRC
 
-# camera_create_proj_logic
+# camera_create_${project_name}_logic
+alias "$project_name"="tmux new -A -s $project_name -c $project_dir"
 if [ -n "\$TMUX" ]; then
     session_name=\$(tmux display-message -p '#S')
     if [ -d "\$HOME/projects/\$session_name" ]; then
@@ -117,6 +118,7 @@ camera_remove_proj() {
         echo "Removed Conda environment: $project_name"
     fi
 }
+
 camera_ssh_keygen() {
     read -p "Enter your ID: " id
     [ -z "$id" ] && { echo "ID is required."; return; }
@@ -148,6 +150,13 @@ camera_ssh_add() {
     export GIT_AUTHOR_EMAIL="$email"
     export GIT_COMMITTER_NAME="$name"
     export GIT_COMMITTER_EMAIL="$email"
+}
+
+# Override ssh-keygen to enforce custom key management
+ssh-keygen() {
+    echo "Error: 'ssh-keygen' is disabled on this system." >&2
+    echo "Please use 'camera_ssh_keygen' to generate keys and 'camera_ssh_add' to add them." >&2
+    return 1
 }
 
 alias brc="vi ~/.bashrc"

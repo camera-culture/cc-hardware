@@ -6,9 +6,10 @@
 INCLUDE ./docker/common/base.dockerfile
 
 # Snippets
-INCLUDE ./docker/snippets/miniconda.dockerfile
+# INCLUDE ./docker/snippets/miniconda.dockerfile
 INCLUDE ./docker/snippets/libsurvive.dockerfile
-# INCLUDE ./docker/snippets/librealsense2.dockerfile
+INCLUDE ./docker/snippets/librealsense2.dockerfile
+INCLUDE ./docker/snippets/nano.dockerfile
 
 # Will copy in other common configurations for this build
 INCLUDE ./docker/common/common.dockerfile
