@@ -45,7 +45,7 @@ SENSOR = WRAPPED_SENSOR
 
 CAMERA = RealsenseConfig.create(align=False)
 
-NUM_SAMPLES = 1000
+NUM_SAMPLES = 100
 
 # ==========
 
@@ -144,7 +144,7 @@ def setup(
 
 
 def loop(
-    frame: int,
+    iter: int,
     manager: Manager,
     sensor: SPADSensor,
     camera: Camera,
@@ -152,18 +152,18 @@ def loop(
     algorithm: YOLO,
     writer: PklHandler | None = None,
 ):
-    if frame >= NUM_SAMPLES:
+    if iter >= NUM_SAMPLES:
         return False
 
     histogram = HISTOGRAM.get()
     if histogram is None:
-        manager.set_iter(frame - 1)
+        manager.set_iter(iter - 1)
         return
 
     image = camera.accumulate()
 
     results = algorithm.predict(source=image, verbose=False)
-    result = results[0]
+    result = results[0].cpu()
     if result is None or result.keypoints is None:
         get_logger().warning("No keypoints detected in the image.")
         return
@@ -175,10 +175,9 @@ def loop(
     if writer is not None:
         writer.append(
             {
-                "iter": frame,
-                "image": image,
+                "iter": iter,
                 "histogram": histogram,
-                "result": result,
+                "keypoints": result.keypoints,
             }
         )
 
