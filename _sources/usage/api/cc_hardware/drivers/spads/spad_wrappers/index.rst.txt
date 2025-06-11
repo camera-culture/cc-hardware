@@ -1070,7 +1070,7 @@ Classes
 
 
 
-   .. py:method:: accumulate(*args, **kwargs)
+   .. py:method:: accumulate(num_samples = 1, **kwargs)
 
       Accumulates the specified number of histogram samples from the sensor.
 
@@ -1463,7 +1463,7 @@ Classes
 
 
 
-   .. py:method:: accumulate(*args, **kwargs)
+   .. py:method:: accumulate(num_samples = 1, **kwargs)
 
       Accumulates the specified number of histogram samples from the sensor.
 
