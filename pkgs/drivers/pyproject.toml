@@ -24,3 +24,4 @@ pylablib-lightweight = "^1.4.3"
 numba = "^0.60.0"
 telemetrix = { git = "https://github.com/AaronYoung5/telemetrix.git", rev = "4f9377cd1d58fa07075407583791610968cabc83" }
 cc_hardware_utils = { path = "../utils", develop = true }
+pyopengl = { version = "^3.1.9", optional = true }
