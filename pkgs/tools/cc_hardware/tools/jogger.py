@@ -6,13 +6,7 @@ import sys
 from collections import deque
 
 from cc_hardware.drivers.stepper_motors import StepperMotorSystem
-from cc_hardware.tools.app import APP, typer
 from cc_hardware.utils.logger import get_logger
-
-# ======================
-
-jogger_APP = typer.Typer()
-APP.add_typer(jogger_APP, name="jogger")
 
 # ======================
 
@@ -47,8 +41,8 @@ class LogBufferHandler(logging.Handler):
 
 
 class Jogger:
-    def __init__(self, system: str, port: str):
-        self._system = StepperMotorSystem.create_from_registry(system, port)
+    def __init__(self, system: str, port: str | None = None):
+        self._system = StepperMotorSystem.create_from_config(system)
         self._system.initialize()
         assert len(self._system.position) == 2, "Only 2D systems are supported."
 
@@ -208,7 +202,6 @@ class Jogger:
 # ======================
 
 
-@jogger_APP.command()
 def run(
     system: StepperMotorSystem.registered,
     port: str | None = None,
@@ -246,7 +239,11 @@ def jogger():
 
     args = parser.parse_args()
 
-    jogger = Jogger(args.port)
+    from cc_hardware.drivers.stepper_motors.telemetrix_stepper import (
+        SingleDrive1AxisGantryConfig,
+    )
+
+    jogger = Jogger(SingleDrive1AxisGantryConfig.create(port=args.port))
     if args.exit_immediately:
         return
     jogger.start()

@@ -254,7 +254,7 @@ class TelemetrixStepperMotorSystem[T: TelemetrixStepperMotorSystemConfig](
     def close(self) -> None:
         """Closes the connection or shuts down the stepper motor safely."""
         super().close()
-        if hasattr(self, "_board"):
+        if "_board" in self.__dict__:
             self._board.shutdown()
             del self._board
 

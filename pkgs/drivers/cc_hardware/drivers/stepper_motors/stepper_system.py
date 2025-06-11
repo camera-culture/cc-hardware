@@ -205,6 +205,10 @@ class StepperMotorSystem[T: StepperMotorSystemConfig](Component[T]):
 
     def close(self):
         get_logger().info("Closing steppers...")
+        if "_axes" not in self.__dict__:
+            get_logger().warning("StepperMotorSystem has not been initialized.")
+            return
+
         for motors in self.axes.values():
             for motor in motors:
                 motor.close()

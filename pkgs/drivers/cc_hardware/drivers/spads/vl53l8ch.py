@@ -263,7 +263,7 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
         try:
             idx = int(row[0])
             if idx in histogram:
-                get_logger().error(f"Duplicate histogram for pixel {idx}")
+                get_logger().debug(f"Duplicate histogram for pixel {idx}")
                 return False
 
             ambient = int(row[1]) if self._config.add_back_ambient else 0.0
@@ -476,7 +476,7 @@ class VL53L8CHSensor(SPADSensor[VL53L8CHConfig]):
                 if began:
                     tokens = [tok.strip() for tok in line.split(" ") if tok.strip()]
                     if not self._data.process(tokens):
-                        get_logger().error(f"Error processing row: {tokens}")
+                        get_logger().debug(f"Error processing row: {tokens}")
                         self._data.reset()
                         began = False
                         continue

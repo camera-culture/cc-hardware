@@ -220,8 +220,9 @@ class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
 
         return True
 
-    def accumulate(self, *args, **kwargs):
-        data = super().accumulate(*args, **kwargs)
+    def accumulate(self, num_samples: int = 1, **kwargs):
+        assert num_samples == 1
+        data = super().accumulate(num_samples, **kwargs)
 
         if SPADDataType.HISTOGRAM in self.config.data_type:
             data[SPADDataType.HISTOGRAM] = self._moving_average(
@@ -347,17 +348,18 @@ class SPADBackgroundRemovalWrapper(SPADWrapper[SPADBackgroundRemovalWrapperConfi
 
         return True
 
-    def accumulate(self, *args, **kwargs):
-        data = super().accumulate(*args, **kwargs)
+    def accumulate(self, num_samples: int = 1, **kwargs):
+        data = super().accumulate(num_samples=num_samples, **kwargs)
 
-        if not self.config.remove_background or self._background is None:
-            return data
-
-        data[SPADDataType.HISTOGRAM] -= self._background
-        if self.config.clip:
-            data[SPADDataType.HISTOGRAM] = np.clip(
-                data[SPADDataType.HISTOGRAM], a_min=0, a_max=None
-            )
+        if self.config.remove_background and self._background is not None:
+            samples = [data] if num_samples == 1 else data
+            for sample in samples:
+                hist = sample[SPADDataType.HISTOGRAM]
+                hist -= self._background
+                if self.config.clip:
+                    np.clip(hist, a_min=0, a_max=None, out=hist)
+                sample[SPADDataType.HISTOGRAM] = hist
+            data = samples[0] if num_samples == 1 else samples
 
         return data
 
