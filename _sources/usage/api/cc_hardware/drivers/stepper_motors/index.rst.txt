@@ -183,6 +183,13 @@ Classes
       files) where you want to store data that is not necessarily defined in the config.
 
 
+   .. py:method:: __post_init__()
+
+      Define a post init method. If not, derived classes won't be able to
+      implement their own __post_init__ method for some reason.
+
+
+
    .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
       :classmethod:
 
@@ -284,6 +291,12 @@ Classes
 
       This uses the stored config attribute to convert to yaml. If the config is None,
       this will return the default string representation of the object.
+
+
+
+   .. py:method:: to_dict(*, resolve = True, throw_on_missing = True, **kwargs)
+
+      Convert the config to a dictionary.
 
 
 
@@ -571,6 +584,13 @@ Classes
       files) where you want to store data that is not necessarily defined in the config.
 
 
+   .. py:method:: __post_init__()
+
+      Define a post init method. If not, derived classes won't be able to
+      implement their own __post_init__ method for some reason.
+
+
+
    .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
       :classmethod:
 
@@ -672,6 +692,12 @@ Classes
 
       This uses the stored config attribute to convert to yaml. If the config is None,
       this will return the default string representation of the object.
+
+
+
+   .. py:method:: to_dict(*, resolve = True, throw_on_missing = True, **kwargs)
+
+      Convert the config to a dictionary.
 
 
 
@@ -1007,6 +1033,13 @@ Classes
       files) where you want to store data that is not necessarily defined in the config.
 
 
+   .. py:method:: __post_init__()
+
+      Define a post init method. If not, derived classes won't be able to
+      implement their own __post_init__ method for some reason.
+
+
+
    .. py:method:: instantiate(config, *, _convert_ = 'object', **kwargs)
       :classmethod:
 
@@ -1108,6 +1141,12 @@ Classes
 
       This uses the stored config attribute to convert to yaml. If the config is None,
       this will return the default string representation of the object.
+
+
+
+   .. py:method:: to_dict(*, resolve = True, throw_on_missing = True, **kwargs)
+
+      Convert the config to a dictionary.
 
 
 

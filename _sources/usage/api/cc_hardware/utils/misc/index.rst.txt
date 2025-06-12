@@ -30,6 +30,7 @@ Classes
 .. autoapisummary::
 
    cc_hardware.utils.misc.AtomicVariable
+   cc_hardware.utils.misc.MPAtomicVariable
    cc_hardware.utils.misc.BlockingDeque
    cc_hardware.utils.misc.classproperty
    cc_hardware.utils.misc.MultiprocessingDeque
@@ -69,6 +70,7 @@ Functions
 
    Wraps an asynchronous method and returns a specific index in the callback
    list.
+
 
 
 

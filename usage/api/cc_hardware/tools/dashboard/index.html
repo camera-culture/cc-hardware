@@ -528,6 +528,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.DashboardConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.DashboardConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.DashboardConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.DashboardConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -644,6 +651,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.DashboardConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.DashboardConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -944,6 +957,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.SPADDashboardConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.SPADDashboardConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1060,6 +1080,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.tools.dashboard.SPADDashboardConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1219,6 +1245,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig"><code class="docutils literal notranslate"><span class="pre">DashboardConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.config"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.custom"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.compose"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.load"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.load()</span></code></a></li>
@@ -1227,6 +1254,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.copy"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.save"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.DashboardConfig.__str__"><code class="docutils literal notranslate"><span class="pre">DashboardConfig.__str__()</span></code></a></li>
@@ -1257,6 +1285,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.config"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.custom"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.compose"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.load"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.load()</span></code></a></li>
@@ -1265,6 +1294,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.copy"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.save"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.tools.dashboard.SPADDashboardConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SPADDashboardConfig.__str__()</span></code></a></li>

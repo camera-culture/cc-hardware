@@ -646,6 +646,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -762,6 +769,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.CameraConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.CameraConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1086,6 +1099,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.MotionCaptureSensorConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.MotionCaptureSensorConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.MotionCaptureSensorConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.MotionCaptureSensorConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1202,6 +1222,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.MotionCaptureSensorConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.MotionCaptureSensorConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1722,6 +1748,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1838,6 +1871,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SensorConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SensorConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2216,6 +2255,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -2332,6 +2378,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.SPADSensorConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.SPADSensorConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -2964,6 +3016,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.settings"><code class="docutils literal notranslate"><span class="pre">CameraConfig.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.config"><code class="docutils literal notranslate"><span class="pre">CameraConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.custom"><code class="docutils literal notranslate"><span class="pre">CameraConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">CameraConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.compose"><code class="docutils literal notranslate"><span class="pre">CameraConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.load"><code class="docutils literal notranslate"><span class="pre">CameraConfig.load()</span></code></a></li>
@@ -2972,6 +3025,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.copy"><code class="docutils literal notranslate"><span class="pre">CameraConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.save"><code class="docutils literal notranslate"><span class="pre">CameraConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">CameraConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">CameraConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.CameraConfig.__str__"><code class="docutils literal notranslate"><span class="pre">CameraConfig.__str__()</span></code></a></li>
@@ -3002,6 +3056,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.config"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.compose"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.load"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.load()</span></code></a></li>
@@ -3010,6 +3065,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.copy"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.save"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.MotionCaptureSensorConfig.__str__"><code class="docutils literal notranslate"><span class="pre">MotionCaptureSensorConfig.__str__()</span></code></a></li>
@@ -3051,6 +3107,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SensorConfig.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.config"><code class="docutils literal notranslate"><span class="pre">SensorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">SensorConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SensorConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SensorConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.compose"><code class="docutils literal notranslate"><span class="pre">SensorConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.load"><code class="docutils literal notranslate"><span class="pre">SensorConfig.load()</span></code></a></li>
@@ -3059,6 +3116,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.copy"><code class="docutils literal notranslate"><span class="pre">SensorConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.save"><code class="docutils literal notranslate"><span class="pre">SensorConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SensorConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SensorConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SensorConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SensorConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SensorConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SensorConfig.__str__()</span></code></a></li>
@@ -3092,6 +3150,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.settings</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.config"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.custom"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.compose"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.load"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.load()</span></code></a></li>
@@ -3100,6 +3159,7 @@ attributes – see the documentation for details.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.copy"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.save"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.SPADSensorConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SPADSensorConfig.__str__()</span></code></a></li>

@@ -517,6 +517,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperControllerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperControllerConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -633,6 +640,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperControllerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -978,6 +991,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1094,6 +1114,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1497,6 +1523,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1613,6 +1646,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1788,6 +1827,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.config"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.custom"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.compose"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.load"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.load()</span></code></a></li>
@@ -1796,6 +1836,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.copy"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.save"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperControllerConfig.__str__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__str__()</span></code></a></li>
@@ -1827,6 +1868,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.config"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.custom"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.compose"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.load"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.load()</span></code></a></li>
@@ -1835,6 +1877,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.copy"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.save"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorConfig.__str__"><code class="docutils literal notranslate"><span class="pre">StepperMotorConfig.__str__()</span></code></a></li>
@@ -1875,6 +1918,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.config"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.custom"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.compose"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.load"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.load()</span></code></a></li>
@@ -1883,6 +1927,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.copy"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.save"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.StepperMotorSystemConfig.__str__"><code class="docutils literal notranslate"><span class="pre">StepperMotorSystemConfig.__str__()</span></code></a></li>

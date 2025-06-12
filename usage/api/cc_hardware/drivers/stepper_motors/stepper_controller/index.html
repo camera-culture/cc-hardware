@@ -362,6 +362,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -478,6 +485,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -608,6 +621,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -724,6 +744,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1011,6 +1037,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1127,6 +1160,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1266,6 +1305,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1382,6 +1428,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1523,6 +1575,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1639,6 +1698,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1956,6 +2021,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.config"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.custom"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.compose"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.load"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.load()</span></code></a></li>
@@ -1964,6 +2030,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.copy"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.save"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__str__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__str__()</span></code></a></li>
@@ -1976,6 +2043,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.config"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.custom"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.compose"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.load"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.load()</span></code></a></li>
@@ -1984,6 +2052,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.copy"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.save"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__str__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__str__()</span></code></a></li>
@@ -2009,6 +2078,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.config"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.custom"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.compose"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.load"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.load()</span></code></a></li>
@@ -2017,6 +2087,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.copy"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.save"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__str__()</span></code></a></li>
@@ -2029,6 +2100,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.custom"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.compose"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.load"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.load()</span></code></a></li>
@@ -2037,6 +2109,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.copy"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.save"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__str__()</span></code></a></li>
@@ -2049,6 +2122,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.custom"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.compose"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.load"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.load()</span></code></a></li>
@@ -2057,6 +2131,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.copy"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.save"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__str__()</span></code></a></li>

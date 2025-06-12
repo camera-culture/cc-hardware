@@ -368,6 +368,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -484,6 +491,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.Setting.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.Setting.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -643,6 +656,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -759,6 +779,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.RangeSetting.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.RangeSetting.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -929,6 +955,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1045,6 +1078,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.OptionSetting.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.OptionSetting.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1200,6 +1239,13 @@ files) where you want to store data that is not necessarily defined in the confi
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.instantiate">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.instantiate" title="Link to this definition">#</a></dt>
 <dd><p>Instantiate the config into an object.</p>
@@ -1316,6 +1362,12 @@ the object is pickled and unpickled.</p>
 Adds some custom representers.</p>
 <p>This uses the stored config attribute to convert to yaml. If the config is None,
 this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.utils.setting.BoolSetting.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.setting.BoolSetting.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1478,6 +1530,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.default_factory"><code class="docutils literal notranslate"><span class="pre">Setting.default_factory()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.config"><code class="docutils literal notranslate"><span class="pre">Setting.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.custom"><code class="docutils literal notranslate"><span class="pre">Setting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__post_init__"><code class="docutils literal notranslate"><span class="pre">Setting.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.instantiate"><code class="docutils literal notranslate"><span class="pre">Setting.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.compose"><code class="docutils literal notranslate"><span class="pre">Setting.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.load"><code class="docutils literal notranslate"><span class="pre">Setting.load()</span></code></a></li>
@@ -1486,6 +1539,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.copy"><code class="docutils literal notranslate"><span class="pre">Setting.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.save"><code class="docutils literal notranslate"><span class="pre">Setting.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.to_yaml"><code class="docutils literal notranslate"><span class="pre">Setting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.to_dict"><code class="docutils literal notranslate"><span class="pre">Setting.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__getstate__"><code class="docutils literal notranslate"><span class="pre">Setting.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__setstate__"><code class="docutils literal notranslate"><span class="pre">Setting.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.Setting.__str__"><code class="docutils literal notranslate"><span class="pre">Setting.__str__()</span></code></a></li>
@@ -1500,6 +1554,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">RangeSetting.default_factory()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.config"><code class="docutils literal notranslate"><span class="pre">RangeSetting.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.custom"><code class="docutils literal notranslate"><span class="pre">RangeSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__post_init__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">RangeSetting.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.compose"><code class="docutils literal notranslate"><span class="pre">RangeSetting.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.load"><code class="docutils literal notranslate"><span class="pre">RangeSetting.load()</span></code></a></li>
@@ -1508,6 +1563,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.copy"><code class="docutils literal notranslate"><span class="pre">RangeSetting.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.save"><code class="docutils literal notranslate"><span class="pre">RangeSetting.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">RangeSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.to_dict"><code class="docutils literal notranslate"><span class="pre">RangeSetting.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.RangeSetting.__str__"><code class="docutils literal notranslate"><span class="pre">RangeSetting.__str__()</span></code></a></li>
@@ -1523,6 +1579,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">OptionSetting.default_factory()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.config"><code class="docutils literal notranslate"><span class="pre">OptionSetting.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.custom"><code class="docutils literal notranslate"><span class="pre">OptionSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__post_init__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">OptionSetting.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.compose"><code class="docutils literal notranslate"><span class="pre">OptionSetting.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.load"><code class="docutils literal notranslate"><span class="pre">OptionSetting.load()</span></code></a></li>
@@ -1531,6 +1588,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.copy"><code class="docutils literal notranslate"><span class="pre">OptionSetting.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.save"><code class="docutils literal notranslate"><span class="pre">OptionSetting.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">OptionSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.to_dict"><code class="docutils literal notranslate"><span class="pre">OptionSetting.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.OptionSetting.__str__"><code class="docutils literal notranslate"><span class="pre">OptionSetting.__str__()</span></code></a></li>
@@ -1545,6 +1603,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.default_factory"><code class="docutils literal notranslate"><span class="pre">BoolSetting.default_factory()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.config"><code class="docutils literal notranslate"><span class="pre">BoolSetting.config</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.custom"><code class="docutils literal notranslate"><span class="pre">BoolSetting.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__post_init__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__post_init__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.instantiate"><code class="docutils literal notranslate"><span class="pre">BoolSetting.instantiate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.compose"><code class="docutils literal notranslate"><span class="pre">BoolSetting.compose()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.load"><code class="docutils literal notranslate"><span class="pre">BoolSetting.load()</span></code></a></li>
@@ -1553,6 +1612,7 @@ and only one class is registered, it will instantiate that class.</p></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.copy"><code class="docutils literal notranslate"><span class="pre">BoolSetting.copy()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.save"><code class="docutils literal notranslate"><span class="pre">BoolSetting.save()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.to_yaml"><code class="docutils literal notranslate"><span class="pre">BoolSetting.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.to_dict"><code class="docutils literal notranslate"><span class="pre">BoolSetting.to_dict()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__getstate__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__getstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__setstate__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__setstate__()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.utils.setting.BoolSetting.__str__"><code class="docutils literal notranslate"><span class="pre">BoolSetting.__str__()</span></code></a></li>
