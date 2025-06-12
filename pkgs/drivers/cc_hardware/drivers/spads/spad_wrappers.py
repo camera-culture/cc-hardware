@@ -134,28 +134,38 @@ class SPADMergeWrapper(SPADWrapper[SPADMergeWrapperConfig]):
             self.config.merge_rows = False
             self.config.merge_cols = False
 
-    def accumulate(self, *args, **kwargs):
-        data = super().accumulate(*args, **kwargs)
+    def accumulate(self, num_samples: int = 1, **kwargs):
+        data = super().accumulate(num_samples=num_samples, **kwargs)
 
-        if SPADDataType.HISTOGRAM in self.config.data_type:
-            histograms = data[SPADDataType.HISTOGRAM]
-            data[SPADDataType.HISTOGRAM] = self._merge(histograms)
-        if SPADDataType.DISTANCE in self.config.data_type:
-            distances = data[SPADDataType.DISTANCE]
-            data[SPADDataType.DISTANCE] = self._merge(distances)
-        if SPADDataType.POINT_CLOUD in self.config.data_type:
-            point_clouds = data[SPADDataType.POINT_CLOUD]
-            data[SPADDataType.POINT_CLOUD] = self._merge(point_clouds)
-        if SPADDataType.RAW in self.config.data_type:
-            raise ValueError(
-                "SPADMergeWrapper does not support raw data type. "
-                "Please use a different wrapper or remove the raw data type."
-            )
+        if num_samples == 1:
+            data = [data]
+
+        for _data in data:
+            if SPADDataType.HISTOGRAM in self.config.data_type:
+                histograms = _data[SPADDataType.HISTOGRAM]
+                _data[SPADDataType.HISTOGRAM] = self._merge(histograms)
+            if SPADDataType.DISTANCE in self.config.data_type:
+                distances = _data[SPADDataType.DISTANCE]
+                _data[SPADDataType.DISTANCE] = self._merge(distances)
+            if SPADDataType.POINT_CLOUD in self.config.data_type:
+                point_clouds = _data[SPADDataType.POINT_CLOUD]
+                _data[SPADDataType.POINT_CLOUD] = self._merge(point_clouds, axis=0)
+            if SPADDataType.RAW in self.config.data_type:
+                raise ValueError(
+                    "SPADMergeWrapper does not support raw data type. "
+                    "Please use a different wrapper or remove the raw data type."
+                )
+
+        if num_samples == 1:
+            data = data[0]
 
         return data
 
-    def _merge(self, data: np.ndarray) -> np.ndarray:
+    def _merge(self, data: np.ndarray, axis: int | None = None) -> np.ndarray:
         """Merges the data based on the configuration."""
+        if axis is not None:
+            return np.sum(data, axis=axis, keepdims=True)
+
         if self.config.merge_rows:
             data = np.sum(data, axis=0, keepdims=True)
         if self.config.merge_cols:

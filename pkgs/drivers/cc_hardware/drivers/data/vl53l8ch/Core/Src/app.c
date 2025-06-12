@@ -113,12 +113,12 @@ int app(UART_HandleTypeDef *huart2) {
                                         &p_ambient_scaler);
 
         amb_value = ((float)*p_ambient) / (1 << *p_ambient_scaler);
-        printf("%d %d %d", agg_id, (int)amb_value * 1000,
+        printf("%d %d %d", agg_id, (int)(amb_value * 1000),
                Results.distance_mm[VL53LMZ_NB_TARGET_PER_ZONE * agg_id]);
 
         for (bin_num = 0; bin_num < cnh_config.feature_length; bin_num++) {
           bin_value = ((float)p_hist[bin_num]) / (1 << p_hist_scaler[bin_num]);
-          printf(" %d", (int)bin_value * 1000);
+          printf(" %d", (int)(bin_value * 1000));
         }
         printf("\n");
       }

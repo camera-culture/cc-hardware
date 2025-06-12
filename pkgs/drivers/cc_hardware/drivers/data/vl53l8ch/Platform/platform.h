@@ -53,7 +53,7 @@ typedef struct {
  * format allows an increased precision.
  */
 
-#define 	VL53LMZ_USE_RAW_FORMAT
+// #define 	VL53LMZ_USE_RAW_FORMAT
 
 /*
  * @brief All macro below are used to configure the sensor output. User can
