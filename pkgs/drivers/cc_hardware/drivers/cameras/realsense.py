@@ -80,9 +80,9 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         self.pipeline = rs.pipeline()
         self.rs_config = rs.config()
 
-        # Enable color and depth streams
         self.rs_config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
         self.rs_config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
+        self.rs_config.enable_stream(rs.stream.infrared, 640, 480, rs.format.y8, 60)
 
         if self.align_streams:
             self.align = rs.align(rs.stream.color)
@@ -106,6 +106,8 @@ class RealsenseCamera(Camera[RealsenseConfig]):
 
             get_logger().debug("Re-applying exposure settings...")
             for sensor, exposure_value in zip(sensors, self.exposure_settings):
+                if sensor.supports(rs.option.emitter_enabled):
+                    sensor.set_option(rs.option.emitter_enabled, 0)
                 if exposure_value is not None and sensor.supports(rs.option.exposure):
                     sensor.set_option(rs.option.exposure, exposure_value)
                 if sensor.supports(rs.option.enable_auto_exposure):
@@ -209,13 +211,14 @@ class RealsenseCamera(Camera[RealsenseConfig]):
 
                 color_frame = frames.get_color_frame()
                 depth_frame = frames.get_depth_frame()
+                ir_frame = frames.get_infrared_frame()
 
-                if not color_frame or not depth_frame:
+                if not color_frame or not depth_frame or not ir_frame:
                     continue
 
                 color_images.append(np.asanyarray(color_frame.get_data()))
                 depth_images.append(np.asanyarray(depth_frame.get_data()))
-                ir_images.append(None)
+                ir_images.append(np.asanyarray(ir_frame.get_data()))
 
             if num_samples == 1:
                 color_images = color_images[0]
@@ -247,7 +250,10 @@ class RealsenseCamera(Camera[RealsenseConfig]):
         Returns:
           Tuple[int, int]: The resolution of the color stream.
         """
-        return 1920, 1080  # TODO: Should match the resolution in the config
+        return (
+            self.rs_config.get_stream(rs.stream.color).width,
+            self.rs_config.get_stream(rs.stream.color).height,
+        )
 
     @property
     @override

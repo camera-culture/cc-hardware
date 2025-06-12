@@ -382,6 +382,8 @@ class SPADBackgroundRemovalWrapper(SPADWrapper[SPADBackgroundRemovalWrapperConfi
 
 
 # =============================================================================
+
+
 @config_wrapper
 class SPADScalingWrapperConfig(SPADWrapperConfig):
     """Configuration for SPAD sensor scaling wrapper.
@@ -438,3 +440,12 @@ class SPADScalingWrapper(SPADWrapper[SPADScalingWrapperConfig]):
         data[SPADDataType.HISTOGRAM] = scaled_histogram
 
         return data
+
+# =============================================================================
+
+# @config_wrapper
+# class SPADSubpixelSampleWrapperConfig(SPADWrapperConfig):
+#     pass
+
+# class SPADSubpixelSampleWrapper(SPADWrapper[SPADSubpixelSampleWrapper]):
+#     pass

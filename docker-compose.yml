@@ -28,6 +28,8 @@ services:
           libxcb-cursor0
           mesa-vulkan-drivers
           vim
+          gcc-arm-none-eabi
+          libnewlib-arm-none-eabi
         CONDA_PACKAGES: "python=3.12 gcc=12.1.0"
         CONDA_CHANNELS: "conda-forge"
     volumes:
@@ -76,6 +78,9 @@ services:
       - "999" # camera
     shm_size: '8gb'
     runtime: nvidia
+    volumes:
+      - '../cc-demos:/home/${COMPOSE_PROJECT_NAME}/demos'
+      - "/mnt/nucleo:/mnt/nucleo"
   vnc:
     image: "camera/${COMPOSE_PROJECT_NAME}:vnc"
     hostname: "${COMPOSE_PROJECT_NAME}-vnc"

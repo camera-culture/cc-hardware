@@ -1,4 +1,5 @@
 import cv2
+import tqdm
 
 from cc_hardware.drivers import Camera, CameraConfig
 from cc_hardware.utils import Manager, get_logger, register_cli, run_cli
@@ -10,16 +11,23 @@ def camera_viewer(
     num_frames: int = -1,
     resolution: tuple[int, int] | None = None,
 ):
+    pbar = tqdm.tqdm(
+        total=num_frames if num_frames != -1 else None,
+        unit="frame",
+    )
+
     def setup(manager: Manager):
         _camera = Camera.create_from_config(camera)
         manager.add(camera=_camera)
 
     def loop(iter: int, manager: Manager, camera: Camera) -> bool:
+        pbar.update(1)
+
         if num_frames != -1 and iter >= num_frames:
             get_logger().info(f"Finished capturing {num_frames} frames.")
             return False
 
-        frame = camera.accumulate()
+        frame = camera.accumulate(return_rgb=False, return_ir=True)
         if frame is None:
             return False
 

@@ -240,7 +240,7 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
             try:
                 self._finalize()
             except ValueError as e:
-                get_logger().error(f"Error finalizing data: {e}")
+                get_logger().debug(f"Error finalizing data: {e}")
                 return False
         return True
 
@@ -273,7 +273,7 @@ class VL53L8CHData(SPADSensorData[VL53L8CHConfig]):
             distance[idx] = float(row[2])
             return True
         except (ValueError, IndexError) as e:
-            get_logger().error(f"Invalid histogram formatting: {e}")
+            get_logger().debug(f"Invalid histogram formatting: {e}")
             return False
 
     def _finalize(self) -> None:
