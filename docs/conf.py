@@ -117,7 +117,7 @@ autoapi_type = "python"
 autoapi_dirs = ["../pkgs/"]
 autoapi_options = [
     "members",
-    "show-inheritance-diagram",
+    # "show-inheritance-diagram",
     "show-module-summary",
     "special-members",
     "imported-members",

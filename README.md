@@ -37,7 +37,7 @@ The current supported packages are as follows:
     Contains drivers for interfacing with hardware.
 - [`utils`](https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/utils):
     Contains utility functions and classes.
-<!-- - [`tools`](https://camera-culture.github.io/cc-hardware/usage/cc_hardware/cli): -->
+- [`tools`](https://camera-culture.github.io/cc-hardware/usage/api/cc_hardware/tools):
     Contains tools for working with hardware, such as calibration or visualization
     scripts.
 
