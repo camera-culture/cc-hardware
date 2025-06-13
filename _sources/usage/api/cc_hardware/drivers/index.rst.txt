@@ -58,9 +58,6 @@ Classes
 .. py:class:: Camera(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.Camera
-      :parts: 1
-
 
    Abstract base class for a Camera sensor, extending the Sensor class.
    Defines methods and properties for specific for cameras.
@@ -171,9 +168,6 @@ Classes
 .. py:class:: CameraConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.CameraConfig
-      :parts: 1
-
 
    Configuration for Camera sensors.
 
@@ -186,9 +180,6 @@ Classes
 
 .. py:class:: MotionCaptureSensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.MotionCaptureSensor
-      :parts: 1
 
 
    An abstract base class for motion capture sensors.
@@ -265,9 +256,6 @@ Classes
 
 .. py:class:: MotionCaptureSensorConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.MotionCaptureSensorConfig
-      :parts: 1
 
 
    Configuration for SPAD sensors.
@@ -427,9 +415,6 @@ Classes
 .. py:class:: Sensor(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.Sensor
-      :parts: 1
-
 
    Abstract base class for sensors.
 
@@ -496,9 +481,6 @@ Classes
 .. py:class:: SensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.SensorConfig
-      :parts: 1
-
 
    Configuration for sensors.
 
@@ -520,9 +502,6 @@ Classes
 
 .. py:class:: SPADSensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.SPADSensor
-      :parts: 1
 
 
    An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
@@ -632,9 +611,6 @@ Classes
 .. py:class:: SPADSensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.SPADSensorConfig
-      :parts: 1
-
 
    Configuration for SPAD sensors.
 
@@ -665,9 +641,6 @@ Classes
 
 .. py:class:: StepperMotor
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.StepperMotor
-      :parts: 1
 
 
    An abstract base class for controlling a stepper motor. This class provides a
@@ -758,9 +731,6 @@ Classes
 .. py:class:: StepperMotorSystem(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.StepperMotorSystem
-      :parts: 1
-
 
    This is a wrapper around multiple stepper motors which defines the system
    as a whole (i.e. a gantry or multi-axis rotation stage).
@@ -800,9 +770,6 @@ Classes
 
 .. py:class:: StepperMotorSystemAxis(*args, **kwds)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.StepperMotorSystemAxis
-      :parts: 1
 
 
    Create a collection of name/value pairs.

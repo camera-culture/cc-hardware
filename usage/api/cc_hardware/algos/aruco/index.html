@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -304,19 +306,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.algos.aruco.ArucoLocalizationAlgorithm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ArucoLocalizationAlgorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aruco_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">marker_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.algos.aruco.ArucoLocalizationAlgorithm" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance165b6b66ee {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Algorithm&quot; [URL=&quot;../algorithm/index.html#cc_hardware.algos.algorithm.Algorithm&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This is an algorithm interface that all algorithms should implement.&quot;];
-  &quot;Registry&quot; -&gt; &quot;Algorithm&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABC&quot; -&gt; &quot;Algorithm&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ArucoLocalizationAlgorithm&quot; [URL=&quot;#cc_hardware.algos.aruco.ArucoLocalizationAlgorithm&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An algorithm to localize ArUco markers using camera images.&quot;];
-  &quot;Algorithm&quot; -&gt; &quot;ArucoLocalizationAlgorithm&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-}
-<p>An algorithm to localize ArUco markers using camera images.</p>
+<dd><p>An algorithm to localize ArUco markers using camera images.</p>
 <p>This class processes images from a camera sensor to detect ArUco markers and
 compute their poses relative to an origin marker.</p>
 <dl class="py method">

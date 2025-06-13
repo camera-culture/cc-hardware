@@ -27,9 +27,6 @@ Classes
 .. py:class:: HistogramDataset(pkl_path = None, rolling_window=1)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.algos.datasets.HistogramDataset
-      :parts: 1
-
 
    Histogram dataset for model training and analysis. Contains a corresponding list of inputs (histograms) and targets.
    Can manipulate inputs and targets without affecting raw data.

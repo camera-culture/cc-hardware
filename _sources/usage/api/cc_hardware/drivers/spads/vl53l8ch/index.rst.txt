@@ -38,9 +38,6 @@ Classes
 .. py:class:: RangingMode(*args, **kwds)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.RangingMode
-      :parts: 1
-
 
    Enumeration for the ranging mode of the VL53L8CH sensor.
 
@@ -97,9 +94,6 @@ Classes
 
 .. py:class:: VL53L8CHConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig
-      :parts: 1
 
 
    Configuration parameters for the VL53L8CH sensor.
@@ -163,9 +157,6 @@ Classes
 .. py:class:: VL53L8CHSharedConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig
-      :parts: 1
-
 
    Shared sensor configuration with default settings.
 
@@ -191,9 +182,6 @@ Classes
 .. py:class:: VL53L8CHConfig4x4
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4
-      :parts: 1
-
 
    Sensor configuration for a 4x4 resolution.
 
@@ -216,9 +204,6 @@ Classes
 
 .. py:class:: VL53L8CHConfig8x8
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8
-      :parts: 1
 
 
    Sensor configuration for an 8x8 resolution.
@@ -243,9 +228,6 @@ Classes
 .. py:class:: VL53L8CHData
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData
-      :parts: 1
-
 
    Processes and stores both histogram and target data from the VL53L8CH sensor.
 
@@ -265,9 +247,6 @@ Classes
 
 .. py:class:: VL53L8CHSensor(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor
-      :parts: 1
 
 
    Main sensor class for the VL53L8CH time-of-flight sensor.

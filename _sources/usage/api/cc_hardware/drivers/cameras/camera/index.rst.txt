@@ -28,9 +28,6 @@ Classes
 .. py:class:: CameraConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.camera.CameraConfig
-      :parts: 1
-
 
    Configuration for Camera sensors.
 
@@ -43,9 +40,6 @@ Classes
 
 .. py:class:: Camera(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.camera.Camera
-      :parts: 1
 
 
    Abstract base class for a Camera sensor, extending the Sensor class.

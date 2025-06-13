@@ -27,9 +27,6 @@ Classes
 .. py:class:: Algorithm
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.algos.algorithm.Algorithm
-      :parts: 1
-
 
    This is an algorithm interface that all algorithms should implement.
 

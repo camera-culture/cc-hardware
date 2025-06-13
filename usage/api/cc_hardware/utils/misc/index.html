@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -497,19 +499,7 @@ Does not perform any type checks on the entity.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.misc.SingletonABCMeta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingletonABCMeta</span></span><a class="headerlink" href="#cc_hardware.utils.misc.SingletonABCMeta" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance6b1e53164a {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABCMeta&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Metaclass for defining Abstract Base Classes (ABCs).&quot;];
-  &quot;ABCMeta&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Metaclass for defining Abstract Base Classes (ABCs).&quot;];
-  &quot;SingletonABCMeta&quot; [URL=&quot;singleton/index.html#cc_hardware.utils.misc.singleton.SingletonABCMeta&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A metaclass combining Singleton and Abstract Base Class (ABC) functionality.&quot;];
-  &quot;ABCMeta&quot; -&gt; &quot;SingletonABCMeta&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;ABCMeta&quot; -&gt; &quot;SingletonABCMeta&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SingletonMeta&quot; -&gt; &quot;SingletonABCMeta&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SingletonMeta&quot; [URL=&quot;singleton/index.html#cc_hardware.utils.misc.singleton.SingletonMeta&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A metaclass for implementing the Singleton pattern.&quot;];
-}
-<p>A metaclass combining Singleton and Abstract Base Class (ABC) functionality.</p>
+<dd><p>A metaclass combining Singleton and Abstract Base Class (ABC) functionality.</p>
 <p>This is useful for creating classes that need to enforce the Singleton
 pattern while also being an Abstract Base Class.</p>
 <dl class="py method">
@@ -564,13 +554,7 @@ pattern while also being an Abstract Base Class.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.misc.SingletonMeta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SingletonMeta</span></span><a class="headerlink" href="#cc_hardware.utils.misc.SingletonMeta" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance4c75eb921e {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;SingletonMeta&quot; [URL=&quot;singleton/index.html#cc_hardware.utils.misc.singleton.SingletonMeta&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A metaclass for implementing the Singleton pattern.&quot;];
-}
-<p>A metaclass for implementing the Singleton pattern.</p>
+<dd><p>A metaclass for implementing the Singleton pattern.</p>
 <p>This ensures that only one instance of the class exists. Additional
 calls to create an instance will return the same existing instance.</p>
 <dl class="py method">

@@ -30,9 +30,6 @@ Classes
 .. py:class:: SPADDataType(*args, **kwds)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad.SPADDataType
-      :parts: 1
-
 
    Enum for SPAD data types.
 
@@ -102,9 +99,6 @@ Classes
 .. py:class:: SPADSensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad.SPADSensorConfig
-      :parts: 1
-
 
    Configuration for SPAD sensors.
 
@@ -128,9 +122,6 @@ Classes
 
 .. py:class:: SPADSensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad.SPADSensor
-      :parts: 1
 
 
    An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed
@@ -239,9 +230,6 @@ Classes
 
 .. py:class:: SPADSensorData(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad.SPADSensorData
-      :parts: 1
 
 
    Abstract base class for handling sensor data.

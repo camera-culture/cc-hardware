@@ -37,9 +37,6 @@ Classes
 .. py:class:: MotionCaptureDashboard(config, sensor)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.MotionCaptureDashboard
-      :parts: 1
-
 
    Abstract base class for MotionCapture sensor dashboards.
 
@@ -83,9 +80,6 @@ Classes
 
 .. py:class:: MotionCaptureDashboardConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.MotionCaptureDashboardConfig
-      :parts: 1
 
 
    Configuration for motion capture dashboards.

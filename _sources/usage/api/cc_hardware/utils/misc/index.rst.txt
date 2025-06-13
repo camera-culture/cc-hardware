@@ -163,9 +163,6 @@ Functions
 .. py:class:: SingletonABCMeta
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.SingletonABCMeta
-      :parts: 1
-
 
    A metaclass combining Singleton and Abstract Base Class (ABC) functionality.
 
@@ -216,9 +213,6 @@ Functions
 
 .. py:class:: SingletonMeta
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.SingletonMeta
-      :parts: 1
 
 
    A metaclass for implementing the Singleton pattern.

@@ -43,9 +43,6 @@ Classes
 .. py:class:: TelemetrixStepperMotorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motors.
 
@@ -73,9 +70,6 @@ Classes
 
 .. py:class:: TelemetrixStepperMotor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotor
-      :parts: 1
 
 
    This is a wrapper of the Telemetrix library's interface with stepper motors.
@@ -184,9 +178,6 @@ Classes
 .. py:class:: TelemetrixStepperMotorSystemConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystemConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motor systems.
 
@@ -201,9 +192,6 @@ Classes
 .. py:class:: TelemetrixStepperMotorSystem(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorSystem
-      :parts: 1
-
 
    This is a wrapper of the Telemetrix library's interface with multiple
    stepper motors.
@@ -217,9 +205,6 @@ Classes
 
 .. py:class:: TelemetrixStepperMotorXConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorXConfig
-      :parts: 1
 
 
    Configuration for Telemetrix stepper motors.
@@ -249,9 +234,6 @@ Classes
 .. py:class:: TelemetrixStepperMotorYConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorYConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motors.
 
@@ -279,9 +261,6 @@ Classes
 
 .. py:class:: TelemetrixStepperMotorZConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.TelemetrixStepperMotorZConfig
-      :parts: 1
 
 
    Configuration for Telemetrix stepper motors.
@@ -311,9 +290,6 @@ Classes
 .. py:class:: DualDrive2AxisGantryXConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryXConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motors.
 
@@ -341,9 +317,6 @@ Classes
 
 .. py:class:: DualDrive2AxisGantryY1Config
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY1Config
-      :parts: 1
 
 
    Configuration for Telemetrix stepper motors.
@@ -373,9 +346,6 @@ Classes
 .. py:class:: DualDrive2AxisGantryY2Config
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryY2Config
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motors.
 
@@ -404,9 +374,6 @@ Classes
 .. py:class:: DualDrive2AxisGantryConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.DualDrive2AxisGantryConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motor systems.
 
@@ -420,9 +387,6 @@ Classes
 
 .. py:class:: SingleDrive1AxisGantryXConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryXConfig
-      :parts: 1
 
 
    Configuration for Telemetrix stepper motors.
@@ -452,9 +416,6 @@ Classes
 .. py:class:: SingleDrive1AxisGantryYConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryYConfig
-      :parts: 1
-
 
    Configuration for Telemetrix stepper motors.
 
@@ -482,9 +443,6 @@ Classes
 
 .. py:class:: SingleDrive1AxisGantryConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.telemetrix_stepper.SingleDrive1AxisGantryConfig
-      :parts: 1
 
 
    Configuration for Telemetrix stepper motor systems.

@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -321,15 +323,7 @@ custom mapping of SPAD pixels to allow for 3x3, 4x4, 3x6, and 8x8 multizone outp
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.SPADID">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.SPADID" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance066089f405 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Enum&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Create a collection of name/value pairs.&quot;];
-  &quot;SPADID&quot; [URL=&quot;#cc_hardware.drivers.spads.tmf8828.SPADID&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Enum&quot; -&gt; &quot;SPADID&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Create a collection of name/value pairs.</p>
+<dd><p>Create a collection of name/value pairs.</p>
 <p>Example enumeration:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
@@ -477,15 +471,7 @@ attributes – see the documentation for details.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.RangeMode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RangeMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.RangeMode" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance51c731128c {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Enum&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Create a collection of name/value pairs.&quot;];
-  &quot;RangeMode&quot; [URL=&quot;#cc_hardware.drivers.spads.tmf8828.RangeMode&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;Enum&quot; -&gt; &quot;RangeMode&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Create a collection of name/value pairs.</p>
+<dd><p>Create a collection of name/value pairs.</p>
 <p>Example enumeration:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">Color</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
@@ -590,25 +576,7 @@ attributes – see the documentation for details.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.TMF8828Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Config</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Config" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancee1cc3285bf {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;TMF8828Config&quot; [URL=&quot;#cc_hardware.drivers.spads.tmf8828.TMF8828Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for the TMF8828 sensor.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;TMF8828Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for the TMF8828 sensor.</p>
+<dd><p>Configuration for the TMF8828 sensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -623,19 +591,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.TMF8828Data">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Data" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance66aa000c0b {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;SPADSensorData&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SensorData&quot; -&gt; &quot;SPADSensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorData&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for handling sensor data.&quot;];
-  &quot;ABC&quot; -&gt; &quot;SensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;TMF8828Data&quot; [URL=&quot;#cc_hardware.drivers.spads.tmf8828.TMF8828Data&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Processes and stores both histogram and target data from the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorData&quot; -&gt; &quot;TMF8828Data&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Processes and stores both histogram and target data from the VL53L8CH sensor.</p>
+<dd><p>Processes and stores both histogram and target data from the VL53L8CH sensor.</p>
 <p>This class handles the accumulation and processing of histogram bins
 and per-pixel target information, keeping them aligned by pixel index.</p>
 <dl class="py method">
@@ -657,23 +613,7 @@ and per-pixel target information, keeping them aligned by pixel index.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.tmf8828.TMF8828Sensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TMF8828Sensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance7833c8a5cd {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;TMF8828Sensor&quot; [URL=&quot;#cc_hardware.drivers.spads.tmf8828.TMF8828Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;TMF8828Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.
+<dd><p>A class representing the TMF8828 sensor, a specific implementation of a SPAD sensor.
 The TMF8828 sensor collects histogram data across multiple channels and subcaptures,
 enabling high-resolution depth measurements.</p>
 <dl class="simple">

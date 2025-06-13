@@ -25,9 +25,6 @@ Classes
 .. py:class:: USBCameraConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.usb.USBCameraConfig
-      :parts: 1
-
 
    Configuration for generic USB Camera.
 
@@ -50,9 +47,6 @@ Classes
 
 .. py:class:: USBCamera(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.usb.USBCamera
-      :parts: 1
 
 
    Camera class for a generic USB camera. Captures RGB frames in a background thread

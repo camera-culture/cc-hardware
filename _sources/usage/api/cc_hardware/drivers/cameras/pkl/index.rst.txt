@@ -27,9 +27,6 @@ Classes
 .. py:class:: PklCamera(pkl_path)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.pkl.PklCamera
-      :parts: 1
-
 
    Camera class that loads and reads images from a pickle (.pkl) file.
    Inherits from the abstract Camera class.

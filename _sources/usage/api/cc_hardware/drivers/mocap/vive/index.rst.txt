@@ -25,9 +25,6 @@ Classes
 .. py:class:: ViveTrackerSensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.vive.ViveTrackerSensorConfig
-      :parts: 1
-
 
    Config for the ViveTracker.
 
@@ -40,9 +37,6 @@ Classes
 
 .. py:class:: ViveTrackerPose
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.vive.ViveTrackerPose
-      :parts: 1
 
 
    Abstract base class for handling sensor data.

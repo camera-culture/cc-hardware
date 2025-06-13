@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -330,25 +332,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADWrapperConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancecd563c553a {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor wrapper.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;SPADWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensor wrapper.</p>
+<dd><p>Configuration for SPAD sensor wrapper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>wrapped</strong> (<em>SPADSensorConfig</em>) – The configuration for the wrapped sensor.</p>
@@ -365,23 +349,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance92e23a3340 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that provides additional functionality and&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;SPADWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A wrapper class for SPAD sensors that provides additional functionality and
+<dd><p>A wrapper class for SPAD sensors that provides additional functionality and
 abstraction. This class is designed to wrap an existing SPAD sensor and expose
 additional methods and properties to simplify sensor management and data
 collection.</p>
@@ -407,27 +375,7 @@ collection.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMergeWrapperConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance4e14dc455b {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADMergeWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor merge wrapper.&quot;];
-  &quot;SPADWrapperConfig&quot; -&gt; &quot;SPADMergeWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor wrapper.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;SPADWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensor merge wrapper.</p>
+<dd><p>Configuration for SPAD sensor merge wrapper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -449,25 +397,7 @@ merge_cols are ignored.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMergeWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance31bd7719bd {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADMergeWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SPADWrapper&quot; -&gt; &quot;SPADMergeWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that provides additional functionality and&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;SPADWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A wrapper class for SPAD sensors that provides additional functionality and
+<dd><p>A wrapper class for SPAD sensors that provides additional functionality and
 abstraction. This class is designed to wrap an existing SPAD sensor and expose
 additional methods and properties to simplify sensor management and data
 collection.</p>
@@ -493,27 +423,7 @@ collection.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMovingAverageWrapperConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance62f6c040ba {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADMovingAverageWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor moving average wrapper.&quot;];
-  &quot;SPADWrapperConfig&quot; -&gt; &quot;SPADMovingAverageWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor wrapper.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;SPADWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensor moving average wrapper.</p>
+<dd><p>Configuration for SPAD sensor moving average wrapper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>window_size</strong> (<em>int</em>) – The size of the moving average window.</p>
@@ -530,25 +440,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADMovingAverageWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancea5272b8a89 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADMovingAverageWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SPADWrapper&quot; -&gt; &quot;SPADMovingAverageWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that provides additional functionality and&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;SPADWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A wrapper class for SPAD sensors that provides additional functionality and
+<dd><p>A wrapper class for SPAD sensors that provides additional functionality and
 abstraction. This class is designed to wrap an existing SPAD sensor and expose
 additional methods and properties to simplify sensor management and data
 collection.</p>
@@ -574,27 +466,7 @@ collection.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapperConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADBackgroundRemovalWrapperConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapperConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance2f019dada5 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADBackgroundRemovalWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor background removal wrapper. Note this only removes&quot;];
-  &quot;SPADWrapperConfig&quot; -&gt; &quot;SPADBackgroundRemovalWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor wrapper.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;SPADWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensor background removal wrapper. Note this only removes
+<dd><p>Configuration for SPAD sensor background removal wrapper. Note this only removes
 the background from the histogram.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -618,25 +490,7 @@ removal. If True, negative values in the histogram will be set to zero.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADBackgroundRemovalWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancef95efa97fd {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADBackgroundRemovalWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SPADWrapper&quot; -&gt; &quot;SPADBackgroundRemovalWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that provides additional functionality and&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;SPADWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A wrapper class for SPAD sensors that provides additional functionality and
+<dd><p>A wrapper class for SPAD sensors that provides additional functionality and
 abstraction. This class is designed to wrap an existing SPAD sensor and expose
 additional methods and properties to simplify sensor management and data
 collection.</p>
@@ -668,27 +522,7 @@ collection.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapperConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADScalingWrapperConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapperConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancec581c07e86 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADScalingWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor scaling wrapper.&quot;];
-  &quot;SPADWrapperConfig&quot; -&gt; &quot;SPADScalingWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapperConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor wrapper.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;SPADWrapperConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for SPAD sensor scaling wrapper.
+<dd><p>Configuration for SPAD sensor scaling wrapper.
 This wrapper scales the histogram data by a given factor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -706,25 +540,7 @@ This wrapper scales the histogram data by a given factor.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SPADScalingWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper" title="Link to this definition">#</a></dt>
-<dd>digraph inheritanceaf5047cbcb {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADScalingWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that scales the accumulated histogram data.&quot;];
-  &quot;SPADWrapper&quot; -&gt; &quot;SPADScalingWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SPADWrapper&quot; [URL=&quot;#cc_hardware.drivers.spads.spad_wrappers.SPADWrapper&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A wrapper class for SPAD sensors that provides additional functionality and&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;SPADWrapper&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A wrapper class for SPAD sensors that scales the accumulated histogram data.</p>
+<dd><p>A wrapper class for SPAD sensors that scales the accumulated histogram data.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.accumulate">
 <span class="sig-name descname"><span class="pre">accumulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper.accumulate" title="Link to this definition">#</a></dt>

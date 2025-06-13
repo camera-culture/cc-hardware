@@ -33,9 +33,6 @@ Classes
 .. py:class:: SPADWrapperConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADWrapperConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor wrapper.
 
@@ -50,9 +47,6 @@ Classes
 
 .. py:class:: SPADWrapper(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADWrapper
-      :parts: 1
 
 
    A wrapper class for SPAD sensors that provides additional functionality and
@@ -78,9 +72,6 @@ Classes
 .. py:class:: SPADMergeWrapperConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapperConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor merge wrapper.
 
@@ -98,9 +89,6 @@ Classes
 
 .. py:class:: SPADMergeWrapper(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMergeWrapper
-      :parts: 1
 
 
    A wrapper class for SPAD sensors that provides additional functionality and
@@ -126,9 +114,6 @@ Classes
 .. py:class:: SPADMovingAverageWrapperConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapperConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor moving average wrapper.
 
@@ -143,9 +128,6 @@ Classes
 
 .. py:class:: SPADMovingAverageWrapper(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADMovingAverageWrapper
-      :parts: 1
 
 
    A wrapper class for SPAD sensors that provides additional functionality and
@@ -171,9 +153,6 @@ Classes
 .. py:class:: SPADBackgroundRemovalWrapperConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapperConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor background removal wrapper. Note this only removes
    the background from the histogram.
@@ -193,9 +172,6 @@ Classes
 
 .. py:class:: SPADBackgroundRemovalWrapper(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADBackgroundRemovalWrapper
-      :parts: 1
 
 
    A wrapper class for SPAD sensors that provides additional functionality and
@@ -227,9 +203,6 @@ Classes
 .. py:class:: SPADScalingWrapperConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapperConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor scaling wrapper.
    This wrapper scales the histogram data by a given factor.
@@ -245,9 +218,6 @@ Classes
 
 .. py:class:: SPADScalingWrapper(config, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.spad_wrappers.SPADScalingWrapper
-      :parts: 1
 
 
    A wrapper class for SPAD sensors that scales the accumulated histogram data.

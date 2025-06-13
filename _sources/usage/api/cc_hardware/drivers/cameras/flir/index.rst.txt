@@ -107,9 +107,6 @@ Classes
 .. py:class:: FlirCamera(camera_index = 0)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.flir.FlirCamera
-      :parts: 1
-
 
    A singleton camera class for FLIR cameras using the PySpin library.
    Captures images in a background thread and stores them in a queue.
@@ -222,9 +219,6 @@ Classes
 
 .. py:class:: GrasshopperFlirCamera(camera_index = 0)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.flir.GrasshopperFlirCamera
-      :parts: 1
 
 
    Specialized camera class for a Grasshopper FLIR camera model.

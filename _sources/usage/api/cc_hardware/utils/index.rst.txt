@@ -55,9 +55,6 @@ Functions
 .. py:class:: Component(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.Component
-      :parts: 1
-
 
    Base class for components which must be closed.
 
@@ -157,9 +154,6 @@ Functions
 
 .. py:class:: Config
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.Config
-      :parts: 1
 
 
    Base configuration class for cc-hardware components.
@@ -448,9 +442,6 @@ Functions
 
 .. py:class:: ThreadedComponent(wrapped, *, future = True)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.ThreadedComponent
-      :parts: 1
 
 
    Base class for components which must be closed.

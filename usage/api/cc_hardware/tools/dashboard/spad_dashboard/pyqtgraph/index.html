@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -310,37 +312,13 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboardConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphDashboardConfig</span></span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboardConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance12dbebd436 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;DashboardConfig&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.DashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for dashboard GUIs.&quot;];
-  &quot;Config&quot; -&gt; &quot;DashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;PyQtGraphDashboardConfig&quot; [URL=&quot;#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for the PyQtGraph dashboard.&quot;];
-  &quot;SPADDashboardConfig&quot; -&gt; &quot;PyQtGraphDashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADDashboardConfig&quot; [URL=&quot;../spad_dashboard/index.html#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensor dashboards.&quot;];
-  &quot;DashboardConfig&quot; -&gt; &quot;SPADDashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration for the PyQtGraph dashboard.</p>
+<dd><p>Configuration for the PyQtGraph dashboard.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DashboardWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancefd388c53de {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;DashboardWindow&quot; [URL=&quot;#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Custom window class with a fixed settings panel on the right.&quot;];
-}
-<p>Custom window class with a fixed settings panel on the right.</p>
+<dd><p>Custom window class with a fixed settings panel on the right.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow.init_ui">
 <span class="sig-name descname"><span class="pre">init_ui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">settings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow.init_ui" title="Link to this definition">#</a></dt>
@@ -370,23 +348,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance3112c961fa {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Dashboard&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.Dashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for dashboards.&quot;];
-  &quot;Component&quot; -&gt; &quot;Dashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;PyQtGraphDashboard&quot; [URL=&quot;#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Dashboard implementation using PyQtGraph for real-time visualization.&quot;];
-  &quot;SPADDashboard&quot; -&gt; &quot;PyQtGraphDashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADDashboard&quot; [URL=&quot;../spad_dashboard/index.html#cc_hardware.tools.dashboard.spad_dashboard.spad_dashboard.SPADDashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for SPAD sensor dashboards.&quot;];
-  &quot;Dashboard&quot; -&gt; &quot;SPADDashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Dashboard implementation using PyQtGraph for real-time visualization.</p>
+<dd><p>Dashboard implementation using PyQtGraph for real-time visualization.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard.setup" title="Link to this definition">#</a></dt>

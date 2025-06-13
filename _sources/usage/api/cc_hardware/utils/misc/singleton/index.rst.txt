@@ -50,9 +50,6 @@ Classes
 .. py:class:: SingletonMeta
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.singleton.SingletonMeta
-      :parts: 1
-
 
    A metaclass for implementing the Singleton pattern.
 
@@ -83,9 +80,6 @@ Classes
 
 .. py:class:: SingletonABCMeta
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.misc.singleton.SingletonABCMeta
-      :parts: 1
 
 
    A metaclass combining Singleton and Abstract Base Class (ABC) functionality.

@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -318,21 +320,7 @@ console. It also provides a filter to set a maximum logging level for a logger.<
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.FileHandler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.FileHandler" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance5fa813d733 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;FileHandler&quot; [URL=&quot;#cc_hardware.utils.logger.FileHandler&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A file handler which creates the directory if it doesn't exist.&quot;];
-  &quot;FileHandler&quot; -&gt; &quot;FileHandler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;FileHandler&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A handler class which writes formatted logging records to disk files.&quot;];
-  &quot;StreamHandler&quot; -&gt; &quot;FileHandler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Filterer&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A base class for loggers and handlers which allows them to share&quot;];
-  &quot;Handler&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Handler instances dispatch logging events to specific destinations.&quot;];
-  &quot;Filterer&quot; -&gt; &quot;Handler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;StreamHandler&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A handler class which writes logging records, appropriately formatted,&quot;];
-  &quot;Handler&quot; -&gt; &quot;StreamHandler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A file handler which creates the directory if it doesn’t exist.</p>
+<dd><p>A file handler which creates the directory if it doesn’t exist.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.FileHandler.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.FileHandler.close" title="Link to this definition">#</a></dt>
@@ -473,19 +461,7 @@ modifying it in place.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.TqdmStreamHandler">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TqdmStreamHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.TqdmStreamHandler" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance66ec9cc527 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Filterer&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A base class for loggers and handlers which allows them to share&quot;];
-  &quot;Handler&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Handler instances dispatch logging events to specific destinations.&quot;];
-  &quot;Filterer&quot; -&gt; &quot;Handler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;StreamHandler&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;A handler class which writes logging records, appropriately formatted,&quot;];
-  &quot;Handler&quot; -&gt; &quot;StreamHandler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;TqdmStreamHandler&quot; [URL=&quot;#cc_hardware.utils.logger.TqdmStreamHandler&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A handler that uses tqdm.write to log messages.&quot;];
-  &quot;StreamHandler&quot; -&gt; &quot;TqdmStreamHandler&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>A handler that uses tqdm.write to log messages.</p>
+<dd><p>A handler that uses tqdm.write to log messages.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.TqdmStreamHandler.emit">
 <span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.TqdmStreamHandler.emit" title="Link to this definition">#</a></dt>
@@ -632,15 +608,7 @@ modifying it in place.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.LoggerMaxLevelFilter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LoggerMaxLevelFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.LoggerMaxLevelFilter" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance7119e516a5 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Filter&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Filter instances are used to perform arbitrary filtering of LogRecords.&quot;];
-  &quot;LoggerMaxLevelFilter&quot; [URL=&quot;#cc_hardware.utils.logger.LoggerMaxLevelFilter&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;This filter sets a maximum level.&quot;];
-  &quot;Filter&quot; -&gt; &quot;LoggerMaxLevelFilter&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>This filter sets a maximum level.</p>
+<dd><p>This filter sets a maximum level.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.utils.logger.LoggerMaxLevelFilter.filter">
 <span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.utils.logger.LoggerMaxLevelFilter.filter" title="Link to this definition">#</a></dt>

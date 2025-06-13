@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -309,38 +311,14 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphMotionCaptureDashboardConfig</span></span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance4b063f0532 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;DashboardConfig&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.DashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for dashboard GUIs.&quot;];
-  &quot;Config&quot; -&gt; &quot;DashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;MotionCaptureDashboardConfig&quot; [URL=&quot;../mocap_dashboard/index.html#cc_hardware.tools.dashboard.mocap_dashboard.mocap_dashboard.MotionCaptureDashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for motion capture dashboards.&quot;];
-  &quot;DashboardConfig&quot; -&gt; &quot;MotionCaptureDashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;PyQtGraphMotionCaptureDashboardConfig&quot; [URL=&quot;#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration class for the PyQtGraph 3D motion capture dashboard.&quot;];
-  &quot;MotionCaptureDashboardConfig&quot; -&gt; &quot;PyQtGraphMotionCaptureDashboardConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-}
-<p>Configuration class for the PyQtGraph 3D motion capture dashboard.
+<dd><p>Configuration class for the PyQtGraph 3D motion capture dashboard.
 E.g., can add more fields if needed.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DashboardWindow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancece995cec49 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;DashboardWindow&quot; [URL=&quot;#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A QWidget that holds a 3D OpenGL view (pyqtgraph.opengl.GLViewWidget).&quot;];
-}
-<p>A QWidget that holds a 3D OpenGL view (pyqtgraph.opengl.GLViewWidget).</p>
+<dd><p>A QWidget that holds a 3D OpenGL view (pyqtgraph.opengl.GLViewWidget).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow.keyPressEvent">
 <span class="sig-name descname"><span class="pre">keyPressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow.keyPressEvent" title="Link to this definition">#</a></dt>
@@ -352,23 +330,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PyQtGraphMotionCaptureDashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sensor</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard" title="Link to this definition">#</a></dt>
-<dd>digraph inheritanceea8f2adb02 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Dashboard&quot; [URL=&quot;../../dashboard/index.html#cc_hardware.tools.dashboard.dashboard.Dashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for dashboards.&quot;];
-  &quot;Component&quot; -&gt; &quot;Dashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;MotionCaptureDashboard&quot; [URL=&quot;../mocap_dashboard/index.html#cc_hardware.tools.dashboard.mocap_dashboard.mocap_dashboard.MotionCaptureDashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for MotionCapture sensor dashboards.&quot;];
-  &quot;Dashboard&quot; -&gt; &quot;MotionCaptureDashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;PyQtGraphMotionCaptureDashboard&quot; [URL=&quot;#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;A 3D motion capture visualization dashboard using pyqtgraph's GLViewWidget.&quot;];
-  &quot;MotionCaptureDashboard&quot; -&gt; &quot;PyQtGraphMotionCaptureDashboard&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-}
-<p>A 3D motion capture visualization dashboard using pyqtgraph’s GLViewWidget.</p>
+<dd><p>A 3D motion capture visualization dashboard using pyqtgraph’s GLViewWidget.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard.setup" title="Link to this definition">#</a></dt>

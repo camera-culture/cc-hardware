@@ -29,18 +29,12 @@ Classes
 .. py:class:: PyQtGraphDashboardConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboardConfig
-      :parts: 1
-
 
    Configuration for the PyQtGraph dashboard.
 
 
 .. py:class:: DashboardWindow(parent=None)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.DashboardWindow
-      :parts: 1
 
 
    Custom window class with a fixed settings panel on the right.
@@ -72,9 +66,6 @@ Classes
 
 .. py:class:: PyQtGraphDashboard(config, sensor)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.pyqtgraph.PyQtGraphDashboard
-      :parts: 1
 
 
    Dashboard implementation using PyQtGraph for real-time visualization.

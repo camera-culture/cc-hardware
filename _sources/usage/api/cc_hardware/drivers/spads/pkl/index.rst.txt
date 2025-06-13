@@ -28,9 +28,6 @@ Classes
 .. py:class:: PklSPADSensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.pkl.PklSPADSensorConfig
-      :parts: 1
-
 
    Configuration for the PklSPADSensor.
 
@@ -47,9 +44,6 @@ Classes
 
 .. py:class:: PklSPADSensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.spads.pkl.PklSPADSensor
-      :parts: 1
 
 
    A fake SPAD sensor class that simulates sensor behavior by loading pre-recorded

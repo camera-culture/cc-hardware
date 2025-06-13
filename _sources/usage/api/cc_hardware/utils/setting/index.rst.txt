@@ -31,9 +31,6 @@ Classes
 .. py:class:: Setting
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.setting.Setting
-      :parts: 1
-
 
    Defines an individual setting attribute for a sensor. Should be overridden
    to define different logic for different setting types.
@@ -267,9 +264,6 @@ Classes
 
 .. py:class:: RangeSetting
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.setting.RangeSetting
-      :parts: 1
 
 
    Defines a setting that has a range of valid values.
@@ -506,9 +500,6 @@ Classes
 
 .. py:class:: OptionSetting
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.setting.OptionSetting
-      :parts: 1
 
 
    Defines a setting that has a set of valid options.
@@ -757,9 +748,6 @@ Classes
 
 .. py:class:: BoolSetting
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.setting.BoolSetting
-      :parts: 1
 
 
    Defines a setting that has a boolean value.

@@ -31,9 +31,6 @@ Classes
 .. py:class:: StepperMotorSystemAxis(*args, **kwds)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemAxis
-      :parts: 1
-
 
    Create a collection of name/value pairs.
 
@@ -126,9 +123,6 @@ Classes
 .. py:class:: StepperMotorSystemConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystemConfig
-      :parts: 1
-
 
    Configuration for a stepper motor system.
 
@@ -141,9 +135,6 @@ Classes
 
 .. py:class:: StepperMotorSystem(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.StepperMotorSystem
-      :parts: 1
 
 
    This is a wrapper around multiple stepper motors which defines the system
@@ -184,9 +175,6 @@ Classes
 
 .. py:class:: DummyStepperSystem
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_system.DummyStepperSystem
-      :parts: 1
 
 
    A dummy stepper system that does nothing.

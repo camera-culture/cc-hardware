@@ -37,18 +37,12 @@ Classes
 .. py:class:: RealsenseConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.realsense.RealsenseConfig
-      :parts: 1
-
 
    Configuration for Camera sensors.
 
 
 .. py:class:: RealsenseCamera(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.cameras.realsense.RealsenseCamera
-      :parts: 1
 
 
    Camera class for Intel RealSense devices. Captures RGB and depth images on the main

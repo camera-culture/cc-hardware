@@ -39,9 +39,6 @@ Classes
 .. py:class:: KinesisStepperMotor(port, *, channel = 1, is_rack_system = True, scale = 1.0)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotor
-      :parts: 1
-
 
    A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
    This class provides additional features such as homing, movement with limits, and
@@ -167,9 +164,6 @@ Classes
 
 .. py:class:: KinesisRotationStage(*args, is_rack_system = None, scale = None, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisRotationStage
-      :parts: 1
 
 
    A wrapper class for controlling a Kinesis motor using the StepperMotor interface.
@@ -297,9 +291,6 @@ Classes
 .. py:class:: KinesisStepperMotorSystem(port, axes)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.KinesisStepperMotorSystem
-      :parts: 1
-
 
    A wrapper around multiple Kinesis stepper motors which defines the system as a
    whole.
@@ -346,9 +337,6 @@ Classes
 
 .. py:class:: AzimuthElevationSystem(port)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.kinesis_stepper.AzimuthElevationSystem
-      :parts: 1
 
 
    A predefined multi-axis system for an azimuth-elevation setup.

@@ -29,9 +29,6 @@ Classes
 .. py:class:: SensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.sensor.SensorConfig
-      :parts: 1
-
 
    Configuration for sensors.
 
@@ -53,9 +50,6 @@ Classes
 
 .. py:class:: Sensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.sensor.Sensor
-      :parts: 1
 
 
    Abstract base class for sensors.
@@ -122,9 +116,6 @@ Classes
 
 .. py:class:: SensorData
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.sensor.SensorData
-      :parts: 1
 
 
    Abstract base class for handling sensor data.

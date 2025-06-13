@@ -35,9 +35,6 @@ Functions
 .. py:class:: DeepLocation8(height=8, width=8, num_bins=16, out_dims=2)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.algos.models.DeepLocation8
-      :parts: 1
-
 
    DeepLocation8 model: 2-layer convolutional network designed for 8x8 histogram input
 

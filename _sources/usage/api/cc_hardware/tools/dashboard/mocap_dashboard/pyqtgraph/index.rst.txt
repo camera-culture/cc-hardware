@@ -26,9 +26,6 @@ Classes
 .. py:class:: PyQtGraphMotionCaptureDashboardConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboardConfig
-      :parts: 1
-
 
    Configuration class for the PyQtGraph 3D motion capture dashboard.
    E.g., can add more fields if needed.
@@ -36,9 +33,6 @@ Classes
 
 .. py:class:: DashboardWindow(parent=None)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.DashboardWindow
-      :parts: 1
 
 
    A QWidget that holds a 3D OpenGL view (pyqtgraph.opengl.GLViewWidget).
@@ -52,9 +46,6 @@ Classes
 
 .. py:class:: PyQtGraphMotionCaptureDashboard(config, sensor)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.mocap_dashboard.pyqtgraph.PyQtGraphMotionCaptureDashboard
-      :parts: 1
 
 
    A 3D motion capture visualization dashboard using pyqtgraph's GLViewWidget.

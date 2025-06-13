@@ -186,7 +186,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">Home</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/sensors.html">Sensors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../examples/stepper_motors.html">Stepper Motor Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../../../../api.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -326,15 +328,7 @@ CC Hardware framework.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.RangingMode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RangingMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.RangingMode" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance99c1695d22 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;Enum&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Create a collection of name/value pairs.&quot;];
-  &quot;RangingMode&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.RangingMode&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Enumeration for the ranging mode of the VL53L8CH sensor.&quot;];
-  &quot;Enum&quot; -&gt; &quot;RangingMode&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Enumeration for the ranging mode of the VL53L8CH sensor.</p>
+<dd><p>Enumeration for the ranging mode of the VL53L8CH sensor.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.RangingMode.__repr__">
 <span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.RangingMode.__repr__" title="Link to this definition">#</a></dt>
@@ -389,25 +383,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance1a24e86815 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Configuration parameters for the VL53L8CH sensor.</p>
+<dd><p>Configuration parameters for the VL53L8CH sensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -461,27 +437,7 @@ removed).</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHSharedConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig" title="Link to this definition">#</a></dt>
-<dd>digraph inheritancef57435c4fb {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHSharedConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Shared sensor configuration with default settings.&quot;];
-  &quot;VL53L8CHConfig&quot; -&gt; &quot;VL53L8CHSharedConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Shared sensor configuration with default settings.</p>
+<dd><p>Shared sensor configuration with default settings.</p>
 <p>Inherits from SensorConfig and provides default values for common parameters.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.pack">
@@ -510,29 +466,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHConfig4x4</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance83a4ee4271 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig4x4&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Sensor configuration for a 4x4 resolution.&quot;];
-  &quot;VL53L8CHSharedConfig&quot; -&gt; &quot;VL53L8CHConfig4x4&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHSharedConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Shared sensor configuration with default settings.&quot;];
-  &quot;VL53L8CHConfig&quot; -&gt; &quot;VL53L8CHSharedConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Sensor configuration for a 4x4 resolution.</p>
+<dd><p>Sensor configuration for a 4x4 resolution.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.pack">
 <span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.pack" title="Link to this definition">#</a></dt>
@@ -560,29 +494,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHConfig8x8</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance2a83a4eaf6 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Config&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Config&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base configuration class for cc-hardware components.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Config&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;HydraContainerConfig&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Base dataclass which provides additional methods for working with configs.&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensorConfig&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for SPAD sensors.&quot;];
-  &quot;SensorConfig&quot; -&gt; &quot;SPADSensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorConfig&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration for sensors.&quot;];
-  &quot;Config&quot; -&gt; &quot;SensorConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Configuration parameters for the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorConfig&quot; -&gt; &quot;VL53L8CHConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHConfig8x8&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Sensor configuration for an 8x8 resolution.&quot;];
-  &quot;VL53L8CHSharedConfig&quot; -&gt; &quot;VL53L8CHConfig8x8&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHSharedConfig&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Shared sensor configuration with default settings.&quot;];
-  &quot;VL53L8CHConfig&quot; -&gt; &quot;VL53L8CHSharedConfig&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Sensor configuration for an 8x8 resolution.</p>
+<dd><p>Sensor configuration for an 8x8 resolution.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.pack">
 <span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.pack" title="Link to this definition">#</a></dt>
@@ -610,19 +522,7 @@ size=&quot;8.0, 12.0&quot;;
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHData</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance46e3085842 {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;SPADSensorData&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;];
-  &quot;SensorData&quot; -&gt; &quot;SPADSensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;SensorData&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.SensorData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for handling sensor data.&quot;];
-  &quot;ABC&quot; -&gt; &quot;SensorData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHData&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Processes and stores both histogram and target data from the VL53L8CH sensor.&quot;];
-  &quot;SPADSensorData&quot; -&gt; &quot;VL53L8CHData&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Processes and stores both histogram and target data from the VL53L8CH sensor.</p>
+<dd><p>Processes and stores both histogram and target data from the VL53L8CH sensor.</p>
 <p>This class handles the accumulation and processing of histogram bins
 and per-pixel target information, keeping them aligned by pixel index.</p>
 <dl class="py method">
@@ -644,23 +544,7 @@ and per-pixel target information, keeping them aligned by pixel index.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor" title="Link to this definition">#</a></dt>
-<dd>digraph inheritance9162a7d90e {
-bgcolor=transparent;
-rankdir=LR;
-size=&quot;8.0, 12.0&quot;;
-  &quot;ABC&quot; [fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,tooltip=&quot;Helper class that provides a standard way to create an ABC using&quot;];
-  &quot;Component&quot; [URL=&quot;../../../utils/manager/index.html#cc_hardware.utils.manager.Component&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class for components which must be closed.&quot;];
-  &quot;ABC&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; -&gt; &quot;Component&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Registry&quot; [URL=&quot;../../../utils/registry/index.html#cc_hardware.utils.registry.Registry&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Base class providing a registry for its subclasses, plus a factory method.&quot;];
-  &quot;SPADSensor&quot; [URL=&quot;../spad/index.html#cc_hardware.drivers.spads.spad.SPADSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;An abstract base class for Single-Photon Avalanche Diode (SPAD) sensors, designed&quot;];
-  &quot;Sensor&quot; -&gt; &quot;SPADSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;Sensor&quot; [URL=&quot;../../sensor/index.html#cc_hardware.drivers.sensor.Sensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Abstract base class for sensors.&quot;];
-  &quot;Component&quot; -&gt; &quot;Sensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-  &quot;VL53L8CHSensor&quot; [URL=&quot;#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor&quot;,fillcolor=white,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;setlinewidth(0.5),filled&quot;,target=&quot;_top&quot;,tooltip=&quot;Main sensor class for the VL53L8CH time-of-flight sensor.&quot;];
-  &quot;SPADSensor&quot; -&gt; &quot;VL53L8CHSensor&quot; [arrowsize=0.5,color=gray,style=&quot;setlinewidth(0.5)&quot;];
-}
-<p>Main sensor class for the VL53L8CH time-of-flight sensor.</p>
+<dd><p>Main sensor class for the VL53L8CH time-of-flight sensor.</p>
 <p>This class handles communication with the sensor, configuration,
 data acquisition, and data processing.</p>
 <dl class="field-list simple">

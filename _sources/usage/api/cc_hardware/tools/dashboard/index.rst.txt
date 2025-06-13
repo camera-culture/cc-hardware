@@ -37,9 +37,6 @@ Classes
 .. py:class:: Dashboard(config)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.Dashboard
-      :parts: 1
-
 
    Abstract base class for dashboards.
 
@@ -77,9 +74,6 @@ Classes
 .. py:class:: DashboardConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.DashboardConfig
-      :parts: 1
-
 
    Configuration for dashboard GUIs.
 
@@ -93,9 +87,6 @@ Classes
 
 .. py:class:: SPADDashboard(config, sensor)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.SPADDashboard
-      :parts: 1
 
 
    Abstract base class for SPAD sensor dashboards.
@@ -156,9 +147,6 @@ Classes
 
 .. py:class:: SPADDashboardConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.SPADDashboardConfig
-      :parts: 1
 
 
    Configuration for SPAD sensor dashboards.

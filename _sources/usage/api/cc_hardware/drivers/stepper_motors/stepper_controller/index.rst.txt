@@ -31,9 +31,6 @@ Classes
 .. py:class:: ControllerAxisConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig
-      :parts: 1
-
 
    Configuration for a controller axis.
 
@@ -49,18 +46,12 @@ Classes
 .. py:class:: StepperControllerConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig
-      :parts: 1
-
 
    Configuration for a stepper motor controller.
 
 
 .. py:class:: SnakeControllerAxisConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig
-      :parts: 1
 
 
    Configuration for a single axis of a stepper motor controller.
@@ -75,9 +66,6 @@ Classes
 .. py:class:: SnakeStepperControllerConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig
-      :parts: 1
-
 
    Configuration for a stepper motor controller.
 
@@ -90,9 +78,6 @@ Classes
 
 .. py:class:: SnakeStepperControllerConfigXY
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY
-      :parts: 1
 
 
    Configuration for a stepper motor controller with 2 axes.

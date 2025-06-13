@@ -27,9 +27,6 @@ Classes
 .. py:class:: ArucoLocalizationAlgorithm(sensor, *, aruco_dict, marker_size, origin_id = -1, num_samples = 1, **marker_ids)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.algos.aruco.ArucoLocalizationAlgorithm
-      :parts: 1
-
 
    An algorithm to localize ArUco markers using camera images.
 

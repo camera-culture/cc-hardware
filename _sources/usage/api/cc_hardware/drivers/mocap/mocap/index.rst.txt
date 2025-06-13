@@ -25,9 +25,6 @@ Classes
 .. py:class:: MotionCaptureSensorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.mocap.MotionCaptureSensorConfig
-      :parts: 1
-
 
    Configuration for SPAD sensors.
 
@@ -40,9 +37,6 @@ Classes
 
 .. py:class:: MotionCaptureSensor(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.mocap.mocap.MotionCaptureSensor
-      :parts: 1
 
 
    An abstract base class for motion capture sensors.

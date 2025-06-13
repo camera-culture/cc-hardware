@@ -33,9 +33,6 @@ Classes
 .. py:class:: LogBufferHandler(buffer)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.jogger.LogBufferHandler
-      :parts: 1
-
 
    Logging handler that stores log records in a buffer.
 

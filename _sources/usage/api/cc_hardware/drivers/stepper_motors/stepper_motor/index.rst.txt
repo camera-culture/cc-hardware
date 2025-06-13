@@ -29,9 +29,6 @@ Classes
 .. py:class:: StepperMotorConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotorConfig
-      :parts: 1
-
 
    Configuration for stepper motors.
 
@@ -41,9 +38,6 @@ Classes
 
 .. py:class:: StepperMotor
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.drivers.stepper_motors.stepper_motor.StepperMotor
-      :parts: 1
 
 
    An abstract base class for controlling a stepper motor. This class provides a

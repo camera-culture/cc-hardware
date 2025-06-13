@@ -25,9 +25,6 @@ Classes
 .. py:class:: DashboardConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.dashboard.DashboardConfig
-      :parts: 1
-
 
    Configuration for dashboard GUIs.
 
@@ -41,9 +38,6 @@ Classes
 
 .. py:class:: Dashboard(config)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.dashboard.Dashboard
-      :parts: 1
 
 
    Abstract base class for dashboards.

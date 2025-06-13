@@ -123,9 +123,6 @@ Classes
 .. py:class:: PklReader(path, **kwargs)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.file_handlers.PklReader
-      :parts: 1
-
 
    A utility class for reading data from a pickle file.
    Inherits from PklHandler but sets overwrite to False by default.

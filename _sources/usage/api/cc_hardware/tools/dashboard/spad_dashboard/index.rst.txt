@@ -40,9 +40,6 @@ Classes
 .. py:class:: DummySPADDashboard(config, sensor)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.DummySPADDashboard
-      :parts: 1
-
 
    Dummy dashboard for testing purposes.
 
@@ -97,9 +94,6 @@ Classes
 .. py:class:: DummySPADDashboardConfig
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.DummySPADDashboardConfig
-      :parts: 1
-
 
    Configuration for SPAD sensor dashboards.
 
@@ -121,9 +115,6 @@ Classes
 
 .. py:class:: SPADDashboard(config, sensor)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.SPADDashboard
-      :parts: 1
 
 
    Abstract base class for SPAD sensor dashboards.
@@ -184,9 +175,6 @@ Classes
 
 .. py:class:: SPADDashboardConfig
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.tools.dashboard.spad_dashboard.SPADDashboardConfig
-      :parts: 1
 
 
    Configuration for SPAD sensor dashboards.

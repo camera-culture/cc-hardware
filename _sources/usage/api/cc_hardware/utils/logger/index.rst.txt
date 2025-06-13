@@ -40,9 +40,6 @@ Classes
 .. py:class:: FileHandler(filename, *args, **kwargs)
 
 
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.logger.FileHandler
-      :parts: 1
-
 
    A file handler which creates the directory if it doesn't exist.
 
@@ -194,9 +191,6 @@ Classes
 
 .. py:class:: TqdmStreamHandler(*args, **kwargs)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.logger.TqdmStreamHandler
-      :parts: 1
 
 
    A handler that uses tqdm.write to log messages.
@@ -355,9 +349,6 @@ Classes
 
 .. py:class:: LoggerMaxLevelFilter(max_level)
 
-
-   .. autoapi-inheritance-diagram:: cc_hardware.utils.logger.LoggerMaxLevelFilter
-      :parts: 1
 
 
    This filter sets a maximum level.
