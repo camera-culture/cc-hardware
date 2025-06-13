@@ -231,7 +231,7 @@ class SPADMovingAverageWrapper(SPADWrapper[SPADMovingAverageWrapperConfig]):
         return True
 
     def accumulate(self, num_samples: int = 1, **kwargs):
-        assert num_samples == 1
+        assert num_samples == 1, "SPADMovingAverageWrapper only supports num_samples=1 for moving average calculation."
         data = super().accumulate(num_samples, **kwargs)
 
         if SPADDataType.HISTOGRAM in self.config.data_type:
