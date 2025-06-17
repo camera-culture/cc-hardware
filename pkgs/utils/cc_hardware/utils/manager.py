@@ -236,7 +236,9 @@ class Manager:
             try:
                 while self.is_okay:
                     if loop(self._iter, manager=self, **self._components) is False:
-                        get_logger().info(f"Exiting loop after {self._iter + 1} iterations.")
+                        get_logger().info(
+                            f"Exiting loop after {self._iter + 1} iterations."
+                        )
                         break
 
                     self._iter += 1
