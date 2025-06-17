@@ -154,6 +154,12 @@ Classes
       :returns: *dict[str, Setting]* -- Configuration settings.
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
 .. py:class:: VL53L8CHSharedConfig
 
 
@@ -179,6 +185,12 @@ Classes
       :returns: *dict[str, Setting]* -- Configuration settings.
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
 .. py:class:: VL53L8CHConfig4x4
 
 
@@ -200,6 +212,12 @@ Classes
       Retrieves the configuration settings for the sensor.
 
       :returns: *dict[str, Setting]* -- Configuration settings.
+
+
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
 
 
 .. py:class:: VL53L8CHConfig8x8
@@ -225,7 +243,13 @@ Classes
       :returns: *dict[str, Setting]* -- Configuration settings.
 
 
-.. py:class:: VL53L8CHData
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
+.. py:class:: VL53L8CHData(config)
 
 
 
@@ -242,6 +266,54 @@ Classes
       :Parameters: **row** (*list[str]*) -- A row of string values from sensor output.
 
       :returns: *bool* -- True if processing succeeds, False otherwise.
+
+
+
+   .. py:method:: reset()
+
+      Resets the sensor data to its initial state.
+
+
+
+   .. py:property:: has_data
+      :type: bool
+
+      Checks if the sensor has data available.
+
+
+   .. py:method:: get_data(*, verify_has_data = True, reset = True)
+
+      Retrieves the processed sensor data.
+
+
+
+   .. py:method:: calculate_point_cloud(*, histogram = None, distances = None, subpixel_samples = 1, bilinear_interpolation = False)
+
+      Calculates the point cloud from histogram or precomputed distances.
+
+      :Parameters: * **histogram** (*np.ndarray*) -- Histogram data, if distances not provided.
+                   * **distances** (*np.ndarray*) -- Precomputed distances (mm).
+
+      :keyword subpixel_samples: Number of samples per pixel.
+      :kwtype subpixel_samples: int
+      :keyword bilinear_interpolation: Whether to interpolate distances.
+      :kwtype bilinear_interpolation: bool
+
+      :returns: *np.ndarray* -- Point cloud (N, 3) in meters.
+
+
+
+   .. py:method:: calculate_distance(histogram, *, window = 10, threshold = 0)
+
+      Calculates the distance from the histogram data.
+
+      :Parameters: **histogram** (*np.ndarray*) -- The histogram data.
+
+      :keyword window: The size of the window to use for distance calculation.
+                       Defaults to 10.
+      :kwtype window: int
+
+      :returns: *np.ndarray* -- The calculated distance.
 
 
 
@@ -297,6 +369,59 @@ Classes
    .. py:method:: close()
 
       Closes the sensor connection and stops background processes.
+
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
+
+
+   .. py:method:: calibrate()
+      :abstractmethod:
+
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
 
 
 

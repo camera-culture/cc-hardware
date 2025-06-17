@@ -432,6 +432,12 @@ removed).</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -459,6 +465,12 @@ removed).</p></li>
 <dd class="field-odd"><p><em>dict[str, Setting]</em> – Configuration settings.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
 </dd></dl>
 
 </dd></dl>
@@ -489,6 +501,12 @@ removed).</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -517,11 +535,17 @@ removed).</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHData</span></span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VL53L8CHData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData" title="Link to this definition">#</a></dt>
 <dd><p>Processes and stores both histogram and target data from the VL53L8CH sensor.</p>
 <p>This class handles the accumulation and processing of histogram bins
 and per-pixel target information, keeping them aligned by pixel index.</p>
@@ -535,6 +559,65 @@ and per-pixel target information, keeping them aligned by pixel index.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><em>bool</em> – True if processing succeeds, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor data to its initial state.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.has_data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.has_data" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the sensor has data available.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify_has_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the processed sensor data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_point_cloud">
+<span class="sig-name descname"><span class="pre">calculate_point_cloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histogram</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subpixel_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bilinear_interpolation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_point_cloud" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the point cloud from histogram or precomputed distances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>histogram</strong> (<em>np.ndarray</em>) – Histogram data, if distances not provided.</p></li>
+<li><p><strong>distances</strong> (<em>np.ndarray</em>) – Precomputed distances (mm).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>subpixel_samples</strong> (<em>int</em>) – Number of samples per pixel.</p></li>
+<li><p><strong>bilinear_interpolation</strong> (<em>bool</em>) – Whether to interpolate distances.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>np.ndarray</em> – Point cloud (N, 3) in meters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_distance">
+<span class="sig-name descname"><span class="pre">calculate_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histogram</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_distance" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the distance from the histogram data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>histogram</strong> (<em>np.ndarray</em>) – The histogram data.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>window</strong> (<em>int</em>) – The size of the window to use for distance calculation.
+Defaults to 10.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>np.ndarray</em> – The calculated distance.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -602,6 +685,68 @@ the fields of SensorConfig.</p>
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the sensor connection and stops background processes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
+number of discrete values or ranges that the sensor can measure. The total
+distance a sensor can measure is equal to the number of bins multiplied by
+the bin width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.resolution" title="Link to this definition">#</a></dt>
+<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
+the spatial resolution of the sensor, where the width and height refer to the
+number of pixels or sampling points in the respective dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
+<dl class="simple">
+<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate" title="Link to this definition">#</a></dt>
+<dd><p>Calibrates the sensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -682,25 +827,34 @@ the fields of SensorConfig.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig.num_pixels</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSharedConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSharedConfig.num_pixels</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig4x4.num_pixels"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig4x4.num_pixels</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.pack"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.pack()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHConfig8x8.num_pixels"><code class="docutils literal notranslate"><span class="pre">VL53L8CHConfig8x8.num_pixels</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.process"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.process()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.reset"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.reset()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.has_data"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.has_data</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.get_data"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.get_data()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_point_cloud"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.calculate_point_cloud()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHData.calculate_distance"><code class="docutils literal notranslate"><span class="pre">VL53L8CHData.calculate_distance()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor</span></code></a><ul>
@@ -708,6 +862,12 @@ the fields of SensorConfig.</p>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.accumulate()</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.close"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.num_bins</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.resolution"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.resolution</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.settings"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.reset"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.reset()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.calibrate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.vl53l8ch.VL53L8CHSensor.__del__"><code class="docutils literal notranslate"><span class="pre">VL53L8CHSensor.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

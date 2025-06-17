@@ -320,6 +320,18 @@ Default is False.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.num_pixels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_pixels</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.num_pixels" title="Link to this definition">#</a></dt>
+<dd><p>Returns the total number of pixels in the sensor.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -352,10 +364,95 @@ data.</p>
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Checks if the sensor is operational.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close" title="Link to this definition">#</a></dt>
 <dd><p>Closes the sensor connection. This method is a no-op for this fake sensor.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_bins</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of bins in the sensor’s histogram. This indicates the
+number of discrete values or ranges that the sensor can measure. The total
+distance a sensor can measure is equal to the number of bins multiplied by
+the bin width.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>int</em> – The total number of bins in the histogram.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution" title="Link to this definition">#</a></dt>
+<dd><p>Returns the resolution of the sensor as a tuple (width, height). This indicates
+the spatial resolution of the sensor, where the width and height refer to the
+number of pixels or sampling points in the respective dimensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p><em>tuple[int, int]</em> –</p>
+<dl class="simple">
+<dt>A tuple representing the sensor’s resolution</dt><dd><p>(width, height).</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.settings">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">settings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../../../utils/setting/index.html#cc_hardware.utils.setting.Setting" title="cc_hardware.utils.setting.Setting"><span class="pre">cc_hardware.utils.setting.Setting</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.settings" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the sensor settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.reset" title="Link to this definition">#</a></dt>
+<dd><p>Resets the sensor configuration to its initial state. This method can be
+overridden by subclasses to implement specific reset behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Additional parameters that may be used for resetting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.update" title="Link to this definition">#</a></dt>
+<dd><p>Updates the sensor configuration with provided keyword arguments. If there are
+any changes given via the kwargs or in the settings, the configuration is sent
+to the sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Configuration parameters to update. Keys must match
+the fields of SensorConfig.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>bool</em> – True if the configuration was updated. False if no changes were made.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calibrate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate" title="Link to this definition">#</a></dt>
+<dd><p>Calibrates the sensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Destructor to ensure the sensor is properly closed.</p>
 </dd></dl>
 
 </dd></dl>
@@ -422,10 +519,22 @@ data.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.spads.pkl</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.num_pixels"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig.num_pixels</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensorConfig.settings"><code class="docutils literal notranslate"><span class="pre">PklSPADSensorConfig.settings</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor</span></code></a><ul>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.accumulate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.accumulate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.is_okay"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.is_okay</span></code></a></li>
 <li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.close"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.num_bins"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.num_bins</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.resolution"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.resolution</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.settings"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.settings</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.reset"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.reset()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.update"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.update()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.calibrate"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.calibrate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.spads.pkl.PklSPADSensor.__del__"><code class="docutils literal notranslate"><span class="pre">PklSPADSensor.__del__()</span></code></a></li>
 </ul>
 </li>
 </ul>

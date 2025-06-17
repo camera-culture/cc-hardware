@@ -42,6 +42,18 @@ Classes
    :vartype loop: bool
 
 
+   .. py:property:: num_pixels
+      :type: int
+
+      Returns the total number of pixels in the sensor.
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
 .. py:class:: PklSPADSensor(config)
 
 
@@ -66,9 +78,81 @@ Classes
 
 
 
+   .. py:property:: is_okay
+      :type: bool
+
+      Checks if the sensor is operational.
+
+
    .. py:method:: close()
 
       Closes the sensor connection. This method is a no-op for this fake sensor.
+
+
+
+   .. py:property:: num_bins
+      :type: int
+
+      Returns the number of bins in the sensor's histogram. This indicates the
+      number of discrete values or ranges that the sensor can measure. The total
+      distance a sensor can measure is equal to the number of bins multiplied by
+      the bin width.
+
+      :returns: *int* -- The total number of bins in the histogram.
+
+
+   .. py:property:: resolution
+      :type: tuple[int, int]
+
+      Returns the resolution of the sensor as a tuple (width, height). This indicates
+      the spatial resolution of the sensor, where the width and height refer to the
+      number of pixels or sampling points in the respective dimensions.
+
+      :returns: *tuple[int, int]* --
+
+                A tuple representing the sensor's resolution
+                    (width, height).
+
+
+   .. py:property:: settings
+      :type: dict[str, cc_hardware.utils.setting.Setting]
+
+      Retrieves the sensor settings.
+
+
+   .. py:method:: reset(**kwargs)
+
+      Resets the sensor configuration to its initial state. This method can be
+      overridden by subclasses to implement specific reset behavior.
+
+      :Parameters: **\*\*kwargs** -- Additional parameters that may be used for resetting.
+
+
+
+   .. py:method:: update(**kwargs)
+
+      Updates the sensor configuration with provided keyword arguments. If there are
+      any changes given via the kwargs or in the settings, the configuration is sent
+      to the sensor.
+
+      :Parameters: **\*\*kwargs** -- Configuration parameters to update. Keys must match
+                   the fields of SensorConfig.
+
+      :returns: *bool* -- True if the configuration was updated. False if no changes were made.
+
+
+
+   .. py:method:: calibrate()
+      :abstractmethod:
+
+
+      Calibrates the sensor.
+
+
+
+   .. py:method:: __del__()
+
+      Destructor to ensure the sensor is properly closed.
 
 
 
