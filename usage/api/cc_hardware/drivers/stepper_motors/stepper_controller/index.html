@@ -303,14 +303,20 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a></p></td>
 <td><p>Configuration for a stepper motor controller.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StepperController</span></code></a></p></td>
+<td><p>Base class for components which must be closed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a></p></td>
 <td><p>Configuration for a single axis of a stepper motor controller.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a></p></td>
 <td><p>Configuration for a stepper motor controller.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a></p></td>
 <td><p>Configuration for a stepper motor controller with 2 axes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SnakeStepperController</span></code></a></p></td>
+<td><p>Base class for components which must be closed.</p></td>
 </tr>
 </tbody>
 </table>
@@ -328,12 +334,627 @@
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StepperControllerConfig</span></span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig" title="Link to this definition">#</a></dt>
 <dd><p>Configuration for a stepper motor controller.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">StepperController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController" title="Link to this definition">#</a></dt>
+<dd><p>Base class for components which must be closed.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position" title="Link to this definition">#</a></dt>
+<dd><p>Get the position for the given iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iter</strong> (<em>int</em>) – The iteration number.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>list[float]</em> – The position for the given iteration.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Check if the controller is okay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the controller is okay, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.close" title="Link to this definition">#</a></dt>
+<dd><p>Close the controller.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -348,6 +969,245 @@
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -361,6 +1221,245 @@ that the keys must be unique and are used to identify the axes in the
 controller.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -374,6 +1473,387 @@ that the keys must be unique and are used to identify the axes in the
 controller.</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">omegaconf.DictConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.config" title="Link to this definition">#</a></dt>
+<dd><p>The original, uninstantiated config. This is maintained within each nested
+instantiated config to allow for proper serialization and deserialization, as well
+as printing the config as a yaml string.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.custom">
+<span class="sig-name descname"><span class="pre">custom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.custom" title="Link to this definition">#</a></dt>
+<dd><p>Custom data to use. This is useful for code-specific logic (i.e. not in yaml
+files) where you want to store data that is not necessarily defined in the config.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__" title="Link to this definition">#</a></dt>
+<dd><p>Define a post init method. If not, derived classes won’t be able to
+implement their own __post_init__ method for some reason.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_convert_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'object'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate" title="Link to this definition">#</a></dt>
+<dd><p>Instantiate the config into an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>DictConfig | ListConfig</em>) – The config to instantiate.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_convert_</strong> (<em>str</em>) – The conversion method to use. Defaults to “object”, meaning
+all structured configs will be converted to their dataclass equivalent.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.compose">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overrides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_hydra_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.compose" title="Link to this definition">#</a></dt>
+<dd><p>Compose a config using the Hydra compose API. This will return the config as
+a HydraContainerConfig instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dir</strong> (<em>Path | str</em>) – The path to the config directory.</p></li>
+<li><p><strong>config_name</strong> (<em>str</em>) – The name of the config file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>overrides</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The overrides to use when composing the config.</p></li>
+<li><p><strong>return_hydra_config</strong> (<em>bool</em>) – Whether to return the HydraConfig object.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">instantiate_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.load" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.load to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>pattern</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The specific pattern to select from the loaded
+config.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instantiate_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.create to instantiate the config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instantiate</strong> (<em>bool</em>) – Whether to instantiate the config into an object.</p></li>
+<li><p><strong>**instantiate_kwargs</strong> – Additional keyword arguments to pass to the
+instantiation method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.merge_with">
+<span class="sig-name descname"><span class="pre">merge_with</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.merge_with" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.merge to merge the config with another config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>others</strong> (<em>DictConfig | ListConfig | Dict | List</em>) – The other config(s) to
+merge with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.copy" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around the copy method to return a new instance of this class.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method will perform a deepcopy, meaning the <a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getstate__()</span></code></a> and
+<a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__" title="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__setstate__()</span></code></a> methods will be called. This is fairly slow since
+the object is pickled and unpickled.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.save" title="Link to this definition">#</a></dt>
+<dd><p>Saves the config to a yaml file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>Path | str</em>) – The path to save the config to.</p>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>header</strong> (<em>str</em>) – The header to add to the top of the yaml file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_yaml" title="Link to this definition">#</a></dt>
+<dd><p>Wrapper around OmegaConf.to_yaml to convert the config to a yaml string.
+Adds some custom representers.</p>
+<p>This uses the stored config attribute to convert to yaml. If the config is None,
+this will return the default string representation of the object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolve</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">throw_on_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__">
+<span class="sig-name descname"><span class="pre">__getstate__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to pickle the object. We’ll return the config as the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__">
+<span class="sig-name descname"><span class="pre">__setstate__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__" title="Link to this definition">#</a></dt>
+<dd><p>This is used to unpickle the object. We’ll set the config from the state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__str__" title="Link to this definition">#</a></dt>
+<dd><p>Convert the config to a yaml string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SnakeStepperController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController" title="Link to this definition">#</a></dt>
+<dd><p>Base class for components which must be closed.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position">
+<span class="sig-name descname"><span class="pre">get_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iter</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position" title="Link to this definition">#</a></dt>
+<dd><p>Get the position that the controller should move to for the given iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>iter</strong> (<em>int</em>) – The current iteration index.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>dict</em> –</p>
+<dl class="simple">
+<dt>A dictionary with axis names as keys and current positions as values.</dt><dd><p>Returns an empty dictionary if the iteration exceeds total positions.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.is_okay">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_okay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.is_okay" title="Link to this definition">#</a></dt>
+<dd><p>Check if the controller is okay.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>bool</em> – True if the controller is okay, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.close" title="Link to this definition">#</a></dt>
+<dd><p>Close the controller.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">T</span></em><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.config" title="Link to this definition">#</a></dt>
+<dd><p>Retrieves the component configuration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create an instance of the class from a configuration object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>T</em>) – The configuration object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Self</em> – An instance of the class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__">
+<span class="sig-name descname"><span class="pre">__del__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__" title="Link to this definition">#</a></dt>
+<dd><p>Ensures the component is closed when it is deleted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">friend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Registers a class in this registry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>type[Self] | str</em>) – A class object or a class name for lazy
+loading.</p></li>
+<li><p><strong>module_path</strong> (<em>str | None</em>) – Path to the module if <cite>class_type</cite> is a string.</p></li>
+<li><p><strong>friend</strong> (<em>str | None</em>) – Name of another class to associate with this class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>type[Self] | None</em> –</p>
+<dl class="simple">
+<dt>The registered class if <cite>class_type</cite> is a type,</dt><dd><p>otherwise None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_from_registry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry" title="Link to this definition">#</a></dt>
+<dd><p>Creates an instance of a registered class, performing lazy loading if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str | None</em>) – The name of the class to instantiate. If None,
+and only one class is registered, it will instantiate that class.</p></li>
+<li><p><strong>*args</strong> (<em>Any</em>) – Positional arguments to pass to the class constructor.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Keyword arguments to pass to the class constructor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><em>Self | Any</em> –</p>
+<dl class="simple">
+<dt>An instance of the requested class, or an associated</dt><dd><p>’friend’ class.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry">
+<span class="sig-name descname"><span class="pre">registry</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry" title="Link to this definition">#</a></dt>
+<dd><p>Get the registry for this class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary mapping class names to class objects or lazy load paths.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered">
+<span class="sig-name descname"><span class="pre">registered</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered" title="Link to this definition">#</a></dt>
+<dd><p>Get an enumeration of the registered classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An enumeration of the registered classes.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -438,11 +1918,142 @@ controller.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cc_hardware.drivers.stepper_motors.stepper_controller</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a></li>
-<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.config"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.custom"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.compose"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.load"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.copy"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.save"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.__str__"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.register"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registry"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.ControllerAxisConfig.registered"><code class="docutils literal notranslate"><span class="pre">ControllerAxisConfig.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.config"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.custom"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.compose"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.load"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.copy"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.save"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.__str__"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.register"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registry"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperControllerConfig.registered"><code class="docutils literal notranslate"><span class="pre">StepperControllerConfig.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController"><code class="docutils literal notranslate"><span class="pre">StepperController</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.get_position"><code class="docutils literal notranslate"><span class="pre">StepperController.get_position()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.is_okay"><code class="docutils literal notranslate"><span class="pre">StepperController.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.close"><code class="docutils literal notranslate"><span class="pre">StepperController.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.config"><code class="docutils literal notranslate"><span class="pre">StepperController.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_config"><code class="docutils literal notranslate"><span class="pre">StepperController.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.__del__"><code class="docutils literal notranslate"><span class="pre">StepperController.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.register"><code class="docutils literal notranslate"><span class="pre">StepperController.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">StepperController.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registry"><code class="docutils literal notranslate"><span class="pre">StepperController.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.StepperController.registered"><code class="docutils literal notranslate"><span class="pre">StepperController.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.config"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.custom"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.compose"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.load"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.copy"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.save"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.register"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registry"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeControllerAxisConfig.registered"><code class="docutils literal notranslate"><span class="pre">SnakeControllerAxisConfig.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.custom"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.compose"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.load"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.merge_with"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.copy"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.save"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.register"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfig.registered"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfig.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.custom"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.custom</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__post_init__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__post_init__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.instantiate"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.instantiate()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.compose"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.compose()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.load"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.load()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.create()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.merge_with"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.merge_with()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.copy"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.copy()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.save"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.save()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_yaml"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.to_yaml()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.to_dict"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__getstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__getstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__setstate__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__setstate__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.__str__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.__str__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.register"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperControllerConfigXY.registered"><code class="docutils literal notranslate"><span class="pre">SnakeStepperControllerConfigXY.registered()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController</span></code></a><ul>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.get_position"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.get_position()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.is_okay"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.is_okay</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.close"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.close()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.config</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_config"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.create_from_config()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.__del__"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.__del__()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.register"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.register()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.create_from_registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.create_from_registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registry"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.registry()</span></code></a></li>
+<li><a class="reference internal" href="#cc_hardware.drivers.stepper_motors.stepper_controller.SnakeStepperController.registered"><code class="docutils literal notranslate"><span class="pre">SnakeStepperController.registered()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
