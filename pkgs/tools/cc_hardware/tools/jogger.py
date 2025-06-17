@@ -5,8 +5,11 @@ import logging
 import sys
 from collections import deque
 
-from cc_hardware.drivers.stepper_motors import StepperMotorSystem
-from cc_hardware.utils.logger import get_logger
+from cc_hardware.drivers.stepper_motors import (
+    StepperMotorSystem,
+    StepperMotorSystemConfig,
+)
+from cc_hardware.utils import get_logger, register_cli, run_cli
 
 # ======================
 
@@ -41,8 +44,8 @@ class LogBufferHandler(logging.Handler):
 
 
 class Jogger:
-    def __init__(self, system: str, port: str | None = None):
-        self._system = StepperMotorSystem.create_from_config(system)
+    def __init__(self, stepper_system: StepperMotorSystem):
+        self._system = stepper_system
         self._system.initialize()
         assert len(self._system.position) == 2, "Only 2D systems are supported."
 
@@ -54,10 +57,35 @@ class Jogger:
         # Set up logging
         self.log_handler = LogBufferHandler(self.output_buffer)
 
-    def start(self):
-        curses.wrapper(self._start)
+        self._stdscr: curses.window = None  # Will be set by curses.wrapper
+        self._main_ui_lines: str = None
 
-    def _start(self, stdscr: curses.window):
+    def run(self):
+        def _run(stdscr: curses.window):
+            self.start(stdscr)
+            try:
+                while self._step(self._stdscr, self._main_ui_lines):
+                    pass
+            finally:
+                # Restore stdout and stderr
+                sys.stdout = sys.__stdout__
+                sys.stderr = sys.__stderr__
+
+                self._system.close()
+
+        curses.wrapper(_run)
+
+    def start(self, stdscr: curses.window | None = None):
+        if stdscr is None:
+            if self._stdscr is None:
+                self._stdscr = curses.initscr()
+                curses.noecho()
+                curses.cbreak()
+                self._stdscr.keypad(True)
+
+            stdscr = self._stdscr
+        self._stdscr = stdscr
+
         curses.curs_set(0)  # Disable blinking cursor
         stdscr.nodelay(True)  # Make getch non-blocking
 
@@ -81,6 +109,8 @@ class Jogger:
         ]
         main_ui_height = len(main_ui_lines) + 2  # Add padding if necessary
 
+        self._main_ui_lines = main_ui_lines
+
         # Calculate output window height to fill remaining space
         output_height = max_y - main_ui_height
         if output_height < 5:
@@ -90,17 +120,19 @@ class Jogger:
         # Create the output window
         self.output_win = curses.newwin(output_height, max_x, main_ui_height, 0)
 
+    def update(self) -> bool:
+        assert self._stdscr is not None, "Jogger must be started with start() first."
         try:
-            while self._step(stdscr, main_ui_lines, main_ui_height):
-                pass
+            return self._step(self._stdscr, self._main_ui_lines)
         finally:
-            # Restore stdout and stderr
-            sys.stdout = sys.__stdout__
-            sys.stderr = sys.__stderr__
+            # Ensure the output window is refreshed after each step
+            self.output_win.refresh()
 
-            self._system.close()
+            # Restore the cursor position
+            self._stdscr.move(0, 0)
+            self._stdscr.refresh()
 
-    def _step(self, stdscr: curses.window, main_ui_lines, main_ui_height) -> bool:
+    def _step(self, stdscr: curses.window, main_ui_lines: int) -> bool:
         key = stdscr.getch()
         curses.flushinp()
 
@@ -120,7 +152,7 @@ class Jogger:
             self._scale *= 2
         elif key == ord("d") or key == ord("D"):
             self._scale /= 2
-            self._scale = min(int(self._scale), 1)
+            self._scale = max(int(self._scale), 1)
 
         # Update the UI
         stdscr.erase()
@@ -202,52 +234,33 @@ class Jogger:
 # ======================
 
 
-def run(
-    system: StepperMotorSystem.registered,
-    port: str | None = None,
-    exit_immediately: bool = False,
+@register_cli
+def jogger(
+    stepper_system: StepperMotorSystemConfig,
 ):
-    jogger = Jogger(system.value, port)
-    if exit_immediately:
-        return
-    jogger.start()
+    from cc_hardware.utils.manager import Manager
 
+    def setup(manager: Manager):
+        _stepper_system = StepperMotorSystem.create_from_config(stepper_system)
+        manager.add(stepper_system=_stepper_system)
 
-# ======================
+        jogger = Jogger(_stepper_system)
+        jogger.start()
+        manager.add(jogger=jogger)
 
+    def loop(
+        iter: int, manager: Manager, stepper_system: StepperMotorSystem, jogger: Jogger
+    ) -> bool:
+        return jogger.update()
 
-def jogger():
-    import argparse
+    def cleanup(manager: Manager, stepper_system: StepperMotorSystem, jogger: Jogger):
+        get_logger().info("Cleaning up...")
+        stepper_system.move_to(0, 0)
+        stepper_system.close()
 
-    parser = argparse.ArgumentParser(
-        description="Communication script between a PC and the Arduino. "
-        "For controlling linear slides with a CNCShield."
-    )
-
-    parser.add_argument(
-        "--port",
-        type=str,
-        help="The port the arduino is on. If None, auto port detection is used.",
-        default="/dev/ttyUSB0",
-    )
-    parser.add_argument(
-        "-E" "--exit-immediately",
-        dest="exit_immediately",
-        action="store_true",
-        help="Exit immediately after instantiating the gantry object.",
-    )
-
-    args = parser.parse_args()
-
-    from cc_hardware.drivers.stepper_motors.telemetrix_stepper import (
-        SingleDrive1AxisGantryConfig,
-    )
-
-    jogger = Jogger(SingleDrive1AxisGantryConfig.create(port=args.port))
-    if args.exit_immediately:
-        return
-    jogger.start()
+    with Manager() as manager:
+        manager.run(setup=setup, loop=loop, cleanup=cleanup)
 
 
 if __name__ == "__main__":
-    jogger()
+    run_cli(jogger)
